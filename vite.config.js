@@ -9,7 +9,7 @@ function getPageData() {
   const pages = {};
   
   // Список файлов для обработки
-  const files = ['index.html', 'vacancies.html', 'contacts.html'];
+  const files = ['index.html', 'vacancies.html', 'contacts.html', 'helper.html', 'payments.html', 'order-tracking.html', 'news.html', 'services.html'];
   
   files.forEach(file => {
     try {
@@ -75,6 +75,7 @@ function getContactsData() {
 }
 
 export default defineConfig({
+  base: '/aeroline/', // Базовый путь для GitHub Pages
   plugins: [
     handlebars({
       partialDirectory: resolve(__dirname, 'src/partials'),
@@ -153,6 +154,11 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         vacancies: resolve(__dirname, 'vacancies.html'),
         contacts: resolve(__dirname, 'contacts.html'),
+        helper: resolve(__dirname, 'helper.html'),
+        payments: resolve(__dirname, 'payments.html'),
+        orderTracking: resolve(__dirname, 'order-tracking.html'),
+        news: resolve(__dirname, 'news.html'),
+        services: resolve(__dirname, 'services.html'),
       },
     },
   },
