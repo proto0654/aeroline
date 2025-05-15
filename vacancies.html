@@ -1,0 +1,92 @@
+{{> header}}
+
+<main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
+  <!-- Hero-блок -->
+  <section class="relative rounded-2xl overflow-hidden mb-8 md:mb-12 flex flex-col justify-center items-center">
+    <img src="./src/img/layout/vacancy-hero.jpg" alt="Вакансии Aeroline" class="w-full h-48 md:h-auto object-contain object-center select-none pointer-events-none" draggable="false">
+    <h1 class="absolute left-1/2 -translate-x-1/2 top-10  text-h3 md:text-h1 font-bold text-brand-gray text-center uppercase">Вакансии</h1>
+    
+  </section>
+
+  <!-- Фильтр по городу -->
+  <div class="flex justify-center mb-6 md:mb-10">
+    <div class="relative">
+      <select id="cityFilter" class="flex items-center bg-brand-light border border-brand-gray/20 rounded-lg px-5 py-3 text-brand-gray text-base md:text-lg shadow-sm appearance-none pr-10">
+        <option value="all">Все города</option>
+        {{#each cities}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-brand-gray">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Список вакансий -->
+  <section class="space-y-4 md:space-y-6 md:mx-20 mb-10" id="vacancies-list">
+    {{#each vacancies}}
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2 md:p-6" data-location="{{location}}">
+      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h5 md:text-h3 text-brand-gray mb-1 text-left">{{title}}</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left">{{salary}} <span class="text-brand-gray font-normal">{{location}}</span></div>
+        </div>
+        <div class="bg-white p-4 rounded-full ml-5 md:ml-0">
+          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+        {{#if description}}
+        <div class="text-sm md:text-base">{{description}}</div>
+        {{else}}
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            {{#if duties}}
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              {{#each duties}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+            {{/if}}
+            
+            {{#if requirements}}
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              {{#each requirements}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+            {{/if}}
+            
+            {{#if conditions}}
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              {{#each conditions}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+            {{/if}}
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              {{#if contact}}
+              <div class="mb-2 text-sm">{{contact.phone}}</div>
+              <div class="mb-2 text-sm">Контактное лицо: {{contact.person}}</div>
+              <div class="mb-2 text-sm">Email: {{contact.email}}</div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </section>
+</main>
+
+{{> footer}}

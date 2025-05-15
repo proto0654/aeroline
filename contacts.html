@@ -1,0 +1,89 @@
+{{> header}}
+
+<main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
+  <!-- Hero-блок -->
+  <section class="mb-4 md:mb-8">
+    <h1 class="text-h2 md:text-h1 font-bold text-brand-gray mb-2 md:mb-4 uppercase">Контакты</h1>
+    <p class="body-secondary caption-regular mb-4 md:mb-8">{{pageDescription}}</p>
+    <!-- Карта (заглушка) -->
+    <div class="relative rounded-2xl overflow-hidden shadow mb-6 md:mb-10 map-container">
+      <img src="./src/img/layout/map.jpg" alt="Карта офисов"
+        class="w-full h-[90vh] md:h-[550px] object-cover object-center select-none pointer-events-none" draggable="false">
+      
+      <!-- Карточка выбранного офиса поверх карты -->
+      {{#if selectedOffice}}
+      <div class="selected-office-card absolute left-1/2 -translate-x-1/2 bottom-5 md:top-5 md:bottom-5 md:right-6 md:left-auto md:translate-x-0 w-[95%] md:w-[30%] max-w-full bg-white rounded-2xl shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2">
+        <div class="flex justify-end items-center mb-2">
+          <button class="text-brand-gray hover:text-brand-blue transition-colors" id="close-selected-office">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="font-bold text-2xl text-brand-gray">{{selectedOffice.city}}</div>
+        <div class="text-brand-gray">{{selectedOffice.address}}</div>
+        <div class="text-brand-gray">{{selectedOffice.type}}</div>
+        <div class="text-brand-gray">{{selectedOffice.phone}}</div>
+        <div class="text-brand-gray">{{selectedOffice.email}}</div>
+        <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 font-bold hover:bg-blue-700 transition-colors">Подробнее</button>
+      </div>
+      {{/if}}
+    </div>
+  </section>
+
+  
+  <!-- Сетка карточек офисов -->
+  <section class="mb-8 md:mb-12">
+    <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 offices-grid">
+      {{#each offices}}
+      <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card {{#if (eq @index ../selectedOfficeIndex)}}ring ring-brand-blue{{/if}}"
+        data-city="{{city}}" data-coordinates="{{coordinates.[0]}},{{coordinates.[1]}}" data-index="{{@index}}">
+        <div>
+          <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
+          </svg>
+          <h3 class="font-bold text-brand-gray body-secondary leading-1.2 my-2 text-h5">{{city}}, {{address}}</h3>
+          <div class="text-brand-gray">{{type}}</div>
+          <div class="text-brand-gray">{{phone}}</div>
+          <div class="text-brand-gray">{{email}}</div>
+        </div>
+        <a href="{{mapLink}}" class="text-brand-blue text-xl md:text-sm font-semibold hover:underline mt-2">Посмотреть на карте</a>
+      </div>
+      {{/each}}
+    </div>
+
+    <!-- Пагинация -->
+    {{#if pagination}}
+    <div class="flex justify-start mt-8 pagination-container">
+      <nav class="inline-flex items-center space-x-1">
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors"
+          {{#if (eq pagination.currentPage 1)}}disabled{{/if}}>&lt;</button>
+
+        {{#each (pageNumbers pagination.currentPage pagination.totalPages)}}
+        {{#if (eq this ../pagination.currentPage)}}
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-blue text-white font-bold">{{this}}</button>
+        {{else}}
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">{{this}}</button>
+        {{/if}}
+
+        {{#if (eq @index 2)}}
+        {{#unless (eq this ../pagination.totalPages)}}
+        <span class="w-8 h-8 flex items-center justify-center">...</span>
+        {{/unless}}
+        {{/if}}
+        {{/each}}
+
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors"
+          {{#if (eq pagination.currentPage pagination.totalPages)}}disabled{{/if}}>&gt;</button>
+      </nav>
+    </div>
+    {{/if}}
+  </section>
+</main>
+
+{{> footer}}
