@@ -8,11 +8,7 @@ import { dirname } from 'path';
 
 // Функция для определения базового пути в зависимости от окружения
 function getBase() {
-  // Если сборка для GitHub Pages (или другого продакшена), используем путь репозитория
-  if (process.env.NODE_ENV === 'production') {
-    return '/aeroline/';
-  }
-  // Для локальной разработки используем относительный путь
+  // Всегда используем относительный путь для корректной работы
   return './';
 }
 
@@ -187,6 +183,24 @@ export default defineConfig({
       }
     },
     {
+      name: 'copy-main-js',
+      closeBundle() {
+        // Копируем main.js в папку assets для прямого подключения
+        try {
+          if (fs.existsSync('main.js')) {
+            // Убедимся, что директория существует
+            if (!fs.existsSync('docs/assets')) {
+              mkdirSync('docs/assets', { recursive: true });
+            }
+            fs.copyFileSync('main.js', 'docs/assets/main.js');
+            console.log('Successfully copied main.js to docs/assets folder');
+          }
+        } catch (error) {
+          console.error('Error copying main.js file:', error);
+        }
+      }
+    },
+    {
       name: 'copy-nojekyll',
       closeBundle() {
         // Копируем файл .nojekyll в docs для GitHub Pages
@@ -243,13 +257,13 @@ export default defineConfig({
         services: resolve(__dirname, 'services.html'),
       },
       output: {
-        // Именование файлов без хешей для простого открытия через file://
+        // Именование файлов без хешей для простого открытия
         entryFileNames: 'assets/[name].js',
         chunkFileNames: 'assets/[name].js',
         assetFileNames: (assetInfo) => {
-          // Сохраняем оригинальную структуру для картинок и других ресурсов
+          // Сохраняем оригинальную структуру для ресурсов
           if (assetInfo.name.endsWith('.css')) {
-            return 'assets/[name].css';
+            return 'assets/css/[name][extname]';
           }
           if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(assetInfo.name)) {
             return 'assets/img/[name][extname]';
