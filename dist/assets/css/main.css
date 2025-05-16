@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Настройка шрифтов */
+@layer base {
+  /* Основные стили для текста */
+  body {
+    @apply font-calibri font-regular text-brand-gray;
+  }
+
+  /* Заголовок h1 */
+  h1 {
+    @apply text-h1 font-bold leading-1;
+  }
+
+  /* Заголовок h2 */
+  h2 {
+    @apply text-h2 font-bold leading-auto;
+  }
+
+  /* Заголовок h3 */
+  h3 {
+    @apply text-h3 font-bold leading-auto;
+  }
+
+  /* Заголовок h4 */
+  h4 {
+    @apply text-h4 font-bold leading-auto;
+  }
+
+  /* Заголовок h5 */
+  h5 {
+    @apply text-h5 font-bold leading-auto;
+  }
+
+  /* Заголовок h6 */
+  h6 {
+    @apply text-h6 font-bold leading-auto;
+  }
+
+  /* Заголовок h4 с капителью */
+  .h4-caps {
+    @apply text-h4 font-bold leading-auto uppercase;
+  }
+
+  /* Заголовок h4 обычный */
+  h4 {
+    @apply text-h4 font-bold leading-auto;
+  }
+
+  /* Основной текст */
+  .body {
+    @apply text-body font-light leading-auto;
+  }
+
+  /* Вторичный текст */
+  .body-secondary {
+    @apply text-body-secondary font-regular leading-auto;
+  }
+
+  /* Выделенный текст (caps bold) */
+  .caps-bold {
+    @apply text-caps-bold font-bold leading-auto uppercase;
+  }
+  
+  /* Текст для кнопок и заголовков */
+  .buttons-extraheadings {
+    @apply text-buttons leading-auto;
+  }
+
+  /* Текст с капителью для меню */
+  .caps-regular {
+    @apply text-caps-regular font-regular leading-auto uppercase;
+  }
+
+  /* Подписи (caption regular) */
+  .caption-regular {
+    @apply text-caption-regular font-regular leading-auto;
+  }
+
+  /* Подписи (caption light) */
+  .caption-light {
+    @apply text-caption-light font-light leading-auto;
+  }
+
+  /* Текст в формах */
+  .caption-form {
+    @apply text-caption-form font-regular leading-1;
+  }
+}
+
+/* Медиа-запросы для мобильных версий */
+@layer utilities {
+  @media (max-width: 767px) {
+    h1 {
+      @apply text-h2;
+    }
+    h2 {
+      @apply text-h3;
+    }
+    h3 {
+      @apply text-h4;
+    }
+    h4, .h4-caps {
+      @apply text-body;
+    }
+    .body {
+      @apply text-body-secondary;
+    }
+    .body-secondary {
+      @apply text-caption-regular;
+    }
+    .caps-bold, .buttons-extraheadings {
+      @apply text-caption-regular;
+    }
+    .caps-regular {
+      @apply text-caption-light;
+    }
+    .caption-regular, .caption-light {
+      @apply text-caption-form;
+    }
+  }
+}
+
+/* Стили для анимации бургер-меню */
+@layer components {
+  /* Анимация для бургер-иконки */
+  .burger-line {
+    transform-origin: center;
+  }
+  
+  /* Состояние при открытом меню */
+  .burger-line.rotate-45 {
+    transform: rotate(45deg) translateY(0.5rem);
+  }
+  
+  .burger-line.-rotate-45 {
+    transform: rotate(-45deg) translateY(-0.5rem);
+  }
+  
+  /* Плавная анимация для мобильного меню */
+  #mobile-menu {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Запрет скролла при открытом меню */
+  body.overflow-hidden {
+    overflow: hidden;
+  }
+  
+  /* Анимация появления элементов меню */
+  #mobile-menu.translate-x-0 .space-y-6 > li {
+    animation: fadeInRight 0.3s ease-in-out forwards;
+    opacity: 0;
+  }
+  
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(1) { animation-delay: 0.1s; }
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(2) { animation-delay: 0.15s; }
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(3) { animation-delay: 0.2s; }
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(4) { animation-delay: 0.25s; }
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(5) { animation-delay: 0.3s; }
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(6) { animation-delay: 0.35s; }
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(7) { animation-delay: 0.4s; }
+  #mobile-menu.translate-x-0 .space-y-6 > li:nth-child(8) { animation-delay: 0.45s; }
+  
+  /* Анимация для кнопки закрытия в шапке мобильного меню */
+  #mobile-menu.translate-x-0 .container > div:first-child > button {
+    animation: fadeInDown 0.3s ease-in-out forwards;
+    animation-delay: 0.05s;
+    opacity: 0;
+  }
+  
+  /* Анимация для блока социальных иконок */
+  #mobile-menu.translate-x-0 .space-y-5 {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+  
+  /* Анимация для социальных иконок */
+  #mobile-menu.translate-x-0 .space-y-5 > div {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.55s;
+    opacity: 0;
+  }
+  
+  /* Анимация для контактных данных */
+  #mobile-menu.translate-x-0 .space-y-5 > a:nth-of-type(1) {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.6s;
+    opacity: 0;
+  }
+  
+  #mobile-menu.translate-x-0 .space-y-5 > a:nth-of-type(2) {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.65s;
+    opacity: 0;
+  }
+  
+  /* Анимация для кнопки "Войти" */
+  #mobile-menu.translate-x-0 > .container > button {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.7s;
+    opacity: 0;
+  }
+  
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Стили для анимации заголовков на страницах-заглушках */
+.title-wrapper, .subtitle-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.animated-title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.animated-subtitle {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition-delay: 0.3s;
+}
+
+.animated-title.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animated-subtitle.show {
+  opacity: 1;
+  transform: translateY(0);
+} 

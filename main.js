@@ -1,5 +1,5 @@
 // Импорт стилей
-import './src/css/main.css';
+import './assets/css/main.css';
 
 // Обработчик для мобильного меню
 document.addEventListener('DOMContentLoaded', () => {

@@ -3,6 +3,8 @@ import handlebars from 'vite-plugin-handlebars';
 import { resolve } from 'path';
 import fs from 'fs';
 import matter from 'front-matter';
+import { copyFileSync, mkdirSync } from 'fs';
+import { dirname } from 'path';
 
 // Функция для чтения front matter из HTML-файлов
 function getPageData() {
@@ -27,7 +29,7 @@ function getPageData() {
 // Загрузка данных о вакансиях из JSON
 function getVacanciesData() {
   try {
-    const vacanciesData = fs.readFileSync('./src/data/vacancies.json', 'utf-8');
+    const vacanciesData = fs.readFileSync('./assets/data/vacancies.json', 'utf-8');
     return JSON.parse(vacanciesData);
   } catch (error) {
     console.error('Error reading vacancies data:', error);
@@ -38,7 +40,7 @@ function getVacanciesData() {
 // Загрузка данных о контактах из JSON
 function getContactsData() {
   try {
-    const contactsData = fs.readFileSync('./src/data/contacts.json', 'utf-8');
+    const contactsData = fs.readFileSync('./assets/data/contacts.json', 'utf-8');
     const data = JSON.parse(contactsData);
     
     // Если есть офисы, определяем параметры пагинации
@@ -74,11 +76,39 @@ function getContactsData() {
   }
 }
 
+// Функция для копирования директории
+function copyDir(src, dest) {
+  try {
+    if (!fs.existsSync(dest)) {
+      mkdirSync(dest, { recursive: true });
+    }
+    
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+    
+    for (const entry of entries) {
+      const srcPath = resolve(src, entry.name);
+      const destPath = resolve(dest, entry.name);
+      
+      if (entry.isDirectory()) {
+        copyDir(srcPath, destPath);
+      } else {
+        const destDir = dirname(destPath);
+        if (!fs.existsSync(destDir)) {
+          mkdirSync(destDir, { recursive: true });
+        }
+        copyFileSync(srcPath, destPath);
+      }
+    }
+  } catch (error) {
+    console.error(`Error copying directory from ${src} to ${dest}:`, error);
+  }
+}
+
 export default defineConfig({
-  base: '/aeroline/', // Базовый путь для GitHub Pages
+  base: './',
   plugins: [
     handlebars({
-      partialDirectory: resolve(__dirname, 'src/partials'),
+      partialDirectory: resolve(__dirname, 'assets/partials'),
       context: (pagePath) => {
         const pageData = getPageData();
         const filename = pagePath.split('/').pop();
@@ -137,6 +167,13 @@ export default defineConfig({
         }
       }
     }),
+    {
+      name: 'copy-assets',
+      closeBundle() {
+        // Копируем директорию assets в dist
+        copyDir('assets', 'dist/assets');
+      }
+    }
   ],
   server: {
     open: true,
@@ -161,5 +198,6 @@ export default defineConfig({
         services: resolve(__dirname, 'services.html'),
       },
     },
+    assetsDir: 'assets'
   },
 }); 
