@@ -182,18 +182,18 @@ export default defineConfig({
     {
       name: 'copy-assets',
       closeBundle() {
-        // Копируем директорию assets в dist
-        copyDir('assets', 'dist/assets');
+        // Копируем директорию assets в docs
+        copyDir('assets', 'docs/assets');
       }
     },
     {
       name: 'copy-nojekyll',
       closeBundle() {
-        // Копируем файл .nojekyll в dist для GitHub Pages
+        // Копируем файл .nojekyll в docs для GitHub Pages
         try {
           if (fs.existsSync('.nojekyll')) {
-            fs.copyFileSync('.nojekyll', 'dist/.nojekyll');
-            console.log('Successfully copied .nojekyll to dist folder');
+            fs.copyFileSync('.nojekyll', 'docs/.nojekyll');
+            console.log('Successfully copied .nojekyll to docs folder');
           }
         } catch (error) {
           console.error('Error copying .nojekyll file:', error);
@@ -210,7 +210,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     emptyOutDir: true,
     // Настраиваем минификацию, чтобы сохранить имена функций
     minify: 'terser',
