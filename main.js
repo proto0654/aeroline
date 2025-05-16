@@ -1,3 +1,23 @@
+// Определяем базовый путь для ресурсов, используя атрибуты скрипта
+function getBasePath() {
+  // Получаем текущий скрипт
+  const scripts = document.getElementsByTagName('script');
+  const currentScript = scripts[scripts.length - 1]; // Последний загруженный скрипт (наш файл)
+  
+  // Получаем путь к скрипту и извлекаем базовый путь
+  const scriptSrc = currentScript.src;
+  const pathParts = scriptSrc.split('/');
+  
+  // Удаляем имя файла и папку assets из пути
+  pathParts.pop(); // Удаляем имя файла (main.js)
+  pathParts.pop(); // Удаляем папку (assets)
+  
+  return pathParts.join('/') + '/';
+}
+
+// Базовый путь для использования в скрипте
+const BASE_PATH = getBasePath();
+
 // Функция для инициализации анимаций заголовков
 function initTitleAnimations() {
   // Находим все элементы с классами для анимации
@@ -353,6 +373,8 @@ function initForms() {
 
 // Главная функция инициализации, запускается сразу и при загрузке DOM
 function initializePage() {
+  console.log('Base path for resources:', BASE_PATH);
+  
   // Инициализация мобильного меню
   initMobileMenu();
   

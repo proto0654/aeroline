@@ -6,6 +6,16 @@ import matter from 'front-matter';
 import { copyFileSync, mkdirSync } from 'fs';
 import { dirname } from 'path';
 
+// Функция для определения базового пути в зависимости от окружения
+function getBase() {
+  // Если сборка для GitHub Pages (или другого продакшена), используем путь репозитория
+  if (process.env.NODE_ENV === 'production') {
+    return '/aeroline/';
+  }
+  // Для локальной разработки используем относительный путь
+  return './';
+}
+
 // Функция для чтения front matter из HTML-файлов
 function getPageData() {
   const pages = {};
@@ -105,7 +115,7 @@ function copyDir(src, dest) {
 }
 
 export default defineConfig({
-  base: './',
+  base: getBase(),
   plugins: [
     handlebars({
       partialDirectory: resolve(__dirname, 'assets/partials'),
@@ -116,6 +126,8 @@ export default defineConfig({
         let contextData = {
           // Глобальный контекст для всех шаблонов
           siteName: 'Aeroline',
+          // Добавляем базовый путь для ссылок
+          basePath: getBase(),
           // Добавляем контекст из front matter
           ...pageData[filename]
         };
