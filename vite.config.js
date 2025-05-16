@@ -124,6 +124,8 @@ export default defineConfig({
           siteName: 'Aeroline',
           // Добавляем базовый путь для ссылок
           basePath: getBase(),
+          // Определяем режим работы
+          isDev: process.env.NODE_ENV !== 'production',
           // Добавляем контекст из front matter
           ...pageData[filename]
         };
@@ -165,6 +167,10 @@ export default defineConfig({
       helpers: {
         eq: (a, b) => a === b,
         contains: (str, substr) => str.includes(substr),
+        // Хелпер для условий с is_dev
+        if_eq: function(a, b, opts) {
+          return a === b ? opts.fn(this) : opts.inverse(this);
+        },
         // Добавляем хелпер для генерации номеров страниц пагинации
         pageNumbers: (currentPage, totalPages) => {
           const pages = [];

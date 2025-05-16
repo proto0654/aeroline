@@ -104,8 +104,12 @@
   </div>
 </footer>
 
-<!-- Подключаем JavaScript в конце страницы -->
+<!-- Подключаем JavaScript в конце страницы с условным выбором пути -->
+{{#if_eq isDev true}}
+<script src="./main.js"></script>
+{{else}}
 <script src="{{basePath}}assets/main.js"></script>
+{{/if_eq}}
 
 </body>
 
