@@ -240,6 +240,24 @@
 <!-- Подключаем JavaScript в конце страницы с условным выбором пути -->
 <script src="./assets/main.js"></script>
 
+<!-- Добавляем резервную ссылку на скрипт в случае, если основной путь не работает -->
+<script>
+  // Проверяем, был ли загружен скрипт
+  if (typeof BASE_PATH === 'undefined') {
+    // Если переменная не определена, значит скрипт не загрузился
+    console.log('Пытаемся загрузить скрипт из альтернативного пути...');
+    
+    // Создаем новый элемент script
+    const script = document.createElement('script');
+    script.src = './assets/js/main.js'; // Альтернативный путь
+    script.type = 'text/javascript';
+    script.async = true;
+    
+    // Добавляем скрипт в body
+    document.body.appendChild(script);
+  }
+</script>
+
 </body>
 
 </html>

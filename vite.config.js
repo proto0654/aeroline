@@ -113,6 +113,18 @@ function copyDir(src, dest) {
 export default defineConfig({
   base: getBase(),
   plugins: [
+    // Добавляем плагин для правильной обработки tailwind при сборке
+    {
+      name: 'process-tailwind-css',
+      enforce: 'pre',
+      apply: 'build',
+      transform(src, id) {
+        if (id.endsWith('main.css') && src.includes('@tailwind')) {
+          console.log('Обработка Tailwind CSS при сборке...');
+          return;  // Возвращаем undefined, чтобы продолжить стандартную обработку
+        }
+      }
+    },
     handlebars({
       partialDirectory: resolve(__dirname, 'assets/partials'),
       context: (pagePath) => {
@@ -125,7 +137,7 @@ export default defineConfig({
           // Добавляем базовый путь для ссылок
           basePath: getBase(),
           // Определяем режим работы
-          isDev: process.env.NODE_ENV !== 'production',
+          isDev: process.env.NODE_ENV !== 'production', // true в режиме разработки, false в режиме сборки
           // Добавляем контекст из front matter
           ...pageData[filename]
         };
@@ -186,6 +198,29 @@ export default defineConfig({
       closeBundle() {
         // Копируем директорию assets в docs
         copyDir('assets', 'docs/assets');
+        
+        // Делаем дополнительную проверку и копирование иконок и логотипов, 
+        // чтобы они были доступны и в оригинальной структуре
+        try {
+          // Создаем необходимые директории, если они отсутствуют
+          if (!fs.existsSync('docs/assets/img')) {
+            mkdirSync('docs/assets/img', { recursive: true });
+          }
+          
+          // Убедимся, что подпапки существуют
+          if (!fs.existsSync('docs/assets/img/layout')) {
+            mkdirSync('docs/assets/img/layout', { recursive: true });
+          }
+          
+          if (!fs.existsSync('docs/assets/img/icons')) {
+            mkdirSync('docs/assets/img/icons', { recursive: true });
+          }
+          
+          // Логгинг для отладки
+          console.log('Successfully created image directories');
+        } catch (error) {
+          console.error('Error creating image directories:', error);
+        }
       }
     },
     {
@@ -199,7 +234,14 @@ export default defineConfig({
               mkdirSync('docs/assets', { recursive: true });
             }
             fs.copyFileSync('main.js', 'docs/assets/main.js');
-            console.log('Successfully copied main.js to docs/assets folder');
+            
+            // Дополнительно копируем его в js директорию для поддержки разных путей
+            if (!fs.existsSync('docs/assets/js')) {
+              mkdirSync('docs/assets/js', { recursive: true });
+            }
+            fs.copyFileSync('main.js', 'docs/assets/js/main.js');
+            
+            console.log('Successfully copied main.js to docs/assets folder and docs/assets/js folder');
           }
         } catch (error) {
           console.error('Error copying main.js file:', error);
@@ -219,23 +261,32 @@ export default defineConfig({
             if (fs.existsSync(filePath)) {
               let content = fs.readFileSync(filePath, 'utf-8');
               
-              // Исправление путей к изображениям
+              // Общее исправление путей к ресурсам
+              // Заменяем все относительные пути на правильную структуру
+              
               // 1. Логотипы
               content = content.replace(/src="\.\/assets\/img\/Logotype_aerline\.png"/g, 'src="./assets/img/layout/Logotype_aerline.png"');
               content = content.replace(/src="\.\/assets\/img\/Logotype_aerline_white\.png"/g, 'src="./assets/img/layout/Logotype_aerline_white.png"');
               
-              // 2. Иконки в шапке и футере
+              // 2. Общая обработка иконок
               const iconFiles = ['logos_telegram', 'logos_whatsapp-icon', 'cube', 'q', 'messages3', 'callcalling', 'messages3_white', 'callcalling_white'];
               iconFiles.forEach(icon => {
-                content = content.replace(new RegExp(`src="\\./assets/img/${icon}\\.svg"`, 'g'), `src="./assets/img/icons/${icon}.svg"`);
+                // Исправляем пути в любой части URL, искать везде, а не только после assets/img
+                content = content.replace(new RegExp(`src="[^"]*${icon}\\.svg"`, 'g'), `src="./assets/img/icons/${icon}.svg"`);
               });
               
+              // 3. Исправляем ссылки на скрипты
+              content = content.replace(/src="\.\/main\.js"/g, 'src="./assets/main.js"');
+              
+              // 4. Исправляем ссылки на стили
+              content = content.replace(/href="\.\/assets\/css\/main\.css"/g, 'href="./assets/css/main.css"');
+              
               fs.writeFileSync(filePath, content, 'utf-8');
-              console.log(`Fixed image paths in ${file}`);
+              console.log(`Fixed resources paths in ${file}`);
             }
           });
         } catch (error) {
-          console.error('Error fixing image paths:', error);
+          console.error('Error fixing resource paths:', error);
         }
       }
     },
@@ -250,6 +301,88 @@ export default defineConfig({
           }
         } catch (error) {
           console.error('Error copying .nojekyll file:', error);
+        }
+      }
+    },
+    {
+      name: 'verify-and-fix-assets',
+      closeBundle() {
+        // Проверка наличия всех необходимых ассетов и исправление проблем
+        try {
+          console.log('Проверка и исправление ассетов...');
+          
+          // 1. Проверка CSS
+          if (!fs.existsSync('docs/assets/css/main.css')) {
+            console.log('CSS файл не найден, создаем директорию и копируем...');
+            
+            if (!fs.existsSync('docs/assets/css')) {
+              mkdirSync('docs/assets/css', { recursive: true });
+            }
+            
+            // Если есть исходный CSS, копируем его
+            if (fs.existsSync('assets/css/main.css')) {
+              fs.copyFileSync('assets/css/main.css', 'docs/assets/css/main.css');
+              console.log('CSS файл скопирован из assets/css/main.css');
+            }
+          }
+          
+          // 2. Проверка JS
+          if (!fs.existsSync('docs/assets/main.js')) {
+            console.log('main.js не найден в docs/assets, копируем...');
+            
+            if (!fs.existsSync('docs/assets')) {
+              mkdirSync('docs/assets', { recursive: true });
+            }
+            
+            if (fs.existsSync('main.js')) {
+              fs.copyFileSync('main.js', 'docs/assets/main.js');
+              console.log('main.js скопирован в docs/assets/main.js');
+            }
+          }
+          
+          // 3. Проверка дубликатов изображений (могут быть и в корне, и в подпапках)
+          const sourceIconsFiles = fs.readdirSync('assets/img/icons');
+          const sourceLayoutFiles = fs.readdirSync('assets/img/layout');
+          
+          if (fs.existsSync('docs/assets/img')) {
+            // Перебираем все файлы в docs/assets/img и проверяем, должны ли они быть в подпапке
+            const imgFiles = fs.readdirSync('docs/assets/img')
+              .filter(file => file.endsWith('.svg') || file.endsWith('.png') || file.endsWith('.jpg'));
+            
+            imgFiles.forEach(file => {
+              // Если файл должен быть в icons
+              if (sourceIconsFiles.includes(file)) {
+                if (!fs.existsSync(`docs/assets/img/icons/${file}`)) {
+                  // Создаем директорию, если нет
+                  if (!fs.existsSync('docs/assets/img/icons')) {
+                    mkdirSync('docs/assets/img/icons', { recursive: true });
+                  }
+                  
+                  // Копируем файл в подпапку
+                  fs.copyFileSync(`docs/assets/img/${file}`, `docs/assets/img/icons/${file}`);
+                  console.log(`Скопирован файл ${file} в icons подпапку`);
+                }
+              }
+              
+              // Если файл должен быть в layout
+              if (sourceLayoutFiles.includes(file)) {
+                if (!fs.existsSync(`docs/assets/img/layout/${file}`)) {
+                  // Создаем директорию, если нет
+                  if (!fs.existsSync('docs/assets/img/layout')) {
+                    mkdirSync('docs/assets/img/layout', { recursive: true });
+                  }
+                  
+                  // Копируем файл в подпапку
+                  fs.copyFileSync(`docs/assets/img/${file}`, `docs/assets/img/layout/${file}`);
+                  console.log(`Скопирован файл ${file} в layout подпапку`);
+                }
+              }
+            });
+          }
+          
+          console.log('Проверка и исправление ассетов завершена');
+        } catch (error) {
+          console.error('Ошибка при проверке и исправлении ассетов:', error);
         }
       }
     }
@@ -267,6 +400,9 @@ export default defineConfig({
     emptyOutDir: true,
     // Настраиваем минификацию, чтобы сохранить имена функций
     minify: 'terser',
+    // Настраиваем postcss для правильной обработки tailwind
+    cssCodeSplit: true,
+    cssTarget: ['chrome52', 'firefox52', 'safari10'],
     terserOptions: {
       compress: {
         // Отключаем агрессивную минификацию некоторых конструкций
@@ -305,6 +441,16 @@ export default defineConfig({
             return 'assets/css/[name][extname]';
           }
           if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(assetInfo.name)) {
+            // Сохраняем структуру для изображений
+            const imgPath = assetInfo.name;
+            
+            // Проверяем, содержит ли путь подпапки
+            if (imgPath.includes('layout/')) {
+              return 'assets/img/layout/[name][extname]';
+            } else if (imgPath.includes('icons/')) {
+              return 'assets/img/icons/[name][extname]';
+            }
+            // Для остальных изображений
             return 'assets/img/[name][extname]';
           }
           return 'assets/[name][extname]';
