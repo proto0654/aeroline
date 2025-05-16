@@ -201,6 +201,39 @@ export default defineConfig({
       }
     },
     {
+      name: 'fix-image-paths',
+      closeBundle() {
+        // Исправляем пути к изображениям в HTML файлах
+        try {
+          // Список файлов для обработки
+          const htmlFiles = ['index.html', 'vacancies.html', 'contacts.html', 'helper.html', 'payments.html', 'order-tracking.html', 'news.html', 'services.html'];
+          
+          htmlFiles.forEach(file => {
+            const filePath = `docs/${file}`;
+            if (fs.existsSync(filePath)) {
+              let content = fs.readFileSync(filePath, 'utf-8');
+              
+              // Исправление путей к изображениям
+              // 1. Логотипы
+              content = content.replace(/src="\.\/assets\/img\/Logotype_aerline\.png"/g, 'src="./assets/img/layout/Logotype_aerline.png"');
+              content = content.replace(/src="\.\/assets\/img\/Logotype_aerline_white\.png"/g, 'src="./assets/img/layout/Logotype_aerline_white.png"');
+              
+              // 2. Иконки в шапке и футере
+              const iconFiles = ['logos_telegram', 'logos_whatsapp-icon', 'cube', 'q', 'messages3', 'callcalling', 'messages3_white', 'callcalling_white'];
+              iconFiles.forEach(icon => {
+                content = content.replace(new RegExp(`src="\\./assets/img/${icon}\\.svg"`, 'g'), `src="./assets/img/icons/${icon}.svg"`);
+              });
+              
+              fs.writeFileSync(filePath, content, 'utf-8');
+              console.log(`Fixed image paths in ${file}`);
+            }
+          });
+        } catch (error) {
+          console.error('Error fixing image paths:', error);
+        }
+      }
+    },
+    {
       name: 'copy-nojekyll',
       closeBundle() {
         // Копируем файл .nojekyll в docs для GitHub Pages
