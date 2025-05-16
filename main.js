@@ -1,75 +1,13 @@
-// Импорт стилей
-import './assets/css/main.css';
-
-// Обработчик для мобильного меню
-document.addEventListener('DOMContentLoaded', () => {
-  const burgerMenuBtn = document.getElementById('burger-menu-btn');
-  const mobileCloseBtn = document.getElementById('mobile-close-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const burgerLines = document.querySelectorAll('.burger-line');
-  
-  // Функция для открытия мобильного меню
-  const openMobileMenu = () => {
-    mobileMenu.classList.remove('translate-x-full');
-    mobileMenu.classList.add('translate-x-0');
-    
-    // Анимация бургер-иконки в крестик
-    burgerLines[0].classList.add('rotate-45', 'translate-y-2');
-    burgerLines[1].classList.add('opacity-0');
-    burgerLines[2].classList.add('-rotate-45', '-translate-y-2');
-    
-    // Блокировка прокрутки страницы
-    document.body.classList.add('overflow-hidden');
-  };
-  
-  // Функция для закрытия мобильного меню
-  const closeMobileMenu = () => {
-    mobileMenu.classList.remove('translate-x-0');
-    mobileMenu.classList.add('translate-x-full');
-    
-    // Возврат бургер-иконки в исходное состояние
-    burgerLines[0].classList.remove('rotate-45', 'translate-y-2');
-    burgerLines[1].classList.remove('opacity-0');
-    burgerLines[2].classList.remove('-rotate-45', '-translate-y-2');
-    
-    // Разблокировка прокрутки страницы
-    document.body.classList.remove('overflow-hidden');
-  };
-  
-  // Обработчики событий для открытия и закрытия меню
-  if (burgerMenuBtn) {
-    burgerMenuBtn.addEventListener('click', openMobileMenu);
-  }
-  
-  if (mobileCloseBtn) {
-    mobileCloseBtn.addEventListener('click', closeMobileMenu);
-  }
-  
-  // Обработчик формы на странице контактов
-  const contactForm = document.querySelector('form');
-  
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Форма отправлена!');
-    });
-  }
-  
-  // Анимация заголовков на страницах-заглушках
-  initTitleAnimations();
-  
-  // Функционал страницы вакансий
-  initVacanciesPage();
-  
-  // Функционал страницы контактов
-  initContactsPage();
-});
-
 // Функция для инициализации анимаций заголовков
 function initTitleAnimations() {
   // Находим все элементы с классами для анимации
   const animatedTitles = document.querySelectorAll('.animated-title');
   const animatedSubtitles = document.querySelectorAll('.animated-subtitle');
+  
+  // Проверяем наличие элементов для анимации
+  if (animatedTitles.length === 0 && animatedSubtitles.length === 0) {
+    return; // Если элементов нет, выходим из функции
+  }
   
   // Запускаем анимацию с небольшой задержкой после загрузки страницы
   setTimeout(() => {
@@ -350,4 +288,103 @@ function initContactsPage() {
       });
     }
   }
-} 
+}
+
+// Функция инициализации бургер-меню
+function initMobileMenu() {
+  const burgerMenuBtn = document.getElementById('burger-menu-btn');
+  const mobileCloseBtn = document.getElementById('mobile-close-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const burgerLines = document.querySelectorAll('.burger-line');
+  
+  // Если на странице нет мобильного меню, выходим
+  if (!mobileMenu) return;
+  
+  // Функция для открытия мобильного меню
+  const openMobileMenu = () => {
+    mobileMenu.classList.remove('translate-x-full');
+    mobileMenu.classList.add('translate-x-0');
+    
+    // Анимация бургер-иконки в крестик
+    burgerLines[0].classList.add('rotate-45', 'translate-y-2');
+    burgerLines[1].classList.add('opacity-0');
+    burgerLines[2].classList.add('-rotate-45', '-translate-y-2');
+    
+    // Блокировка прокрутки страницы
+    document.body.classList.add('overflow-hidden');
+  };
+  
+  // Функция для закрытия мобильного меню
+  const closeMobileMenu = () => {
+    mobileMenu.classList.remove('translate-x-0');
+    mobileMenu.classList.add('translate-x-full');
+    
+    // Возврат бургер-иконки в исходное состояние
+    burgerLines[0].classList.remove('rotate-45', 'translate-y-2');
+    burgerLines[1].classList.remove('opacity-0');
+    burgerLines[2].classList.remove('-rotate-45', '-translate-y-2');
+    
+    // Разблокировка прокрутки страницы
+    document.body.classList.remove('overflow-hidden');
+  };
+  
+  // Обработчики событий для открытия и закрытия меню
+  if (burgerMenuBtn) {
+    burgerMenuBtn.addEventListener('click', openMobileMenu);
+  }
+  
+  if (mobileCloseBtn) {
+    mobileCloseBtn.addEventListener('click', closeMobileMenu);
+  }
+}
+
+// Функция инициализации формы
+function initForms() {
+  // Обработчик формы на странице контактов
+  const contactForm = document.querySelector('form');
+  
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Форма отправлена!');
+    });
+  }
+}
+
+// Главная функция инициализации, запускается сразу и при загрузке DOM
+function initializePage() {
+  // Инициализация мобильного меню
+  initMobileMenu();
+  
+  // Инициализация форм
+  initForms();
+  
+  // Анимация заголовков на страницах-заглушках
+  initTitleAnimations();
+  
+  // Функционал страницы вакансий
+  initVacanciesPage();
+  
+  // Функционал страницы контактов
+  initContactsPage();
+  
+  console.log('Инициализация страницы завершена');
+}
+
+// Функция для проверки загрузки DOM
+function domReady(fn) {
+  if (document.readyState !== 'loading') {
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}
+
+// Вызываем функцию инициализации при загрузке DOM с помощью функции domReady
+domReady(initializePage);
+
+// Повторный вызов для страниц, где может быть проблема с загрузкой DOM
+window.addEventListener('load', initializePage);
+
+// Запускаем инициализацию сразу для обеспечения работы в любом случае
+initializePage(); 

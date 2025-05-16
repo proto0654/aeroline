@@ -173,6 +173,20 @@ export default defineConfig({
         // Копируем директорию assets в dist
         copyDir('assets', 'dist/assets');
       }
+    },
+    {
+      name: 'copy-nojekyll',
+      closeBundle() {
+        // Копируем файл .nojekyll в dist для GitHub Pages
+        try {
+          if (fs.existsSync('.nojekyll')) {
+            fs.copyFileSync('.nojekyll', 'dist/.nojekyll');
+            console.log('Successfully copied .nojekyll to dist folder');
+          }
+        } catch (error) {
+          console.error('Error copying .nojekyll file:', error);
+        }
+      }
     }
   ],
   server: {
@@ -186,6 +200,25 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    // Настраиваем минификацию, чтобы сохранить имена функций
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        // Отключаем агрессивную минификацию некоторых конструкций
+        drop_console: false,
+        drop_debugger: false,
+        pure_funcs: []
+      },
+      mangle: {
+        // Сохраняем важные имена функций
+        keep_fnames: /^init/
+      },
+      format: {
+        // Оставляем комментарии
+        comments: false
+      }
+    },
+    // Настройки для правильной обработки скриптов в режиме разработки и production
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
@@ -197,7 +230,28 @@ export default defineConfig({
         news: resolve(__dirname, 'news.html'),
         services: resolve(__dirname, 'services.html'),
       },
+      output: {
+        // Именование файлов без хешей для простого открытия через file://
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: (assetInfo) => {
+          // Сохраняем оригинальную структуру для картинок и других ресурсов
+          if (assetInfo.name.endsWith('.css')) {
+            return 'assets/[name].css';
+          }
+          if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(assetInfo.name)) {
+            return 'assets/img/[name][extname]';
+          }
+          return 'assets/[name][extname]';
+        },
+        // Отключаем inlineDynamicImports, чтобы избежать ошибки с множественными input
+        inlineDynamicImports: false
+      }
     },
-    assetsDir: 'assets'
+    // Отключаем инлайн для улучшения совместимости
+    assetsInlineLimit: 0,
+    assetsDir: 'assets',
+    // Отключаем source maps
+    sourcemap: false
   },
 }); 
