@@ -4,8 +4,8 @@
   <p class="text-body-secondary text-brand-gray mb-6">Описание, например сколько представительств или выберите одну из отмеченных точек на карте</p>{{/if}}
   
   <!-- Карта (заглушка) -->
-  <div class="{{#if isHomePage}}w-full h-[400px] md:h-[500px] rounded-lg{{else}}relative rounded-2xl overflow-hidden shadow mb-6 md:mb-10 map-container{{/if}}">
-    <img src="{{basePath}}assets/img/layout/map.jpg" alt="Карта" class="{{#if isHomePage}}w-full h-full object-cover{{else}}w-full h-[90vh] md:h-[550px] object-cover object-center select-none pointer-events-none{{/if}}" {{#unless isHomePage}}draggable="false"{{/unless}}>
+  <div class="relative {{#if isHomePage}}w-full h-[400px] md:h-[500px] rounded-lg{{else}} relative rounded-2xl overflow-hidden shadow mb-6 md:mb-10 map-container{{/if}} ">
+    <img src="{{basePath}}assets/img/layout/map.jpg" alt="Карта" class="rounded-2xl {{#if isHomePage}}w-full h-full object-cover{{else}}w-full h-[90vh] md:h-[550px] object-cover object-center select-none pointer-events-none{{/if}}" {{#unless isHomePage}}draggable="false"{{/unless}}>
     
     <!-- Карточка выбранного офиса поверх карты -->
     {{#if selectedOffice}}
@@ -22,7 +22,7 @@
       <div class="text-brand-gray">{{selectedOffice.type}}</div>
       <div class="text-brand-gray">{{selectedOffice.phone}}</div>
       <div class="text-brand-gray">{{selectedOffice.email}}</div>
-      <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 font-bold hover:bg-blue-700 transition-colors">Подробнее</button>
+      <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
     </div>
     {{else}}
     {{#if defaultOffice}}
@@ -39,7 +39,7 @@
       <div class="text-brand-gray">{{defaultOffice.type}}</div>
       <div class="text-brand-gray">{{defaultOffice.phone}}</div>
       <div class="text-brand-gray">{{defaultOffice.email}}</div>
-      <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 font-bold hover:bg-blue-700 transition-colors">Подробнее</button>
+      <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
     </div>
     {{/if}}
     {{/if}}

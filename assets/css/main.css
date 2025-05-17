@@ -90,69 +90,6 @@
   }
 }
 
-/* Стандартизированные стили для кнопок и форм */
-@layer components {
-  /* Основные стили для всех кнопок */
-  .btn {
-    @apply px-6 py-3 rounded-lg text-buttons transition-all duration-200 font-regular;
-  }
-  
-  /* Серые кнопки - Основной стиль */
-  .btn-gray {
-    @apply bg-brand-gray text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-brand-gray focus:ring-opacity-50;
-  }
-  
-  /* Серые кнопки - Альтернативный стиль (с границей) */
-  .btn-gray-outline {
-    @apply bg-transparent text-brand-gray border-2 border-brand-gray hover:bg-brand-gray hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-gray focus:ring-opacity-50;
-  }
-  
-  /* Синие кнопки - Основной стиль */
-  .btn-blue {
-    @apply bg-brand-blue text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-opacity-50;
-  }
-  
-  /* Синие кнопки - Альтернативный стиль (с границей) */
-  .btn-blue-outline {
-    @apply bg-transparent text-brand-blue border-2 border-brand-blue hover:bg-brand-blue hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-opacity-50;
-  }
-  
-  /* Стили для полей ввода */
-  .form-input {
-    @apply px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary transition-all duration-200;
-  }
-  
-  /* Стили для селектов */
-  .form-select {
-    @apply appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-brand-blue text-body-secondary transition-all duration-200;
-  }
-  
-  /* Стили для чекбоксов */
-  .form-checkbox {
-    @apply w-4 h-4 border-gray-300 rounded focus:ring-brand-blue text-brand-blue transition-all duration-200;
-  }
-  
-  /* Стили для радио-кнопок */
-  .form-radio {
-    @apply w-4 h-4 border-gray-300 rounded-full focus:ring-brand-blue text-brand-blue transition-all duration-200;
-  }
-  
-  /* Стили для кнопок поиска */
-  .btn-search {
-    @apply bg-brand-gray p-3 rounded-lg text-white flex items-center justify-center gap-1 min-w-[6em] text-buttons hover:bg-opacity-90 transition-all duration-200;
-  }
-  
-  /* Стили для кнопок пагинации */
-  .btn-pagination {
-    @apply w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors;
-  }
-  
-  /* Стили для активной кнопки пагинации */
-  .btn-pagination-active {
-    @apply w-10 h-10 flex items-center justify-center rounded-lg text-white bg-brand-blue;
-  }
-}
-
 /* Медиа-запросы для мобильных версий */
 @layer utilities {
   @media (max-width: 767px) {
@@ -402,10 +339,13 @@
 /* Стили для карусели Swiper */
 #swiper-section{
   position: relative;
-  
+  background-image: url('../img/slider/snowflakes.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 #swiper-section::before{
-  content: '';
+  
   top:0;
   position: absolute;
   bottom: 0;
@@ -417,7 +357,7 @@
   pointer-events:none
 }
 #swiper-section::after{
-  content: '';
+  
   top:0;
   position: absolute;
   bottom: 0;
@@ -425,7 +365,7 @@
   transform: translateX(-50%);
   width: 100vw;
   max-width: 1920px;
-  background: linear-gradient(to right, #ffffff,#ffffff, #ffffff00, #ffffff00,#ffffff00,#ffffff00,#ffffff00,#ffffff00, #ffffffc4, #ffffff);
+  background: linear-gradient(to right, #ffffff,#ffffff,#ffffffd0, #ffffff00, #ffffff00, #ffffff00, #ffffff00,#ffffff00, #ffffff80, #ffffff, #ffffff);
   z-index: +100;
   pointer-events:none
 }
@@ -472,7 +412,7 @@
 @keyframes fadeInLeft {
   from {
     opacity: 0;
-    transform: translate3d(-100%, -50%, 0);
+    transform: translate3d(-80%, -50%, 0);
   }
   to {
     opacity: 1;
@@ -490,13 +430,7 @@
     transform: translate3d(0, -50%, 0);
   }
 }
-/* Базовые настройки для всех изображений */
-.swiper-slide img {
-  /* max-width: none; */
-  
-  
-  opacity: 0;
-}
+
 .swiper-nav-arrow.swiper-button-prev,
 .swiper-nav-arrow.swiper-button-next{
   position:relative;
@@ -524,13 +458,13 @@
 }
 
 /* Анимация для появления изображений в активном слайде */
-.swiper-container .swiper-slide-active .left-image-container img,
+
 .swiper-container .swiper-slide-active .right-image-container img {
-  animation: fadeInLeft 0.8s ease-out forwards;
+  animation: fadeInLeft 0.6s ease-out forwards;
 }
 .swiper-container .swiper-slide-active .left-image-container img{
-  animation: fadeInLeftShort 0.4s ease-out forwards;
-  animation-delay: 0.8s;
+  animation: fadeInLeftShort 0.5s ease-out forwards;
+  animation-delay: .4s;
 }
 /* Анимация для дубликатов в карусели */
 .swiper-container .swiper-slide-duplicate-active .left-image-container img,

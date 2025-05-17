@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body class="flex flex-col min-h-screen">
-<header class="bg-white shadow">
+<header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
     <div class="flex justify-between items-center py-4">
       <div class="logo flex items-center">
@@ -119,321 +119,316 @@
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента --> 
 <main class="container mx-auto max-w-[1920px] flex-grow flex flex-col overflow-x-hidden">
-  
-<!-- Секция с каруселью -->
-<section id="swiper-section" class="overflow-visible max-w-[1200px] mx-auto">
-  <div class="swiper-container w-full relative h-[400px] md:h-[450px] lg:h-[500px] rounded-lg overflow-visible">
-    <div class="swiper-wrapper h-full flex items-stretch">
-      <div class="swiper-slide h-full">
-        <div class="flex flex-col md:flex-row justify-between items-center relative h-full">
-          <!-- Левая часть изображения -->
-          <div class="hidden md:block absolute left-[-65%] w-[100%] h-full z-0 overflow-visible left-image-container">
-            <img src="./assets/img/slide-one.png" alt="" class="h-full w-[40w] object-cover absolute right-0 top-1/2 transform -translate-y-1/2">
-          </div>
-          
-          <!-- Фоновое изображение для мобильной версии -->
-          <div class="block md:hidden absolute inset-0 w-full h-full z-0 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-[#008DD2] to-[#008DD2] opacity-20"></div>
-            <img src="./assets/img/slide-one.png" alt="Доставка с температурным режимом" class="object-cover h-full w-full">
-          </div>
-          
-          <!-- Контентная часть -->
-          <div class="w-full pr-0 md:pr-8 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full py-6 px-4 md:px-10">
-            <div class="flex flex-row h-full">
-              <div class="flex flex-col w-2/5"> </div>
-              <div class="flex flex-col w-3/5 h-full items-start pr-[15%]">
-                <div class="bg-white h-full p-8 rounded-2xl">
-                  <h1 class="text-h4 md:text-h3 lg:text-h2 font-bold text-brand-gray md:text-brand-gray text-white mb-6">Доставка с температурным режимом</h1>
-                <button class="bg-brand-gray text-white px-6 py-2 rounded-lg text-buttons mb-6 w-auto">Подробнее</button>
-                <p class="text-white md:text-brand-gray line-clamp-3 md:line-clamp-none">
-                  Поддержание температуры окружающей среды на уровне не ниже +2°C для сохранения груза. география обслуживания — филиальная сеть Aeroline в России и её официальные представительства. Возможно увеличение срока доставка на 1–2 дня. Подробные условия предоставления услуги на сайте www.aeroline.su
-                </p>
+
+  <!-- Секция с каруселью -->
+  <section id="swiper-section" class="bg-cover bg-center after:content-none xl:after:content-['']  before:content-none xl:before:content-[''] overflow-visible max-w-[1200px] mx-auto transition-opacity duration-300 ease-in-out animate-fadeIn duration-1000">
+    <div class="swiper-container w-full relative rounded-lg overflow-visible max-w-[100vw] lg-h-[500px]">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide h-full max-w-[100vw]">
+          <div class="flex flex-col lg:flex-row justify-between items-center relative h-full">
+            <!-- Левая часть изображения -->
+            <div class="hidden lg:block absolute left-[-82%] w-[100%] h-full z-0 overflow-visible left-image-container scale-[1.3]">
+              <img src="./assets/img/slide-three.png" alt=""
+                class="h-full object-cover object-right absolute right-0 top-2/3 transform -translate-y-1/3">
+            </div>
+
+            <!-- Фоновое изображение для мобильной версии -->
+            <div class="block lg:hidden inset-0 max-w-[100vw] w-full h-full z-0 left-image-container translate-y-2/3 -translate-x-2/3 scale-150 origin-top-left pr-5">
+              <div class=""></div>
+              <img src="./assets/img/slide-three.png" alt="Доставка с температурным режимом" class="object-contain object-bottom h-full w-full mb-[10%]">
+            </div>
+
+            <!-- Контентная часть -->
+            <div class="w-full pr-0 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full">
+              <div class="flex flex-col lg:flex-row h-full">
+                <div class="flex flex-col w-full lg:w-2/5"></div>
+                <div class="flex flex-col w-full lg:w-3/5 h-full items-start lg:pr-[15%]">
+                  <div class="relative h-full px-10 md:pr-12 w-full lg:min-h-[450px] before:content-[''] before:absolute before:inset-0 before:bg-white before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
+                    <h1
+                      class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
+                      Доставка с температурным режимом</h1>
+                    <button
+                      class="bg-brand-gray text-white px-4 py-2 rounded-lg text-buttons mb-4 md:mb-6 w-auto">Подробнее</button>
+                    <p class="text-brand-gray text-sm md:text-base line-clamp-3 md:line-clamp-none">
+                      Поддержание температуры окружающей среды на уровне не ниже +2°C для сохранения груза. география обслуживания — филиальная сеть Aeroline в России и её официальные представительства. Возможно увеличение срока доставка на 1–2 дня. Подробные условия предоставления услуги на сайте www.aeroline.su
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <!-- Правая часть изображения -->
+            <div
+              class="hidden lg:block absolute right-[-93%] w-[100%] h-full z-0 right-image-container scale-[1.3]">
+              <img src="./assets/img/slide-three.png" alt="Доставка с температурным режимом"
+                class="h-full absolute left-[10%] top-2/3 transform -translate-y-1/3 object-cover object-left">
+            </div>
           </div>
-          
-          <!-- Правая часть изображения -->
-          <div class="hidden md:block absolute right-[-80%] w-[100%] h-full z-0 overflow-hidden right-image-container">
-            <img src="./assets/img/slide-one.png" alt="Доставка с температурным режимом" class="h-full w-[40vw] absolute left-[10%] top-1/2 transform -translate-y-1/2">
+        </div>
+        <div class="swiper-slide h-full max-w-[100vw]">
+          <div class="flex flex-col lg:flex-row justify-between items-center relative h-full">
+            <!-- Левая часть изображения -->
+            <div class="hidden lg:block absolute left-[-82%] w-[100%] h-full z-0 overflow-visible left-image-container scale-[1.3]">
+              <img src="./assets/img/slide-fourth.png" alt=""
+                class="h-full object-cover object-right absolute right-0 top-2/3 transform -translate-y-1/3">
+            </div>
+
+            <!-- Фоновое изображение для мобильной версии -->
+            <div class="block lg:hidden inset-0 max-w-[100vw] w-full h-full z-0 left-image-container translate-y-2/3 -translate-x-2/3 scale-150 origin-top-left pr-5">
+              <div class=""></div>
+              <img src="./assets/img/slide-fourth.png" alt="Международные перевозки" class="object-contain object-bottom h-full w-full mb-[10%]">
+            </div>
+
+            <!-- Контентная часть -->
+            <div class="w-full pr-0 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full">
+              <div class="flex flex-col lg:flex-row h-full">
+                <div class="flex flex-col w-full lg:w-2/5"></div>
+                <div class="flex flex-col w-full lg:w-3/5 h-full items-start lg:pr-[15%]">
+                  <div class="relative h-full px-10 md:pr-12 w-full lg:min-h-[450px] before:content-[''] before:absolute before:inset-0 before:bg-white before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
+                    <h1
+                      class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
+                      Международные перевозки</h1>
+                    <button
+                      class="bg-brand-gray text-white px-4 py-2 rounded-lg text-buttons mb-4 md:mb-6 w-auto">Узнать больше</button>
+                    <p class="text-brand-gray text-sm md:text-base line-clamp-3 md:line-clamp-none">
+                      Оказываем услуги по доставке грузов в страны СНГ и дальнего зарубежья. Полный комплекс услуг по таможенному оформлению, страхованию и сопровождению грузов. Индивидуальный подход к каждому клиенту и оптимальные логистические решения. Подробности у менеджеров и на сайте.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Правая часть изображения -->
+            <div
+              class="hidden lg:block absolute right-[-93%] w-[100%] h-full z-0 right-image-container scale-[1.3]">
+              <img src="./assets/img/slide-fourth.png" alt="Международные перевозки"
+                class="h-full absolute left-[10%] top-2/3 transform -translate-y-1/3 object-cover object-left">
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide h-full max-w-[100vw]">
+          <div class="flex flex-col lg:flex-row justify-between items-center relative h-full">
+            <!-- Левая часть изображения -->
+            <div class="hidden lg:block absolute left-[-82%] w-[100%] h-full z-0 overflow-visible left-image-container scale-[1.3]">
+              <img src="./assets/img/slide-three.png" alt=""
+                class="h-full object-cover object-right absolute right-0 top-2/3 transform -translate-y-1/3">
+            </div>
+
+            <!-- Фоновое изображение для мобильной версии -->
+            <div class="block lg:hidden inset-0 max-w-[100vw] w-full h-full z-0 left-image-container translate-y-2/3 -translate-x-2/3 scale-150 origin-top-left pr-5">
+              <div class=""></div>
+              <img src="./assets/img/slide-three.png" alt="Срочная доставка" class="object-contain object-bottom h-full w-full mb-[10%]">
+            </div>
+
+            <!-- Контентная часть -->
+            <div class="w-full pr-0 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full">
+              <div class="flex flex-col lg:flex-row h-full">
+                <div class="flex flex-col w-full lg:w-2/5"></div>
+                <div class="flex flex-col w-full lg:w-3/5 h-full items-start lg:pr-[15%]">
+                  <div class="relative h-full px-10 md:pr-12 w-full lg:min-h-[450px] before:content-[''] before:absolute before:inset-0 before:bg-white before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
+                    <h1
+                      class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
+                      Срочная доставка</h1>
+                    <button
+                      class="bg-brand-gray text-white px-4 py-2 rounded-lg text-buttons mb-4 md:mb-6 w-auto">Заказать сейчас</button>
+                    <p class="text-brand-gray text-sm md:text-base line-clamp-3 md:line-clamp-none">
+                      Экспресс-доставка грузов по всей территории России в кратчайшие сроки. Гарантированная доставка в течение 24-48 часов в зависимости от расстояния. Идеальное решение для срочных отправлений и документов. Уведомления о статусе доставки в режиме реального времени.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Правая часть изображения -->
+            <div
+              class="hidden lg:block absolute right-[-93%] w-[100%] h-full z-0 right-image-container scale-[1.3]">
+              <img src="./assets/img/slide-three.png" alt="Срочная доставка"
+                class="h-full absolute left-[10%] top-2/3 transform -translate-y-1/3 object-cover object-left">
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide h-full max-w-[100vw]">
+          <div class="flex flex-col lg:flex-row justify-between items-center relative h-full">
+            <!-- Левая часть изображения -->
+            <div class="hidden lg:block absolute left-[-82%] w-[100%] h-full z-0 overflow-visible left-image-container scale-[1.3]">
+              <img src="./assets/img/slide-fourth.png" alt=""
+                class="h-full object-cover object-right absolute right-0 top-2/3 transform -translate-y-1/3">
+            </div>
+
+            <!-- Фоновое изображение для мобильной версии -->
+            <div class="block lg:hidden inset-0 max-w-[100vw] w-full h-full z-0 left-image-container translate-y-2/3 -translate-x-2/3 scale-150 origin-top-left pr-5">
+              <div class=""></div>
+              <img src="./assets/img/slide-fourth.png" alt="Складское хранение" class="object-contain object-bottom h-full w-full mb-[10%]">
+            </div>
+
+            <!-- Контентная часть -->
+            <div class="w-full pr-0 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full">
+              <div class="flex flex-col lg:flex-row h-full">
+                <div class="flex flex-col w-full lg:w-2/5"></div>
+                <div class="flex flex-col w-full lg:w-3/5 h-full items-start lg:pr-[15%]">
+                  <div class="relative h-full px-10 md:pr-12 w-full lg:min-h-[450px] before:content-[''] before:absolute before:inset-0 before:bg-white before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
+                    <h1
+                      class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
+                      Складское хранение</h1>
+                    <button
+                      class="bg-brand-gray text-white px-4 py-2 rounded-lg text-buttons mb-4 md:mb-6 w-auto">Рассчитать стоимость</button>
+                    <p class="text-brand-gray text-sm md:text-base line-clamp-3 md:line-clamp-none">
+                      Предлагаем современные складские помещения для хранения различных типов грузов. Круглосуточная охрана и видеонаблюдение. Температурный контроль и специальные условия для хрупких и ценных грузов. Гибкие тарифы и индивидуальные условия для постоянных клиентов.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Правая часть изображения -->
+            <div
+              class="hidden lg:block absolute right-[-93%] w-[100%] h-full z-0 right-image-container scale-[1.3]">
+              <img src="./assets/img/slide-fourth.png" alt="Складское хранение"
+                class="h-full absolute left-[10%] top-2/3 transform -translate-y-1/3 object-cover object-left">
+            </div>
           </div>
         </div>
       </div>
-      <div class="swiper-slide h-full">
-        <div class="flex flex-col md:flex-row justify-between items-center relative h-full">
-          <!-- Левая часть изображения -->
-          <div class="hidden md:block absolute left-[-65%] w-[100%] h-full z-0 overflow-visible left-image-container">
-            <img src="./assets/img/slide-two.png" alt="" class="h-full w-[40w] object-cover absolute right-0 top-1/2 transform -translate-y-1/2">
-          </div>
-          
-          <!-- Фоновое изображение для мобильной версии -->
-          <div class="block md:hidden absolute inset-0 w-full h-full z-0 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-[#008DD2] to-[#008DD2] opacity-20"></div>
-            <img src="./assets/img/slide-two.png" alt="Международные перевозки" class="object-cover h-full w-full">
-          </div>
-          
-          <!-- Контентная часть -->
-          <div class="w-full pr-0 md:pr-8 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full py-6 px-4 md:px-10">
-            <div class="flex flex-row h-full">
-              <div class="flex flex-col w-2/5"> </div>
-              <div class="flex flex-col w-3/5 h-full items-start pr-[15%]">
-                <div class="bg-white h-full p-8 rounded-2xl">
-                  <h1 class="text-h4 md:text-h3 lg:text-h2 font-bold text-brand-gray md:text-brand-gray text-white mb-6">Международные перевозки</h1>
-                <button class="bg-brand-gray text-white px-6 py-2 rounded-lg text-buttons mb-6 w-auto">Узнать больше</button>
-                <p class="text-white md:text-brand-gray line-clamp-3 md:line-clamp-none">
-                  Оказываем услуги по доставке грузов в страны СНГ и дальнего зарубежья. Полный комплекс услуг по таможенному оформлению, страхованию и сопровождению грузов. Индивидуальный подход к каждому клиенту и оптимальные логистические решения. Подробности у менеджеров и на сайте.
-                </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Правая часть изображения -->
-          <div class="hidden md:block absolute right-[-80%] w-[100%] h-full z-0 overflow-hidden right-image-container">
-            <img src="./assets/img/slide-two.png" alt="Международные перевозки" class="h-full w-[40vw] absolute left-[10%] top-1/2 transform -translate-y-1/2">
-          </div>
+
+      <!-- Элементы управления -->
+      <div class="select-none flex flex-row swiper-nav-container justify-center items-center h-[40px]">
+        <div
+          class="position-relative swiper-nav-arrow swiper-button-prev text-brand-blue after:text-lg p-4 lg:after:text-sm opacity-0 md:opacity-100 transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full">
         </div>
-      </div>
-      <div class="swiper-slide h-full">
-        <div class="flex flex-col md:flex-row justify-between items-center relative h-full">
-          <!-- Левая часть изображения -->
-          <div class="hidden md:block absolute left-[-65%] w-[100%] h-full z-0 overflow-visible left-image-container">
-            <img src="./assets/img/slide-one.png" alt="" class="h-full w-[40w] object-cover absolute right-0 top-1/2 transform -translate-y-1/2">
-          </div>
-          
-          <!-- Фоновое изображение для мобильной версии -->
-          <div class="block md:hidden absolute inset-0 w-full h-full z-0 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-[#008DD2] to-[#008DD2] opacity-20"></div>
-            <img src="./assets/img/slide-one.png" alt="Срочная доставка" class="object-cover h-full w-full">
-          </div>
-          
-          <!-- Контентная часть -->
-          <div class="w-full pr-0 md:pr-8 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full py-6 px-4 md:px-10">
-            <div class="flex flex-row h-full">
-              <div class="flex flex-col w-2/5"> </div>
-              <div class="flex flex-col w-3/5 h-full items-start pr-[15%]">
-                <div class="bg-white h-full p-8 rounded-2xl">
-                  <h1 class="text-h4 md:text-h3 lg:text-h2 font-bold text-brand-gray md:text-brand-gray text-white mb-6">Срочная доставка</h1>
-                <button class="bg-brand-gray text-white px-6 py-2 rounded-lg text-buttons mb-6 w-auto">Заказать сейчас</button>
-                <p class="text-white md:text-brand-gray line-clamp-3 md:line-clamp-none">
-                  Экспресс-доставка грузов по всей территории России в кратчайшие сроки. Гарантированная доставка в течение 24-48 часов в зависимости от расстояния. Идеальное решение для срочных отправлений и документов. Уведомления о статусе доставки в режиме реального времени.
-                </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Правая часть изображения -->
-          <div class="hidden md:block absolute right-[-80%] w-[100%] h-full z-0 overflow-hidden right-image-container">
-            <img src="./assets/img/slide-one.png" alt="Срочная доставка" class="h-full w-[40vw] absolute left-[10%] top-1/2 transform -translate-y-1/2">
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide h-full">
-        <div class="flex flex-col md:flex-row justify-between items-center relative h-full">
-          <!-- Левая часть изображения -->
-          <div class="hidden md:block absolute left-[-65%] w-[100%] h-full z-0 overflow-visible left-image-container">
-            <img src="./assets/img/slide-two.png" alt="" class="h-full w-[40w] object-cover absolute right-0 top-1/2 transform -translate-y-1/2">
-          </div>
-          
-          <!-- Фоновое изображение для мобильной версии -->
-          <div class="block md:hidden absolute inset-0 w-full h-full z-0 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-[#008DD2] to-[#008DD2] opacity-20"></div>
-            <img src="./assets/img/slide-two.png" alt="Складское хранение" class="object-cover h-full w-full">
-          </div>
-          
-          <!-- Контентная часть -->
-          <div class="w-full pr-0 md:pr-8 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full py-6 px-4 md:px-10">
-            <div class="flex flex-row h-full">
-              <div class="flex flex-col w-2/5"> </div>
-              <div class="flex flex-col w-3/5 h-full items-start pr-[15%]">
-                <div class="bg-white h-full p-8 rounded-2xl">
-                  <h1 class="text-h4 md:text-h3 lg:text-h2 font-bold text-brand-gray md:text-brand-gray text-white mb-6">Складское хранение</h1>
-                <button class="bg-brand-gray text-white px-6 py-2 rounded-lg text-buttons mb-6 w-auto">Рассчитать стоимость</button>
-                <p class="text-white md:text-brand-gray line-clamp-3 md:line-clamp-none">
-                  Предлагаем современные складские помещения для хранения различных типов грузов. Круглосуточная охрана и видеонаблюдение. Температурный контроль и специальные условия для хрупких и ценных грузов. Гибкие тарифы и индивидуальные условия для постоянных клиентов.
-                </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Правая часть изображения -->
-          <div class="hidden md:block absolute right-[-80%] w-[100%] h-full z-0 overflow-hidden right-image-container">
-            <img src="./assets/img/slide-two.png" alt="Складское хранение" class="h-full w-[40vw] absolute left-[10%] top-1/2 transform -translate-y-1/2">
-          </div>
+        <div class="swiper-pagination max-w-[6em] top-auto bottom-auto z-10 left-auto right-auto translate-x-0 translate-y-1/2 mt-3"></div>
+        <div
+          class="position-relative swiper-nav-arrow swiper-button-next text-brand-blue after:text-lg p-4 lg:after:text-sm opacity-0 md:opacity-100 transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full">
         </div>
       </div>
     </div>
-    
-    <!-- Элементы управления -->
-    <div class="flex flex-row swiper-nav-container justify-center items-center h-[40px]">
-      <div class="position-relative swiper-nav-arrow swiper-button-prev text-brand-blue after:text-2xl lg:after:text-3xl opacity-0 md:opacity-100 transition-opacity h-10 w-10"></div>
-      <div class="swiper-pagination w-auto"></div>
-      <div class="position-relative swiper-nav-arrow swiper-button-next text-brand-blue after:text-2xl lg:after:text-3xl opacity-0 md:opacity-100 transition-opacity h-10 w-10"></div>
-    </div>
-  </div>
-</section>
+  </section>
   <!-- Секция с формами -->
   <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full">
     <div class="flex flex-col md:flex-row gap-3 md:gap-4">
       <!-- Форма отслеживания -->
       <div class="bg-brand-light p-6 rounded-lg w-full md:w-2/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Отследить</h2>
-        <div class="flex items-center bg-white rounded-lg overflow-hidden border border-gray-200 px-1">
-          <input type="text" placeholder="Номер заказа" class="px-4 py-3 w-full focus:outline-none text-body-secondary">
-          <button class="bg-brand-gray p-3 rounded-lg">
-            <img src="./assets/img/search.svg" alt="Поиск" class="w-6 h-6">
-          </button>
+        <div class="flex flex-row w-full gap-2">
+          <div class="flex items-center bg-white rounded-lg grow border border-gray-200 px-1">
+            <input type="text" placeholder="Номер заказа" class="px-4 py-3 w-full focus:outline-none text-body-secondary">
+          </div>
+            <button class="bg-brand-gray px-3 py-2 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons">
+              <img src="./assets/img/search.svg" alt="Поиск" class="w-6 h-6"> Поиск
+            </button>
         </div>
+        
         <div class="mt-2 text-caption-form text-brand-gray underline cursor-pointer">Где найти номер заказа?</div>
       </div>
-      
+
       <!-- Форма расчета стоимости -->
       <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-stretch gap-2 mb-4">
           <div class="relative w-full">
-            <select class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+            <select
+              class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
               <option value="">Откуда</option>
               <option value="novosibirsk">Новосибирск</option>
               <option value="krasnoyarsk">Красноярск</option>
               <option value="irkutsk">Иркутск</option>
             </select>
-            <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <img src="./assets/img/select-arrow.svg" alt=""
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
           </div>
-          
-          <button class="bg-white p-3 rounded-lg border border-gray-200">
+
+          <button class="w-12">
             <img src="./assets/img/double-arrow.svg" alt="Поменять местами" class="w-6 h-6">
           </button>
-          
+
           <div class="relative w-full">
-            <select class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+            <select
+              class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
               <option value="">Куда</option>
               <option value="novosibirsk">Новосибирск</option>
               <option value="krasnoyarsk">Красноярск</option>
               <option value="irkutsk">Иркутск</option>
             </select>
-            <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <img src="./assets/img/select-arrow.svg" alt=""
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
           </div>
-          <button class="bg-brand-gray text-white px-2 py-3 rounded-lg w-full text-buttons">Рассчитать</button>
+          <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons">Рассчитать</button>
         </div>
-        
-        
-        
+
+
+
         <div class="mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-1">
-          
-            <span class="cursor-pointer underline">Новосибирск</span>
-            <span class="cursor-pointer underline">Красноярск</span>
-            <span class="cursor-pointer underline">Иркутск</span>
-            <span class="cursor-pointer underline">Абакан</span>
-            <span class="cursor-pointer underline">Томск</span>
-            <span class="cursor-pointer underline">Барнаул</span>
-            <span class="cursor-pointer underline">Кемерово</span>
-            <span class="cursor-pointer underline">Омск</span>
-            <span class="cursor-pointer underline">Тюмень</span>
-            <span class="cursor-pointer underline">Екатеринбург</span>
-            <span class="cursor-pointer underline">Челябинск</span>
-            <span class="cursor-pointer underline">Уфа</span>
-          
-          
+
+          <span class="cursor-pointer underline">Новосибирск</span>
+          <span class="cursor-pointer underline">Красноярск</span>
+          <span class="cursor-pointer underline">Иркутск</span>
+          <span class="cursor-pointer underline">Абакан</span>
+          <span class="cursor-pointer underline">Томск</span>
+          <span class="cursor-pointer underline">Барнаул</span>
+          <span class="cursor-pointer underline">Кемерово</span>
+          <span class="cursor-pointer underline">Омск</span>
+          <span class="cursor-pointer underline">Тюмень</span>
+          <span class="cursor-pointer underline">Екатеринбург</span>
+          <span class="cursor-pointer underline">Челябинск</span>
+          <span class="cursor-pointer underline">Уфа</span>
+
+
         </div>
       </div>
     </div>
   </section>
 
   <!-- Секция с разделами -->
+
+  <!-- Секция с карточками сервисов -->
+  <section class="mt-8 md:mt-16 lg:mt-20 mb-12 mx-auto max-w-[1920px] bg-brand-light w-full 3xl:rounded-3xl" id="services-cards">
   
-    <!-- Секция с карточками сервисов -->
-    <section class="mt-8 md:mt-16 lg:mt-20 mb-12" id="services-cards">
-    
-      <div class="max-w-[1200px] mx-auto my-20">
-        <div class="flex flex-col md:flex-row flex-wrap">
-          <div class="flex flex-col w-full md:w-2/5 md:px-2">
-            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-              <img src="./assets/img/request-for-calculation.png" alt="Запрос на расчет"
-                class="w-16 h-16 mr-4">
-              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
-                расчет</span>
-              <div class="ml-auto arrow-wrapper">
-                <img src="./assets/img/sections-button-arrow.svg" alt=""
-                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-              </div>
-            </a>
-            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-              <img src="./assets/img/track.png" alt="Отследить груз" class="w-16 h-16 mr-4">
-              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Отследить
-                груз</span>
-              <div class="ml-auto arrow-wrapper">
-                <img src="./assets/img/sections-button-arrow.svg" alt=""
-                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-              </div>
-            </a>
-            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-              <img src="./assets/img/feedback.png" alt="Обратная связь" class="w-16 h-16 mr-4">
-              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Обратная
-                связь</span>
-              <div class="ml-auto arrow-wrapper">
-                <img src="./assets/img/sections-button-arrow.svg" alt=""
-                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-              </div>
-            </a>
-            <div class="flex flex-row mb-4 md:mb-0 gap-4 half-cards">
-              <a href="#"
-                class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
-                <img src="./assets/img/payment.png" alt="Оплата" class="w-16 h-16 mr-4 w-full">
-                <span
-                  class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Оплата</span>
-                <div class="ml-auto arrow-wrapper">
-                  <img src="./assets/img/sections-button-arrow.svg" alt=""
-                    class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-                </div>
-              </a>
-              <a href="#"
-                class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
-                <img src="./assets/img/tariffs.png" alt="Тарифы" class="w-16 h-16 mr-4 w-full">
-                <span
-                  class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Тарифы</span>
-                <div class="ml-auto arrow-wrapper">
-                  <img src="./assets/img/sections-button-arrow.svg" alt=""
-                    class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-                </div>
-              </a>
+    <div class="max-w-[1200px] mx-auto my-20">
+      <div class="flex flex-col md:flex-row flex-wrap">
+        <div class="flex flex-col w-full md:w-2/5 md:px-2">
+          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+            <img src="./assets/img/request-for-calculation.png" alt="Запрос на расчет"
+              class="w-16 h-16 mr-4">
+            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
+              расчет</span>
+            <div class="ml-auto arrow-wrapper">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
             </div>
-          </div>
-          <div class="flex flex-col w-full md:w-3/5 md:px-2">
-            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-              <img src="./assets/img/shipping.png" alt="Заявка на перевозку" class="w-16 h-16 mr-4">
-              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Заявка на
-                перевозку</span>
-              <div class="ml-auto arrow-wrapper">
-                <img src="./assets/img/sections-button-arrow.svg" alt=""
-                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-              </div>
-            </a>
-            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-              <img src="./assets/img/helper.png" alt="Страница «Помощник»" class="w-16 h-16 mr-4">
-              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Страница
-                «Помощник»</span>
-              <div class="ml-auto arrow-wrapper">
-                <img src="./assets/img/sections-button-arrow.svg" alt=""
-                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-              </div>
-            </a>
-            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-              <img src="./assets/img/calculator.png" alt="Калькулятор" class="w-16 h-16 mr-4">
+          </a>
+          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+            <img src="./assets/img/track.png" alt="Отследить груз" class="w-16 h-16 mr-4">
+            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Отследить
+              груз</span>
+            <div class="ml-auto arrow-wrapper">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+            <img src="./assets/img/feedback.png" alt="Обратная связь" class="w-16 h-16 mr-4">
+            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Обратная
+              связь</span>
+            <div class="ml-auto arrow-wrapper">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <div class="flex flex-row mb-4 md:mb-0 gap-4 half-cards">
+            <a href="#"
+              class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
+              <img src="./assets/img/payment.png" alt="Оплата" class="w-16 h-16 mr-4 w-full">
               <span
-                class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Калькулятор</span>
+                class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Оплата</span>
               <div class="ml-auto arrow-wrapper">
                 <img src="./assets/img/sections-button-arrow.svg" alt=""
                   class="w-4 h-4 group-hover:translate-x-1 transition-transform">
               </div>
             </a>
-            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-              <img src="./assets/img/international.png" alt="Запрос на международную перевозку"
-                class="w-16 h-16 mr-4">
-              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
-                международную перевозку</span>
+            <a href="#"
+              class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
+              <img src="./assets/img/tariffs.png" alt="Тарифы" class="w-16 h-16 mr-4 w-full">
+              <span
+                class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Тарифы</span>
               <div class="ml-auto arrow-wrapper">
                 <img src="./assets/img/sections-button-arrow.svg" alt=""
                   class="w-4 h-4 group-hover:translate-x-1 transition-transform">
@@ -441,213 +436,516 @@
             </a>
           </div>
         </div>
+        <div class="flex flex-col w-full md:w-3/5 md:px-2">
+          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+            <img src="./assets/img/shipping.png" alt="Заявка на перевозку" class="w-16 h-16 mr-4">
+            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Заявка на
+              перевозку</span>
+            <div class="ml-auto arrow-wrapper">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+            <img src="./assets/img/helper.png" alt="Страница «Помощник»" class="w-16 h-16 mr-4">
+            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Страница
+              «Помощник»</span>
+            <div class="ml-auto arrow-wrapper">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+            <img src="./assets/img/calculator.png" alt="Калькулятор" class="w-16 h-16 mr-4">
+            <span
+              class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Калькулятор</span>
+            <div class="ml-auto arrow-wrapper">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+            <img src="./assets/img/international.png" alt="Запрос на международную перевозку"
+              class="w-16 h-16 mr-4">
+            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
+              международную перевозку</span>
+            <div class="ml-auto arrow-wrapper">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+        </div>
       </div>
-    </section> 
-  
-  <!-- Секция с картой -->
-  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px]">
-    <h2 class="text-h5 md:text-h3 font-bold text-brand-gray mb-4">Контакты</h2>
-    <p class="text-body-secondary text-brand-gray mb-6">Описание, например сколько представительств или выберите одну из отмеченных точек на карте</p>
-    <div id="map" class="w-full h-[400px] md:h-[500px] rounded-lg">
-      <img src="./assets/img/map.jpg" alt="Карта" class="w-full h-full object-cover">
     </div>
   </section>
-  
+
+  <!-- Секция с картой -->
+  <!-- Секция с картой -->
+  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px]">
+    <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">Контакты</h2>
+    <p class="text-body-secondary text-brand-gray mb-6">Описание, например сколько представительств или выберите одну из отмеченных точек на карте</p>
+    
+    <!-- Карта (заглушка) -->
+    <div class="relative w-full h-[400px] md:h-[500px] rounded-lg ">
+      <img src="./assets/img/map.jpg" alt="Карта" class="rounded-2xl w-full h-full object-cover" >
+      
+      <!-- Карточка выбранного офиса поверх карты -->
+      <div class="selected-office-card absolute left-1/2 -translate-x-1/2 bottom-5 md:top-5 md:bottom-5 md:right-6 md:left-auto md:translate-x-0 w-[95%] md:w-[30%] max-w-full bg-white rounded-2xl shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2">
+        <div class="flex justify-end items-center mb-2">
+          <button class="text-brand-gray hover:text-brand-blue transition-colors" id="close-selected-office">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="font-bold text-2xl text-brand-gray">Красноярск</div>
+        <div class="text-brand-gray">ул. Авиаторов, 50</div>
+        <div class="text-brand-gray">Центральный офис</div>
+        <div class="text-brand-gray">+7 (391) 555-12-34</div>
+        <div class="text-brand-gray">info@aeroline.ru</div>
+        <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
+      </div>
+    </div>
+  </section> 
+  <div class="h-[20vh] max-h-[80px]">&nbsp;</div>
   <!-- Секция "Стать клиентом" -->
-  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto relative bg-brand-light rounded-2xl p-6 md:p-10 w-full flex flex-row my-[60px]">
-    <div class="flex flex-col items-start z-10 relative h-[300px]">
-      <h2 class="text-h5 md:text-h3 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
+  <section
+    class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto relative bg-brand-light rounded-2xl p-6 md:p-10 w-full flex flex-row my-[60px] items-center">
+    <div class="flex flex-col items-start z-10 relative h-[300px] justify-center">
+      <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
       <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
       <button class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons">Отправить</button>
     </div>
-    <img class="absolute right-0 bottom-0 w-1/2 md:w-auto opacity-50 md:opacity-100 mr-[-2%]" src="./assets/img/mens-hands.png" alt="Рукопожатие мужчин">
+    <img class="absolute right-0 bottom-0 w-2/3 max-w-[600px] opacity-50 md:opacity-100 mr-[-2%]"
+      src="./assets/img/mens-hands.png" alt="Рукопожатие мужчин">
   </section>
-  
+
   <!-- Секция новостей -->
   <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-      <h2 class="text-h5 md:text-h3 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
+      <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
       <a href="./news.html" class="text-brand-blue text-body-secondary">Смотреть все новости</a>
     </div>
-    
-    <div class="news-swiper-container relative">
+
+    <div class="news-swiper-container relative bg-brand-light pb-10 overflow-hidden rounded-2xl">
       <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="bg-brand-light rounded-lg p-6 md:p-8">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Цены на авиабилеты снижаются</h3>
-                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g filter="url(#filter0_d_news_2)">
-                    <circle cx="25" cy="25" r="5" fill="#008DD2"></circle>
-                  </g>
-                  <circle cx="25" cy="25" r="7" stroke="#008DD2"></circle>
-                  <defs>
-                    <filter id="filter0_d_news_2" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                      <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                      <feOffset></feOffset>
-                      <feGaussianBlur stdDeviation="10"></feGaussianBlur>
-                      <feComposite in2="hardAlpha" operator="out"></feComposite>
-                      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0 0.823529 0 0 0 1 0"></feColorMatrix>
-                      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_2"></feBlend>
-                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_news_2" result="shape"></feBlend>
-                    </filter>
-                  </defs>
-                </svg>
-              </div>
-              
-              <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none">
-                Аналитики отмечают значительное снижение цен на авиабилеты на популярных направлениях. Это связано с увеличением количества рейсов и конкуренцией между авиакомпаниями. Снижение цен особенно заметно на европейских маршрутах.
-              </p>
-              
-              <div class="flex justify-between items-center">
-                <div class="text-caption-form text-brand-gray">15 май 2024</div>
-                <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
-              </div>
+        <div class="swiper-slide">
+          <div class="bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+            <div class="flex justify-between items-start mb-4 w-full px-10">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Цены на авиабилеты снижаются</h3>
+              <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_news_2)">
+                  <circle cx="25" cy="25" r="5" fill="#008DD2"></circle>
+                </g>
+                <circle cx="25" cy="25" r="7" stroke="#008DD2"></circle>
+                <defs>
+                  <filter id="filter0_d_news_2" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse"
+                    color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                      result="hardAlpha"></feColorMatrix>
+                    <feOffset></feOffset>
+                    <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+                    <feComposite in2="hardAlpha" operator="out"></feComposite>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0 0.823529 0 0 0 1 0">
+                    </feColorMatrix>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_2"></feBlend>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_news_2" result="shape">
+                    </feBlend>
+                  </filter>
+                </defs>
+              </svg>
+            </div>
+
+            <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none px-10">
+              Аналитики отмечают значительное снижение цен на авиабилеты на популярных направлениях. Это связано с увеличением количества рейсов и конкуренцией между авиакомпаниями. Снижение цен особенно заметно на европейских маршрутах. Эксперты прогнозируют дальнейшее снижение цен в летний сезон. Пассажиры могут сэкономить до 30% при раннем бронировании. Авиакомпании вводят новые тарифные планы и специальные предложения для разных категорий пассажиров. Отмечено снижение цен на бизнес-класс и премиальные направления. Введены дополнительные скидки для постоянных клиентов и участников программ лояльности. Улучшены условия отмены и изменения бронирования.
+            </p>
+
+            <div class="flex justify-between items-center w-full px-10">
+              <div class="text-caption-form text-brand-gray">15 май 2024</div>
+              <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="bg-brand-light rounded-lg p-6 md:p-8">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Новые правила перевозки опасных грузов</h3>
-              </div>
-              
-              <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none">
-                С 1 июня вступают в силу обновленные правила перевозки опасных грузов. Изменения касаются упаковки, маркировки и документации. Перевозчикам рекомендуется ознакомиться с новыми правилами перед отправкой.
-              </p>
-              
-              <div class="flex justify-between items-center">
-                <div class="text-caption-form text-brand-gray">10 май 2024</div>
-                <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
-              </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+            <div class="flex justify-between items-start mb-4 w-full px-10">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Новые правила перевозки опасных грузов</h3>
+            </div>
+
+            <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none px-10">
+              С 1 июня вступают в силу обновленные правила перевозки опасных грузов. Изменения касаются упаковки, маркировки и документации. Перевозчикам рекомендуется ознакомиться с новыми правилами перед отправкой. Введены новые требования к упаковке и маркировке опасных веществ. Обновлены формы сопроводительной документации и процедуры проверки. Усилены меры безопасности при транспортировке особо опасных грузов. Внедрены новые стандарты обучения персонала и сертификации перевозчиков. Улучшены системы контроля и мониторинга перевозок. Введены дополнительные требования к транспортным средствам и оборудованию.
+            </p>
+
+            <div class="flex justify-between items-center w-full px-10">
+              <div class="text-caption-form text-brand-gray">10 май 2024</div>
+              <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="bg-brand-light rounded-lg p-6 md:p-8">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Рекордное количество туристов</h3>
-              </div>
-              
-              <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none">
-                По данным статистики, в этом году ожидается рекордное количество туристов. Популярными направлениями стали Турция, ОАЭ и страны Юго-Восточной Азии. Авиакомпании увеличивают количество рейсов на эти направления.
-              </p>
-              
-              <div class="flex justify-between items-center">
-                <div class="text-caption-form text-brand-gray">5 май 2024</div>
-                <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
-              </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+            <div class="flex justify-between items-start mb-4 w-full px-10">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Рекордное количество туристов</h3>
+            </div>
+
+            <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none px-10">
+              По данным статистики, в этом году ожидается рекордное количество туристов. Популярными направлениями стали Турция, ОАЭ и страны Юго-Восточной Азии. Авиакомпании увеличивают количество рейсов на эти направления. Ожидается рост туристического потока на 25% по сравнению с прошлым годом. Введены дополнительные рейсы на популярные курорты. Отмечен рост интереса к экзотическим направлениям и индивидуальным турам. Улучшена инфраструктура аэропортов для обслуживания увеличившегося потока пассажиров. Внедрены новые технологии для ускорения регистрации и прохождения контроля. Расширены программы лояльности для туристических компаний.
+            </p>
+
+            <div class="flex justify-between items-center w-full px-10">
+              <div class="text-caption-form text-brand-gray">5 май 2024</div>
+              <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="bg-brand-light rounded-lg p-6 md:p-8">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Новые технологии в грузовой авиации</h3>
-              </div>
-              
-              <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none">
-                Ведущие производители представили новые модели грузовых самолетов с улучшенной грузоподъемностью. Инновации позволят снизить расходы на перевозки и сделать грузоперевозки более эффективными.
-              </p>
-              
-              <div class="flex justify-between items-center">
-                <div class="text-caption-form text-brand-gray">1 май 2024</div>
-                <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
-              </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+            <div class="flex justify-between items-start mb-4 w-full px-10">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Новые технологии в грузовой авиации</h3>
+            </div>
+
+            <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none px-10">
+              Ведущие производители представили новые модели грузовых самолетов с улучшенной грузоподъемностью. Инновации позволят снизить расходы на перевозки и сделать грузоперевозки более эффективными. Новые самолеты оснащены системами экономии топлива и улучшенной аэродинамикой. Внедрены цифровые системы управления и мониторинга. Разработаны новые материалы для снижения веса конструкции. Улучшены системы навигации и безопасности. Внедрены автоматизированные системы погрузки и разгрузки. Оптимизированы внутренние объемы для максимальной загрузки.
+            </p>
+
+            <div class="flex justify-between items-center w-full px-10">
+              <div class="text-caption-form text-brand-gray">1 май 2024</div>
+              <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="bg-brand-light rounded-lg p-6 md:p-8">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Изменения в расписании рейсов</h3>
-              </div>
-              
-              <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none">
-                Аэропорты обновляют расписание летних рейсов. Добавлены новые направления и увеличена частота полетов на популярных маршрутах. Пассажирам рекомендуется проверять актуальное расписание перед вылетом.
-              </p>
-              
-              <div class="flex justify-between items-center">
-                <div class="text-caption-form text-brand-gray">29 апр 2024</div>
-                <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
-              </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+            <div class="flex justify-between items-start mb-4 w-full px-10">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Изменения в расписании рейсов</h3>
+            </div>
+
+            <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none px-10">
+              Аэропорты обновляют расписание летних рейсов. Добавлены новые направления и увеличена частота полетов на популярных маршрутах. Пассажирам рекомендуется проверять актуальное расписание перед вылетом. Введены дополнительные рейсы в популярные туристические направления. Обновлены стыковочные рейсы для удобства пассажиров. Улучшена система информирования о задержках и изменениях. Внедрены новые технологии для оптимизации расписания. Расширена сеть региональных маршрутов. Улучшены условия пересадки и обслуживания транзитных пассажиров.
+            </p>
+
+            <div class="flex justify-between items-center w-full px-10">
+              <div class="text-caption-form text-brand-gray">29 апр 2024</div>
+              <a href="./news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
             </div>
           </div>
+        </div>
       </div>
-      
-      <button class="absolute left-0 top-1/2 transform -translate-y-1/2 rotate-180 bg-transparent border-none cursor-pointer z-10 hidden md:block news-swiper-button-prev">
-        <img src="./assets/img/sections-button-arrow.svg" alt="Предыдущая новость" class="w-6 h-6">
+
+      <button
+        class="absolute p-2 bg-white rounded-full left-12 top-1/2 transform  rotate-180 border-brand-blue border-2 cursor-pointer z-10 hidden md:block news-swiper-button-prev swiper-button-prev min-w-10 max-h-10">
+        
       </button>
-      
-      <button class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent border-none cursor-pointer z-10 hidden md:block news-swiper-button-next">
-        <img src="./assets/img/sections-button-arrow.svg" alt="Следующая новость" class="w-6 h-6">
+
+      <button
+        class="absolute p-2 bg-white rounded-full right-12 top-1/2 transform -translate-y-1/2 border-1 border-brand-blue border-2 cursor-pointer z-10 hidden md:block news-swiper-button-next swiper-button-next min-w-10 max-h-10">
+        
       </button>
-      
-      <div class="news-swiper-pagination flex justify-center mt-4"></div>
+
+      <div class="news-swiper-pagination flex justify-center mt-4 select-none"></div>
     </div>
   </section>
-  
+
   <!-- Секция о компании -->
-  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 relative">
-    <div class="bg-brand-light rounded-lg p-6 md:p-10 relative overflow-hidden">
-      <img src="./assets/img/about-background.png" alt="Фон" class="absolute inset-0 w-full h-full object-cover opacity-10">
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-        <div>
+  <section class="pl-10 lg:pl-3 mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 relative p-3">
+    <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-10">О компании</h2>
+    <div class="relative">
+
+
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10">
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-brand-blue
+          border-l 
+          border-l-2 
+          lg:rounded-tr-none
+          lg:border-t-2
+          lg:border-l-0
+          rounded-br-2xl
+          border-dashed
+          lg:border-b-0
+        ">
+
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:top-0
+            lg:left-0
+            lg:-translate-x-1/2
+            lg:-translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
           <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Aeroline since 2013</h3>
-          <p class="text-body-secondary text-brand-gray">
-            Aeroline на&nbsp;рынке транспортно-экспедиционных услуг с&nbsp;2013&nbsp;года. За&nbsp;это&nbsp;время мы&nbsp;прошли путь от&nbsp;региональной транспортной компании в&nbsp;г.&nbsp;Красноярск, оказывающей услуги Экспресс, до&nbsp;крупного логистического оператора на&nbsp;территории всей Сибири.
+          <p class="text-brand-gray">
+            Aeroline на&nbsp;рынке транспортно-экспедиционных услуг с&nbsp;2013&nbsp;года. За&nbsp;это&nbsp;время
+            мы&nbsp;прошли путь от&nbsp;региональной транспортной компании в&nbsp;г.&nbsp;Красноярск, оказывающей услуги
+            Экспресс, до&nbsp;крупного логистического оператора на&nbsp;территории всей Сибири.
           </p>
         </div>
-        
-        <div>
+
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-brand-blue
+          
+          border-l
+          border-l-2
+          
+          
+          rounded-bl-none
+          border-dashed 
+          lg:rounded-tr-2xl 
+          lg:rounded-br-2xl
+          lg:rounded-tl-none
+          lg:border-l-0
+          lg:border-t-2
+          lg:border-r-2
+          lg:border-b-2
+          lg:rounded-bl-none
+        ">
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:top-1
+            lg:left-auto 
+            lg:right-1
+            lg:translate-x-1/2
+            lg:-translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
           <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Расширение сети</h3>
-          <p class="text-body-secondary text-brand-gray">
-            Мы&nbsp;не&nbsp;останавливаемся на&nbsp;достигнутом и&nbsp;продолжаем развивать географическую сеть обслуживания для&nbsp;наших партнёров. Так, в&nbsp;2020&nbsp;году мы&nbsp;начали оказывать транспортно-экспедиционные услуги по&nbsp;сборному сервису в&nbsp;Иркутской области, а&nbsp;в&nbsp;2021&nbsp;году в&nbsp;республике Бурятия.
+          <p class="text-brand-gray">
+            Мы&nbsp;не&nbsp;останавливаемся на&nbsp;достигнутом и&nbsp;продолжаем развивать географическую сеть
+            обслуживания для&nbsp;наших партнёров. Так, в&nbsp;2020&nbsp;году мы&nbsp;начали оказывать
+            транспортно-экспедиционные услуги по&nbsp;сборному сервису в&nbsp;Иркутской области,
+            а&nbsp;в&nbsp;2021&nbsp;году в&nbsp;республике Бурятия.
           </p>
         </div>
-        
-        <div>
+
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-left-2
+          border-brand-blue
+          lg:border-l 
+          
+          border-l
+          border-l-2
+          
+          border-dashed 
+          
+          
+          lg:rounded-tl-2xl
+          lg:rounded-bl-2xl
+          lg:rounded-tr-none
+          lg:border-r-0
+          lg:rounded-br-none
+          lg:border-t-2
+          lg:border-b-2
+          lg:border-l-2
+        ">
+
+
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:top-auto 
+            lg:bottom-1
+            lg:left-1
+            lg:-translate-x-1/2
+            lg:translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
+
           <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Новые терминалы</h3>
-          <p class="text-body-secondary text-brand-gray">
-            В&nbsp;течении нескольких лет&nbsp;открыты крупные терминалы в&nbsp;городах Красноярск, Новосибирск, Иркутск, кросс-докинговые терминалы в&nbsp;городах Ачинск, Кемерово, Новокузнецк, Томск.
+          <p class="text-brand-gray">
+            В&nbsp;течении нескольких лет&nbsp;открыты крупные терминалы в&nbsp;городах Красноярск, Новосибирск,
+            Иркутск, кросс-докинговые терминалы в&nbsp;городах Ачинск, Кемерово, Новокузнецк, Томск.
           </p>
         </div>
-        
-        <div>
+
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-brand-blue
+          
+          border-l
+          border-l-2
+          border-dashed
+          lg:border-t-0
+          lg:border-l-0
+          lg:rounded-bl-none
+          lg:border-b-2
+        ">
+
+
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:bottom-0
+            lg:left-auto
+            lg:top-auto 
+            lg:right-0
+            lg:translate-x-1/2
+            lg:translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
+
+
           <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Крупные партнеры</h3>
-          <p class="text-body-secondary text-brand-gray">
-            За&nbsp;период роста компании, в&nbsp;перечне наших ключевых партнёров появились крупные федеральные и&nbsp;транснациональные компании, с&nbsp;которыми мы&nbsp;сотрудничаем уже&nbsp;на&nbsp;протяжении нескольких&nbsp;лет. Каждый год&nbsp;мы заключаем договора с&nbsp;новыми Партнёрами, которые доверяют нам, оценивают наш&nbsp;сервис только на&nbsp;«отлично»!»
+          <p class="text-brand-gray">
+            За&nbsp;период роста компании, в&nbsp;перечне наших ключевых партнёров появились крупные федеральные
+            и&nbsp;транснациональные компании, с&nbsp;которыми мы&nbsp;сотрудничаем уже&nbsp;на&nbsp;протяжении
+            нескольких&nbsp;лет. Каждый год&nbsp;мы заключаем договора с&nbsp;новыми Партнёрами, которые доверяют нам,
+            оценивают наш&nbsp;сервис только на&nbsp;«отлично»!»
           </p>
         </div>
       </div>
     </div>
   </section>
-  
+
   <!-- Секция с контактной формой -->
-  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12">
-    <div id="contact-form" class="bg-brand-light rounded-lg relative overflow-hidden">
+  <section class="mt-8 md:mt-16 lg:mt-20 bg-brand-light max-w-[1920px] mx-auto  w-full pt-[8%] pb-[5%] px-10 3xl:rounded-tl-3xl xl:rounded-tr-3xl">
+    <div id="contact-form" class="bg-white rounded-2xl relative w-auto max-w-[1200px] mx-auto">
       <div class="flex flex-col md:flex-row items-stretch">
-        <div class="w-full md:w-1/2 mb-6 md:mb-0 p-6 md:p-10">
-          <h2 class="text-h5 md:text-h3 font-bold text-brand-gray mb-3">Остались вопросы?</h2>
+        <div class="w-full md:w-1/2 mb-6 md:mb-0 p-6 md:p-10 lg:px-20">
+          <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-3">Остались вопросы?</h2>
           <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
-          
+
           <form class="space-y-4">
-            <input type="text" placeholder="Имя" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
-            <input type="tel" placeholder="Номер телефона" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
-            
-            <button type="submit" class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons w-full">Отправить</button>
-            
+            <input type="text" placeholder="Имя"
+              class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
+            <input type="tel" placeholder="Номер телефона"
+              class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
+
+            <button type="submit"
+              class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons w-full">Отправить</button>
+
             <div class="flex items-start">
               <div class="flex items-center h-6 mt-1">
                 <input id="consent-checkbox" type="checkbox" required class="w-4 h-4 border-gray-300 rounded">
               </div>
               <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray">
-                Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой конфиденциальности
+                Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой
+                конфиденциальности
               </label>
             </div>
           </form>
         </div>
-        
+
         <div class="w-full md:w-1/2 flex justify-center md:justify-end md:items-end">
-          <img src="./assets/img/pilot.png" alt="Контактная форма" class="max-h-[300px] md:max-h-[400px] object-contain">
+          <img src="./assets/img/pilot.png" alt="Контактная форма"
+            class="w-[40vw] h-[60vw] object-bottom object-contain max-w-[500px] max-h-[600px] lg:mt-[-20%]">
         </div>
       </div>
     </div>
@@ -655,7 +953,7 @@
 </main>
 
 </div> <!-- Закрытие обертки основного контента -->
-<footer class="bg-brand-gray text-brand-white py-12">
+<footer class="bg-brand-gray text-brand-white py-12 w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
     <!-- Мобильный футер -->
     <div class="md:hidden flex flex-col items-start space-y-8">

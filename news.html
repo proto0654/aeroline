@@ -1,8 +1,8 @@
 {{> header}}
 
-<main class="container mx-auto px-4 max-w-[1200px] flex-grow flex flex-col">
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
   <!-- Заголовок страницы -->
-  <section class="py-12 md:py-16 lg:py-20 relative overflow-hidden h-[150px] md:h-[500px] mb-4">
+  <section class="py-12 md:py-16 lg:py-20 relative overflow-hidden h-[150px] md:h-[500px] mb-4 max-w-[1200px] mx-auto w-full">
     <div class="flex flex-col items-center text-center relative z-10">
       <h1 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">НОВОСТИ</h1>
     </div>
@@ -12,7 +12,7 @@
   </section>
 
   <!-- Блок с фильтром по месяцам -->
-  <section class="mb-8 md:mb-12">
+  <section class="mb-8 md:mb-12 max-w-[1200px] mx-auto w-full">
     <div class="relative w-full md:w-1/4 mx-auto">
       <select class="appearance-none bg-brand-light border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
         <option value="">{{newsData.currentMonth}}</option>
@@ -25,7 +25,7 @@
   </section>
 
   <!-- Блок с новостями -->
-  <section class="mb-12 md:mb-16 lg:mb-20">
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full">
     <div class="space-y-6 md:space-y-8">
       {{#each newsData.news}}
       <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
@@ -95,7 +95,9 @@
   </section>
 
   
-    {{> services-cards}}
+    <div class="bg-brand-light max-w-[1920px] mx-auto w-full 3xl:rounded-tl-3xl 3xl:rounded-tr-3xl">
+      {{> services-cards}}
+    </div>
   
 </main>
 

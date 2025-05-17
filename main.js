@@ -774,6 +774,84 @@ function initFaqAccordion() {
   }
 }
 
+// Функция инициализации табов для страницы платежей
+function initPaymentTabs() {
+  console.log('Инициализация табов на странице платежей...');
+  
+  // Табы "Рассчитайте стоимость"
+  const paymentTabs = document.querySelectorAll('.payment-tab');
+  const paymentContents = document.querySelectorAll('.payment-tab-content');
+  
+  if (paymentTabs.length > 0) {
+    paymentTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const tabId = this.getAttribute('data-tab');
+        const contentId = `tab-${tabId}`;
+        
+        // Удаляем активные классы со всех табов
+        paymentTabs.forEach(t => {
+          t.classList.remove('bg-white', 'border-brand-blue', 'text-brand-blue');
+          t.classList.add('bg-brand-light', 'border-transparent', 'text-brand-gray');
+        });
+        
+        // Добавляем активные классы текущему табу
+        this.classList.remove('bg-brand-light', 'border-transparent', 'text-brand-gray');
+        this.classList.add('bg-white', 'border-brand-blue', 'text-brand-blue');
+        
+        // Скрываем все контенты
+        paymentContents.forEach(content => {
+          content.classList.add('hidden');
+        });
+        
+        // Показываем нужный контент
+        document.getElementById(contentId).classList.remove('hidden');
+      });
+    });
+  }
+  
+  // Табы "Когда можно оплатить"
+  const deliveryTabs = document.querySelectorAll('.delivery-tab');
+  const deliveryContents = document.querySelectorAll('.delivery-tab-content');
+  
+  if (deliveryTabs.length > 0) {
+    deliveryTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const tabId = this.getAttribute('data-tab');
+        const contentId = `tab-${tabId}`;
+        
+        // Удаляем активные классы со всех табов
+        deliveryTabs.forEach(t => {
+          t.classList.remove('bg-white', 'border-brand-blue', 'text-brand-blue');
+          t.classList.add('bg-brand-light', 'border-transparent', 'text-brand-gray');
+        });
+        
+        // Добавляем активные классы текущему табу
+        this.classList.remove('bg-brand-light', 'border-transparent', 'text-brand-gray');
+        this.classList.add('bg-white', 'border-brand-blue', 'text-brand-blue');
+        
+        // Скрываем все контенты
+        deliveryContents.forEach(content => {
+          content.classList.add('hidden');
+        });
+        
+        // Показываем нужный контент
+        document.getElementById(contentId).classList.remove('hidden');
+      });
+    });
+  }
+}
+
+// Function for payments page
+function initPaymentsPage() {
+  console.log('Инициализация страницы платежей...');
+  
+  // Initialize FAQ accordion
+  initFaqAccordion();
+  
+  // Initialize payment tabs
+  initPaymentTabs();
+}
+
 // Общая функция инициализации страницы
 function initializePage() {
   console.log('=== Начало инициализации страницы ===');
@@ -806,7 +884,7 @@ function initializePage() {
   } else if (currentPage === 'payments.html') {
     // Страница платежей
     console.log('Инициализация страницы платежей...');
-    initFaqAccordion();
+    initPaymentsPage();
   } else {
     console.log(`Не найдено специфической инициализации для страницы: ${currentPage}`);
   }
