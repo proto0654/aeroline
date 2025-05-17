@@ -1,16 +1,535 @@
 {{> header}}
 
-<main class="container mx-auto px-4 py-12 max-w-[1100px] flex-grow flex flex-col justify-center">
-  <section class="mb-12">
-    <div class="title-wrapper mb-6">
-      <h1 class="animated-title text-center">Добро пожаловать в Aeroline</h1>
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col overflow-x-hidden">
+
+  <!-- Секция с каруселью -->
+  <section id="swiper-section" class="overflow-visible max-w-[1200px] mx-auto">
+    <div class="swiper-container w-full relative h-[400px] md:h-[450px] lg:h-[500px] rounded-lg overflow-visible">
+      <div class="swiper-wrapper h-full flex items-stretch">
+        {{#each sliders}}
+        <div class="swiper-slide h-full">
+          <div class="flex flex-col md:flex-row justify-between items-center relative h-full">
+            <!-- Левая часть изображения -->
+            <div class="hidden md:block absolute left-[-65%] w-[100%] h-full z-0 overflow-visible left-image-container">
+              <img src="{{../basePath}}{{image}}" alt=""
+                class="h-full w-[40w]  max-w-[700px] object-cover absolute right-0 top-2/3 transform -translate-y-1/2">
+            </div>
+
+            <!-- Фоновое изображение для мобильной версии -->
+            <div class="block md:hidden absolute inset-0 w-full h-full z-0 overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-b from-[#008DD2] to-[#008DD2] opacity-20"></div>
+              <img src="{{../basePath}}{{image}}" alt="{{altText}}" class="object-cover h-full w-full">
+            </div>
+
+            <!-- Контентная часть -->
+            <div class="w-full pr-0 md:pr-8 mb-6 md:mb-0 z-10 flex flex-col justify-center h-full py-6 px-4 md:px-10">
+              <div class="flex flex-row h-full">
+                <div class="flex flex-col w-2/5">&nbsp;</div>
+                <div class="flex flex-col w-3/5 h-full items-start pr-[15%]">
+                  <div class="bg-white h-full p-8 rounded-2xl">
+                    <h1
+                      class="text-h4 md:text-h3 lg:text-h2 font-bold text-brand-gray md:text-brand-gray text-white mb-6 uppercase">
+                      {{title}}</h1>
+                    <button
+                      class="bg-brand-gray text-white px-6 py-2 rounded-lg text-buttons mb-6 w-auto">{{buttonText}}</button>
+                    <p class="text-white md:text-brand-gray line-clamp-3 md:line-clamp-none">
+                      {{description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Правая часть изображения -->
+            <div
+              class="hidden md:block absolute right-[-80%] w-[100%] h-full z-0 overflow-hidden right-image-container">
+              <img src="{{../basePath}}{{image}}" alt="{{altText}}"
+                class="h-full w-[40vw] max-w-[650px] absolute left-[10%] top-2/3 transform -translate-y-1/2 object-cover">
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+      <!-- Элементы управления -->
+      <div class="select-none flex flex-row swiper-nav-container justify-center items-center h-[40px]">
+        <div
+          class="position-relative swiper-nav-arrow swiper-button-prev text-brand-blue after:text-lg p-4 lg:after:text-sm opacity-0 md:opacity-100 transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full">
+        </div>
+        <div class="swiper-pagination max-w-[6em] top-auto bottom-auto z-10 left-auto right-auto translate-x-0 translate-y-1/2 mt-3"></div>
+        <div
+          class="position-relative swiper-nav-arrow swiper-button-next text-brand-blue after:text-lg p-4 lg:after:text-sm opacity-0 md:opacity-100 transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full">
+        </div>
+      </div>
     </div>
-    <div class="subtitle-wrapper">
-      <p class="animated-subtitle body mb-4 text-center">
-        Мы предоставляем высококачественные услуги и решения для наших клиентов.
-      </p>
+  </section>
+  <!-- Секция с формами -->
+  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full">
+    <div class="flex flex-col md:flex-row gap-3 md:gap-4">
+      <!-- Форма отслеживания -->
+      <div class="bg-brand-light p-6 rounded-lg w-full md:w-2/5">
+        <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Отследить</h2>
+        <div class="flex items-center bg-white rounded-lg overflow-hidden border border-gray-200 px-1">
+          <input type="text" placeholder="Номер заказа" class="px-4 py-3 w-full focus:outline-none text-body-secondary">
+          <button class="bg-brand-gray p-3 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons">
+            <img src="{{basePath}}assets/img/search.svg" alt="Поиск" class="w-6 h-6"> Поиск
+          </button>
+        </div>
+        <div class="mt-2 text-caption-form text-brand-gray underline cursor-pointer">Где найти номер заказа?</div>
+      </div>
+
+      <!-- Форма расчета стоимости -->
+      <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
+        <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="relative w-full">
+            <select
+              class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+              <option value="">Откуда</option>
+              <option value="novosibirsk">Новосибирск</option>
+              <option value="krasnoyarsk">Красноярск</option>
+              <option value="irkutsk">Иркутск</option>
+            </select>
+            <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+          </div>
+
+          <button class="w-12">
+            <img src="{{basePath}}assets/img/double-arrow.svg" alt="Поменять местами" class="w-6 h-6">
+          </button>
+
+          <div class="relative w-full">
+            <select
+              class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+              <option value="">Куда</option>
+              <option value="novosibirsk">Новосибирск</option>
+              <option value="krasnoyarsk">Красноярск</option>
+              <option value="irkutsk">Иркутск</option>
+            </select>
+            <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+          </div>
+          <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons">Рассчитать</button>
+        </div>
+
+
+
+        <div class="mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-1">
+
+          <span class="cursor-pointer underline">Новосибирск</span>
+          <span class="cursor-pointer underline">Красноярск</span>
+          <span class="cursor-pointer underline">Иркутск</span>
+          <span class="cursor-pointer underline">Абакан</span>
+          <span class="cursor-pointer underline">Томск</span>
+          <span class="cursor-pointer underline">Барнаул</span>
+          <span class="cursor-pointer underline">Кемерово</span>
+          <span class="cursor-pointer underline">Омск</span>
+          <span class="cursor-pointer underline">Тюмень</span>
+          <span class="cursor-pointer underline">Екатеринбург</span>
+          <span class="cursor-pointer underline">Челябинск</span>
+          <span class="cursor-pointer underline">Уфа</span>
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция с разделами -->
+
+  {{> services-cards}}
+
+
+  <!-- Секция с картой -->
+  {{> map-section isHomePage=true defaultOffice=defaultOffice}}
+
+  <div class="h-[20vh] max-h-[80px]">&nbsp;</div>
+  <!-- Секция "Стать клиентом" -->
+  <section
+    class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto relative bg-brand-light rounded-2xl p-6 md:p-10 w-full flex flex-row my-[60px] items-center">
+    <div class="flex flex-col items-start z-10 relative h-[300px] justify-center">
+      <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
+      <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
+      <button class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons">Отправить</button>
+    </div>
+    <img class="absolute right-0 bottom-0 w-2/3 max-w-[600px] opacity-50 md:opacity-100 mr-[-2%]"
+      src="{{basePath}}assets/img/mens-hands.png" alt="Рукопожатие мужчин">
+  </section>
+
+  <!-- Секция новостей -->
+  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+      <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
+      <a href="{{basePath}}news.html" class="text-brand-blue text-body-secondary">Смотреть все новости</a>
+    </div>
+
+    <div class="news-swiper-container relative bg-brand-light pb-10 overflow-hidden rounded-2xl">
+      <div class="swiper-wrapper">
+        {{#each newsData.news}}
+        {{#if @index}}
+        {{#if (lt @index 6)}}
+        <div class="swiper-slide">
+          <div class="bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+            <div class="flex justify-between items-start mb-4 w-full px-10">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">{{title}}</h3>
+              {{#if isNew}}
+              <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_news_{{id}})">
+                  <circle cx="25" cy="25" r="5" fill="#008DD2"></circle>
+                </g>
+                <circle cx="25" cy="25" r="7" stroke="#008DD2"></circle>
+                <defs>
+                  <filter id="filter0_d_news_{{id}}" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse"
+                    color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                      result="hardAlpha"></feColorMatrix>
+                    <feOffset></feOffset>
+                    <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+                    <feComposite in2="hardAlpha" operator="out"></feComposite>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0 0.823529 0 0 0 1 0">
+                    </feColorMatrix>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_{{id}}"></feBlend>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_news_{{id}}" result="shape">
+                    </feBlend>
+                  </filter>
+                </defs>
+              </svg>
+              {{/if}}
+            </div>
+
+            <p class="text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none px-10">
+              {{content}}
+            </p>
+
+            <div class="flex justify-between items-center w-full px-10">
+              <div class="text-caption-form text-brand-gray">{{date}}</div>
+              <a href="{{../basePath}}news.html" class="text-brand-blue text-body-secondary">Подробнее</a>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        {{/if}}
+        {{/each}}
+      </div>
+
+      <button
+        class="absolute p-2 bg-white rounded-full left-5 top-1/2 transform -translate-y-1/2 rotate-180 border-brand-blue border-2 cursor-pointer z-10 hidden md:block news-swiper-button-prev swiper-button-prev min-w-10 max-h-10">
+        
+      </button>
+
+      <button
+        class="absolute p-2 bg-white rounded-full right-5 top-1/2 transform -translate-y-1/2 border-1 border-brand-blue border-2 cursor-pointer z-10 hidden md:block news-swiper-button-next swiper-button-next min-w-10 max-h-10">
+        
+      </button>
+
+      <div class="news-swiper-pagination flex justify-center mt-4 select-none"></div>
+    </div>
+  </section>
+
+  <!-- Секция о компании -->
+  <section class="pl-10 lg:pl-3 mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 relative p-3">
+    <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-10">О компании</h2>
+    <div class="relative">
+
+
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10">
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-brand-blue
+          border-l 
+          border-l-2 
+          lg:rounded-tr-none
+          lg:border-t-2
+          lg:border-l-0
+          rounded-br-2xl
+          border-dashed
+          lg:border-b-0
+        ">
+
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:top-0
+            lg:left-0
+            lg:-translate-x-1/2
+            lg:-translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
+          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Aeroline since 2013</h3>
+          <p class="text-brand-gray">
+            Aeroline на&nbsp;рынке транспортно-экспедиционных услуг с&nbsp;2013&nbsp;года. За&nbsp;это&nbsp;время
+            мы&nbsp;прошли путь от&nbsp;региональной транспортной компании в&nbsp;г.&nbsp;Красноярск, оказывающей услуги
+            Экспресс, до&nbsp;крупного логистического оператора на&nbsp;территории всей Сибири.
+          </p>
+        </div>
+
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-brand-blue
+          
+          border-l
+          border-l-2
+          
+          
+          rounded-bl-none
+          border-dashed 
+          lg:rounded-tr-2xl 
+          lg:rounded-br-2xl
+          lg:rounded-tl-none
+          lg:border-l-0
+          lg:border-t-2
+          lg:border-r-2
+          lg:border-b-2
+          lg:rounded-bl-none
+        ">
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:top-1
+            lg:left-auto 
+            lg:right-1
+            lg:translate-x-1/2
+            lg:-translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
+          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Расширение сети</h3>
+          <p class="text-brand-gray">
+            Мы&nbsp;не&nbsp;останавливаемся на&nbsp;достигнутом и&nbsp;продолжаем развивать географическую сеть
+            обслуживания для&nbsp;наших партнёров. Так, в&nbsp;2020&nbsp;году мы&nbsp;начали оказывать
+            транспортно-экспедиционные услуги по&nbsp;сборному сервису в&nbsp;Иркутской области,
+            а&nbsp;в&nbsp;2021&nbsp;году в&nbsp;республике Бурятия.
+          </p>
+        </div>
+
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-left-2
+          border-brand-blue
+          lg:border-l 
+          
+          border-l
+          border-l-2
+          
+          border-dashed 
+          
+          
+          lg:rounded-tl-2xl
+          lg:rounded-bl-2xl
+          lg:rounded-tr-none
+          lg:border-r-0
+          lg:rounded-br-none
+          lg:border-t-2
+          lg:border-b-2
+          lg:border-l-2
+        ">
+
+
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:top-auto 
+            lg:bottom-1
+            lg:left-1
+            lg:-translate-x-1/2
+            lg:translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
+
+          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Новые терминалы</h3>
+          <p class="text-brand-gray">
+            В&nbsp;течении нескольких лет&nbsp;открыты крупные терминалы в&nbsp;городах Красноярск, Новосибирск,
+            Иркутск, кросс-докинговые терминалы в&nbsp;городах Ачинск, Кемерово, Новокузнецк, Томск.
+          </p>
+        </div>
+
+        <div class="
+          relative 
+          pt-0
+          lg:pt-10
+          p-10 
+          border-brand-blue
+          
+          border-l
+          border-l-2
+          border-dashed
+          lg:border-t-0
+          lg:border-l-0
+          lg:rounded-bl-none
+          lg:border-b-2
+        ">
+
+
+
+          <div class="
+            point-pulse
+            absolute
+            w-16
+            h-16
+            rounded-full
+            border-2
+            border-blue-600
+            bg-transparent
+            top-0
+            left-0
+            -translate-x-1/2
+            -translate-y-1/2
+            lg:bottom-0
+            lg:left-auto
+            lg:top-auto 
+            lg:right-0
+            lg:translate-x-1/2
+            lg:translate-y-1/2
+        ">
+            <div class="
+                point-pulse-inner
+                absolute
+                w-4
+                h-4
+                rounded-full
+                bg-blue-600
+                pulse
+                top-1/2
+                left-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+            "></div>
+          </div>
+
+
+
+          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Крупные партнеры</h3>
+          <p class="text-brand-gray">
+            За&nbsp;период роста компании, в&nbsp;перечне наших ключевых партнёров появились крупные федеральные
+            и&nbsp;транснациональные компании, с&nbsp;которыми мы&nbsp;сотрудничаем уже&nbsp;на&nbsp;протяжении
+            нескольких&nbsp;лет. Каждый год&nbsp;мы заключаем договора с&nbsp;новыми Партнёрами, которые доверяют нам,
+            оценивают наш&nbsp;сервис только на&nbsp;«отлично»!»
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция с контактной формой -->
+  <section class="mt-8 md:mt-16 lg:mt-20 bg-brand-light max-w-[1920px] mx-auto  w-full pt-[8%] pb-[5%] px-10 3xl:rounded-tl-3xl xl:rounded-tr-3xl">
+    <div id="contact-form" class="bg-white rounded-2xl relative w-auto max-w-[1200px] mx-auto">
+      <div class="flex flex-col md:flex-row items-stretch">
+        <div class="w-full md:w-1/2 mb-6 md:mb-0 p-6 md:p-10">
+          <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-3">Остались вопросы?</h2>
+          <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
+
+          <form class="space-y-4">
+            <input type="text" placeholder="Имя"
+              class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
+            <input type="tel" placeholder="Номер телефона"
+              class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
+
+            <button type="submit"
+              class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons w-full">Отправить</button>
+
+            <div class="flex items-start">
+              <div class="flex items-center h-6 mt-1">
+                <input id="consent-checkbox" type="checkbox" required class="w-4 h-4 border-gray-300 rounded">
+              </div>
+              <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray">
+                Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой
+                конфиденциальности
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <div class="w-full md:w-1/2 flex justify-center md:justify-end md:items-end">
+          <img src="{{basePath}}assets/img/pilot.png" alt="Контактная форма"
+            class="w-[40vw] h-[60vw] object-bottom object-contain max-w-[500px] max-h-[600px] lg:mt-[-20%]">
+        </div>
+      </div>
     </div>
   </section>
 </main>
 
-{{> footer}} 
+{{> footer}}

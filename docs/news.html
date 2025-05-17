@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body class="flex flex-col min-h-screen">
-<header class="bg-white shadow-md">
+<header class="bg-white shadow">
   <div class="container mx-auto px-4 max-w-[1200px]">
     <div class="flex justify-between items-center py-4">
       <div class="logo flex items-center">
@@ -118,17 +118,374 @@
   </div>
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента --> 
-<main class="container mx-auto px-4 py-12 max-w-[1100px] flex-grow flex flex-col justify-center">
-  <section class="mb-12">
-    <div class="title-wrapper mb-6">
-      <h1 class="animated-title text-center">Новости</h1>
+<main class="container mx-auto px-4 max-w-[1200px] flex-grow flex flex-col">
+  <!-- Заголовок страницы -->
+  <section class="py-12 md:py-16 lg:py-20 relative overflow-hidden h-[150px] md:h-[500px] mb-4">
+    <div class="flex flex-col items-center text-center relative z-10">
+      <h1 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">НОВОСТИ</h1>
     </div>
-    <div class="subtitle-wrapper">
-      <p class="animated-subtitle body mb-4 text-center">
-        Актуальные новости и события компании Aeroline.
-      </p>
+    <div class="absolute inset-0 z-0">
+      <img src="./assets/img/news-bg.jpg" alt="" class="w-full h-full object-bottom md:object-center object-contain">
     </div>
   </section>
+
+  <!-- Блок с фильтром по месяцам -->
+  <section class="mb-8 md:mb-12">
+    <div class="relative w-full md:w-1/4 mx-auto">
+      <select class="appearance-none bg-brand-light border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+        <option value="">Май 2024</option>
+        <option value="Январь">Январь</option>
+        <option value="Февраль">Февраль</option>
+        <option value="Март">Март</option>
+        <option value="Апрель">Апрель</option>
+        <option value="Май">Май</option>
+        <option value="Июнь">Июнь</option>
+        <option value="Июль">Июль</option>
+        <option value="Август">Август</option>
+        <option value="Сентябрь">Сентябрь</option>
+        <option value="Октябрь">Октябрь</option>
+        <option value="Ноябрь">Ноябрь</option>
+        <option value="Декабрь">Декабрь</option>
+      </select>
+      <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+    </div>
+  </section>
+
+  <!-- Блок с новостями -->
+  <section class="mb-12 md:mb-16 lg:mb-20">
+    <div class="space-y-6 md:space-y-8">
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;1" alt="Новый грузовой терминал в Шереметьево" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Новый грузовой терминал в Шереметьево</h3>
+              <div class="flex-shrink-0">
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g filter="url(#filter0_d_news_1)">
+                    <circle cx="25" cy="25" r="5" fill="#008DD2"></circle>
+                  </g>
+                  <circle cx="25" cy="25" r="7" stroke="#008DD2"></circle>
+                  <defs>
+                    <filter id="filter0_d_news_1" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                      <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                      <feOffset></feOffset>
+                      <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+                      <feComposite in2="hardAlpha" operator="out"></feComposite>
+                      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0 0.823529 0 0 0 1 0"></feColorMatrix>
+                      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_1"></feBlend>
+                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_news_1" result="shape"></feBlend>
+                    </filter>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">В аэропорту Шереметьево завершается строительство нового грузового терминала. Объект сможет обрабатывать до 500 тысяч тонн грузов в год. Открытие запланировано на летний сезон 2024 года.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">18 май 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;2" alt="Цены на авиабилеты снижаются" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Цены на авиабилеты снижаются</h3>
+              <div class="flex-shrink-0">
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g filter="url(#filter0_d_news_2)">
+                    <circle cx="25" cy="25" r="5" fill="#008DD2"></circle>
+                  </g>
+                  <circle cx="25" cy="25" r="7" stroke="#008DD2"></circle>
+                  <defs>
+                    <filter id="filter0_d_news_2" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                      <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                      <feOffset></feOffset>
+                      <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+                      <feComposite in2="hardAlpha" operator="out"></feComposite>
+                      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0 0.823529 0 0 0 1 0"></feColorMatrix>
+                      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_2"></feBlend>
+                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_news_2" result="shape"></feBlend>
+                    </filter>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">Аналитики отмечают значительное снижение цен на авиабилеты на популярных направлениях. Это связано с увеличением количества рейсов и конкуренцией между авиакомпаниями. Снижение цен особенно заметно на европейских маршрутах.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">15 май 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;3" alt="Новые правила перевозки опасных грузов" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Новые правила перевозки опасных грузов</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">С 1 июня вступают в силу обновленные правила перевозки опасных грузов. Изменения касаются упаковки, маркировки и документации. Перевозчикам рекомендуется ознакомиться с новыми правилами перед отправкой.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">10 май 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;4" alt="Рекордное количество туристов" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Рекордное количество туристов</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">По данным статистики, в этом году ожидается рекордное количество туристов. Популярными направлениями стали Турция, ОАЭ и страны Юго-Восточной Азии. Авиакомпании увеличивают количество рейсов на эти направления.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">5 май 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;5" alt="Новые технологии в грузовой авиации" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Новые технологии в грузовой авиации</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">Ведущие производители представили новые модели грузовых самолетов с улучшенной грузоподъемностью. Инновации позволят снизить расходы на перевозки и сделать грузоперевозки более эффективными.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">1 май 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;6" alt="Изменения в расписании рейсов" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Изменения в расписании рейсов</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">Аэропорты обновляют расписание летних рейсов. Добавлены новые направления и увеличена частота полетов на популярных маршрутах. Пассажирам рекомендуется проверять актуальное расписание перед вылетом.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">29 апр 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;7" alt="Развитие региональных аэропортов" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Развитие региональных аэропортов</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">Правительство утвердило программу развития региональных аэропортов. В ближайшие годы планируется модернизация инфраструктуры и увеличение количества рейсов в малые города.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">25 апр 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;8" alt="Экологичные авиаперевозки" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Экологичные авиаперевозки</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">Авиационная отрасль активно внедряет экологичные технологии. Разрабатываются новые виды топлива и системы снижения выбросов. Это позволит сделать авиаперевозки более экологичными.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">20 апр 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;9" alt="Улучшение сервиса в грузовых терминалах" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Улучшение сервиса в грузовых терминалах</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">Крупные аэропорты внедряют новые технологии для улучшения обработки грузов. Внедряются системы автоматической сортировки, роботизированные склады и умные системы отслеживания.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">15 апр 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+              <img src="https://picsum.photos/800/600?random&#x3D;10" alt="Новые направления для путешествий" class="w-full h-full object-cover min-h-[200px]">
+          </div>
+          <div class="w-full md:w-3/4 p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">Новые направления для путешествий</h3>
+            </div>
+            <p class="text-body-secondary text-brand-gray mb-6">Туристические эксперты составили список новых популярных направлений для путешествий. В топ вошли экзотические страны с развивающейся туристической инфраструктурой и доступными ценами.</p>
+            <div class="flex justify-between items-center">
+              <div class="text-caption-form text-brand-gray">10 апр 2024</div>
+              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Пагинация -->
+    <div class="flex justify-center mt-12">
+      <div class="flex space-x-2">
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg text-white bg-brand-blue">1</button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">2</button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">3</button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  
+    <!-- Секция с карточками сервисов -->
+    <section class="mt-8 md:mt-16 lg:mt-20 mb-12" id="services-cards">
+    
+      <div class="max-w-[1200px] mx-auto my-20">
+        <div class="flex flex-col md:flex-row flex-wrap">
+          <div class="flex flex-col w-full md:w-2/5 md:px-2">
+            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <img src="./assets/img/request-for-calculation.png" alt="Запрос на расчет"
+                class="w-16 h-16 mr-4">
+              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
+                расчет</span>
+              <div class="ml-auto arrow-wrapper">
+                <img src="./assets/img/sections-button-arrow.svg" alt=""
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+              </div>
+            </a>
+            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <img src="./assets/img/track.png" alt="Отследить груз" class="w-16 h-16 mr-4">
+              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Отследить
+                груз</span>
+              <div class="ml-auto arrow-wrapper">
+                <img src="./assets/img/sections-button-arrow.svg" alt=""
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+              </div>
+            </a>
+            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <img src="./assets/img/feedback.png" alt="Обратная связь" class="w-16 h-16 mr-4">
+              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Обратная
+                связь</span>
+              <div class="ml-auto arrow-wrapper">
+                <img src="./assets/img/sections-button-arrow.svg" alt=""
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+              </div>
+            </a>
+            <div class="flex flex-row mb-4 md:mb-0 gap-4 half-cards">
+              <a href="#"
+                class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
+                <img src="./assets/img/payment.png" alt="Оплата" class="w-16 h-16 mr-4 w-full">
+                <span
+                  class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Оплата</span>
+                <div class="ml-auto arrow-wrapper">
+                  <img src="./assets/img/sections-button-arrow.svg" alt=""
+                    class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                </div>
+              </a>
+              <a href="#"
+                class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
+                <img src="./assets/img/tariffs.png" alt="Тарифы" class="w-16 h-16 mr-4 w-full">
+                <span
+                  class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Тарифы</span>
+                <div class="ml-auto arrow-wrapper">
+                  <img src="./assets/img/sections-button-arrow.svg" alt=""
+                    class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="flex flex-col w-full md:w-3/5 md:px-2">
+            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <img src="./assets/img/shipping.png" alt="Заявка на перевозку" class="w-16 h-16 mr-4">
+              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Заявка на
+                перевозку</span>
+              <div class="ml-auto arrow-wrapper">
+                <img src="./assets/img/sections-button-arrow.svg" alt=""
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+              </div>
+            </a>
+            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <img src="./assets/img/helper.png" alt="Страница «Помощник»" class="w-16 h-16 mr-4">
+              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Страница
+                «Помощник»</span>
+              <div class="ml-auto arrow-wrapper">
+                <img src="./assets/img/sections-button-arrow.svg" alt=""
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+              </div>
+            </a>
+            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <img src="./assets/img/calculator.png" alt="Калькулятор" class="w-16 h-16 mr-4">
+              <span
+                class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Калькулятор</span>
+              <div class="ml-auto arrow-wrapper">
+                <img src="./assets/img/sections-button-arrow.svg" alt=""
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+              </div>
+            </a>
+            <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <img src="./assets/img/international.png" alt="Запрос на международную перевозку"
+                class="w-16 h-16 mr-4">
+              <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
+                международную перевозку</span>
+              <div class="ml-auto arrow-wrapper">
+                <img src="./assets/img/sections-button-arrow.svg" alt=""
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>  
 </main>
 
 </div> <!-- Закрытие обертки основного контента -->

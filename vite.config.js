@@ -43,6 +43,17 @@ function getVacanciesData() {
   }
 }
 
+// Загрузка данных о слайдере из JSON
+function getSlidersData() {
+  try {
+    const slidersData = fs.readFileSync('./assets/data/sliders.json', 'utf-8');
+    return JSON.parse(slidersData);
+  } catch (error) {
+    console.error('Error reading sliders data:', error);
+    return [];
+  }
+}
+
 // Загрузка данных о контактах из JSON
 function getContactsData() {
   try {
@@ -79,6 +90,66 @@ function getContactsData() {
       offices: [],
       pagination: { currentPage: 1, totalPages: 1 }
     };
+  }
+}
+
+// Загрузка данных о новостях из JSON
+function getNewsData() {
+  try {
+    const newsData = fs.readFileSync('./assets/data/news.json', 'utf-8');
+    const data = JSON.parse(newsData);
+    
+    // Если есть новости, определяем параметры пагинации
+    if (data.news && data.news.length > 0) {
+      const itemsPerPage = data.itemsPerPage || 5;
+      const totalPages = Math.ceil(data.news.length / itemsPerPage);
+      
+      // Обновляем общее количество страниц
+      data.pagination = {
+        currentPage: 1,
+        totalPages: totalPages
+      };
+      
+      // Ограничиваем количество новостей на странице
+      data.currentPageNews = data.news.slice(0, itemsPerPage);
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error reading news data:', error);
+    return {
+      pageDescription: "Актуальные новости и события компании Aeroline.",
+      news: [],
+      pagination: { currentPage: 1, totalPages: 1 }
+    };
+  }
+}
+
+// Загрузка данных офиса по умолчанию из JSON
+function getDefaultOfficeData() {
+  try {
+    const defaultOfficeData = fs.readFileSync('./assets/data/default-office.json', 'utf-8');
+    return JSON.parse(defaultOfficeData);
+  } catch (error) {
+    console.error('Error reading default office data:', error);
+    return {
+      city: "Красноярск",
+      address: "ул. Авиаторов, 50",
+      type: "Центральный офис",
+      phone: "+7 (391) 555-12-34",
+      email: "info@aeroline.ru"
+    };
+  }
+}
+
+// Загрузка данных о FAQ для страницы платежей
+function getPaymentsFaqData() {
+  try {
+    const faqData = fs.readFileSync('./assets/data/faq-payments.json', 'utf-8');
+    return JSON.parse(faqData);
+  } catch (error) {
+    console.error('Error reading payments FAQ data:', error);
+    return [];
   }
 }
 
@@ -127,6 +198,26 @@ export default defineConfig({
     },
     handlebars({
       partialDirectory: resolve(__dirname, 'assets/partials'),
+      // Регистрируем дополнительные хелперы
+      helpers: {
+        // Хелпер lt (less than) для сравнения чисел
+        lt: (a, b) => a < b,
+        // Хелпер eq (equals) для сравнения значений
+        eq: (a, b) => a === b,
+        contains: (str, substr) => str.includes(substr),
+        // Хелпер для условий с is_dev
+        if_eq: function(a, b, opts) {
+          return a === b ? opts.fn(this) : opts.inverse(this);
+        },
+        // Добавляем хелпер для генерации номеров страниц пагинации
+        pageNumbers: (currentPage, totalPages) => {
+          const pages = [];
+          for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+          }
+          return pages;
+        }
+      },
       context: (pagePath) => {
         const pageData = getPageData();
         const filename = pagePath.split('/').pop();
@@ -141,6 +232,15 @@ export default defineConfig({
           // Добавляем контекст из front matter
           ...pageData[filename]
         };
+
+        // Если это главная страница, добавляем данные для слайдера
+        if (filename === 'index.html') {
+          contextData.sliders = getSlidersData();
+          // Добавляем данные новостей для главной страницы
+          contextData.newsData = getNewsData();
+          // Добавляем данные офиса по умолчанию для карты на главной странице
+          contextData.defaultOffice = getDefaultOfficeData();
+        }
 
         // Если это страница вакансий, добавляем данные о вакансиях
         if (filename === 'vacancies.html') {
@@ -174,23 +274,22 @@ export default defineConfig({
           contextData.cities = Array.from(cities);
         }
         
-        return contextData;
-      },
-      helpers: {
-        eq: (a, b) => a === b,
-        contains: (str, substr) => str.includes(substr),
-        // Хелпер для условий с is_dev
-        if_eq: function(a, b, opts) {
-          return a === b ? opts.fn(this) : opts.inverse(this);
-        },
-        // Добавляем хелпер для генерации номеров страниц пагинации
-        pageNumbers: (currentPage, totalPages) => {
-          const pages = [];
-          for (let i = 1; i <= totalPages; i++) {
-            pages.push(i);
-          }
-          return pages;
+        // Если это страница новостей, добавляем данные о новостях
+        if (filename === 'news.html') {
+          const newsData = getNewsData();
+          
+          contextData = {
+            ...contextData,
+            newsData: newsData
+          };
         }
+        
+        // Если это страница платежей, добавляем данные о FAQ
+        if (filename === 'payments.html') {
+          contextData.paymentsFaq = getPaymentsFaqData();
+        }
+        
+        return contextData;
       }
     }),
     {

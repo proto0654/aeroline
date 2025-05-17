@@ -13,6 +13,7 @@ module.exports = {
         'brand-gray': '#4D4D4D',    // Темно-серый цвет из брендбука
         'brand-light': '#F4F6F9',   // Светло-серый цвет из брендбука
         'brand-white': '#FFFFFF',   // Белый цвет из брендбука
+        
       },
       fontFamily: {
         'calibri': ['Calibri', 'sans-serif'],
@@ -47,6 +48,17 @@ module.exports = {
         '1.2': '1.2',
         '1.5': '1.5',
       },
+      objectPosition: {
+        'bottom': 'bottom',
+        'center': 'center',
+        'top': 'top',
+        'left': 'left',
+        'right': 'right',
+        'left-bottom': 'left bottom',
+        'left-top': 'left top',
+        'right-bottom': 'right bottom',
+        'right-top': 'right top',
+      },
     },
     // Настройка брейкпоинтов для mobile-first подхода
     screens: {
@@ -55,7 +67,8 @@ module.exports = {
       'lg': '1024px',
       'xl': '1280px',
       '2xl': '1536px',
+      '3xl': '1921px',
     },
   },
   plugins: [],
-} 
+}
