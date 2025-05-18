@@ -6,7 +6,7 @@
 @layer base {
   /* Основные стили для текста */
   body {
-    @apply font-calibri font-regular text-brand-gray;
+    @apply font-calibri font-regular text-brand-gray overflow-x-hidden max-w-screen-3xl;
   }
 
   /* Заголовок h1 */
@@ -339,7 +339,7 @@
 /* Стили для карусели Swiper */
 #swiper-section{
   position: relative;
-  background-image: url('../img/slider/snowflakes.png');
+  /* background-image: url('../img/slider/snowflakes.png'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -365,7 +365,7 @@
   transform: translateX(-50%);
   width: 100vw;
   max-width: 1920px;
-  background: linear-gradient(to right, #ffffff,#ffffff,#ffffffd0, #ffffff00, #ffffff00, #ffffff00, #ffffff00,#ffffff00, #ffffff80, #ffffff, #ffffff);
+  background: linear-gradient(to right, #ffffff,#ffffff,#ffffffd0, #ffffff00, #ffffff00, #ffffff00, #ffffff00,#ffffff00, #ffffff80, #ffffffea, #ffffff);
   z-index: +100;
   pointer-events:none
 }
@@ -744,6 +744,11 @@
   right: 0;
   
 }
+@media (max-width: 768px) {
+  #services-cards .arrow-wrapper{
+    display: none;
+  }
+}
 #services-cards .service-card-item span{
   max-width: 8em;
   text-transform: uppercase;
@@ -784,4 +789,123 @@
   #services-cards .service-card-item span{
    
   }
+}
+
+/* Анимация снежинок в слайдере */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"] {
+  opacity: 0;
+  /* Убираем transition для неактивных слайдов */
+  transition: none;
+  will-change: transform, opacity, filter;
+}
+
+/* Индивидуальные трансформации для каждой снежинки в неактивных слайдах */
+
+/* Снежинка 1: левый верхний угол (top-[25%], left-[5%]), с лёгким размытием (blur-[2px]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(1) {
+  transform: translateX(-40px) rotate(-45deg);
+  filter: blur(2px);
+}
+
+/* Снежинка 2: верхняя часть слева (top-[22%], left-[25%]), уменьшенная (scale-[0.5]), полупрозрачная (opacity-60) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(2) {
+  transform: translateX(-50px) rotate(60deg) scale(0.5);
+  opacity: 0;
+}
+
+/* Снежинка 3: левый нижний угол (bottom-[-2%], left-[27%]), увеличенная (scale-[1.5]), с сильным размытием (blur-[6px]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(3) {
+  transform: translateX(-300px) rotate(-190deg) scale(1.5);
+  filter: blur(6px);
+}
+
+/* Снежинка 4: правый нижний угол (bottom-[25%], right-[5%]), с умеренным размытием (blur-[3px]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(4) {
+  transform: translateX(-70px) rotate(-75deg);
+  filter: blur(3px);
+}
+
+/* Снежинка 5: правый край вверху (top-[35%], right-[-5%]), уменьшенная (scale-[0.5]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(5) {
+  transform: translateX(-70px) rotate(180deg) scale(0.5);
+}
+
+/* Стили для снежинок в активном слайде */
+.swiper-slide-active img[alt="snowflake"], 
+.swiper-slide-duplicate-active img[alt="snowflake"] {
+  opacity: 1;
+  /* Меняем функцию перехода на плавную, без колебаний в конце */
+  transition: transform .4s ease-out, 
+              opacity .4s ease, 
+              filter .4s ease;
+  will-change: transform, opacity, filter;
+}
+
+/* Сохраняем исходные трансформации для снежинок в активном слайде */
+
+/* Снежинка 1: левый верхний угол (top-[25%], left-[5%]), с лёгким размытием (blur-[2px]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(1), 
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(1) {
+  transform: rotate(-10deg);
+  filter: blur(2px);
+  transition-delay: 0.8s; /* Начинаем после начала анимации грузовика */
+}
+
+/* Снежинка 2: верхняя часть слева (top-[22%], left-[25%]), уменьшенная (scale-[0.5]), полупрозрачная (opacity-60) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(2),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(2) {
+  transform: rotate(-16deg) scale(0.5);
+  opacity: 0.6;
+  transition-delay: 0.7s;
+}
+
+/* Снежинка 3: левый нижний угол (bottom-[-2%], left-[27%]), увеличенная (scale-[1.5]), с сильным размытием (blur-[6px]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(3),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(3) {
+  transition: all .7s ease-out;
+  transform: rotate(-16deg) scale(1.5);
+  filter: blur(6px);
+  transition-delay: .4s;
+}
+
+/* Снежинка 4: правый нижний угол (bottom-[25%], right-[5%]), с умеренным размытием (blur-[3px]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(4),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(4) {
+  transform: rotate(35deg);
+  filter: blur(3px);
+  transition-delay: 0.4s;
+}
+
+/* Снежинка 5: правый край вверху (top-[35%], right-[-5%]), уменьшенная (scale-[0.5]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(5),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(5) {
+  transform: rotate(76deg) scale(0.5);
+  transition-delay: 0.3s;
+}
+
+/* Стили для пагинации */
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 0 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #008DD2;
+  transform: scale(1.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
