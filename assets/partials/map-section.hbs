@@ -5,7 +5,7 @@
   <!-- Интерактивная карта -->
   <div class="relative w-full rounded-lg">
     <!-- Контейнер для Leaflet карты -->
-    <div id="map" class="w-full h-[80vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
+    <div id="map" class="w-full h-[90vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
       <!-- Стиль для скрытия атрибуции на мобильных устройствах -->
       <style>
         @media (max-width: 768px) {
@@ -28,10 +28,10 @@
       </div>
       <div class="font-bold text-2xl text-brand-gray">{{selectedOffice.city}}</div>
       <div class="text-brand-gray">{{selectedOffice.address}}</div>
-      <div class="text-brand-gray">{{selectedOffice.type}}</div>
-      <div class="text-brand-gray">{{selectedOffice.phone}}</div>
-      <div class="text-brand-gray">{{selectedOffice.email}}</div>
-      <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
+      <div class="hidden md:block text-brand-gray">{{selectedOffice.type}}</div>
+      <div class="hidden md:block text-brand-gray">{{selectedOffice.phone}}</div>
+      <div class="hidden md:block text-brand-gray">{{selectedOffice.email}}</div>
+      <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
       {{else}}
       {{#if defaultOffice}}
       <div class="flex justify-end items-center mb-2">
@@ -43,9 +43,9 @@
       </div>
       <div class="font-bold text-2xl text-brand-gray">{{defaultOffice.city}}</div>
       <div class="text-brand-gray">{{defaultOffice.address}}</div>
-      <div class="text-brand-gray">{{defaultOffice.type}}</div>
-      <div class="text-brand-gray">{{defaultOffice.phone}}</div>
-      <div class="text-brand-gray">{{defaultOffice.email}}</div>
+      <div class="hidden md:block text-brand-gray">{{defaultOffice.type}}</div>
+      <div class="hidden md:block text-brand-gray">{{defaultOffice.phone}}</div>
+      <div class="hidden md:block text-brand-gray">{{defaultOffice.email}}</div>
       <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
       {{else}}
       <!-- Содержимое будет заполнено через JavaScript -->
