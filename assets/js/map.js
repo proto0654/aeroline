@@ -39,6 +39,23 @@ function getZoomForDevice(zoomConfig) {
   return zoomConfig[deviceType];
 }
 
+// Функция для получения базового пути
+function getBasePath() {
+  // Проверяем, находимся ли мы на GitHub Pages
+  const isGitHubPages = window.location.hostname.includes('github.io');
+  // Получаем путь из URL
+  const pathSegments = window.location.pathname.split('/').filter(segment => segment);
+  
+  // Если это GitHub Pages и есть сегменты пути (проект в подкаталоге)
+  if (isGitHubPages && pathSegments.length > 0) {
+    // Возвращаем путь с учетом подкаталога
+    return `/${pathSegments[0]}/`;
+  }
+  
+  // В других случаях возвращаем корневой путь
+  return '/';
+}
+
 // Инициализация карты при загрузке DOM
 document.addEventListener('DOMContentLoaded', function() {
   // Проверяем, есть ли элемент карты на странице
@@ -47,8 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Добавляем небольшую задержку для гарантии корректной инициализации на больших экранах
   setTimeout(() => {
-    // Загружаем данные офисов из JSON
-    fetch('/assets/data/contacts.json')
+    // Получаем базовый путь
+    const basePath = getBasePath();
+    
+    // Загружаем данные офисов из JSON с учетом базового пути
+    fetch(`${basePath}assets/data/contacts.json`)
       .then(response => response.json())
       .then(data => {
         initMap(data.offices);
@@ -93,10 +113,13 @@ function initMap(offices) {
       }
     }, 100);
 
+    // Получаем базовый путь для изображений
+    const basePath = getBasePath();
+
     // Создаем иконки для маркеров с использованием внешних SVG файлов
     const defaultIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-gray">
-              <img src="/assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
+              <img src="${basePath}assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
@@ -105,7 +128,7 @@ function initMap(offices) {
 
     const activeIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-blue">
-              <img src="/assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
+              <img src="${basePath}assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
