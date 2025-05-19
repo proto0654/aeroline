@@ -7,9 +7,9 @@
     window.officesData = window.officesData || {};
     
     // Если на странице есть данные офисов из Vite, добавляем их в глобальную переменную
-    {{#if offices}}
+    {{#if ../offices}}
     window.officesData.offices = [
-      {{#each offices}}
+      {{#each ../offices}}
       {
         city: "{{city}}",
         address: "{{address}}",
@@ -23,16 +23,16 @@
     {{/if}}
     
     // Если выбран офис по умолчанию, также добавляем его
-    {{#if selectedOffice}}
+    {{#if ../selectedOffice}}
     window.officesData.selectedOffice = {
-      city: "{{selectedOffice.city}}",
-      address: "{{selectedOffice.address}}",
-      type: "{{selectedOffice.type}}",
-      phone: "{{selectedOffice.phone}}",
-      email: "{{selectedOffice.email}}",
-      coordinates: [{{selectedOffice.coordinates.[0]}}, {{selectedOffice.coordinates.[1]}}]
+      city: "{{../selectedOffice.city}}",
+      address: "{{../selectedOffice.address}}",
+      type: "{{../selectedOffice.type}}",
+      phone: "{{../selectedOffice.phone}}",
+      email: "{{../selectedOffice.email}}",
+      coordinates: [{{../selectedOffice.coordinates.[0]}}, {{../selectedOffice.coordinates.[1]}}]
     };
-    window.officesData.selectedOfficeIndex = {{selectedOfficeIndex}};
+    window.officesData.selectedOfficeIndex = {{../selectedOfficeIndex}};
     {{/if}}
     
     // Если есть офис по умолчанию, также добавляем его

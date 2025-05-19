@@ -98,14 +98,57 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Базовый путь для карты:', basePath);
     
     // Проверяем, есть ли предварительно загруженные данные офисов в HTML
-    // Vite должен был встроить эти данные при сборке
     if (window.officesData && window.officesData.offices) {
-      console.log('Используем предварительно загруженные данные офисов');
+      console.log('Используем предварительно загруженные данные офисов из window.officesData');
       initMap(window.officesData.offices);
       return;
     }
     
-    // Если данные не встроены в HTML, пробуем загрузить их через fetch
+    // Если данные не встроены через window.officesData, пробуем извлечь их из HTML-разметки
+    const officeCards = document.querySelectorAll('.office-card');
+    if (officeCards.length > 0) {
+      console.log('Извлекаем данные офисов из HTML-разметки');
+      
+      // Собираем данные из HTML-элементов
+      const offices = Array.from(officeCards).map((card, index) => {
+        // Извлекаем данные из карточки офиса
+        const cityText = card.querySelector('h3')?.textContent || '';
+        const cityMatch = cityText.match(/^([^,]+),/);
+        const city = cityMatch ? cityMatch[1].trim() : `Офис ${index + 1}`;
+        
+        // Извлекаем адрес (текст после запятой в заголовке)
+        const address = cityText.replace(`${city}, `, '').trim();
+        
+        // Извлекаем остальные данные из div-элементов
+        const divs = card.querySelectorAll('div.text-brand-gray');
+        const type = divs[0]?.textContent || '';
+        const phone = divs[1]?.textContent || '';
+        const email = divs[2]?.textContent || '';
+        
+        // Получаем координаты из data-атрибута
+        const coordinates = card.dataset.coordinates ? 
+          card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim())) : 
+          null;
+        
+        return {
+          city,
+          address,
+          type,
+          phone,
+          email,
+          coordinates
+        };
+      });
+      
+      // Инициализируем карту с данными из HTML
+      if (offices.length > 0) {
+        console.log('Найдено', offices.length, 'офисов в HTML-разметке');
+        initMap(offices);
+        return;
+      }
+    }
+    
+    // Если не удалось получить данные из HTML, пробуем загрузить их через fetch
     console.log('Пытаемся загрузить данные офисов через fetch:', `${basePath}assets/data/contacts.json`);
     fetch(`${basePath}assets/data/contacts.json`)
       .then(response => {
@@ -115,45 +158,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return response.json();
       })
       .then(data => {
+        console.log('Данные офисов успешно загружены через fetch');
         initMap(data.offices);
       })
       .catch(error => {
-        console.error('Ошибка загрузки данных офисов:', error);
-        
-        // Если не удалось загрузить данные, проверяем наличие элементов с данными офисов на странице
-        const officeCards = document.querySelectorAll('.office-card');
-        if (officeCards.length > 0) {
-          console.log('Используем данные офисов из HTML-разметки');
-          
-          // Собираем данные из HTML-элементов
-          const offices = Array.from(officeCards).map((card, index) => {
-            const cityElement = card.querySelector('.city');
-            const addressElement = card.querySelector('.address');
-            const typeElement = card.querySelector('.type');
-            const phoneElement = card.querySelector('.phone');
-            const emailElement = card.querySelector('.email');
-            const coordinates = card.dataset.coordinates ? 
-              card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim())) : 
-              null;
-            
-            return {
-              city: cityElement ? cityElement.textContent : `Офис ${index + 1}`,
-              address: addressElement ? addressElement.textContent : '',
-              type: typeElement ? typeElement.textContent : '',
-              phone: phoneElement ? phoneElement.textContent : '',
-              email: emailElement ? emailElement.textContent : '',
-              coordinates: coordinates
-            };
-          });
-          
-          // Инициализируем карту с данными из HTML
-          if (offices.length > 0) {
-            initMap(offices);
-            return;
-          }
-        }
+        console.error('Ошибка загрузки данных офисов через fetch:', error);
         
         // Если все способы не сработали, инициализируем карту без маркеров
+        console.warn('Не удалось получить данные офисов, инициализируем карту без маркеров');
         initMap([]);
       });
   }, 100);
