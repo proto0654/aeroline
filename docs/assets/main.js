@@ -45,6 +45,316 @@ function getBasePath() {
 // Базовый путь для использования в скрипте
 const BASE_PATH = getBasePath();
 
+// Конфигурация карты для разных размеров экрана
+const mapConfig = {
+  // Начальные координаты и масштаб
+  initialView: {
+    center: [55.7558, 37.6173], // Москва
+    zoom: {
+      desktop: 12,     // Масштаб для десктопа
+      tablet: 9,      // Масштаб для планшетов
+      mobile: 7       // Масштаб для мобильных
+    }
+  },
+  // Масштаб при выборе офиса
+  officeZoom: {
+    desktop: 14,
+    tablet: 12,
+    mobile: 10
+  },
+  // Максимальный масштаб при автоматической подгонке (fitBounds)
+  maxBoundsZoom: {
+    desktop: 10,
+    tablet: 8,
+    mobile: 7
+  },
+  // Отступы при автоматической подгонке
+  boundsPadding: [50, 50]
+};
+
+// Определение текущего типа устройства
+function getDeviceType() {
+  const width = window.innerWidth;
+  if (width < 768) return 'mobile';
+  if (width < 1024) return 'tablet';
+  return 'desktop';
+}
+
+// Получение масштаба в зависимости от типа устройства
+function getZoomForDevice(zoomConfig) {
+  const deviceType = getDeviceType();
+  return zoomConfig[deviceType];
+}
+
+// Инициализация карты при загрузке DOM
+document.addEventListener('DOMContentLoaded', function() {
+  // Проверяем, есть ли элемент карты на странице
+  const mapContainer = document.getElementById('map');
+  if (!mapContainer) return;
+
+  // Добавляем небольшую задержку для гарантии корректной инициализации на больших экранах
+  setTimeout(() => {
+    // Загружаем данные офисов из JSON, используя BASE_PATH
+    fetch(BASE_PATH + 'assets/data/contacts.json')
+      .then(response => response.json())
+      .then(data => {
+        initMap(data.offices);
+      })
+      .catch(error => {
+        console.error('Ошибка загрузки данных офисов:', error);
+        // В случае ошибки загрузки данных, инициализируем карту без маркеров
+        initMap([]);
+      });
+  }, 100);
+});
+
+/**
+ * Инициализация карты с маркерами офисов
+ * @param {Array} offices - массив офисов из JSON
+ */
+function initMap(offices) {
+  try {
+    // Центрируем карту с учетом типа устройства
+    const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
+    const map = L.map('map', {
+      center: mapConfig.initialView.center,
+      zoom: initialZoom,
+      zoomControl: true,
+      attributionControl: true,
+      minZoom: 4, // Минимальный масштаб (не позволяет слишком сильно отдалиться)
+      maxZoom: 18 // Максимальный масштаб (позволяет сильно приблизиться)
+    });
+
+    // Добавляем тайловый слой OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Принудительно обновляем размер карты после инициализации
+    setTimeout(() => {
+      map.invalidateSize();
+      
+      // Если нет маркеров, устанавливаем начальный масштаб принудительно
+      if (!offices || offices.length === 0) {
+        map.setView(mapConfig.initialView.center, initialZoom);
+      }
+    }, 100);
+
+    // Создаем иконки для маркеров с использованием внешних SVG файлов
+    const defaultIcon = L.divIcon({
+      html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-gray">
+              <img src="${BASE_PATH}assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
+             </div>`,
+      className: '',
+      iconSize: [36, 42],
+      iconAnchor: [18, 42]
+    });
+
+    const activeIcon = L.divIcon({
+      html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-blue">
+              <img src="${BASE_PATH}assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
+             </div>`,
+      className: '',
+      iconSize: [36, 42],
+      iconAnchor: [18, 42]
+    });
+
+    // Создаем группу маркеров для удобного управления
+    const markers = L.featureGroup();
+    const officeMarkers = {};
+    
+    // Добавляем маркеры для каждого офиса
+    offices.forEach((office, index) => {
+      if (!office.coordinates || office.coordinates.length !== 2) return;
+      
+      const marker = L.marker(office.coordinates, { icon: defaultIcon })
+        .bindTooltip(office.city)
+        .addTo(map);
+      
+      // Сохраняем маркер с индексом офиса для последующего доступа
+      officeMarkers[index] = marker;
+      markers.addLayer(marker);
+      
+      // Обработчик клика по маркеру
+      marker.on('click', () => {
+        // Сбрасываем иконки всех маркеров на дефолтные
+        Object.values(officeMarkers).forEach(m => m.setIcon(defaultIcon));
+        
+        // Устанавливаем активную иконку для выбранного маркера
+        marker.setIcon(activeIcon);
+        
+        // Обновляем информационную панель
+        updateInfoPanel(office);
+      });
+    });
+    
+    // Добавляем группу маркеров на карту и масштабируем карту
+    markers.addTo(map);
+    if (markers.getLayers().length > 0) {
+      // Используем maxZoom из конфигурации в зависимости от устройства
+      const maxZoom = getZoomForDevice(mapConfig.maxBoundsZoom);
+      
+      // Если маркер только один, сразу центрируем на нем с большим масштабом
+      if (markers.getLayers().length === 1) {
+        const marker = markers.getLayers()[0];
+        const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+        map.setView(marker.getLatLng(), officeZoom);
+      } else {
+        // Если маркеров несколько, подгоняем карту под все маркеры
+        map.fitBounds(markers.getBounds(), { 
+          padding: mapConfig.boundsPadding, 
+          maxZoom: maxZoom,
+          animate: false
+        });
+      }
+    }
+    
+    // Проверяем, есть ли уже выбранный офис в HTML
+    const infoPanel = document.querySelector('.map-info-panel');
+    if (infoPanel) {
+      const isDefaultOfficeVisible = !infoPanel.classList.contains('hidden');
+      
+      // Если нет выбранного офиса, устанавливаем офис по умолчанию (первый в списке или Москва)
+      if (!isDefaultOfficeVisible && offices.length > 0) {
+        // Ищем офис в Москве или берем первый офис
+        const defaultOfficeIndex = offices.findIndex(office => office.city === 'Москва') !== -1 ? 
+          offices.findIndex(office => office.city === 'Москва') : 0;
+        
+        if (defaultOfficeIndex !== -1 && officeMarkers[defaultOfficeIndex]) {
+          // Активируем маркер по умолчанию
+          officeMarkers[defaultOfficeIndex].setIcon(activeIcon);
+          
+          // Центрируем карту на выбранном маркере с масштабом в зависимости от устройства
+          const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+          map.setView(officeMarkers[defaultOfficeIndex].getLatLng(), officeZoom);
+          
+          // Обновляем информационную панель
+          updateInfoPanel(offices[defaultOfficeIndex]);
+        }
+      }
+    }
+    
+    // Обработчик клика по карточкам офисов на странице (если они есть)
+    document.querySelectorAll('.office-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const index = parseInt(this.dataset.index, 10);
+        const marker = officeMarkers[index];
+        
+        if (marker) {
+          // Сбрасываем иконки всех маркеров
+          Object.values(officeMarkers).forEach(m => m.setIcon(defaultIcon));
+          
+          // Активируем выбранный маркер
+          marker.setIcon(activeIcon);
+          
+          // Центрируем карту на выбранном маркере с масштабом в зависимости от устройства
+          const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+          map.setView(marker.getLatLng(), officeZoom);
+          
+          // Обновляем информационную панель
+          updateInfoPanel(offices[index]);
+        }
+      });
+    });
+    
+    // Добавляем обработчик для кнопки закрытия информационной панели
+    const closeButtons = document.querySelectorAll('.close-info-panel');
+    closeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const infoPanel = this.closest('.map-info-panel');
+        if (infoPanel) {
+          infoPanel.classList.add('hidden');
+          
+          // Сбрасываем иконки всех маркеров на дефолтные
+          Object.values(officeMarkers).forEach(m => m.setIcon(defaultIcon));
+        }
+      });
+    });
+    
+    // Обработчик изменения размера окна для адаптации карты
+    window.addEventListener('resize', () => {
+      // Получаем текущий центр карты
+      const center = map.getCenter();
+      
+      // Обновляем размер карты с небольшой задержкой для корректной перерисовки
+      setTimeout(() => {
+        map.invalidateSize({
+          animate: false,
+          pan: false
+        });
+        
+        // Устанавливаем новый масштаб в зависимости от устройства
+        const newZoom = getZoomForDevice(mapConfig.initialView.zoom);
+        map.setView(center, newZoom, { animate: false });
+        
+        // Если есть маркеры, обновляем границы карты
+        if (markers.getLayers().length > 0) {
+          const maxZoom = getZoomForDevice(mapConfig.maxBoundsZoom);
+          map.fitBounds(markers.getBounds(), { 
+            padding: mapConfig.boundsPadding, 
+            maxZoom: maxZoom,
+            animate: false
+          });
+        }
+      }, 200);
+    });
+    
+  } catch (error) {
+    console.error('Ошибка при инициализации карты:', error);
+  }
+}
+
+/**
+ * Обновляет информационную панель с данными выбранного офиса
+ * @param {Object} office - объект с данными офиса
+ */
+function updateInfoPanel(office) {
+  const infoPanel = document.querySelector('.map-info-panel');
+  if (!infoPanel) return;
+  
+  // Обновляем содержимое панели
+  const cityElement = infoPanel.querySelector('.office-city');
+  const typeElement = infoPanel.querySelector('.office-type');
+  const addressElement = infoPanel.querySelector('.office-address');
+  const phoneElement = infoPanel.querySelector('.office-phone');
+  const emailElement = infoPanel.querySelector('.office-email');
+  const mapLinkElement = infoPanel.querySelector('.office-map-link');
+  
+  if (cityElement) cityElement.textContent = office.city || '';
+  if (typeElement) typeElement.textContent = office.type || '';
+  if (addressElement) addressElement.textContent = office.address || '';
+  
+  if (phoneElement) {
+    if (office.phone) {
+      phoneElement.href = `tel:${office.phone.replace(/\s+/g, '')}`;
+      phoneElement.textContent = office.phone;
+      phoneElement.parentElement.classList.remove('hidden');
+    } else {
+      phoneElement.parentElement.classList.add('hidden');
+    }
+  }
+  
+  if (emailElement) {
+    if (office.email) {
+      emailElement.href = `mailto:${office.email}`;
+      emailElement.textContent = office.email;
+      emailElement.parentElement.classList.remove('hidden');
+    } else {
+      emailElement.parentElement.classList.add('hidden');
+    }
+  }
+  
+  if (mapLinkElement && office.mapLink) {
+    mapLinkElement.href = office.mapLink;
+    mapLinkElement.parentElement.classList.remove('hidden');
+  } else if (mapLinkElement) {
+    mapLinkElement.parentElement.classList.add('hidden');
+  }
+  
+  // Показываем панель
+  infoPanel.classList.remove('hidden');
+}
+
 // Функция инициализации Swiper
 function initSwiperSlider() {
   if (typeof Swiper === 'undefined') {

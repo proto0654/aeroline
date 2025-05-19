@@ -126,25 +126,6 @@
     <!-- Секция с картой -->
     <div class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px]">
       
-      <!-- Скрипт для передачи данных офисов в глобальную переменную -->
-      <script>
-        // Инициализируем глобальную переменную для данных офисов
-        window.officesData = window.officesData || {};
-        
-        // Если на странице есть данные офисов из Vite, добавляем их в глобальную переменную
-        
-        // Если выбран офис по умолчанию, также добавляем его
-        
-        // Если есть офис по умолчанию, также добавляем его
-        window.officesData.defaultOffice = {
-          city: "Красноярск",
-          address: "ул. Авиаторов, 50",
-          type: "Центральный офис",
-          phone: "+7 (391) 555-12-34",
-          email: "info@aeroline.ru",
-          coordinates: [, ]
-        };
-      </script>
       
       <!-- Интерактивная карта -->
       <div class="relative w-full rounded-lg">
@@ -181,7 +162,6 @@
       <!-- Подключение стилей и скриптов для карты -->
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
       <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-      <script src="./assets/js/map.js"></script>
     </div>   </section>
 
   
