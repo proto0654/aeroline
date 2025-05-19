@@ -43,16 +43,14 @@ function getZoomForDevice(zoomConfig) {
 function getBasePath() {
   // Проверяем, находимся ли мы на GitHub Pages
   const isGitHubPages = window.location.hostname.includes('github.io');
-  // Получаем путь из URL
-  const pathSegments = window.location.pathname.split('/').filter(segment => segment);
   
-  // Если это GitHub Pages и есть сегменты пути (проект в подкаталоге)
-  if (isGitHubPages && pathSegments.length > 0) {
-    // Возвращаем путь с учетом подкаталога
-    return `/${pathSegments[0]}/`;
+  if (isGitHubPages) {
+    // На GitHub Pages используем относительные пути без начального слеша
+    // Это решает проблему с поддоменами и вложенными репозиториями
+    return '';
   }
   
-  // В других случаях возвращаем корневой путь
+  // В локальной разработке используем абсолютный путь от корня
   return '/';
 }
 
@@ -67,9 +65,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Получаем базовый путь
     const basePath = getBasePath();
     
+    // Выводим информацию о текущем пути для отладки
+    console.log('Базовый путь:', basePath);
+    console.log('Полный путь к файлу:', `${basePath}assets/data/contacts.json`);
+    
     // Загружаем данные офисов из JSON с учетом базового пути
     fetch(`${basePath}assets/data/contacts.json`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Ошибка HTTP: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         initMap(data.offices);
       })
@@ -115,6 +122,9 @@ function initMap(offices) {
 
     // Получаем базовый путь для изображений
     const basePath = getBasePath();
+    
+    // Выводим информацию о путях к изображениям для отладки
+    console.log('Путь к маркеру:', `${basePath}assets/img/map-marker.svg`);
 
     // Создаем иконки для маркеров с использованием внешних SVG файлов
     const defaultIcon = L.divIcon({

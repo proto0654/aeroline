@@ -39,6 +39,21 @@ function getZoomForDevice(zoomConfig) {
   return zoomConfig[deviceType];
 }
 
+// Функция для получения базового пути
+function getBasePath() {
+  // Проверяем, находимся ли мы на GitHub Pages
+  const isGitHubPages = window.location.hostname.includes('github.io');
+  
+  if (isGitHubPages) {
+    // На GitHub Pages используем относительные пути без начального слеша
+    // Это решает проблему с поддоменами и вложенными репозиториями
+    return '';
+  }
+  
+  // В локальной разработке используем абсолютный путь от корня
+  return '/';
+}
+
 // Инициализация карты при загрузке DOM
 document.addEventListener('DOMContentLoaded', function() {
   // Проверяем, есть ли элемент карты на странице
@@ -47,9 +62,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Добавляем небольшую задержку для гарантии корректной инициализации на больших экранах
   setTimeout(() => {
-    // Загружаем данные офисов из JSON
-    fetch('/assets/data/contacts.json')
-      .then(response => response.json())
+    // Получаем базовый путь
+    const basePath = getBasePath();
+    
+    // Выводим информацию о текущем пути для отладки
+    console.log('Базовый путь:', basePath);
+    console.log('Полный путь к файлу:', `${basePath}assets/data/contacts.json`);
+    
+    // Загружаем данные офисов из JSON с учетом базового пути
+    fetch(`${basePath}assets/data/contacts.json`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Ошибка HTTP: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         initMap(data.offices);
       })
@@ -93,10 +120,16 @@ function initMap(offices) {
       }
     }, 100);
 
+    // Получаем базовый путь для изображений
+    const basePath = getBasePath();
+    
+    // Выводим информацию о путях к изображениям для отладки
+    console.log('Путь к маркеру:', `${basePath}assets/img/map-marker.svg`);
+
     // Создаем иконки для маркеров с использованием внешних SVG файлов
     const defaultIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-gray">
-              <img src="/assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
+              <img src="${basePath}assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
@@ -105,7 +138,7 @@ function initMap(offices) {
 
     const activeIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-blue">
-              <img src="/assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
+              <img src="${basePath}assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
