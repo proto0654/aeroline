@@ -44,6 +44,7 @@ function getBasePath() {
 
 // Базовый путь для использования в скрипте
 const BASE_PATH = getBasePath();
+console.log('Определен базовый путь:', BASE_PATH);
 
 // Конфигурация карты для разных размеров экрана
 const mapConfig = {
@@ -96,7 +97,20 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(() => {
     // Загружаем данные офисов из JSON, используя BASE_PATH
     fetch(BASE_PATH + 'assets/data/contacts.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          // Если первый запрос не удался, пробуем альтернативный путь
+          console.log('Не удалось загрузить данные по основному пути, пробуем альтернативный...');
+          return fetch('assets/data/contacts.json');
+        }
+        return response;
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         initMap(data.offices);
       })
@@ -143,7 +157,7 @@ function initMap(offices) {
     // Создаем иконки для маркеров с использованием внешних SVG файлов
     const defaultIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-gray">
-              <img src="${BASE_PATH}assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
+              <img src="${BASE_PATH.includes('assets') ? BASE_PATH.replace(/assets\/+$/, '') : BASE_PATH}assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
@@ -152,7 +166,7 @@ function initMap(offices) {
 
     const activeIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-blue">
-              <img src="${BASE_PATH}assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
+              <img src="${BASE_PATH.includes('assets') ? BASE_PATH.replace(/assets\/+$/, '') : BASE_PATH}assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
