@@ -1,6 +1,52 @@
 <!-- Секция с картой -->
 <div class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px]">
   
+  <!-- Скрипт для передачи данных офисов в глобальную переменную -->
+  <script>
+    // Инициализируем глобальную переменную для данных офисов
+    window.officesData = window.officesData || {};
+    
+    // Если на странице есть данные офисов из Vite, добавляем их в глобальную переменную
+    {{#if offices}}
+    window.officesData.offices = [
+      {{#each offices}}
+      {
+        city: "{{city}}",
+        address: "{{address}}",
+        type: "{{type}}",
+        phone: "{{phone}}",
+        email: "{{email}}",
+        coordinates: [{{coordinates.[0]}}, {{coordinates.[1]}}]
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ];
+    {{/if}}
+    
+    // Если выбран офис по умолчанию, также добавляем его
+    {{#if selectedOffice}}
+    window.officesData.selectedOffice = {
+      city: "{{selectedOffice.city}}",
+      address: "{{selectedOffice.address}}",
+      type: "{{selectedOffice.type}}",
+      phone: "{{selectedOffice.phone}}",
+      email: "{{selectedOffice.email}}",
+      coordinates: [{{selectedOffice.coordinates.[0]}}, {{selectedOffice.coordinates.[1]}}]
+    };
+    window.officesData.selectedOfficeIndex = {{selectedOfficeIndex}};
+    {{/if}}
+    
+    // Если есть офис по умолчанию, также добавляем его
+    {{#if defaultOffice}}
+    window.officesData.defaultOffice = {
+      city: "{{defaultOffice.city}}",
+      address: "{{defaultOffice.address}}",
+      type: "{{defaultOffice.type}}",
+      phone: "{{defaultOffice.phone}}",
+      email: "{{defaultOffice.email}}",
+      coordinates: [{{defaultOffice.coordinates.[0]}}, {{defaultOffice.coordinates.[1]}}]
+    };
+    {{/if}}
+  </script>
   
   <!-- Интерактивная карта -->
   <div class="relative w-full rounded-lg">
