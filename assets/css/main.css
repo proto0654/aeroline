@@ -657,13 +657,17 @@
   }
   
   .swiper-button-prev,
-  .swiper-button-next {
+  .swiper-button-next,
+  .swiper-nav-arrow.swiper-button-prev,
+  .swiper-nav-arrow.swiper-button-next {
     width: 30px;
     height: 30px;
   }
   
   .swiper-button-prev:after,
-  .swiper-button-next:after {
+  .swiper-button-next:after,
+  .swiper-nav-arrow.swiper-button-prev:after,
+  .swiper-nav-arrow.swiper-button-next:after {
     font-size: 14px;
   }
   
@@ -928,5 +932,43 @@
  
   .leaflet-control-attribution {
     display: none;
+  }
+}
+
+/* Стили для новостного слайдера */
+.news-swiper-container .news-swiper-button-prev,
+.news-swiper-container .news-swiper-button-next {
+  position: relative;
+  z-index: 10;
+  left: auto;
+  right: auto;
+  transform: translateY(-.6rem);
+  height: 40px;
+  width: 40px;
+}
+
+.news-swiper-container .news-swiper-button-prev:hover,
+.news-swiper-container .news-swiper-button-next:hover {
+  transform: translateY(-.6rem);
+}
+
+.news-swiper-container .news-swiper-pagination {
+  position: relative;
+}
+
+.news-swiper-container .news-swiper-pagination-bullets.swiper-pagination-horizontal {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .news-swiper-container .news-swiper-button-prev,
+  .news-swiper-container .news-swiper-button-next {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .news-swiper-container .news-swiper-button-prev:after,
+  .news-swiper-container .news-swiper-button-next:after {
+    font-size: 14px;
   }
 }
