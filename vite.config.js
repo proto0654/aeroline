@@ -264,6 +264,9 @@ export default defineConfig({
             ...contactsData
           };
           
+          // Добавляем данные офиса по умолчанию для карты на странице контактов
+          contextData.defaultOffice = getDefaultOfficeData();
+          
           // Группируем офисы по городам для фильтрации
           const cities = new Set();
           if (contactsData.offices && contactsData.offices.length > 0) {

@@ -443,7 +443,7 @@
       <!-- Форма расчета стоимости -->
       <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
-        <div class="flex items-stretch gap-2 mb-4">
+        <div class="flex md:flex-row flex-col items-stretch gap-2 mb-4">
           <div class="relative w-full">
             <select
               class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
@@ -456,7 +456,7 @@
               class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
           </div>
 
-          <button class="w-12">
+          <button class="w-12 mx-auto">
             <img src="./assets/img/double-arrow.svg" alt="Поменять местами" class="w-6 h-6">
           </button>
 
@@ -500,14 +500,14 @@
   <!-- Секция с разделами -->
 
   <!-- Секция с карточками сервисов -->
-  <section class="mt-8 md:mt-16 lg:mt-20 mb-12 mx-auto max-w-[1920px] bg-brand-light w-full 3xl:rounded-3xl" id="services-cards">
+  <section class="px-4 md:px-0 mt-8 md:mt-16 lg:mt-20 mb-12 mx-auto max-w-[1920px] bg-brand-light w-full 3xl:rounded-3xl" id="services-cards">
   
     <div class="max-w-[1200px] mx-auto my-20">
       <div class="flex flex-col md:flex-row flex-wrap">
         <div class="flex flex-col w-full md:w-2/5 md:px-2">
           <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
             <img src="./assets/img/request-for-calculation.png" alt="Запрос на расчет"
-              class="w-16 h-16 mr-4">
+              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
             <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
               расчет</span>
             <div class="ml-auto arrow-wrapper">
@@ -516,7 +516,8 @@
             </div>
           </a>
           <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-            <img src="./assets/img/track.png" alt="Отследить груз" class="w-16 h-16 mr-4">
+            <img src="./assets/img/track.png" alt="Отследить груз" 
+              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
             <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Отследить
               груз</span>
             <div class="ml-auto arrow-wrapper">
@@ -525,7 +526,8 @@
             </div>
           </a>
           <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-            <img src="./assets/img/feedback.png" alt="Обратная связь" class="w-16 h-16 mr-4">
+            <img src="./assets/img/feedback.png" alt="Обратная связь" 
+              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
             <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Обратная
               связь</span>
             <div class="ml-auto arrow-wrapper">
@@ -535,8 +537,9 @@
           </a>
           <div class="flex flex-row mb-4 md:mb-0 gap-4 half-cards">
             <a href="#"
-              class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
-              <img src="./assets/img/payment.png" alt="Оплата" class="w-16 h-16 mr-4 w-full">
+              class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 flex-col items-start w-full md:items-start">
+              <img src="./assets/img/payment.png" alt="Оплата" 
+                class="w-16 h-16 mr-4 w-full md:min-w-full min-w-[40%] h-[170px] object-contain object-bottom">
               <span
                 class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Оплата</span>
               <div class="ml-auto arrow-wrapper">
@@ -546,7 +549,8 @@
             </a>
             <a href="#"
               class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
-              <img src="./assets/img/tariffs.png" alt="Тарифы" class="w-16 h-16 mr-4 w-full">
+              <img src="./assets/img/tariffs.png" alt="Тарифы" 
+                class="w-16 h-16 mr-4 w-full min-w-[40%] h-[170px] object-contain object-bottom">
               <span
                 class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Тарифы</span>
               <div class="ml-auto arrow-wrapper">
@@ -558,7 +562,8 @@
         </div>
         <div class="flex flex-col w-full md:w-3/5 md:px-2">
           <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-            <img src="./assets/img/shipping.png" alt="Заявка на перевозку" class="w-16 h-16 mr-4">
+            <img src="./assets/img/shipping.png" alt="Заявка на перевозку" 
+              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
             <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Заявка на
               перевозку</span>
             <div class="ml-auto arrow-wrapper">
@@ -567,7 +572,8 @@
             </div>
           </a>
           <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-            <img src="./assets/img/helper.png" alt="Страница «Помощник»" class="w-16 h-16 mr-4">
+            <img src="./assets/img/helper.png" alt="Страница «Помощник»" 
+              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
             <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Страница
               «Помощник»</span>
             <div class="ml-auto arrow-wrapper">
@@ -576,7 +582,8 @@
             </div>
           </a>
           <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-            <img src="./assets/img/calculator.png" alt="Калькулятор" class="w-16 h-16 mr-4">
+            <img src="./assets/img/calculator.png" alt="Калькулятор" 
+              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
             <span
               class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Калькулятор</span>
             <div class="ml-auto arrow-wrapper">
@@ -586,7 +593,7 @@
           </a>
           <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
             <img src="./assets/img/international.png" alt="Запрос на международную перевозку"
-              class="w-16 h-16 mr-4">
+              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
             <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
               международную перевозку</span>
             <div class="ml-auto arrow-wrapper">
@@ -601,31 +608,25 @@
 
   <!-- Секция с картой -->
   <!-- Секция с картой -->
-  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px]">
+  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px] px-4 md:px-0">
     <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">Контакты</h2>
     <p class="text-body-secondary text-brand-gray mb-6">Описание, например сколько представительств или выберите одну из отмеченных точек на карте</p>
     
-    <!-- Карта (заглушка) -->
-    <div class="relative w-full h-[400px] md:h-[500px] rounded-lg ">
-      <img src="./assets/img/map.jpg" alt="Карта" class="rounded-2xl w-full h-full object-cover" >
+    <!-- Интерактивная карта -->
+    <div class="relative w-full min-h-[90vh] md:h-[500px] rounded-lg">
+      <!-- Контейнер для Leaflet карты -->
+      <div id="map" class="w-full h-[90vh] md:h-[550px] rounded-2xl bg-gray-100"></div>
       
-      <!-- Карточка выбранного офиса поверх карты -->
-      <div class="selected-office-card absolute left-1/2 -translate-x-1/2 bottom-5 md:top-5 md:bottom-5 md:right-6 md:left-auto md:translate-x-0 w-[95%] md:w-[30%] max-w-full bg-white rounded-2xl shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2">
-        <div class="flex justify-end items-center mb-2">
-          <button class="text-brand-gray hover:text-brand-blue transition-colors" id="close-selected-office">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div class="font-bold text-2xl text-brand-gray">Красноярск</div>
-        <div class="text-brand-gray">ул. Авиаторов, 50</div>
-        <div class="text-brand-gray">Центральный офис</div>
-        <div class="text-brand-gray">+7 (391) 555-12-34</div>
-        <div class="text-brand-gray">info@aeroline.ru</div>
-        <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
+      <!-- Информационная панель с данными офиса -->
+      <div class="map-info-panel absolute left-1/2 -translate-x-1/2 bottom-5 md:top-5 md:bottom-5 md:right-6 md:left-auto md:translate-x-0 w-[95%] md:w-[30%] max-w-full bg-white rounded-2xl shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 hidden z-10">
+        <!-- Содержимое будет заполнено через JavaScript -->
       </div>
     </div>
+    
+    <!-- Подключение стилей и скриптов для карты -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="./assets/js/map.js"></script>
   </section> 
   <div class="h-[20vh] max-h-[80px]">&nbsp;</div>
   <!-- Секция "Стать клиентом" -->

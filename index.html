@@ -114,7 +114,7 @@
       <!-- Форма расчета стоимости -->
       <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
-        <div class="flex items-stretch gap-2 mb-4">
+        <div class="flex md:flex-row flex-col items-stretch gap-2 mb-4">
           <div class="relative w-full">
             <select
               class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
@@ -127,7 +127,7 @@
               class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
           </div>
 
-          <button class="w-12">
+          <button class="w-12 mx-auto">
             <img src="{{basePath}}assets/img/double-arrow.svg" alt="Поменять местами" class="w-6 h-6">
           </button>
 
@@ -174,7 +174,7 @@
 
 
   <!-- Секция с картой -->
-  {{> map-section isHomePage=true defaultOffice=defaultOffice}}
+  {{> map-section defaultOffice=defaultOffice}}
 
   <div class="h-[20vh] max-h-[80px]">&nbsp;</div>
   <!-- Секция "Стать клиентом" -->

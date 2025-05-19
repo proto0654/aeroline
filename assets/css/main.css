@@ -270,12 +270,6 @@
     @apply accent-brand-blue;
   }
 
-  /* Стили для карты */
-  #map {
-    @apply bg-gray-100;
-    min-height: 400px;
-  }
-
   /* Стили для кнопок с анимацией */
   .bg-brand-blue {
     transition: background-color 0.2s ease-in-out;
@@ -725,13 +719,7 @@
   overflow: hidden;
   position: relative;
 }
-#services-cards img{
-  
-  min-width: 40%;
-  height: 170px;
-  object-fit: contain;
-  object-position: bottom;
-}
+
 #services-cards .arrow-wrapper{
   width: 100px;
   height: 100px;
@@ -763,13 +751,7 @@
   padding: 10px;
   min-width: 1px;
 }
-#services-cards .half-cards .service-card-item span{
-  
-  margin-top: -1em;
-  padding-bottom: 1em;
-  padding-left: 1em;
-    
-}
+
 @media (min-width: 768px) {
   #services-cards .half-cards .service-card-item .arrow-wrapper{
     bottom: 10px;
@@ -908,4 +890,51 @@
   background-color: #008DD2;
   transform: scale(1.2);
   transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Стили для интерактивной карты */
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 550px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+
+.map-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map-marker svg {
+  width: 36px;
+  height: 42px;
+}
+
+.map-marker.text-brand-gray svg path {
+  fill: #4D4D4D;
+}
+
+.map-marker.text-brand-blue svg path {
+  fill: #008DD2;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 400px;
+  }
+  
+  #map {
+    height: 400px;
+  }
+  
+  .leaflet-control-attribution {
+    display: none;
+  }
 }
