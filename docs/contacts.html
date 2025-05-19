@@ -7,7 +7,7 @@
   
   <link rel="stylesheet" href="./assets/css/main.css">
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
     <div class="flex justify-between items-center py-4">
@@ -18,7 +18,7 @@
       </div>
       
       <!-- Социальные иконки на десктопе -->
-      <div class="hidden md:flex items-center space-x-6">
+      <div class="hidden lg:flex items-center space-x-6">
         <a href="https://t.me/aeroline" class="text-brand-blue">
           <img src="./assets/img/icons/logos_telegram.svg" alt="Telegram" class="h-8 w-8">
         </a>
@@ -35,7 +35,7 @@
       </div>
       
       <!-- Бургер-меню для мобильных устройств -->
-      <button id="burger-menu-btn" class="md:hidden flex flex-col justify-center items-center bg-brand-light rounded-full p-5">
+      <button id="burger-menu-btn" class="lg:hidden flex flex-col justify-center items-center bg-brand-light rounded-full p-5">
         <span class="burger-line w-6 h-0.5 bg-brand-blue mb-1.5 transition-transform duration-300"></span>
         <span class="burger-line w-6 h-0.5 bg-brand-blue mb-1.5 transition-opacity duration-300"></span>
         <span class="burger-line w-6 h-0.5 bg-brand-blue transition-transform duration-300"></span>
@@ -43,7 +43,7 @@
     </div>
     
     <!-- Навигация и контакты в десктопе -->
-    <div class="hidden md:flex justify-between border-t border-gray-200">
+    <div class="hidden lg:flex justify-between border-t border-gray-200">
       <div class="flex items-center space-x-4 py-3">
         <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center text-brand-blue">
           <img src="./assets/img/icons/messages3.svg" alt="Email" class="h-6 w-6 mr-2">
@@ -69,8 +69,8 @@
   </div>
   
   <!-- Мобильное меню на весь экран -->
-  <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 md:hidden">
-    <div class="container mx-auto px-4 py-3 h-full flex flex-col justify-between">
+  <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
+    <div class="w-[100vw] px-4 py-3 h-full flex flex-col justify-between">
       <div class="flex justify-between items-center pb-3 border-b border-gray-200 ">
         <img src="./assets/img/layout/Logotype_aerline.png" alt="Aeroline" class="h-10">
         <button id="mobile-close-btn" class="text-brand-blue bg-brand-light rounded-full p-4">
@@ -124,17 +124,38 @@
     <h1 class="text-h2 md:text-h1 font-bold text-brand-gray mb-2 md:mb-4 uppercase">Контакты</h1>
     <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте или воспользуйтесь списком ниже.</p>
     <!-- Секция с картой -->
-    <section class="mb-4 md:mb-8 px-4 md:px-0">
+    <div class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px]">
       
       
       <!-- Интерактивная карта -->
-      <div class="relative  relative rounded-2xl overflow-hidden shadow mb-6 md:mb-10">
+      <div class="relative w-full rounded-lg">
         <!-- Контейнер для Leaflet карты -->
-        <div id="map" class="w-full h-[90vh] md:h-[550px] rounded-2xl bg-gray-100"></div>
+        <div id="map" class="w-full h-[80vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
+          <!-- Стиль для скрытия атрибуции на мобильных устройствах -->
+          <style>
+            @media (max-width: 768px) {
+              .leaflet-control-attribution {
+                            display: none
+              }
+            }
+          </style>
+        </div>
         
         <!-- Информационная панель с данными офиса -->
-        <div class="map-info-panel absolute left-1/2 -translate-x-1/2 bottom-5 md:top-5 md:bottom-5 md:right-6 md:left-auto md:translate-x-0 w-[95%] md:w-[30%] max-w-full bg-white rounded-2xl shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 hidden z-10">
-          <!-- Содержимое будет заполнено через JavaScript -->
+        <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10">
+          <div class="flex justify-end items-center mb-2">
+            <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="font-bold text-2xl text-brand-gray">Екатеринбург</div>
+          <div class="text-brand-gray">ул. Малышева 51, БЦ «Высоцкий», 27 этаж</div>
+          <div class="text-brand-gray">Региональный офис Россия</div>
+          <div class="text-brand-gray">+7 343 288 77 95</div>
+          <div class="text-brand-gray">ekb@aeroline.com</div>
+          <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
         </div>
       </div>
       
@@ -142,14 +163,14 @@
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
       <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
       <script src="./assets/js/map.js"></script>
-    </section>   </section>
+    </div>   </section>
 
   
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">
     <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 offices-grid">
-      <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card ring ring-brand-blue"
+      <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card "
         data-city="Москва" data-coordinates="55.751244,37.618423" data-index="0">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -227,7 +248,7 @@
         </div>
         <a href="#" class="text-brand-blue text-xl md:text-sm font-semibold hover:underline mt-2">Посмотреть на карте</a>
       </div>
-      <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card "
+      <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card ring ring-brand-blue"
         data-city="Екатеринбург" data-coordinates="56.8519,60.6122" data-index="6">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">

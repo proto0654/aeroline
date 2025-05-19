@@ -7,7 +7,7 @@
   
   <link rel="stylesheet" href="./assets/css/main.css">
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
     <div class="flex justify-between items-center py-4">
@@ -18,7 +18,7 @@
       </div>
       
       <!-- Социальные иконки на десктопе -->
-      <div class="hidden md:flex items-center space-x-6">
+      <div class="hidden lg:flex items-center space-x-6">
         <a href="https://t.me/aeroline" class="text-brand-blue">
           <img src="./assets/img/icons/logos_telegram.svg" alt="Telegram" class="h-8 w-8">
         </a>
@@ -35,7 +35,7 @@
       </div>
       
       <!-- Бургер-меню для мобильных устройств -->
-      <button id="burger-menu-btn" class="md:hidden flex flex-col justify-center items-center bg-brand-light rounded-full p-5">
+      <button id="burger-menu-btn" class="lg:hidden flex flex-col justify-center items-center bg-brand-light rounded-full p-5">
         <span class="burger-line w-6 h-0.5 bg-brand-blue mb-1.5 transition-transform duration-300"></span>
         <span class="burger-line w-6 h-0.5 bg-brand-blue mb-1.5 transition-opacity duration-300"></span>
         <span class="burger-line w-6 h-0.5 bg-brand-blue transition-transform duration-300"></span>
@@ -43,7 +43,7 @@
     </div>
     
     <!-- Навигация и контакты в десктопе -->
-    <div class="hidden md:flex justify-between border-t border-gray-200">
+    <div class="hidden lg:flex justify-between border-t border-gray-200">
       <div class="flex items-center space-x-4 py-3">
         <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center text-brand-blue">
           <img src="./assets/img/icons/messages3.svg" alt="Email" class="h-6 w-6 mr-2">
@@ -69,8 +69,8 @@
   </div>
   
   <!-- Мобильное меню на весь экран -->
-  <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 md:hidden">
-    <div class="container mx-auto px-4 py-3 h-full flex flex-col justify-between">
+  <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
+    <div class="w-[100vw] px-4 py-3 h-full flex flex-col justify-between">
       <div class="flex justify-between items-center pb-3 border-b border-gray-200 ">
         <img src="./assets/img/layout/Logotype_aerline.png" alt="Aeroline" class="h-10">
         <button id="mobile-close-btn" class="text-brand-blue bg-brand-light rounded-full p-4">

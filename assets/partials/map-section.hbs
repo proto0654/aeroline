@@ -1,12 +1,11 @@
 <!-- Секция с картой -->
-<section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px] px-4 lg:px-0">
-  <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">Контакты</h2>
-  <p class="text-body-secondary text-brand-gray mb-6">{{#if pageDescription}}{{pageDescription}}{{else}}Описание, например сколько представительств или выберите одну из отмеченных точек на карте{{/if}}</p>
+<div class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full my-[60px]">
+  
   
   <!-- Интерактивная карта -->
   <div class="relative w-full rounded-lg">
     <!-- Контейнер для Leaflet карты -->
-    <div id="map" class="w-full h-[90vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
+    <div id="map" class="w-full h-[80vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
       <!-- Стиль для скрытия атрибуции на мобильных устройствах -->
       <style>
         @media (max-width: 768px) {
@@ -59,4 +58,4 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="{{basePath}}assets/js/map.js"></script>
-</section> 
+</div> 

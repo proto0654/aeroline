@@ -174,25 +174,33 @@
 
 
   <!-- Секция с картой -->
+  <section class="max-w-[1200px] mx-auto w-full my-10 px-4 lg:px-0">
+    <h1 class="text-h2 md:text-h1 font-bold text-brand-gray mb-2 md:mb-4">Контакты</h1>
+    <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте или воспользуйтесь списком ниже.</p>
   {{> map-section defaultOffice=defaultOffice}}
-
-  <div class="h-[20vh] max-h-[80px]">&nbsp;</div>
+  </section>
+  
   <!-- Секция "Стать клиентом" -->
   <section
-    class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto relative bg-brand-light rounded-2xl p-6 md:p-10 w-full flex flex-row my-[60px] items-center">
-    <div class="flex flex-col items-start z-10 relative h-[300px] justify-center">
-      <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
-      <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
-      <button class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons">Отправить</button>
+    class="lg:mt-20 max-w-[1200px] mx-auto relative p-4 md:p-0 w-full flex flex-row my-[60px] items-center">
+    <div class="bg-brand-light w-full rounded-2xl">
+      <div class="flex flex-col md:flex-row md:items-center w-full items-start z-10 relative justify-center">
+        <div class="px-10 mt-20">
+          <h2 class="leading-1.2 text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
+        <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
+        <button class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons">Отправить</button>
+        </div>
+        <img class="w-full md:w-2/3 max-w-[600px] md:opacity-100 mx-auto min-h-[400px] object-contain object-bottom md:mx-0 md:mr-[-2%] md:mt-[-7%]"
+        src="{{basePath}}assets/img/mens-hands.png" alt="Рукопожатие мужчин">
+      </div>
+      
     </div>
-    <img class="absolute right-0 bottom-0 w-2/3 max-w-[600px] opacity-50 md:opacity-100 mr-[-2%]"
-      src="{{basePath}}assets/img/mens-hands.png" alt="Рукопожатие мужчин">
   </section>
 
   <!-- Секция новостей -->
-  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12">
+  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 w-full px-4 md:px-0">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-      <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
+      <h2 class="text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
       <a href="{{basePath}}news.html" class="text-brand-blue text-body-secondary">Смотреть все новости</a>
     </div>
 
@@ -202,7 +210,7 @@
         {{#if @index}}
         {{#if (lt @index 6)}}
         <div class="swiper-slide">
-          <div class="bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+          <div class="bg-brand-light rounded-lg px-10 flex flex-col justify-between pt-10">
             <div class="flex justify-between items-start mb-4 w-full px-10">
               <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">{{title}}</h3>
               {{#if isNew}}
@@ -261,12 +269,14 @@
   </section>
 
   <!-- Секция о компании -->
-  <section class="pl-10 lg:pl-3 mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 relative p-3">
-    <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-10">О компании</h2>
+  <section class="px-4 lg:px-0 max-w-[1920px] mx-auto relative lg:py-40 py-10 md:py-20">
+    <img src="{{../basePath}}assets/img/layout/Logotype_aerline_sliced.png" alt="Логотип компании" class="absolute top-0 left-0 w-full h-full object-contain object-bottom">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="text-h2 font-bold mb-10">О компании</h2>
     <div class="relative">
 
 
-      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10 pl-15 md:pl-0">
         <div class="
           relative 
           pt-0
@@ -525,10 +535,11 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- Секция с контактной формой -->
-  <section class="mt-8 md:mt-16 lg:mt-20 bg-brand-light max-w-[1920px] mx-auto  w-full pt-[8%] pb-[5%] px-10 3xl:rounded-tl-3xl xl:rounded-tr-3xl">
+  <section class="bg-brand-light max-w-[1920px] mx-auto  w-full pt-[8%] pb-[5%] px-4 3xl:rounded-tl-3xl xl:rounded-tr-3xl">
     <div id="contact-form" class="bg-white rounded-2xl relative w-auto max-w-[1200px] mx-auto">
       <div class="flex flex-col md:flex-row items-stretch">
         <div class="w-full md:w-1/2 mb-6 md:mb-0 p-6 md:p-10 lg:px-20">
@@ -558,7 +569,7 @@
 
         <div class="w-full md:w-1/2 flex justify-center md:justify-end md:items-end">
           <img src="{{basePath}}assets/img/pilot.png" alt="Контактная форма"
-            class="w-[40vw] h-[60vw] object-bottom object-contain max-w-[500px] max-h-[600px] lg:mt-[-20%]">
+            class="w-[60vw] ml-auto md:w-[40vw] md:h-[60vw] object-bottom object-contain max-w-[500px] max-h-[600px] lg:mt-[-20%]">
         </div>
       </div>
     </div>
