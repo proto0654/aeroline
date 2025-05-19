@@ -41,17 +41,46 @@ function getZoomForDevice(zoomConfig) {
 
 // Функция для получения базового пути
 function getBasePath() {
-  // Проверяем, находимся ли мы на GitHub Pages
-  const isGitHubPages = window.location.hostname.includes('github.io');
-  
-  if (isGitHubPages) {
-    // На GitHub Pages используем относительные пути без начального слеша
-    // Это решает проблему с поддоменами и вложенными репозиториями
-    return '';
+  // Получаем текущий скрипт
+  const scripts = document.getElementsByTagName('script');
+  const currentScript = scripts[scripts.length - 1]; // Последний загруженный скрипт
+
+  try {
+    // Получаем путь к скрипту и извлекаем базовый путь
+    const scriptSrc = currentScript.src;
+    
+    // Проверяем, содержит ли путь http:// или https://
+    if (scriptSrc.includes('://')) {
+      // Если это полный URL, извлекаем путь относительно корня сайта
+      const url = new URL(scriptSrc);
+      const pathParts = url.pathname.split('/');
+      pathParts.pop(); // Удаляем имя файла (map.js)
+      
+      // Если скрипт находится в папке assets/js, удаляем две последние части пути
+      if (pathParts[pathParts.length - 1] === 'js' && pathParts[pathParts.length - 2] === 'assets') {
+        pathParts.pop(); // Удаляем js
+        pathParts.pop(); // Удаляем assets
+      }
+      
+      return pathParts.join('/') + '/';
+    } else {
+      // Если это относительный путь
+      const pathParts = scriptSrc.split('/');
+      pathParts.pop(); // Удаляем имя файла (map.js)
+      
+      // Если скрипт находится в папке assets/js, удаляем две последние части пути
+      if (pathParts.length >= 2 && pathParts[pathParts.length - 1] === 'js' && pathParts[pathParts.length - 2] === 'assets') {
+        pathParts.pop(); // Удаляем js
+        pathParts.pop(); // Удаляем assets
+      }
+      
+      return pathParts.join('/') + '/';
+    }
+  } catch (error) {
+    console.error('Ошибка при определении базового пути:', error);
+    // Возвращаем относительный путь от корня в случае ошибки
+    return './';
   }
-  
-  // В локальной разработке используем абсолютный путь от корня
-  return '/';
 }
 
 // Инициализация карты при загрузке DOM
@@ -66,8 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const basePath = getBasePath();
     
     // Выводим информацию о текущем пути для отладки
-    console.log('Базовый путь:', basePath);
-    console.log('Полный путь к файлу:', `${basePath}assets/data/contacts.json`);
+    console.log('Базовый путь для карты:', basePath);
+    console.log('Полный путь к файлу контактов:', `${basePath}assets/data/contacts.json`);
     
     // Загружаем данные офисов из JSON с учетом базового пути
     fetch(`${basePath}assets/data/contacts.json`)
