@@ -1,13 +1,49 @@
+// Конфигурация карты для разных размеров экрана
+const mapConfig = {
+  // Начальные координаты и масштаб
+  initialView: {
+    center: [55.7558, 37.6173], // Москва
+    zoom: {
+      desktop: 5,     // Масштаб для десктопа
+      tablet: 4,      // Масштаб для планшетов
+      mobile: 3       // Масштаб для мобильных
+    }
+  },
+  // Масштаб при выборе офиса
+  officeZoom: {
+    desktop: 8,
+    tablet: 7,
+    mobile: 6
+  },
+  // Максимальный масштаб при автоматической подгонке (fitBounds)
+  maxBoundsZoom: {
+    desktop: 6,
+    tablet: 5,
+    mobile: 4
+  },
+  // Отступы при автоматической подгонке
+  boundsPadding: [50, 50]
+};
+
+// Определение текущего типа устройства
+function getDeviceType() {
+  const width = window.innerWidth;
+  if (width < 768) return 'mobile';
+  if (width < 1024) return 'tablet';
+  return 'desktop';
+}
+
+// Получение масштаба в зависимости от типа устройства
+function getZoomForDevice(zoomConfig) {
+  const deviceType = getDeviceType();
+  return zoomConfig[deviceType];
+}
+
 // Инициализация карты при загрузке DOM
 document.addEventListener('DOMContentLoaded', function() {
   // Проверяем, есть ли элемент карты на странице
   const mapContainer = document.getElementById('map');
   if (!mapContainer) return;
-
-  // Добавляем стиль для скрытия атрибуции на мобильных устройствах
-  const style = document.createElement('style');
-  style.textContent = '@media (max-width: 768px) { .leaflet-control-attribution { display: none; } }';
-  document.head.appendChild(style);
 
   // Загружаем данные офисов из JSON
   fetch('/assets/data/contacts.json')
@@ -25,8 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
  * @param {Array} offices - массив офисов из JSON
  */
 function initMap(offices) {
-  // Центрируем карту на России с увеличенным масштабом
-  const map = L.map('map').setView([55.7558, 37.6173], 5); // Центр на Москву с масштабом 5
+  // Центрируем карту с учетом типа устройства
+  const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
+  const map = L.map('map').setView(mapConfig.initialView.center, initialZoom);
 
   // Добавляем тайловый слой OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -84,7 +121,12 @@ function initMap(offices) {
   // Добавляем группу маркеров на карту и масштабируем карту
   markers.addTo(map);
   if (markers.getLayers().length > 0) {
-    map.fitBounds(markers.getBounds(), { padding: [50, 50], maxZoom: 6 }); // Ограничиваем максимальный масштаб при автоматической подгонке
+    // Используем maxZoom из конфигурации в зависимости от устройства
+    const maxZoom = getZoomForDevice(mapConfig.maxBoundsZoom);
+    map.fitBounds(markers.getBounds(), { 
+      padding: mapConfig.boundsPadding, 
+      maxZoom: maxZoom 
+    });
   }
   
   // Проверяем, есть ли уже выбранный офис в HTML
@@ -101,8 +143,9 @@ function initMap(offices) {
       // Активируем маркер по умолчанию
       officeMarkers[defaultOfficeIndex].setIcon(activeIcon);
       
-      // Центрируем карту на выбранном маркере с увеличенным масштабом
-      map.setView(officeMarkers[defaultOfficeIndex].getLatLng(), 8);
+      // Центрируем карту на выбранном маркере с масштабом в зависимости от устройства
+      const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+      map.setView(officeMarkers[defaultOfficeIndex].getLatLng(), officeZoom);
       
       // Обновляем информационную панель
       updateInfoPanel(offices[defaultOfficeIndex]);
@@ -122,8 +165,9 @@ function initMap(offices) {
         // Активируем выбранный маркер
         marker.setIcon(activeIcon);
         
-        // Центрируем карту на выбранном маркере с увеличенным масштабом
-        map.setView(marker.getLatLng(), 8);
+        // Центрируем карту на выбранном маркере с масштабом в зависимости от устройства
+        const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+        map.setView(marker.getLatLng(), officeZoom);
         
         // Обновляем информационную панель
         updateInfoPanel(offices[index]);
@@ -144,6 +188,19 @@ function initMap(offices) {
       }
     });
   });
+  
+  // Обработчик изменения размера окна для адаптации карты
+  window.addEventListener('resize', () => {
+    // Получаем текущий центр карты
+    const center = map.getCenter();
+    
+    // Обновляем размер карты
+    map.invalidateSize();
+    
+    // Устанавливаем новый масштаб в зависимости от устройства
+    const newZoom = getZoomForDevice(mapConfig.initialView.zoom);
+    map.setView(center, newZoom);
+  });
 }
 
 /**
@@ -161,23 +218,14 @@ function updateInfoPanel(office) {
     return;
   }
   
-  // Сохраняем классы для позиционирования и размеров
-  const positionClasses = infoPanel.className.split(' ').filter(cls => 
-    cls.includes('absolute') || 
-    cls.includes('top-') || 
-    cls.includes('left-') || 
-    cls.includes('right-') || 
-    cls.includes('bottom-') || 
-    cls.includes('translate-') || 
-    cls.includes('w-') || 
-    cls.includes('max-') || 
-    cls.includes('z-') || 
-    cls.includes('overflow-') || 
-    cls.includes('shadow-')
+  // Сохраняем классы Tailwind для позиционирования и стилей
+  const tailwindClasses = infoPanel.className.split(' ').filter(cls => 
+    !cls.includes('hidden') && 
+    cls !== 'map-info-panel'
   ).join(' ');
   
-  // Устанавливаем HTML с сохранением классов Tailwind
-  infoPanel.className = `map-info-panel ${positionClasses} bg-white rounded-2xl p-4 md:p-10 flex flex-col gap-1 md:gap-2`;
+  // Обновляем содержимое, сохраняя все классы Tailwind
+  infoPanel.className = `map-info-panel ${tailwindClasses}`;
   
   infoPanel.innerHTML = `
     <div class="flex justify-end items-center mb-2">
@@ -192,7 +240,7 @@ function updateInfoPanel(office) {
     <div class="text-brand-gray">${office.type}</div>
     <div class="text-brand-gray">${office.phone}</div>
     <div class="text-brand-gray">${office.email}</div>
-    <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 px-4 text-buttons hover:bg-blue-700 transition-colors">Подробнее</button>
+    <button class="bg-brand-blue mt-5 text-white rounded-lg py-3 px-4 text-sm hover:bg-blue-700 transition-colors">Подробнее</button>
   `;
   
   // Показываем панель
