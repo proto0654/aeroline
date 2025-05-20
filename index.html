@@ -114,56 +114,62 @@
       <!-- Форма расчета стоимости -->
       <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
-        <div class="flex md:flex-row flex-col items-stretch gap-2 mb-4">
-          <div class="relative w-full">
-            <select
-              class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
-              <option value="">Откуда</option>
-              <option value="novosibirsk">Новосибирск</option>
-              <option value="krasnoyarsk">Красноярск</option>
-              <option value="irkutsk">Иркутск</option>
-            </select>
-            <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
-              class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+        <div class="flex md:flex-row flex-col items-start gap-2 mb-4">
+          <div>
+            <div class="relative w-full">
+              <select
+                class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+                <option value="">Откуда</option>
+                <option value="novosibirsk">Новосибирск</option>
+                <option value="krasnoyarsk">Красноярск</option>
+                <option value="irkutsk">Иркутск</option>
+              </select>
+              
+              <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            </div>
+            <div class="mb-0 md:mb-0 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
+              <span class="cursor-pointer underline leading-1.5">Новосибирск</span>
+              <span class="cursor-pointer underline leading-1.5">Красноярск</span>
+              <span class="cursor-pointer underline leading-1.5">Иркутск</span>
+              <span class="cursor-pointer underline leading-1.5">Абакан</span>
+              <span class="cursor-pointer underline leading-1.5">Томск</span>
+              
+            </div>
           </div>
 
-          <button class="w-12 mx-auto">
+          <button class="w-12 mx-auto md:mx-2 my-4">
             <img src="{{basePath}}assets/img/double-arrow.svg" alt="Поменять местами" class="w-6 h-6">
           </button>
 
-          <div class="relative w-full">
-            <select
-              class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
-              <option value="">Куда</option>
-              <option value="novosibirsk">Новосибирск</option>
-              <option value="krasnoyarsk">Красноярск</option>
-              <option value="irkutsk">Иркутск</option>
-            </select>
-            <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
-              class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+          <div>
+            <div class="relative w-full">
+              <select
+                class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+                <option value="">Куда</option>
+                <option value="novosibirsk">Новосибирск</option>
+                <option value="krasnoyarsk">Красноярск</option>
+                <option value="irkutsk">Иркутск</option>
+              </select>
+              
+              <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            </div>
+            <div class="mb-4 md:mb-0 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
+              <span class="cursor-pointer underline leading-1.5">Новосибирск</span>
+              <span class="cursor-pointer underline leading-1.5">Красноярск</span>
+              <span class="cursor-pointer underline leading-1.5">Иркутск</span>
+              <span class="cursor-pointer underline leading-1.5">Абакан</span>
+              <span class="cursor-pointer underline leading-1.5">Томск</span>
+              
+            </div>
           </div>
           <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons">Рассчитать</button>
         </div>
 
 
 
-        <div class="mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-1">
-
-          <span class="cursor-pointer underline">Новосибирск</span>
-          <span class="cursor-pointer underline">Красноярск</span>
-          <span class="cursor-pointer underline">Иркутск</span>
-          <span class="cursor-pointer underline">Абакан</span>
-          <span class="cursor-pointer underline">Томск</span>
-          <span class="cursor-pointer underline">Барнаул</span>
-          <span class="cursor-pointer underline">Кемерово</span>
-          <span class="cursor-pointer underline">Омск</span>
-          <span class="cursor-pointer underline">Тюмень</span>
-          <span class="cursor-pointer underline">Екатеринбург</span>
-          <span class="cursor-pointer underline">Челябинск</span>
-          <span class="cursor-pointer underline">Уфа</span>
-
-
-        </div>
+        
       </div>
     </div>
   </section>
@@ -174,15 +180,54 @@
 
 
   <!-- Секция с картой -->
-  <section class="max-w-[1200px] mx-auto w-full my-10 px-4 lg:px-0">
+  <section class="max-w-[1200px] mx-auto w-full my-10 px-4 lg:xl-0">
     <h1 class="text-h2 md:text-h1 font-bold text-brand-gray mb-2 md:mb-4">Контакты</h1>
     <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте или воспользуйтесь списком ниже.</p>
   {{> map-section defaultOffice=defaultOffice}}
+  
+  <!-- Скрытый контейнер для хранения данных офисов -->
+  <div id="offices-data" class="hidden">
+    {{#each offices}}
+    <div class="office-data" 
+         data-city="{{city}}" 
+         data-address="{{address}}" 
+         data-type="{{type}}" 
+         data-phone="{{phone}}" 
+         data-email="{{email}}" 
+         data-coordinates="{{coordinates.[0]}},{{coordinates.[1]}}">
+    </div>
+    {{/each}}
+  </div>
+  
+  <!-- Скрипт для инициализации данных офисов -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Инициализируем данные офисов для карты
+      window.officesData = [];
+      const officeElements = document.querySelectorAll('#offices-data .office-data');
+      if (officeElements && officeElements.length) {
+        officeElements.forEach(officeElem => {
+          const coordinates = officeElem.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
+          if (coordinates.length === 2) {
+            window.officesData.push({
+              city: officeElem.dataset.city,
+              address: officeElem.dataset.address,
+              type: officeElem.dataset.type,
+              phone: officeElem.dataset.phone,
+              email: officeElem.dataset.email,
+              coordinates: coordinates
+            });
+          }
+        });
+        console.log('Инициализированы данные офисов для карты:', window.officesData.length);
+      }
+    });
+  </script>
   </section>
   
   <!-- Секция "Стать клиентом" -->
   <section
-    class="lg:mt-20 max-w-[1200px] mx-auto relative p-0 w-full flex flex-row md:my-[60px] items-center">
+    class="lg:mt-20 max-w-[1200px] mx-auto relative px-4 w-full flex flex-row md:my-[60px] items-center">
     <div class="bg-brand-light w-full rounded-2xl">
       <div class="flex flex-col md:flex-row md:items-center w-full items-start z-10 relative justify-center">
         <div class="px-4 md:px-10 mt-20">
@@ -540,7 +585,10 @@
   <!-- Секция с контактной формой -->
   <section class="bg-brand-light max-w-[1920px] mx-auto  w-full pt-[8%] md:pb-[5%] md:px-4 3xl:rounded-tl-3xl xl:rounded-tr-3xl">
     <div id="contact-form" class="md:bg-white rounded-2xl relative w-auto max-w-[1200px] mx-auto">
-      <div class="flex flex-col md:flex-row items-stretch">
+      <!-- Добавляем фоновое изображение как элемент img вместо CSS background-image -->
+      <img src="{{basePath}}assets/img/layout/circles.svg" alt="Фоновые круги" class="absolute right-0 bottom-0 w-1/2 h-auto pointer-events-none z-0 opacity-80 select-none">
+      
+      <div class="flex flex-col md:flex-row items-stretch relative z-10">
         <div class="w-full md:w-1/2 mb-6 md:mb-0 p-6 md:p-10 lg:px-20">
           <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-3">Остались вопросы?</h2>
           <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>

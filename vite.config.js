@@ -240,6 +240,15 @@ export default defineConfig({
           contextData.newsData = getNewsData();
           // Добавляем данные офиса по умолчанию для карты на главной странице
           contextData.defaultOffice = getDefaultOfficeData();
+          // Добавляем все офисы, как на странице контактов
+          const contactsData = getContactsData();
+          if (contactsData.offices && contactsData.offices.length > 0) {
+            contextData.offices = contactsData.offices;
+            // Выбираем случайный офис для отображения на карте
+            const randomIndex = Math.floor(Math.random() * Math.min(9, contactsData.offices.length));
+            contextData.selectedOffice = contactsData.offices[randomIndex];
+            contextData.selectedOfficeIndex = randomIndex;
+          }
         }
 
         // Если это страница вакансий, добавляем данные о вакансиях
@@ -358,6 +367,18 @@ export default defineConfig({
           // Список файлов для обработки
           const htmlFiles = ['index.html', 'vacancies.html', 'contacts.html', 'helper.html', 'payments.html', 'order-tracking.html', 'news.html', 'services.html'];
           
+          // Находим хешированный CSS-файл
+          let cssFileName = null;
+          if (fs.existsSync('docs/assets/css')) {
+            const cssFiles = fs.readdirSync('docs/assets/css')
+              .filter(file => file.match(/^main\.[a-f0-9]+\.css$/));
+            
+            if (cssFiles.length > 0) {
+              cssFileName = cssFiles[0];
+              console.log(`Найден хешированный CSS-файл: ${cssFileName}`);
+            }
+          }
+          
           htmlFiles.forEach(file => {
             const filePath = `docs/${file}`;
             if (fs.existsSync(filePath)) {
@@ -380,8 +401,17 @@ export default defineConfig({
               // 3. Исправляем ссылки на скрипты
               content = content.replace(/src="\.\/main\.js"/g, 'src="./assets/main.js"');
               
-              // 4. Исправляем ссылки на стили
-              content = content.replace(/href="\.\/assets\/css\/main\.css"/g, 'href="./assets/css/main.css"');
+              // 4. Исправляем ссылки на стили с учетом хеширования
+              if (cssFileName) {
+                // Заменяем любые ссылки на main.css на хешированную версию
+                content = content.replace(
+                  /<link[^>]*href=['"]\.?\/?(assets\/css\/main(?:\.[a-f0-9]+)?\.css)['"][^>]*>/g,
+                  `<link rel="stylesheet" href="./assets/css/${cssFileName}">`
+                );
+              } else {
+                // Если хешированного файла нет, используем обычный путь
+                content = content.replace(/href="\.\/assets\/css\/main\.css"/g, 'href="./assets/css/main.css"');
+              }
               
               fs.writeFileSync(filePath, content, 'utf-8');
               console.log(`Fixed resources paths in ${file}`);
@@ -414,18 +444,25 @@ export default defineConfig({
           console.log('Проверка и исправление ассетов...');
           
           // 1. Проверка CSS
-          if (!fs.existsSync('docs/assets/css/main.css')) {
-            console.log('CSS файл не найден, создаем директорию и копируем...');
-            
-            if (!fs.existsSync('docs/assets/css')) {
-              mkdirSync('docs/assets/css', { recursive: true });
-            }
+          if (!fs.existsSync('docs/assets/css')) {
+            console.log('Директория CSS не найдена, создаем...');
+            mkdirSync('docs/assets/css', { recursive: true });
+          }
+          
+          // Проверяем наличие хешированного CSS-файла
+          const cssFiles = fs.readdirSync('docs/assets/css')
+            .filter(file => file.match(/^main\.[a-f0-9]+\.css$/) || file === 'main.css');
+          
+          if (cssFiles.length === 0) {
+            console.log('CSS файл не найден, копируем исходный...');
             
             // Если есть исходный CSS, копируем его
             if (fs.existsSync('assets/css/main.css')) {
               fs.copyFileSync('assets/css/main.css', 'docs/assets/css/main.css');
               console.log('CSS файл скопирован из assets/css/main.css');
             }
+          } else {
+            console.log(`Найдены CSS файлы: ${cssFiles.join(', ')}`);
           }
           
           // 2. Проверка JS
@@ -480,6 +517,17 @@ export default defineConfig({
                 }
               }
             });
+          }
+          
+          // 4. Копируем circles.svg в директорию CSS для исправления путей в CSS
+          if (fs.existsSync('assets/img/layout/circles.svg')) {
+            // Создаем директорию css/img, если её нет
+            if (!fs.existsSync('docs/assets/css/img')) {
+              mkdirSync('docs/assets/css/img', { recursive: true });
+            }
+            // Копируем файл в css/img
+            fs.copyFileSync('assets/img/layout/circles.svg', 'docs/assets/css/img/circles.svg');
+            console.log('Скопирован circles.svg в директорию css/img для исправления путей в CSS');
           }
           
           console.log('Проверка и исправление ассетов завершена');
@@ -540,7 +588,7 @@ export default defineConfig({
         assetFileNames: (assetInfo) => {
           // Сохраняем оригинальную структуру для ресурсов
           if (assetInfo.name.endsWith('.css')) {
-            return 'assets/css/[name][extname]';
+            return 'assets/css/[name].[hash][extname]';
           }
           if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(assetInfo.name)) {
             // Сохраняем структуру для изображений

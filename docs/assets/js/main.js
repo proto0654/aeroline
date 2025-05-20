@@ -20,6 +20,10 @@ function getBasePath() {
         pathParts.pop(); // Удаляем js
         pathParts.pop(); // Удаляем assets
       }
+      // Если скрипт находится в папке assets, удаляем последнюю часть пути
+      else if (pathParts[pathParts.length - 1] === 'assets') {
+        pathParts.pop(); // Удаляем assets
+      }
       
       return pathParts.join('/') + '/';
     } else {
@@ -30,6 +34,10 @@ function getBasePath() {
       // Если скрипт находится в папке assets/js, удаляем две последние части пути
       if (pathParts.length >= 2 && pathParts[pathParts.length - 1] === 'js' && pathParts[pathParts.length - 2] === 'assets') {
         pathParts.pop(); // Удаляем js
+        pathParts.pop(); // Удаляем assets
+      }
+      // Если скрипт находится в папке assets, удаляем последнюю часть пути
+      else if (pathParts.length >= 1 && pathParts[pathParts.length - 1] === 'assets') {
         pathParts.pop(); // Удаляем assets
       }
       
@@ -95,30 +103,90 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Добавляем небольшую задержку для гарантии корректной инициализации на больших экранах
   setTimeout(() => {
-    // Загружаем данные офисов из JSON, используя BASE_PATH
-    fetch(BASE_PATH + 'assets/data/contacts.json')
-      .then(response => {
-        if (!response.ok) {
-          // Если первый запрос не удался, пробуем альтернативный путь
-          console.log('Не удалось загрузить данные по основному пути, пробуем альтернативный...');
-          return fetch('assets/data/contacts.json');
+    // Сначала проверяем, есть ли данные офисов на странице в виде data-атрибутов в карточках офисов
+    let offices = [];
+    const officeCards = document.querySelectorAll('.office-card');
+    let dataFound = false;
+    
+    if (officeCards && officeCards.length > 0) {
+      console.log('Найдены карточки офисов на странице:', officeCards.length);
+      
+      // Собираем данные офисов из карточек
+      officeCards.forEach(card => {
+        if (card.dataset.coordinates) {
+          const coordinates = card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
+          if (coordinates.length === 2) {
+            const city = card.dataset.city || '';
+            const address = card.querySelector('h3')?.textContent?.replace(city + ',', '').trim() || '';
+            const typeElem = card.querySelector('div:nth-of-type(1)');
+            const phoneElem = card.querySelector('div:nth-of-type(2)');
+            const emailElem = card.querySelector('div:nth-of-type(3)');
+            
+            offices.push({
+              city: city,
+              address: address,
+              type: typeElem ? typeElem.textContent : '',
+              phone: phoneElem ? phoneElem.textContent : '',
+              email: emailElem ? emailElem.textContent : '',
+              coordinates: coordinates
+            });
+          }
         }
-        return response;
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        initMap(data.offices);
-      })
-      .catch(error => {
-        console.error('Ошибка загрузки данных офисов:', error);
-        // В случае ошибки загрузки данных, инициализируем карту без маркеров
-        initMap([]);
       });
+      
+      if (offices.length > 0) {
+        console.log('Собраны данные офисов из карточек:', offices.length);
+        initMap(offices);
+        dataFound = true;
+      }
+    }
+    
+    // Если не нашли данные в карточках, проверяем наличие скрытых данных офисов
+    if (!dataFound && window.officesData && window.officesData.length > 0) {
+      console.log('Использую предварительно загруженные данные офисов из переменной window.officesData:', window.officesData.length);
+      initMap(window.officesData);
+      dataFound = true;
+    }
+    
+    // Если данные не найдены ни в DOM, ни в глобальной переменной, показываем карту без маркеров или с дефолтным офисом
+    if (!dataFound) {
+      // Проверяем, есть ли дефолтный офис в DOM
+      const defaultOfficeCity = document.querySelector('.map-info-panel .font-bold.text-2xl.text-brand-gray');
+      if (defaultOfficeCity) {
+        console.log('Найдены данные для дефолтного офиса в DOM');
+        const defaultOfficeAddress = document.querySelector('.map-info-panel div:nth-of-type(3)');
+        const defaultOfficeType = document.querySelector('.map-info-panel div:nth-of-type(4)');
+        const defaultOfficePhone = document.querySelector('.map-info-panel div:nth-of-type(5)');
+        const defaultOfficeEmail = document.querySelector('.map-info-panel div:nth-of-type(6)');
+        
+        // Координаты для Красноярска (или может быть в другом месте, если указано)
+        let defaultCoordinates = [56.010563, 92.852572]; // Красноярск 
+        
+        // Пробуем найти координаты в ближайших атрибутах (если есть)
+        const mapInfoPanel = document.querySelector('.map-info-panel');
+        if (mapInfoPanel && mapInfoPanel.dataset.coordinates) {
+          const coordStr = mapInfoPanel.dataset.coordinates;
+          const coords = coordStr.split(',').map(coord => parseFloat(coord.trim()));
+          if (coords.length === 2) {
+            defaultCoordinates = coords;
+          }
+        }
+        
+        const defaultOffice = {
+          city: defaultOfficeCity.textContent,
+          address: defaultOfficeAddress ? defaultOfficeAddress.textContent : '',
+          type: defaultOfficeType ? defaultOfficeType.textContent : '',
+          phone: defaultOfficePhone ? defaultOfficePhone.textContent : '',
+          email: defaultOfficeEmail ? defaultOfficeEmail.textContent : '',
+          coordinates: defaultCoordinates
+        };
+        
+        initMap([defaultOffice]);
+      } else {
+        console.log('Данные не найдены на странице, инициализируем карту без маркеров');
+        initMap([]);
+      }
+    }
   }, 100);
 });
 
@@ -157,7 +225,7 @@ function initMap(offices) {
     // Создаем иконки для маркеров с использованием внешних SVG файлов
     const defaultIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-gray">
-              <img src="${BASE_PATH.includes('assets') ? BASE_PATH.replace(/assets\/+$/, '') : BASE_PATH}assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
+              <img src="${BASE_PATH}assets/img/map-marker.svg" alt="Маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
@@ -166,7 +234,7 @@ function initMap(offices) {
 
     const activeIcon = L.divIcon({
       html: `<div class="flex items-center justify-center w-9 h-[42px] text-brand-blue">
-              <img src="${BASE_PATH.includes('assets') ? BASE_PATH.replace(/assets\/+$/, '') : BASE_PATH}assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
+              <img src="${BASE_PATH}assets/img/map-marker-active.svg" alt="Активный маркер" class="w-full h-full" />
              </div>`,
       className: '',
       iconSize: [36, 42],
@@ -527,7 +595,35 @@ function loadJsonData(url, callback) {
     return;
   }
   
-  fetch(url)
+  // Если путь не начинается с http или ./, добавляем BASE_PATH
+  let fullUrl = url;
+  if (!url.startsWith('http') && !url.startsWith('./') && !url.startsWith('../')) {
+    // Предотвращаем дублирование 'assets' в пути
+    if (url.startsWith('assets/')) {
+      fullUrl = `${BASE_PATH}${url}`;
+    } else {
+      fullUrl = `${BASE_PATH}${url}`;
+    }
+    console.log('Модифицированный URL для загрузки:', fullUrl);
+  }
+  
+  fetch(fullUrl)
+    .then(response => {
+      if (!response.ok) {
+        console.log(`Не удалось загрузить данные из ${fullUrl}, пробуем альтернативный путь...`);
+        // Пробуем альтернативный путь
+        return fetch(`./${url}`);
+      }
+      return response;
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.log(`Не удалось загрузить данные из ./${url}, пробуем последний вариант...`);
+        // Пробуем ещё один альтернативный путь
+        return fetch(`../${url}`);
+      }
+      return response;
+    })
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
