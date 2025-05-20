@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main.ae09ee6a.css">
+  <link rel="stylesheet" href="./assets/css/main.6e231cc3.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -82,7 +82,7 @@
   
   <!-- Мобильное меню на весь экран -->
   <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
-    <div class="w-[100vw] px-4 py-3 h-full flex flex-col justify-between h-[100vh]">
+    <div class="w-[100vw] px-4 py-3 h-full flex flex-col justify-between max-h-[100vh] h-[100vh]">
       <div class="flex justify-between items-center pb-3 border-b border-gray-200 " id="mobile-menu-header">
         <img src="./assets/img/layout/Logotype_aerline.png" alt="Aeroline" class="h-10">
         <button id="mobile-close-btn" class="text-brand-blue bg-brand-light rounded-full p-3">
@@ -131,7 +131,7 @@
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента --> <!-- Заголовок страницы -->
 <section class="py-12 md:py-16 lg:py-20 relative overflow-hidden max-w-[1920px] w-full mx-auto">
-  <div class="flex flex-col items-center text-center relative z-10 min-h-[300px]">
+  <div class="flex flex-col items-start p-4 md:items-center text-center relative z-10 min-h-[300px]">
     <h1 class="text-h4 md:text-h2 font-bold text-brand-gray mb-4">УСЛУГИ</h1>
   </div>
   <div class="absolute inset-0 z-0">
@@ -141,7 +141,7 @@
 <main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
   
 
-  <section class="services-section flex flex-col gap-6 py-8 max-w-[1200px] mx-auto my-20">
+  <section class="services-section flex flex-col gap-6 p-4 max-w-[1200px] mx-auto md:my-20">
     <!-- Блок "Ответственное хранение" -->
     <div class="services-item">
       <div class="bg-brand-light rounded-2xl p-6 md:p-8 overflow-hidden">
@@ -150,11 +150,11 @@
             <img src="./assets/img/shipping.png" alt="Ответственное хранение" class="max-h-[220px] object-contain object-left mix-blend-darken w-full max-w-md rounded-lg">
           </div>
           <div class="w-full md:w-3/5">
-            <h2 class="text-h5 md:text-h3 font-bold text-brand-gray mb-4">Ответственное хранение</h2>
-            <p class="text-body-secondary text-brand-gray mb-4">
+            <h2 class="text-h4 md:text-h3 font-bold text-brand-gray mb-4">Ответственное хранение</h2>
+            <p class="md:text-body-secondary text-brand-gray mb-4">
               Осуществляем хранение различных грузов и товаров на тёплых складах и на площадках уличного хранения.
             </p>
-            <p class="text-body-secondary text-brand-gray">
+            <p class="md:text-body-secondary text-brand-gray">
               Работаем с негабаритными грузами.
             </p>
           </div>
@@ -171,8 +171,8 @@
             <img src="./assets/img/calculator.png" alt="3PL" class="max-h-[220px] object-left object-contain mix-blend-darken w-full max-w-md rounded-lg">
           </div>
           <div class="w-full md:w-3/5">
-            <h2 class="text-h5 md:text-h3 font-bold text-brand-gray mb-4">3PL</h2>
-            <p class="text-body-secondary text-brand-gray mb-4">
+            <h2 class="text-h4 md:text-h3 font-bold text-brand-gray mb-4">3PL</h2>
+            <p class="md:text-body-secondary text-brand-gray mb-4">
               На базе своих терминалов предоставляем услуги организации регионального аутсорсинга для клиентов. В рамках проектов осуществляем полный цикл операций с отгрузочными партиями, размещением товара на складе, с интеграцией систем клиента-исполнителя для удобного и оперативного сбора заказов и отгрузке их получателям.
             </p>
           </div>
@@ -189,14 +189,14 @@
             <img src="./assets/img/international.png" alt="Импортные перевозки" class="mix-blend-darken w-full max-w-md max-h-[220px] object-left object-contain rounded-lg">
           </div>
           <div class="w-full md:w-3/5">
-            <h2 class="text-h5 md:text-h3 font-bold text-brand-gray mb-4">Импортные перевозки</h2>
-            <p class="text-body-secondary text-brand-gray mb-4">
+            <h2 class="text-h4 md:text-h3 font-bold text-brand-gray mb-4">Импортные перевозки</h2>
+            <p class="md:text-body-secondary text-brand-gray mb-4">
               Осуществляем транспортировку грузовых партий из разных стран выбранными способами доставки.
             </p>
-            <p class="text-body-secondary text-brand-gray mb-4">
+            <p class="md:text-body-secondary text-brand-gray mb-4">
               Контролируем все этапы доставки грузовых партий через таможню на импорт.
             </p>
-            <p class="text-body-secondary text-brand-gray">
+            <p class="md:text-body-secondary text-brand-gray">
               Работаем с негабаритными и проектными грузами.
             </p>
           </div>
@@ -207,19 +207,31 @@
   </section>
 
   <!-- Форма расчета стоимости -->
-  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto">
+  <section class="mb-[-5px] md:mb-16 lg:mb-20 max-w-[1200px] mx-auto p-4">
     <div class="bg-brand-light rounded-3xl relative">
       <div class="flex flex-col md:flex-row">
         
         <div class="w-full md:w-3/5 mb-6 md:mb-0 p-6 md:p-12">
-          <h2 class="text-h3 md:text-h2 font-bold text-brand-gray uppercase mb-4">Рассчитайте стоимость</h2>
+          <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 leading-1.2">Рассчитайте стоимость</h2>
           <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
           
           <form class="space-y-4">
-            <input type="text" placeholder="Лицо компании" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
-            <input type="text" placeholder="ФИО" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
-            <input type="tel" placeholder="Номер телефона" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
-            <input type="email" placeholder="Почта" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
+            <div class="relative">
+              <input type="text" placeholder="Лицо компании" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
+              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
+            </div>
+            <div class="relative">
+              <input type="text" placeholder="ФИО" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
+              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
+            </div>
+            <div class="relative">
+              <input type="tel" placeholder="Номер телефона" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
+              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
+            </div>
+            <div class="relative">
+              <input type="email" placeholder="Почта" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
+              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
+            </div>
             <textarea placeholder="Дополнительная информация" rows="3" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary"></textarea>
             
             <button type="submit" class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons w-full">Отправить</button>
@@ -228,15 +240,16 @@
               <div class="flex items-center h-6 mt-1">
                 <input id="consent-checkbox" type="checkbox" required class="w-4 h-4 border-gray-300 rounded">
               </div>
-              <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray">
-                Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой конфиденциальности
+              <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray leading-1.2">
+                Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой конфиденциальности 
               </label>
             </div>
+            
           </form>
         </div>
         <div class="w-full md:w-2/5 flex justify-center md:justify-end items-center">
-          <img src="./assets/img/circles.svg" alt="Фоновые круги" class="absolute right-0 w-1/2 h-auto bottom-0 z-0">
-          <img src="./assets/img/delivery-man.png" alt="Рассчитайте стоимость" class="lg:mr-[-11%] object-contain relative z-10 absolute bottom-0">
+          <img src="./assets/img/circles.svg" alt="Фоновые круги" class="absolute right-0 w-full md:w-1/2 h-auto bottom-0 z-0">
+          <img src="./assets/img/delivery-man.png" alt="Рассчитайте стоимость" class="max-w-[80vw] ml-auto lg:mr-[-11%] object-contain relative z-10 absolute bottom-0">
         </div>
         
       </div>
@@ -419,23 +432,23 @@
       <div class="flex flex-col items-start">
         <img src="./assets/img/layout/Logotype_aerline_white.png" alt="Aeroline" class="h-11 mb-8">
         <p class="caption-regular text-white/50">@2025</p>
-        <a href="./privacy.html" class="caption-regular text-white/50">Политика конфиденциальности</a>
+        <a href="./privacy.html" class="caption-regular text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
       </div>
 
       <div class="flex flex-col">
-        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3">
+        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3 hover:text-brand-blue transition-colors">
           <img src="./assets/img/icons/messages3_white.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="caption-regular flex items-center mb-4">
+        <a href="tel:83912050025" class="caption-regular flex items-center mb-4 hover:text-brand-blue transition-colors">
           <img src="./assets/img/icons/callcalling_white.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
         <div class="flex items-center space-x-3">
-          <a href="https://t.me/aeroline" class="text-white">
+          <a href="https://t.me/aeroline" class="text-white hover:opacity-80 transition-opacity">
             <img src="./assets/img/icons/logos_telegram.svg" alt="Telegram" class="h-8 w-8">
           </a>
-          <a href="https://wa.me/83912050025" class="text-white">
+          <a href="https://wa.me/83912050025" class="text-white hover:opacity-80 transition-opacity">
             <img src="./assets/img/icons/logos_whatsapp-icon.svg" alt="WhatsApp" class="h-8 w-8">
           </a>
         </div>
@@ -443,21 +456,21 @@
 
       <div class="flex space-x-16">
         <div class="flex flex-col space-y-3">
-          <a href="./index.html" class="caps-regular">Главная</a>
-          <a href="./services.html" class="caps-regular">Услуги</a>
-          <a href="./payments.html" class="caps-regular">Платежи</a>
+          <a href="./index.html" class="caps-regular hover:text-brand-blue transition-colors">Главная</a>
+          <a href="./services.html" class="caps-regular hover:text-brand-blue transition-colors">Услуги</a>
+          <a href="./payments.html" class="caps-regular hover:text-brand-blue transition-colors">Платежи</a>
         </div>
         <div class="flex flex-col space-y-3">
-          <a href="./news.html" class="caps-regular">Новости</a>
-          <a href="./vacancies.html" class="caps-regular">Вакансии</a>
-          <a href="./contacts.html" class="caps-regular">Контакты</a>
+          <a href="./news.html" class="caps-regular hover:text-brand-blue transition-colors">Новости</a>
+          <a href="./vacancies.html" class="caps-regular hover:text-brand-blue transition-colors">Вакансии</a>
+          <a href="./contacts.html" class="caps-regular hover:text-brand-blue transition-colors">Контакты</a>
         </div>
       </div>
 
       <div class="flex flex-col space-y-3">
-        <a href="./order-tracking.html" class="caps-regular">Отслеживание заказа</a>
-        <a href="./helper.html" class="caps-regular">Страница «Помощник»</a>
-        <a href="./login.html" class="caps-regular">Войти в личный кабинет</a>
+        <a href="./order-tracking.html" class="caps-regular hover:text-brand-blue transition-colors">Отслеживание заказа</a>
+        <a href="./helper.html" class="caps-regular hover:text-brand-blue transition-colors">Страница «Помощник»</a>
+        <a href="./login.html" class="caps-regular hover:text-brand-blue transition-colors">Войти в личный кабинет</a>
       </div>
     </div>
   </div>

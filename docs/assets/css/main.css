@@ -966,3 +966,26 @@
     font-size: 14px;
   }
 }
+
+/* Стили для ховеров в футере */
+footer a.caps-regular {
+  @apply transition-colors duration-300;
+}
+
+footer a.caps-regular:hover {
+  @apply text-brand-blue;
+}
+
+footer a.text-white\/50:hover {
+  @apply text-white;
+}
+
+footer a.text-white.hover\:opacity-80:hover img {
+  @apply opacity-80;
+}
+
+@media (min-width: 768px) {
+  footer a.caption-regular:hover {
+    @apply text-brand-blue;
+  }
+}
