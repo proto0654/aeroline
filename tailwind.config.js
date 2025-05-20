@@ -13,7 +13,7 @@ module.exports = {
         'brand-gray': '#4D4D4D',    // Темно-серый цвет из брендбука
         'brand-light': '#F4F6F9',   // Светло-серый цвет из брендбука
         'brand-white': '#FFFFFF',   // Белый цвет из брендбука
-        
+        'brand-blue-opacity': 'rgba(0, 141, 210, 0.2)',
       },
       fontFamily: {
         'calibri': ['Calibri', 'sans-serif'],
