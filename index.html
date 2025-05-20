@@ -61,7 +61,7 @@
                       class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
                       {{title}}</h1>
                     <button
-                      class="bg-brand-gray px-3 py-2 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons mb-5 px-7">{{buttonText}}</button>
+                      class="bg-brand-gray px-3 py-3 w-full md:w-auto rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons mb-5 px-7">{{buttonText}}</button>
                     <p class="text-brand-gray line-clamp-3 md:line-clamp-none">
                       {{description}}
                     </p>
@@ -94,10 +94,10 @@
     </div>
   </section>
   <!-- Секция с формами -->
-  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full">
+  <section class="mt-8 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto w-full px-4 md:px-0">
     <div class="flex flex-col md:flex-row gap-3 md:gap-4">
       <!-- Форма отслеживания -->
-      <div class="bg-brand-light p-6 rounded-lg w-full md:w-2/5">
+      <div class="bg-brand-light p-4 rounded-lg w-full md:w-2/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Отследить</h2>
         <div class="flex flex-row w-full gap-2">
           <div class="flex items-center bg-white rounded-lg grow border border-gray-200 px-1">
@@ -112,7 +112,7 @@
       </div>
 
       <!-- Форма расчета стоимости -->
-      <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
+      <div class="bg-brand-light p-4 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
         <div class="flex md:flex-row flex-col items-start gap-2 mb-4">
           <div class="w-full">
@@ -128,7 +128,7 @@
               <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
                 class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
             </div>
-            <div class="mb-0 md:mb-0 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
+            <div class="mb-0 md:mb-0 mt-2 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
               <span class="cursor-pointer underline leading-1.5">Новосибирск</span>
               <span class="cursor-pointer underline leading-1.5">Красноярск</span>
               <span class="cursor-pointer underline leading-1.5">Иркутск</span>
@@ -155,7 +155,7 @@
               <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
                 class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
             </div>
-            <div class="mb-4 md:mb-0 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
+            <div class="mb-4 md:mb-0 mt-2 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
               <span class="cursor-pointer underline leading-1.5">Новосибирск</span>
               <span class="cursor-pointer underline leading-1.5">Красноярск</span>
               <span class="cursor-pointer underline leading-1.5">Иркутск</span>
@@ -244,9 +244,9 @@
 
   <!-- Секция новостей -->
   <section class="mt-20 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 w-full px-4 xl:px-0">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+    <div class="flex flex-row justify-between items-start mb-6">
       <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
-      <a href="{{basePath}}news.html" class="text-brand-blue text-body-secondary">Смотреть все новости</a>
+      <a href="{{basePath}}news.html" class="max-w-[40vw] text-right text-brand-blue text-body-secondary">Смотреть все новости</a>
     </div>
 
     <div class="news-swiper-container relative md:bg-brand-light pb-10 overflow-hidden rounded-2xl">
@@ -601,7 +601,7 @@
               <div class="flex items-center h-6 mt-1">
                 <input id="consent-checkbox" type="checkbox" required class="w-4 h-4 border-gray-300 rounded">
               </div>
-              <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray">
+              <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray leading-1.2">
                 Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой
                 конфиденциальности
               </label>
