@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aeroline - </title>
   
-  <link rel="stylesheet" href="./assets/css/main.c80d3398.css">
+  <link rel="stylesheet" href="./assets/css/main.890ff9e8.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -449,7 +449,7 @@
       <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
         <div class="flex md:flex-row flex-col items-start gap-2 mb-4">
-          <div>
+          <div class="w-full">
             <div class="relative w-full">
               <select
                 class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
@@ -476,7 +476,7 @@
             <img src="./assets/img/double-arrow.svg" alt="Поменять местами" class="w-6 h-6">
           </button>
 
-          <div>
+          <div class="w-full">
             <div class="relative w-full">
               <select
                 class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
@@ -498,7 +498,7 @@
               
             </div>
           </div>
-          <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons">Рассчитать</button>
+          <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons w-full">Рассчитать</button>
         </div>
 
 
@@ -514,100 +514,103 @@
   <section class="px-4 md:px-0 mt-8 md:mt-16 lg:mt-20 mb-12 mx-auto max-w-[1920px] bg-brand-light w-full 3xl:rounded-3xl" id="services-cards">
   
     <div class="max-w-[1200px] mx-auto my-20">
-      <div class="flex flex-col md:flex-row flex-wrap">
-        <div class="flex flex-col w-full md:w-2/5 md:px-2">
-          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+      <div class="flex flex-col md:flex-row flex-wrap [&>div]:flex [&_span]:text-caption-regular [&_span]:md:pr-7 leading-1.2">
+        <div class="w-full md:w-2/5 md:px-2 [&>a]:service-card-item [&>a]:bg-white [&>a]:rounded-xl [&>a]:rounded-lg [&>a]:items-center [&>a]:group [&>a]:md:min-h-[240px] gap-4 flex-row flex-wrap">
+          <a href="#" class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative h-[300px] md:h-auto">
             <img src="./assets/img/request-for-calculation.png" alt="Запрос на расчет"
-              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
-            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Запрос на
               расчет</span>
-            <div class="ml-auto arrow-wrapper">
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
               <img src="./assets/img/sections-button-arrow.svg" alt=""
                 class="w-4 h-4 group-hover:translate-x-1 transition-transform">
             </div>
           </a>
-          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-            <img src="./assets/img/track.png" alt="Отследить груз" 
-              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
-            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Отследить
-              груз</span>
-            <div class="ml-auto arrow-wrapper">
-              <img src="./assets/img/sections-button-arrow.svg" alt=""
-                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-            </div>
-          </a>
-          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
-            <img src="./assets/img/feedback.png" alt="Обратная связь" 
-              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
-            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Обратная
-              связь</span>
-            <div class="ml-auto arrow-wrapper">
-              <img src="./assets/img/sections-button-arrow.svg" alt=""
-                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-            </div>
-          </a>
-          <div class="flex flex-row mb-4 md:mb-0 gap-4 half-cards">
-            <a href="#"
-              class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 flex-col items-start w-full md:items-start">
-              <img src="./assets/img/payment.png" alt="Оплата" 
-                class="w-16 h-16 mr-4 w-full md:min-w-full min-w-[40%] h-[170px] object-contain object-bottom">
-              <span
-                class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Оплата</span>
-              <div class="ml-auto arrow-wrapper">
-                <img src="./assets/img/sections-button-arrow.svg" alt=""
-                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-              </div>
-            </a>
-            <a href="#"
-              class="service-card-item bg-white rounded-xl rounded-lg flex items-center group md:w-1/2 md:flex-col items-start w-full md:items-start">
-              <img src="./assets/img/tariffs.png" alt="Тарифы" 
-                class="w-16 h-16 mr-4 w-full min-w-[40%] h-[170px] object-contain object-bottom">
-              <span
-                class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Тарифы</span>
-              <div class="ml-auto arrow-wrapper">
-                <img src="./assets/img/sections-button-arrow.svg" alt=""
-                  class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="flex flex-col w-full md:w-3/5 md:px-2">
-          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+           <a href="#" class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] flex-col justify-around  relative h-[300px] md:h-auto md:hidden">
             <img src="./assets/img/shipping.png" alt="Заявка на перевозку" 
-              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
-            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Заявка на
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Заявка на
               перевозку</span>
-            <div class="ml-auto arrow-wrapper">
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
               <img src="./assets/img/sections-button-arrow.svg" alt=""
                 class="w-4 h-4 group-hover:translate-x-1 transition-transform">
             </div>
           </a>
-          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+              <a href="#" class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative h-[300px] md:h-auto">
+            <img src="./assets/img/track.png" alt="Отследить груз" 
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Отследить
+              груз</span>
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <a href="#" class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative h-[300px] md:h-auto">
+            <img src="./assets/img/feedback.png" alt="Обратная связь" 
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Обратная
+              связь</span>
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <a href="#" class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] flex-col justify-around  items-start md:items-center relative h-[300px] md:h-auto">
+            <img src="./assets/img/payment.png" alt="Оплата" 
+              class="w-full md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="md:mb-[15%] md:ml-[15%] text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Оплата</span>
+            <div class="ml-auto arrow-wrapper md:block hidden md:self-end md:mb-2 md:absolute md:bottom-4 md:right-4">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform relative">
+            </div>
+          </a>
+          <a href="#" class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] flex-col justify-around  items-start md:items-center relative h-[300px] md:h-auto">
+            <img src="./assets/img/tariffs.png" alt="Тарифы" 
+              class="w-full md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="md:mb-[15%] md:ml-[15%] text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Тарифы</span>
+            <div class="ml-auto arrow-wrapper md:block hidden md:self-end md:mb-2 md:absolute md:bottom-4 md:right-4">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform relative">
+            </div>
+          </a>
+        </div>
+        <div class="w-full md:w-3/5 md:px-2 [&>a]:service-card-item [&>a]:bg-white [&>a]:rounded-xl [&>a]:rounded-lg [&>a]:items-center [&>a]:group [&>a]:md:min-h-[170px] gap-4 flex-row flex-wrap">
+          <a href="#" class="hidden md:flex  w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full sm:flex-col sm:justify-around md:flex-row md:justify-start sm:items-start md:items-center relative h-[300px] md:h-auto">
+            <img src="./assets/img/shipping.png" alt="Заявка на перевозку" 
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Заявка на
+              перевозку</span>
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
+              <img src="./assets/img/sections-button-arrow.svg" alt=""
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+            </div>
+          </a>
+          <a href="#" class="hidden md:flex  w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative h-[300px] md:h-auto">
             <img src="./assets/img/helper.png" alt="Страница «Помощник»" 
-              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
-            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Страница
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Страница
               «Помощник»</span>
-            <div class="ml-auto arrow-wrapper">
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
               <img src="./assets/img/sections-button-arrow.svg" alt=""
                 class="w-4 h-4 group-hover:translate-x-1 transition-transform">
             </div>
           </a>
-          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+          <a href="#" class="hidden md:flex  w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative h-[300px] md:h-auto">
             <img src="./assets/img/calculator.png" alt="Калькулятор" 
-              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
-            <span
-              class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Калькулятор</span>
-            <div class="ml-auto arrow-wrapper">
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Калькулятор</span>
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
               <img src="./assets/img/sections-button-arrow.svg" alt=""
                 class="w-4 h-4 group-hover:translate-x-1 transition-transform">
             </div>
           </a>
-          <a href="#" class="service-card-item bg-white rounded-xl rounded-lg flex items-center group">
+          <a href="#" class="flex w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative h-[300px] md:h-auto mb-4">
             <img src="./assets/img/international.png" alt="Запрос на международную перевозку"
-              class="w-16 h-16 mr-4 min-w-[40%] h-[170px] object-contain object-bottom">
-            <span class="text-body-secondary text-brand-gray group-hover:text-brand-blue transition-colors">Запрос на
+              class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center">
+            <span class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0">Запрос на
               международную перевозку</span>
-            <div class="ml-auto arrow-wrapper">
+            <div class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4">
               <img src="./assets/img/sections-button-arrow.svg" alt=""
                 class="w-4 h-4 group-hover:translate-x-1 transition-transform">
             </div>
@@ -619,7 +622,7 @@
 
   <!-- Секция с картой -->
   <section class="max-w-[1200px] mx-auto w-full my-10 px-4 lg:xl-0">
-    <h1 class="text-h2 md:text-h1 font-bold text-brand-gray mb-2 md:mb-4">Контакты</h1>
+    <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-2 md:mb-4">Контакты</h2>
     <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте или воспользуйтесь списком ниже.</p>
   <!-- Секция с картой -->
   <div class="max-w-[1200px] mx-auto w-full mb-10">
@@ -628,7 +631,7 @@
     <!-- Интерактивная карта -->
     <div class="relative w-full rounded-lg">
       <!-- Контейнер для Leaflet карты -->
-      <div id="map" class="w-full h-[90vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
+      <div id="map" class="w-full h-[85vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
         <!-- Стиль для скрытия атрибуции на мобильных устройствах -->
         <style>
           @media (max-width: 768px) {
@@ -642,7 +645,7 @@
       <!-- Информационная панель с данными офиса -->
       <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10">
         <div class="flex justify-between items-center mb-2">
-          <div class="font-bold text-2xl text-brand-gray">Санкт-Петербург</div>
+          <div class="font-bold text-2xl text-brand-gray">Москва</div>
           <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -650,10 +653,10 @@
           </button>
         </div>
         
-        <div class="text-brand-gray">Невский проспект, 114, БЦ «Невский Центр», 4 этаж</div>
-        <div class="hidden md:block text-brand-gray">Представительство Северо-Запад</div>
-        <div class="hidden md:block text-brand-gray">+7 812 456 78 90</div>
-        <div class="hidden md:block text-brand-gray">spb.center@aeroline.com</div>
+        <div class="text-brand-gray">Пресненская набережная, 10, Башня «Набережная», 42 этаж</div>
+        <div class="hidden md:block text-brand-gray">Корпоративный центр</div>
+        <div class="hidden md:block text-brand-gray">+7 495 123 45 67</div>
+        <div class="hidden md:block text-brand-gray">corporate@aeroline.com</div>
         <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
       </div>
     </div>
@@ -1074,7 +1077,7 @@
     <div class="bg-brand-light w-full rounded-2xl">
       <div class="flex flex-col md:flex-row md:items-center w-full items-start z-10 relative justify-center">
         <div class="px-4 md:px-10 mt-20">
-          <h2 class="leading-1 text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
+          <h2 class="leading-1 text-h3 md:text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
         <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
         <button class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons">Отправить</button>
         </div>
@@ -1086,9 +1089,9 @@
   </section>
 
   <!-- Секция новостей -->
-  <section class="mt-20 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 w-full px-4 md:px-0">
+  <section class="mt-20 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 w-full px-4 xl:px-0">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-      <h2 class="text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
+      <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
       <a href="./news.html" class="text-brand-blue text-body-secondary">Смотреть все новости</a>
     </div>
 
@@ -1212,14 +1215,14 @@
   </section>
 
   <!-- Секция о компании -->
-  <section class="px-4 lg:px-0 max-w-[1920px] mx-auto relative lg:py-40 md:py-10 md:py-20">
+  <section class="px-4 xl:px-0 max-w-[1920px] mx-auto relative lg:py-40 md:py-10 md:py-20">
     <img src="./assets/img/Logotype_aerline_sliced.png" alt="Логотип компании" class="absolute top-0 left-0 w-full h-full object-contain object-bottom">
     <div class="max-w-[1200px] mx-auto">
-      <h2 class="text-h2 font-bold mb-10">О компании</h2>
+      <h2 class="text-h3 md:text-h2 font-bold mb-15 md:mb-10">О компании</h2>
     <div class="relative">
 
 
-      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10 pl-7 md:pl-0">
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10 pl-7 md:pl-0 [&>div>h3]:mt-[-1em] md:[&>div>h3]:mt-0">
         <div class="
           relative 
           pt-0

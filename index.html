@@ -115,7 +115,7 @@
       <div class="bg-brand-light p-6 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
         <div class="flex md:flex-row flex-col items-start gap-2 mb-4">
-          <div>
+          <div class="w-full">
             <div class="relative w-full">
               <select
                 class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
@@ -142,7 +142,7 @@
             <img src="{{basePath}}assets/img/double-arrow.svg" alt="Поменять местами" class="w-6 h-6">
           </button>
 
-          <div>
+          <div class="w-full">
             <div class="relative w-full">
               <select
                 class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
@@ -164,7 +164,7 @@
               
             </div>
           </div>
-          <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons">Рассчитать</button>
+          <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons w-full">Рассчитать</button>
         </div>
 
 
@@ -181,7 +181,7 @@
 
   <!-- Секция с картой -->
   <section class="max-w-[1200px] mx-auto w-full my-10 px-4 lg:xl-0">
-    <h1 class="text-h2 md:text-h1 font-bold text-brand-gray mb-2 md:mb-4">Контакты</h1>
+    <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-2 md:mb-4">Контакты</h2>
     <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте или воспользуйтесь списком ниже.</p>
   {{> map-section defaultOffice=defaultOffice}}
   
@@ -231,7 +231,7 @@
     <div class="bg-brand-light w-full rounded-2xl">
       <div class="flex flex-col md:flex-row md:items-center w-full items-start z-10 relative justify-center">
         <div class="px-4 md:px-10 mt-20">
-          <h2 class="leading-1 text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
+          <h2 class="leading-1 text-h3 md:text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
         <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
         <button class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons">Отправить</button>
         </div>
@@ -243,9 +243,9 @@
   </section>
 
   <!-- Секция новостей -->
-  <section class="mt-20 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 w-full px-4 md:px-0">
+  <section class="mt-20 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 w-full px-4 xl:px-0">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-      <h2 class="text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
+      <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
       <a href="{{basePath}}news.html" class="text-brand-blue text-body-secondary">Смотреть все новости</a>
     </div>
 
@@ -313,14 +313,14 @@
   </section>
 
   <!-- Секция о компании -->
-  <section class="px-4 lg:px-0 max-w-[1920px] mx-auto relative lg:py-40 md:py-10 md:py-20">
+  <section class="px-4 xl:px-0 max-w-[1920px] mx-auto relative lg:py-40 md:py-10 md:py-20">
     <img src="{{../basePath}}assets/img/layout/Logotype_aerline_sliced.png" alt="Логотип компании" class="absolute top-0 left-0 w-full h-full object-contain object-bottom">
     <div class="max-w-[1200px] mx-auto">
-      <h2 class="text-h2 font-bold mb-10">О компании</h2>
+      <h2 class="text-h3 md:text-h2 font-bold mb-15 md:mb-10">О компании</h2>
     <div class="relative">
 
 
-      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10 pl-7 md:pl-0">
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10 pl-7 md:pl-0 [&>div>h3]:mt-[-1em] md:[&>div>h3]:mt-0">
         <div class="
           relative 
           pt-0

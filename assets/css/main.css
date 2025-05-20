@@ -717,7 +717,8 @@
   position: relative;
 }
 
-#services-cards .arrow-wrapper{
+/* Удаляю это правило, так как оно перезаписывает локальные стили */
+/* #services-cards .arrow-wrapper{
   width: 100px;
   height: 100px;
   display: flex;
@@ -728,7 +729,7 @@
   transform: translateY(-50%);
   right: 0;
   
-}
+} */
 @media (max-width: 768px) {
   #services-cards .arrow-wrapper{
     display: none;
