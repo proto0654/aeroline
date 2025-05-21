@@ -58,34 +58,35 @@ console.log('Определен базовый путь:', BASE_PATH);
 const mapConfig = {
   // Начальные координаты и масштаб
   initialView: {
-    center: [55.644957, 37.439279], // Москва, Comcity (Киевское шоссе)
+    // Разные центральные точки для разных типов устройств
+    center: {
+      desktop: [54.962902, 73.38475], // Центр России (для обзора всей страны на десктопе)
+      mobile: [53.224854, 50.199879]     // Москва (для мобильных устройств)
+    },
     zoom: {
-      desktop:4, // Было 16, увеличиваю еще больше для лучшего отображения на десктопах
-      tablet: 6,
-      mobile: 5     // Было 7, увеличиваю для приближения карты (между начальным 10 и текущим 7)
+      desktop: 4, // Масштаб для десктопов
+      mobile: 3  // Масштаб для мобильных устройств
     }
   },
   // Масштаб при выборе офиса
   officeZoom: {
-    desktop: 15, // Было 16, увеличиваю для соответствия начальному масштабу
-    tablet: 11,
-    mobile: 13     // Было 10, увеличиваю для лучшего масштаба при выборе офиса
+    desktop: 15, // Масштаб для десктопов при выборе офиса
+    mobile: 13  // Масштаб для мобильных при выборе офиса
   },
   // Максимальный масштаб при автоматической подгонке (fitBounds)
   maxBoundsZoom: {
-    desktop: 18, // Было 16, увеличиваю для соответствия начальному масштабу  
-    tablet: 11,   
-    mobile: 12     // Было 7, увеличиваю для соответствия начальному зуму
+    desktop: 18, // Максимальный масштаб для десктопов
+    mobile: 7  // Максимальный масштаб для мобильных
   },
   // Отступы при автоматической подгонке
   boundsPadding: [50, 50],
   // Настройки масштабирования иконок маркеров
   markerSizing: {
     minZoom: 2,        // Минимальный зум, при котором начинаем масштабировать
-    maxZoom: 18,       // Было 16, увеличиваю для соответствия новому десктопному масштабу
+    maxZoom: 18,       // Максимальный зум для масштабирования иконок
     minSize: [16, 18], // Минимальный размер иконки [ширина, высота]
     maxSize: [36, 42], // Максимальный размер иконки [ширина, высота]
-    minOffset: [-8, -18], // Минимальное смещение иконки - корректирую вертикальное смещение
+    minOffset: [-8, -18], // Минимальное смещение иконки
     maxOffset: [-18, -42]  // Максимальное смещение иконки
   }
 };
@@ -94,7 +95,6 @@ const mapConfig = {
 function getDeviceType() {
   const width = window.innerWidth;
   if (width < 768) return 'mobile';
-  if (width < 1024) return 'tablet';
   return 'desktop';
 }
 
@@ -102,6 +102,12 @@ function getDeviceType() {
 function getZoomForDevice(zoomConfig) {
   const deviceType = getDeviceType();
   return zoomConfig[deviceType];
+}
+
+// Получение центральной точки в зависимости от типа устройства
+function getCenterForDevice(centerConfig) {
+  const deviceType = getDeviceType();
+  return centerConfig[deviceType];
 }
 
 // Инициализация карты при загрузке DOM
@@ -222,10 +228,11 @@ function initMap(offices) {
     ymaps.ready(function() {
     // Центрируем карту с учетом типа устройства
     const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
+    const initialCenter = getCenterForDevice(mapConfig.initialView.center);
       
       // Создаем карту
       const map = new ymaps.Map('map', {
-      center: mapConfig.initialView.center,
+      center: initialCenter,
       zoom: initialZoom,
         controls: ['zoomControl', 'fullscreenControl'],
         behaviors: ['drag', 'multiTouch']
@@ -360,40 +367,9 @@ function initMap(offices) {
       
       // Если есть маркеры, настраиваем отображение карты
       if (markers.getLength() > 0) {
-        // Для десктопов используем заданный в конфигурации масштаб без автоподгонки
-        if (getDeviceType() === 'desktop') {
-          console.log('Десктоп: используем заданный масштаб', initialZoom);
-          
-          // Если есть дефолтный офис, центрируем на нем, иначе используем центр из конфигурации
-          fetch(`${BASE_PATH}assets/data/default-office.json`)
-            .then(response => response.json())
-            .then(defaultOfficeData => {
-              if (defaultOfficeData.coordinates) {
-                map.setCenter(defaultOfficeData.coordinates, initialZoom);
-              }
-            })
-            .catch(error => {
-              console.error('Ошибка при центрировании на дефолтном офисе:', error);
-            });
-        }
-        // Для мобильных и планшетов показываем все маркеры
-        else {
-          // По умолчанию всегда показываем все маркеры на карте для мобильных и планшетов
-          map.setBounds(markers.getBounds(), {
-            checkZoomRange: true,
-            zoomMargin: getDeviceType() === 'mobile' ? 80 : 100 // Уменьшаю отступ со 150 до 80 для мобильных
-          });
-          
-          // Если мобильное устройство, устанавливаем более сбалансированный зум 
-          // после автоматической подгонки границ, но без экстремальных значений
-          if (getDeviceType() === 'mobile' && markers.getLength() > 3) {
-            // Восстанавливаем код с таймаутом, но с меньшим масштабом
-            setTimeout(() => {
-              const mobileZoom = Math.min(9, map.getZoom() + 1); // Просто слегка увеличиваем текущий зум, но не больше 9
-              map.setZoom(mobileZoom);
-            }, 150);
-          }
-        }
+        // Используем заданный в конфигурации масштаб и центр для текущего устройства без автоподгонки
+        console.log(`${getDeviceType()}: используем заданный масштаб и центр`, initialZoom);
+        map.setCenter(initialCenter, initialZoom);
       }
     
     // Проверяем, есть ли уже выбранный офис в HTML
@@ -532,14 +508,20 @@ function initMap(offices) {
       
       // Обновляем размер карты с небольшой задержкой для корректной перерисовки
       setTimeout(() => {
-          map.container.fitToViewport();
+        map.container.fitToViewport();
         
-        // Устанавливаем новый масштаб в зависимости от устройства
+        // Получаем новый тип устройства после изменения размера окна
+        const newDeviceType = getDeviceType();
+        
+        // Устанавливаем новый масштаб и центр в зависимости от устройства
         const newZoom = getZoomForDevice(mapConfig.initialView.zoom);
-          map.setCenter(center, newZoom, { duration: 0 });
+        const newCenter = getCenterForDevice(mapConfig.initialView.center);
+        
+        // Применяем новые настройки
+        map.setCenter(newCenter, newZoom, { duration: 0 });
           
-          // Отключаем автоматическую подгонку карты под маркеры при ресайзе
-          // чтобы сохранить выбранный пользователем масштаб
+        // Отключаем автоматическую подгонку карты под маркеры при ресайзе
+        // чтобы сохранить выбранный пользователем масштаб
       }, 200);
     });
     });
@@ -1209,38 +1191,16 @@ function initContactsPage() {
             
             // Устанавливаем начальный зум для всей карты
             const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
-            mapInstance.setCenter(mapConfig.initialView.center, initialZoom);
             
-            // Если на карте больше одного офиса и это не десктоп, масштабируем карту, чтобы показать все офисы
-            if (allOfficeCoordinates.length > 1 && getDeviceType() !== 'desktop') {
-              setTimeout(() => {
-                try {
-                  const bounds = mapInstance.geoObjects.getBounds();
-                  if (bounds) {
-                    mapInstance.setBounds(bounds, {
-                      checkZoomRange: true,
-                      zoomMargin: getDeviceType() === 'mobile' ? 80 : 100
-                    });
-                  }
-                } catch (e) {
-                  console.error('Ошибка при масштабировании карты:', e);
-                }
-              }, 150);
-            }
-            // Для десктопа - используем дефолтный офис и заданный масштаб
-            else if (getDeviceType() === 'desktop') {
-              fetch(`${BASE_PATH}assets/data/default-office.json`)
-                .then(response => response.json())
-                .then(defaultOfficeData => {
-                  console.log('Десктоп: центрируем на дефолтном офисе с заданным масштабом', initialZoom);
-                  if (defaultOfficeData.coordinates) {
-                    mapInstance.setCenter(defaultOfficeData.coordinates, initialZoom);
-                  }
-                })
-                .catch(error => {
-                  console.error('Ошибка при центрировании на дефолтном офисе:', error);
-                });
-            }
+            // Используем центр из конфигурации для текущего типа устройства
+            const initialCenter = getCenterForDevice(mapConfig.initialView.center);
+            
+            // Устанавливаем карту в заданное положение без подгонки под маркеры
+            console.log(`Контакты - ${getDeviceType()}: используем заданный масштаб и центр`, initialZoom);
+            mapInstance.setCenter(initialCenter, initialZoom);
+            
+            // Логика отображения офиса по умолчанию в карточке сохраняется через обычную загрузку данных
+            // но карта не центрируется на нем
           }
         });
       }
