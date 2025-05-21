@@ -54,6 +54,29 @@ function getBasePath() {
 const BASE_PATH = getBasePath();
 console.log('Определен базовый путь:', BASE_PATH);
 
+// Цвета маркеров для карты
+const ACTIVE_MARKER_COLOR = '#008DD2'; // Голубой бренд-цвет для активного маркера
+const DEFAULT_MARKER_COLOR = '#666666'; // Серый цвет по умолчанию
+
+/**
+ * Функция для динамического создания маркера с указанным цветом
+ * @param {string} color - Цвет маркера в формате HEX (#RRGGBB)
+ * @returns {string} - URL инлайнового SVG с указанным цветом
+ */
+function createColoredMarkerIcon(color) {
+  // Создаем SVG с указанным цветом
+  const svgTemplate = `
+  <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M35.114 14.1578C33.014 4.91781 24.954 0.757812 17.874 0.757812C17.874 0.757812 17.874 0.757812 17.854 0.757812C10.794 0.757812 2.71397 4.89781 0.61397 14.1378C-1.72603 24.4578 4.59397 33.1978 10.314 38.6978C12.434 40.7378 15.154 41.7578 17.874 41.7578C20.594 41.7578 23.314 40.7378 25.414 38.6978C31.134 33.1978 37.454 24.4778 35.114 14.1578ZM17.874 24.1778C14.394 24.1778 11.574 21.3578 11.574 17.8778C11.574 14.3978 14.394 11.5778 17.874 11.5778C21.354 11.5778 24.174 14.3978 24.174 17.8778C24.174 21.3578 21.354 24.1778 17.874 24.1778Z" fill="${color}" />
+  </svg>`;
+  
+  // Кодируем SVG для использования в URL
+  const encodedSvg = encodeURIComponent(svgTemplate);
+  
+  // Формируем данные для инлайн-SVG
+  return `data:image/svg+xml;charset=UTF-8,${encodedSvg}`;
+}
+
 // Конфигурация карты для разных размеров экрана
 const mapConfig = {
   // Начальные координаты и масштаб
@@ -108,6 +131,49 @@ function getZoomForDevice(zoomConfig) {
 function getCenterForDevice(centerConfig) {
   const deviceType = getDeviceType();
   return centerConfig[deviceType];
+}
+
+/**
+ * Функция для вычисления размера иконки в зависимости от текущего зума
+ * @param {number} currentZoom - Текущий масштаб карты
+ * @returns {Object} - Объект с размерами иконки и смещением
+ */
+function getMarkerSizeForZoom(currentZoom) {
+  const { minZoom, maxZoom, minSize, maxSize, minOffset, maxOffset } = mapConfig.markerSizing;
+  
+  // Если зум меньше минимального, возвращаем минимальный размер
+  if (currentZoom <= minZoom) {
+    return {
+      size: minSize,
+      offset: minOffset
+    };
+  }
+  
+  // Если зум больше максимального, возвращаем максимальный размер
+  if (currentZoom >= maxZoom) {
+    return {
+      size: maxSize,
+      offset: maxOffset
+    };
+  }
+  
+  // Вычисляем коэффициент масштабирования (от 0 до 1)
+  const zoomRatio = (currentZoom - minZoom) / (maxZoom - minZoom);
+  
+  // Вычисляем размеры иконки с учетом коэффициента масштабирования
+  const width = Math.round(minSize[0] + (maxSize[0] - minSize[0]) * zoomRatio);
+  const height = Math.round(minSize[1] + (maxSize[1] - minSize[1]) * zoomRatio);
+  
+  // Вычисляем смещение иконки с учетом пропорции размера
+  // Используем отношение текущей высоты к максимальной для более точного позиционирования
+  const heightRatio = height / maxSize[1];
+  const offsetX = Math.round(minOffset[0] + (maxOffset[0] - minOffset[0]) * heightRatio);
+  const offsetY = Math.round(minOffset[1] + (maxOffset[1] - minOffset[1]) * heightRatio);
+  
+  return {
+    size: [width, height],
+    offset: [offsetX, offsetY]
+  };
 }
 
 // Инициализация карты при загрузке DOM
@@ -242,63 +308,17 @@ function initMap(offices) {
       const markers = new ymaps.GeoObjectCollection();
       const officeMarkers = {};
       
-      // Функция для вычисления размера иконки в зависимости от текущего зума
-      function getMarkerSizeForZoom(currentZoom) {
-        const { minZoom, maxZoom, minSize, maxSize, minOffset, maxOffset } = mapConfig.markerSizing;
-        
-        // Если зум меньше минимального, возвращаем минимальный размер
-        if (currentZoom <= minZoom) {
-          return {
-            size: minSize,
-            offset: minOffset
-          };
-        }
-        
-        // Если зум больше максимального, возвращаем максимальный размер
-        if (currentZoom >= maxZoom) {
-          return {
-            size: maxSize,
-            offset: maxOffset
-          };
-        }
-        
-        // Вычисляем коэффициент масштабирования (от 0 до 1)
-        const zoomRatio = (currentZoom - minZoom) / (maxZoom - minZoom);
-        
-        // Вычисляем размеры иконки с учетом коэффициента масштабирования
-        const width = Math.round(minSize[0] + (maxSize[0] - minSize[0]) * zoomRatio);
-        const height = Math.round(minSize[1] + (maxSize[1] - minSize[1]) * zoomRatio);
-        
-        // Вычисляем смещение иконки с учетом пропорции размера
-        // Используем отношение текущей высоты к максимальной для более точного позиционирования
-        const heightRatio = height / maxSize[1];
-        const offsetX = Math.round(minOffset[0] + (maxOffset[0] - minOffset[0]) * heightRatio);
-        const offsetY = Math.round(minOffset[1] + (maxOffset[1] - minOffset[1]) * heightRatio);
-        
-        return {
-          size: [width, height],
-          offset: [offsetX, offsetY]
-        };
-      }
-      
       // Получаем начальные размеры маркеров
       const initialMarkerProps = getMarkerSizeForZoom(initialZoom);
       
       // Создаем иконки для маркеров с учетом начального масштаба
       const defaultIcon = {
         iconLayout: 'default#image',
-        iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
+        iconImageHref: createColoredMarkerIcon(DEFAULT_MARKER_COLOR),
         iconImageSize: initialMarkerProps.size,
         iconImageOffset: initialMarkerProps.offset
       };
 
-      const activeIcon = {
-        iconLayout: 'default#image',
-        iconImageHref: `${BASE_PATH}assets/img/map-marker-active.svg`,
-        iconImageSize: initialMarkerProps.size,
-        iconImageOffset: initialMarkerProps.offset
-      };
-      
       // Функция для обновления размеров всех маркеров
       function updateAllMarkersSize(currentZoom) {
         const markerProps = getMarkerSizeForZoom(currentZoom);
@@ -306,7 +326,7 @@ function initMap(offices) {
         // Обновляем размеры для всех маркеров
         Object.values(officeMarkers).forEach(marker => {
           // Сохраняем текущий статус (активный или нет)
-          const isActive = marker.options.get('iconImageHref').includes('active');
+          const isActive = marker.options.get('iconImageHref').includes(encodeURIComponent(ACTIVE_MARKER_COLOR));
           
           // Обновляем размеры
           marker.options.set({
@@ -322,8 +342,11 @@ function initMap(offices) {
         const markerProps = getMarkerSizeForZoom(currentZoom);
         
         Object.values(officeMarkers).forEach(m => {
+          // Устанавливаем цвет по умолчанию (серый)
+          const defaultMarkerUrl = createColoredMarkerIcon(DEFAULT_MARKER_COLOR);
+          
           m.options.set({
-            iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
+            iconImageHref: defaultMarkerUrl,
             iconImageSize: markerProps.size,
             iconImageOffset: markerProps.offset
           });
@@ -334,9 +357,17 @@ function initMap(offices) {
     offices.forEach((office, index) => {
       if (!office.coordinates || office.coordinates.length !== 2) return;
       
+        // Создаем маркер с серым цветом по умолчанию
+        const defaultMarkerUrl = createColoredMarkerIcon(DEFAULT_MARKER_COLOR);
+        
         const marker = new ymaps.Placemark(office.coordinates, {
           hintContent: office.city
-        }, defaultIcon);
+        }, {
+          iconLayout: 'default#image',
+          iconImageHref: defaultMarkerUrl,
+          iconImageSize: initialMarkerProps.size,
+          iconImageOffset: initialMarkerProps.offset
+        });
       
       // Сохраняем маркер с индексом офиса для последующего доступа
       officeMarkers[index] = marker;
@@ -352,7 +383,7 @@ function initMap(offices) {
             map, 
             marker.geometry.getCoordinates()
           );
-        });
+      });
     });
     
       // Добавляем коллекцию маркеров на карту
@@ -370,7 +401,7 @@ function initMap(offices) {
         // Используем заданный в конфигурации масштаб и центр для текущего устройства без автоподгонки
         console.log(`${getDeviceType()}: используем заданный масштаб и центр`, initialZoom);
         map.setCenter(initialCenter, initialZoom);
-      }
+    }
     
     // Проверяем, есть ли уже выбранный офис в HTML
     const infoPanel = document.querySelector('.map-info-panel');
@@ -396,11 +427,14 @@ function initMap(offices) {
             const currentZoom = map.getZoom();
             const markerProps = getMarkerSizeForZoom(currentZoom);
             
+            // Создаем маркер с серым цветом по умолчанию
+            const defaultMarkerUrl = createColoredMarkerIcon(DEFAULT_MARKER_COLOR);
+            
             const defaultMarker = new ymaps.Placemark(defaultOfficeData.coordinates, {
               hintContent: defaultOfficeData.city
             }, {
               iconLayout: 'default#image',
-              iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
+              iconImageHref: defaultMarkerUrl,
               iconImageSize: markerProps.size,
               iconImageOffset: markerProps.offset
             });
@@ -467,9 +501,9 @@ function initMap(offices) {
       card.addEventListener('click', function() {
           // Получаем индекс офиса из атрибута или из порядкового номера
           const index = this.dataset.index ? parseInt(this.dataset.index, 10) : cardIndex;
-          const marker = officeMarkers[index];
-          
-          if (marker) {
+        const marker = officeMarkers[index];
+        
+        if (marker) {
             // Используем централизованную функцию выбора офиса
             selectOfficeCard(
               this, 
@@ -478,9 +512,9 @@ function initMap(offices) {
               map, 
               marker.geometry.getCoordinates()
             );
-          }
-        });
+        }
       });
+    });
     
     // Добавляем обработчик для кнопки закрытия информационной панели
     const closeButtons = document.querySelectorAll('.close-info-panel');
@@ -508,7 +542,7 @@ function initMap(offices) {
       
       // Обновляем размер карты с небольшой задержкой для корректной перерисовки
       setTimeout(() => {
-        map.container.fitToViewport();
+          map.container.fitToViewport();
         
         // Получаем новый тип устройства после изменения размера окна
         const newDeviceType = getDeviceType();
@@ -520,8 +554,8 @@ function initMap(offices) {
         // Применяем новые настройки
         map.setCenter(newCenter, newZoom, { duration: 0 });
           
-        // Отключаем автоматическую подгонку карты под маркеры при ресайзе
-        // чтобы сохранить выбранный пользователем масштаб
+          // Отключаем автоматическую подгонку карты под маркеры при ресайзе
+          // чтобы сохранить выбранный пользователем масштаб
       }, 200);
     });
     });
@@ -591,9 +625,9 @@ function updateInfoPanel(office) {
  */
 function selectOfficeCardNoFocus(selectedCard, officeData = null, marker = null, map = null) {
   // Удаляем выделение со всех карточек
-  document.querySelectorAll('.office-card').forEach(card => {
-    card.classList.remove('ring', 'ring-brand-blue');
-  });
+      document.querySelectorAll('.office-card').forEach(card => {
+        card.classList.remove('ring', 'ring-brand-blue');
+      });
   
   // Если передана карточка, выделяем её
   if (selectedCard) {
@@ -612,9 +646,21 @@ function selectOfficeCardNoFocus(selectedCard, officeData = null, marker = null,
       resetAllMarkers();
     }
     
-    // Активируем выбранный маркер если доступен activeIcon
-    if (marker.options && typeof activeIcon !== 'undefined') {
-      marker.options.set(activeIcon);
+    // Создаем маркер активного офиса с голубым цветом
+    if (marker.options) {
+      // Получаем текущий зум для корректного размера
+      const currentZoom = map.getZoom();
+      const markerProps = getMarkerSizeForZoom(currentZoom);
+      
+      // Создаем URL для синего маркера
+      const activeMarkerUrl = createColoredMarkerIcon(ACTIVE_MARKER_COLOR);
+      
+      // Устанавливаем активную иконку
+      marker.options.set({
+        iconImageHref: activeMarkerUrl,
+        iconImageSize: markerProps.size,
+        iconImageOffset: markerProps.offset
+      });
     }
     
     // Важно: в этой версии функции мы НЕ центрируем карту и НЕ изменяем масштаб
@@ -654,9 +700,21 @@ function selectOfficeCard(selectedCard, officeData = null, marker = null, map = 
       resetAllMarkers();
     }
     
-    // Активируем выбранный маркер если доступен activeIcon
-    if (marker.options && typeof activeIcon !== 'undefined') {
-      marker.options.set(activeIcon);
+    // Создаем маркер активного офиса с голубым цветом
+    if (marker.options) {
+      // Получаем текущий зум для корректного размера
+      const currentZoom = map.getZoom();
+      const markerProps = getMarkerSizeForZoom(currentZoom);
+      
+      // Создаем URL для синего маркера
+      const activeMarkerUrl = createColoredMarkerIcon(ACTIVE_MARKER_COLOR);
+      
+      // Устанавливаем активную иконку
+      marker.options.set({
+        iconImageHref: activeMarkerUrl,
+        iconImageSize: markerProps.size,
+        iconImageOffset: markerProps.offset
+      });
     }
     
     // Дополнительно: центрируем карту на выбранном маркере или координатах
