@@ -58,27 +58,36 @@ console.log('Определен базовый путь:', BASE_PATH);
 const mapConfig = {
   // Начальные координаты и масштаб
   initialView: {
-    center: [55.7558, 37.6173], // Москва
+    center: [55.644957, 37.439279], // Москва, Comcity (Киевское шоссе)
     zoom: {
       desktop: 14,
       tablet: 11,
-      mobile: 4      // Уменьшаю с 17 до 15 (средний вариант)
+      mobile: 9     // Было 7, увеличиваю для приближения карты (между начальным 10 и текущим 7)
     }
   },
   // Масштаб при выборе офиса
   officeZoom: {
     desktop: 14,
     tablet: 12,
-    mobile: 15      // Уменьшаю с 18 до 15 (более сбалансированно)
+    mobile: 12     // Было 10, увеличиваю для лучшего масштаба при выборе офиса
   },
   // Максимальный масштаб при автоматической подгонке (fitBounds)
   maxBoundsZoom: {
     desktop: 14,  
     tablet: 11,   
-    mobile: 9    
+    mobile: 9     // Было 7, увеличиваю для соответствия начальному зуму
   },
   // Отступы при автоматической подгонке
-  boundsPadding: [50, 50]
+  boundsPadding: [50, 50],
+  // Настройки масштабирования иконок маркеров
+  markerSizing: {
+    minZoom: 2,        // Минимальный зум, при котором начинаем масштабировать
+    maxZoom: 14,       // Максимальный зум, при котором заканчиваем масштабировать
+    minSize: [16, 18], // Минимальный размер иконки [ширина, высота]
+    maxSize: [36, 42], // Максимальный размер иконки [ширина, высота]
+    minOffset: [-8, -18], // Минимальное смещение иконки - корректирую вертикальное смещение
+    maxOffset: [-18, -42]  // Максимальное смещение иконки
+  }
 };
 
 // Определение текущего типа устройства
@@ -198,13 +207,13 @@ function initMap(offices) {
   try {
     // Ждем загрузки API Яндекс.Карт
     ymaps.ready(function() {
-      // Центрируем карту с учетом типа устройства
-      const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
+    // Центрируем карту с учетом типа устройства
+    const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
       
       // Создаем карту
       const map = new ymaps.Map('map', {
-        center: mapConfig.initialView.center,
-        zoom: initialZoom,
+      center: mapConfig.initialView.center,
+      zoom: initialZoom,
         controls: ['zoomControl', 'fullscreenControl'],
         behaviors: ['drag', 'multiTouch']
       });
@@ -213,133 +222,286 @@ function initMap(offices) {
       const markers = new ymaps.GeoObjectCollection();
       const officeMarkers = {};
       
-      // Создаем иконки для маркеров
+      // Функция для вычисления размера иконки в зависимости от текущего зума
+      function getMarkerSizeForZoom(currentZoom) {
+        const { minZoom, maxZoom, minSize, maxSize, minOffset, maxOffset } = mapConfig.markerSizing;
+        
+        // Если зум меньше минимального, возвращаем минимальный размер
+        if (currentZoom <= minZoom) {
+          return {
+            size: minSize,
+            offset: minOffset
+          };
+        }
+        
+        // Если зум больше максимального, возвращаем максимальный размер
+        if (currentZoom >= maxZoom) {
+          return {
+            size: maxSize,
+            offset: maxOffset
+          };
+        }
+        
+        // Вычисляем коэффициент масштабирования (от 0 до 1)
+        const zoomRatio = (currentZoom - minZoom) / (maxZoom - minZoom);
+        
+        // Вычисляем размеры иконки с учетом коэффициента масштабирования
+        const width = Math.round(minSize[0] + (maxSize[0] - minSize[0]) * zoomRatio);
+        const height = Math.round(minSize[1] + (maxSize[1] - minSize[1]) * zoomRatio);
+        
+        // Вычисляем смещение иконки с учетом пропорции размера
+        // Используем отношение текущей высоты к максимальной для более точного позиционирования
+        const heightRatio = height / maxSize[1];
+        const offsetX = Math.round(minOffset[0] + (maxOffset[0] - minOffset[0]) * heightRatio);
+        const offsetY = Math.round(minOffset[1] + (maxOffset[1] - minOffset[1]) * heightRatio);
+        
+        return {
+          size: [width, height],
+          offset: [offsetX, offsetY]
+        };
+      }
+      
+      // Получаем начальные размеры маркеров
+      const initialMarkerProps = getMarkerSizeForZoom(initialZoom);
+      
+      // Создаем иконки для маркеров с учетом начального масштаба
       const defaultIcon = {
         iconLayout: 'default#image',
         iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
-        iconImageSize: [36, 42],
-        iconImageOffset: [-18, -42]
+        iconImageSize: initialMarkerProps.size,
+        iconImageOffset: initialMarkerProps.offset
       };
 
       const activeIcon = {
         iconLayout: 'default#image',
         iconImageHref: `${BASE_PATH}assets/img/map-marker-active.svg`,
-        iconImageSize: [36, 42],
-        iconImageOffset: [-18, -42]
+        iconImageSize: initialMarkerProps.size,
+        iconImageOffset: initialMarkerProps.offset
       };
+      
+      // Функция для обновления размеров всех маркеров
+      function updateAllMarkersSize(currentZoom) {
+        const markerProps = getMarkerSizeForZoom(currentZoom);
+        
+        // Обновляем размеры для всех маркеров
+        Object.values(officeMarkers).forEach(marker => {
+          // Сохраняем текущий статус (активный или нет)
+          const isActive = marker.options.get('iconImageHref').includes('active');
+          
+          // Обновляем размеры
+          marker.options.set({
+            iconImageSize: markerProps.size,
+            iconImageOffset: markerProps.offset
+          });
+        });
+      }
       
       // Функция для сброса иконок всех маркеров на дефолтные
       window.resetAllMarkers = function() {
-        Object.values(officeMarkers).forEach(m => m.options.set(defaultIcon));
-      };
-      
-      // Добавляем маркеры для каждого офиса
-      offices.forEach((office, index) => {
-        if (!office.coordinates || office.coordinates.length !== 2) return;
+        const currentZoom = map.getZoom();
+        const markerProps = getMarkerSizeForZoom(currentZoom);
         
+        Object.values(officeMarkers).forEach(m => {
+          m.options.set({
+            iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
+            iconImageSize: markerProps.size,
+            iconImageOffset: markerProps.offset
+          });
+        });
+      };
+    
+    // Добавляем маркеры для каждого офиса
+    offices.forEach((office, index) => {
+      if (!office.coordinates || office.coordinates.length !== 2) return;
+      
         const marker = new ymaps.Placemark(office.coordinates, {
           hintContent: office.city
         }, defaultIcon);
-        
-        // Сохраняем маркер с индексом офиса для последующего доступа
-        officeMarkers[index] = marker;
+      
+      // Сохраняем маркер с индексом офиса для последующего доступа
+      officeMarkers[index] = marker;
         markers.add(marker);
-        
-        // Обработчик клика по маркеру
+      
+      // Обработчик клика по маркеру
         marker.events.add('click', () => {
-          // Сбрасываем иконки всех маркеров на дефолтные
-          Object.values(officeMarkers).forEach(m => m.options.set(defaultIcon));
+          // Получаем текущий размер маркеров
+          const currentZoom = map.getZoom();
+          const markerProps = getMarkerSizeForZoom(currentZoom);
           
-          // Устанавливаем активную иконку для выбранного маркера
-          marker.options.set(activeIcon);
+        // Сбрасываем иконки всех маркеров на дефолтные
+          Object.values(officeMarkers).forEach(m => {
+            m.options.set({
+              iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
+              iconImageSize: markerProps.size,
+              iconImageOffset: markerProps.offset
+            });
+          });
+        
+        // Устанавливаем активную иконку для выбранного маркера
+          marker.options.set({
+            iconImageHref: `${BASE_PATH}assets/img/map-marker-active.svg`,
+            iconImageSize: markerProps.size,
+            iconImageOffset: markerProps.offset
+          });
           
           // Центрируем карту на выбранном маркере
           const officeZoom = getZoomForDevice(mapConfig.officeZoom);
           map.setCenter(marker.geometry.getCoordinates(), officeZoom);
-          
-          // Обновляем информационную панель
-          updateInfoPanel(office);
-        });
+        
+        // Обновляем информационную панель
+        updateInfoPanel(office);
       });
-      
+    });
+    
       // Добавляем коллекцию маркеров на карту
       map.geoObjects.add(markers);
+      
+      // Добавляем обработчик события изменения масштаба карты
+      map.events.add('boundschange', function(e) {
+        if (e.get('oldZoom') !== e.get('newZoom')) {
+          updateAllMarkersSize(e.get('newZoom'));
+        }
+      });
       
       // Если есть маркеры, масштабируем карту
       if (markers.getLength() > 0) {
         // По умолчанию всегда показываем все маркеры на карте
         map.setBounds(markers.getBounds(), {
           checkZoomRange: true,
-          zoomMargin: getDeviceType() === 'mobile' ? 40 : 100 // Увеличиваю отступ с 20 до 40 для мобильных
+          zoomMargin: getDeviceType() === 'mobile' ? 80 : 100 // Уменьшаю отступ со 150 до 80 для мобильных
         });
         
         // Если мобильное устройство, устанавливаем более сбалансированный зум 
         // после автоматической подгонки границ, но без экстремальных значений
         if (getDeviceType() === 'mobile' && markers.getLength() > 3) {
-          // Устанавливаем задержку для отображения всех маркеров перед зумом
+          // Восстанавливаем код с таймаутом, но с меньшим масштабом
           setTimeout(() => {
-            const mobileZoom = getZoomForDevice(mapConfig.initialView.zoom);
-            if (map.getZoom() < mobileZoom - 1) { // Только если текущий зум значительно меньше желаемого
-              map.setZoom(mobileZoom);
-            }
+            const mobileZoom = Math.min(9, map.getZoom() + 1); // Просто слегка увеличиваем текущий зум, но не больше 9
+            map.setZoom(mobileZoom);
           }, 150);
         }
         
         // Убираем кнопку "Показать все офисы", т.к. это теперь поведение по умолчанию
-      }
+    }
+    
+    // Проверяем, есть ли уже выбранный офис в HTML
+    const infoPanel = document.querySelector('.map-info-panel');
       
-      // Проверяем, есть ли уже выбранный офис в HTML
-      const infoPanel = document.querySelector('.map-info-panel');
-      if (infoPanel) {
-        const isDefaultOfficeVisible = !infoPanel.classList.contains('hidden');
-        const selectedOfficeElement = infoPanel.querySelector('.font-bold.text-2xl.text-brand-gray');
-        
-        // Если панель видима и есть элемент с названием города, значит у нас уже есть выбранный или дефолтный офис
-        if (isDefaultOfficeVisible && selectedOfficeElement) {
-          const selectedCity = selectedOfficeElement.textContent.trim();
+      // Загружаем данные дефолтного офиса из JSON
+      fetch(`${BASE_PATH}assets/data/default-office.json`)
+        .then(response => response.json())
+        .then(defaultOfficeData => {
+          // Добавляем дефолтный офис в список, если его там еще нет
+          const defaultOfficeExists = offices.some(office => 
+            office.city === defaultOfficeData.city && 
+            office.address === defaultOfficeData.address
+          );
           
-          // Ищем соответствующий офис в массиве
-          const selectedOfficeIndex = offices.findIndex(office => office.city === selectedCity);
-          
-          if (selectedOfficeIndex !== -1) {
-            // У нас есть совпадение - выбираем этот офис на карте (только маркер, без фокуса на нем)
-            const selectedOffice = offices[selectedOfficeIndex];
-            const marker = officeMarkers[selectedOfficeIndex];
+          if (!defaultOfficeExists && defaultOfficeData.coordinates) {
+            // Добавляем дефолтный офис в массив офисов
+            offices.push(defaultOfficeData);
             
-            if (marker) {
-              // Сбрасываем все иконки и активируем нужную
+            // Создаем маркер для дефолтного офиса
+            const defaultMarkerIndex = offices.length - 1;
+            
+            // Получаем текущий размер маркеров
+            const currentZoom = map.getZoom();
+            const markerProps = getMarkerSizeForZoom(currentZoom);
+            
+            const defaultMarker = new ymaps.Placemark(defaultOfficeData.coordinates, {
+              hintContent: defaultOfficeData.city
+            }, {
+              iconLayout: 'default#image',
+              iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
+              iconImageSize: markerProps.size,
+              iconImageOffset: markerProps.offset
+            });
+            
+            // Добавляем обработчик клика
+            defaultMarker.events.add('click', () => {
+              // Получаем текущий размер маркеров
+              const clickZoom = map.getZoom();
+              const clickMarkerProps = getMarkerSizeForZoom(clickZoom);
+              
+              // Сбрасываем иконки всех маркеров на дефолтные
+              Object.values(officeMarkers).forEach(m => {
+                m.options.set({
+                  iconImageHref: `${BASE_PATH}assets/img/map-marker.svg`,
+                  iconImageSize: clickMarkerProps.size,
+                  iconImageOffset: clickMarkerProps.offset
+                });
+              });
+              
+              // Устанавливаем активную иконку для выбранного маркера
+              defaultMarker.options.set({
+                iconImageHref: `${BASE_PATH}assets/img/map-marker-active.svg`,
+                iconImageSize: clickMarkerProps.size,
+                iconImageOffset: clickMarkerProps.offset
+              });
+              
+              // Центрируем карту на выбранном маркере
+          const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+              map.setCenter(defaultOfficeData.coordinates, officeZoom);
+          
+          // Обновляем информационную панель
+              updateInfoPanel(defaultOfficeData);
+            });
+            
+            // Сохраняем маркер и добавляем на карту
+            officeMarkers[defaultMarkerIndex] = defaultMarker;
+            markers.add(defaultMarker);
+            map.geoObjects.add(defaultMarker);
+          }
+          
+          // Выделяем дефолтный офис и его маркер (если он не скрыт)
+          const defaultOfficeIndex = offices.findIndex(office => 
+            office.city === defaultOfficeData.city && 
+            office.address === defaultOfficeData.address
+          );
+          
+          if (defaultOfficeIndex !== -1) {
+            const defaultMarker = officeMarkers[defaultOfficeIndex];
+            if (defaultMarker) {
+              // Активируем маркер дефолтного офиса
               resetAllMarkers();
-              marker.options.set(activeIcon);
               
-              // НЕ центрируем карту на выбранном маркере, оставляем общий вид
+              // Получаем текущий размер маркеров
+              const currentZoom = map.getZoom();
+              const markerProps = getMarkerSizeForZoom(currentZoom);
               
-              // Обновляем панель с информацией
-              updateInfoPanel(selectedOffice);
+              defaultMarker.options.set({
+                iconImageHref: `${BASE_PATH}assets/img/map-marker-active.svg`,
+                iconImageSize: markerProps.size,
+                iconImageOffset: markerProps.offset
+              });
               
-              // Также находим карточку офиса и выделяем ее, если она есть на странице
+              // Карта уже должна быть центрирована на этой точке из начальных настроек,
+              // но с настроенным масштабом иницализации
+              
+              // Обновляем панель с информацией, если она пуста
+              if (!infoPanel.querySelector('.font-bold.text-2xl.text-brand-gray') ||
+                  infoPanel.classList.contains('hidden')) {
+          updateInfoPanel(offices[defaultOfficeIndex]);
+        }
+              
+              // Также находим карточку офиса и выделяем её
               const officeCards = document.querySelectorAll('.office-card');
-              officeCards.forEach((card, index) => {
-                if (index === selectedOfficeIndex || 
-                    (card.dataset.city && card.dataset.city === selectedCity)) {
+              officeCards.forEach(card => {
+                if (card.dataset.city === defaultOfficeData.city ||
+                    card.querySelector('h3')?.textContent.includes(defaultOfficeData.city)) {
                   card.classList.add('ring', 'ring-brand-blue');
                 }
               });
             }
-          } else {
-            // Если не нашли совпадение по имени, но панель видима - заполняем данными первого офиса
-            if (offices.length > 0) {
-              updateInfoPanel(offices[0]);
-            }
           }
-        } else if (!isDefaultOfficeVisible && offices.length > 0) {
-          // Если нет выбранного офиса, мы не устанавливаем офис по умолчанию,
-          // просто показываем общую карту со всеми маркерами
-        }
-      }
-      
-      // Обработчик клика по карточкам офисов на странице (если они есть)
+        })
+        .catch(error => {
+          console.error('Ошибка при загрузке дефолтного офиса:', error);
+        });
+    
+    // Обработчик клика по карточкам офисов на странице (если они есть)
       document.querySelectorAll('.office-card').forEach((card, cardIndex) => {
-        card.addEventListener('click', function() {
+      card.addEventListener('click', function() {
           // Удаляем выделение со всех карточек
           document.querySelectorAll('.office-card').forEach(c => {
             c.classList.remove('ring', 'ring-brand-blue');
@@ -350,33 +512,33 @@ function initMap(offices) {
           
           // Получаем индекс офиса из атрибута или из порядкового номера
           const index = this.dataset.index ? parseInt(this.dataset.index, 10) : cardIndex;
-          const marker = officeMarkers[index];
-          
-          if (marker) {
-            // Сбрасываем иконки всех маркеров
+        const marker = officeMarkers[index];
+        
+        if (marker) {
+          // Сбрасываем иконки всех маркеров
             resetAllMarkers();
-            
-            // Активируем выбранный маркер
+          
+          // Активируем выбранный маркер
             marker.options.set(activeIcon);
-            
-            // Центрируем карту на выбранном маркере с масштабом в зависимости от устройства
-            const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+          
+          // Центрируем карту на выбранном маркере с масштабом в зависимости от устройства
+          const officeZoom = getZoomForDevice(mapConfig.officeZoom);
             map.setCenter(marker.geometry.getCoordinates(), officeZoom);
-            
-            // Обновляем информационную панель
-            updateInfoPanel(offices[index]);
-          }
-        });
+          
+          // Обновляем информационную панель
+          updateInfoPanel(offices[index]);
+        }
       });
-      
-      // Добавляем обработчик для кнопки закрытия информационной панели
-      const closeButtons = document.querySelectorAll('.close-info-panel');
-      closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const infoPanel = this.closest('.map-info-panel');
-          if (infoPanel) {
-            infoPanel.classList.add('hidden');
-            
+    });
+    
+    // Добавляем обработчик для кнопки закрытия информационной панели
+    const closeButtons = document.querySelectorAll('.close-info-panel');
+    closeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const infoPanel = this.closest('.map-info-panel');
+        if (infoPanel) {
+          infoPanel.classList.add('hidden');
+          
             // Сбрасываем иконки всех маркеров на дефолтные, если доступна функция
             if (typeof resetAllMarkers === 'function') {
               resetAllMarkers();
@@ -387,26 +549,26 @@ function initMap(offices) {
               card.classList.remove('ring', 'ring-brand-blue');
             });
           }
-        });
       });
+    });
+    
+    // Обработчик изменения размера окна для адаптации карты
+    window.addEventListener('resize', () => {
+      // Получаем текущий центр карты
+      const center = map.getCenter();
       
-      // Обработчик изменения размера окна для адаптации карты
-      window.addEventListener('resize', () => {
-        // Получаем текущий центр карты
-        const center = map.getCenter();
-        
-        // Обновляем размер карты с небольшой задержкой для корректной перерисовки
-        setTimeout(() => {
+      // Обновляем размер карты с небольшой задержкой для корректной перерисовки
+      setTimeout(() => {
           map.container.fitToViewport();
-          
-          // Устанавливаем новый масштаб в зависимости от устройства
-          const newZoom = getZoomForDevice(mapConfig.initialView.zoom);
+        
+        // Устанавливаем новый масштаб в зависимости от устройства
+        const newZoom = getZoomForDevice(mapConfig.initialView.zoom);
           map.setCenter(center, newZoom, { duration: 0 });
           
           // Отключаем автоматическую подгонку карты под маркеры при ресайзе
           // чтобы сохранить выбранный пользователем масштаб
-        }, 200);
-      });
+      }, 200);
+    });
     });
   } catch (error) {
     console.error('Ошибка при инициализации карты:', error);
@@ -913,19 +1075,30 @@ function initVacanciesPage() {
 // Инициализация функционала для страницы контактов
 function initContactsPage() {
   const officeCards = document.querySelectorAll('.office-card');
-  const selectedOfficeCard = document.querySelector('.office-card.ring');
   const officeInfoCard = document.querySelector('.selected-office-card');
   const closeSelectedOfficeBtn = document.getElementById('close-selected-office');
+  
+  // Гарантированно снимаем выделение со всех карточек при инициализации
+  document.querySelectorAll('.office-card').forEach(card => {
+    card.classList.remove('ring', 'ring-brand-blue');
+  });
+
+  // Дополнительный таймаут для гарантии очистки стилей после загрузки DOM
+  setTimeout(() => {
+    document.querySelectorAll('.office-card').forEach(card => {
+      card.classList.remove('ring', 'ring-brand-blue');
+    });
+  }, 0);
 
   // Обработчик закрытия выбранного офиса
   if (closeSelectedOfficeBtn && officeInfoCard) {
     closeSelectedOfficeBtn.addEventListener('click', function () {
       officeInfoCard.style.display = 'none';
 
-      // Снимаем выделение с карточки
-      if (selectedOfficeCard) {
-        selectedOfficeCard.classList.remove('ring', 'ring-brand-blue');
-      }
+      // Снимаем выделение с карточек
+      document.querySelectorAll('.office-card').forEach(card => {
+        card.classList.remove('ring', 'ring-brand-blue');
+      });
     });
   }
 
@@ -946,11 +1119,10 @@ function initContactsPage() {
 
       // При клике на карточку показываем офис на карте
       card.addEventListener('click', function () {
-        // Снимаем выделение с предыдущей карточки
-        const currentSelected = document.querySelector('.office-card.ring');
-        if (currentSelected) {
-          currentSelected.classList.remove('ring', 'ring-brand-blue');
-        }
+        // Снимаем выделение со всех карточек (не только с предыдущей выбранной)
+        document.querySelectorAll('.office-card').forEach(c => {
+          c.classList.remove('ring', 'ring-brand-blue');
+        });
 
         // Выделяем текущую карточку
         this.classList.add('ring', 'ring-brand-blue');
@@ -985,6 +1157,110 @@ function initContactsPage() {
         console.log(`Показываем на карте: ${city}, координаты: ${coordinates[0]}, ${coordinates[1]}`);
       });
     });
+    
+    // Отложенная загрузка дефолтного офиса, чтобы дать время DOM полностью инициализироваться
+    setTimeout(() => {
+      // Еще раз очищаем все выделения перед загрузкой дефолтного офиса
+      document.querySelectorAll('.office-card').forEach(card => {
+        card.classList.remove('ring', 'ring-brand-blue');
+      });
+      
+      // Загружаем дефолтный офис и выделяем его карточку при загрузке страницы
+      fetch(`${BASE_PATH}assets/data/default-office.json`)
+        .then(response => response.json())
+        .then(defaultOffice => {
+          console.log('Загружен дефолтный офис:', defaultOffice.city);
+          
+          // Сначала проверим на множественные выделения
+          const alreadySelected = document.querySelectorAll('.office-card.ring.ring-brand-blue');
+          if (alreadySelected.length > 0) {
+            console.log(`Обнаружено ${alreadySelected.length} уже выделенных карточек, очищаем...`);
+            alreadySelected.forEach(card => {
+              card.classList.remove('ring', 'ring-brand-blue');
+            });
+          }
+          
+          // Находим карточку дефолтного офиса (по городу и/или адресу)
+          let defaultOfficeCard = null;
+          const visibleCards = Array.from(document.querySelectorAll('.office-card:not(.hidden)'));
+          
+          for (const card of visibleCards) {
+            const cardCity = card.getAttribute('data-city');
+            const cardAddress = card.querySelector('h3')?.textContent;
+            
+            if (cardCity === defaultOffice.city || 
+              (cardAddress && cardAddress.includes(defaultOffice.address))) {
+              defaultOfficeCard = card;
+              break;
+            }
+          }
+          
+          // Если нашли карточку дефолтного офиса среди видимых, выделяем её
+          if (defaultOfficeCard) {
+            // Гарантированно снимаем выделение со всех карточек перед выделением дефолтной
+            document.querySelectorAll('.office-card').forEach(card => {
+              card.classList.remove('ring', 'ring-brand-blue');
+            });
+            
+            // Выделяем дефолтную карточку
+            defaultOfficeCard.classList.add('ring', 'ring-brand-blue');
+            
+            // Обновляем информационную панель с данными дефолтного офиса
+            if (officeInfoCard) {
+              const cityElement = officeInfoCard.querySelector('.font-bold.text-2xl');
+              const addressElement = officeInfoCard.querySelector('.text-brand-gray.mb-2:nth-of-type(1)');
+              const typeElement = officeInfoCard.querySelector('.text-brand-gray.mb-2:nth-of-type(2)');
+              const phoneElement = officeInfoCard.querySelector('.text-brand-gray.mb-2:nth-of-type(3)');
+              const emailElement = officeInfoCard.querySelector('.text-brand-gray.mb-2:nth-of-type(4)');
+
+              if (cityElement) cityElement.textContent = defaultOffice.city;
+              if (addressElement) addressElement.textContent = defaultOffice.address;
+              if (typeElement) typeElement.textContent = defaultOffice.type;
+              if (phoneElement) phoneElement.textContent = defaultOffice.phone;
+              if (emailElement) emailElement.textContent = defaultOffice.email;
+
+              // Показываем карточку, если она скрыта
+              officeInfoCard.style.display = 'flex';
+            }
+          } else {
+            console.log('Карточка дефолтного офиса не найдена среди видимых на странице');
+            
+            // Если дефолтная карточка не найдена среди видимых, выделяем первую видимую карточку
+            if (visibleCards.length > 0) {
+              // Гарантированно снимаем выделение со всех карточек
+              document.querySelectorAll('.office-card').forEach(card => {
+                card.classList.remove('ring', 'ring-brand-blue');
+              });
+              
+              // Выделяем первую видимую карточку и симулируем клик на ней
+              visibleCards[0].classList.add('ring', 'ring-brand-blue');
+              visibleCards[0].click();
+            }
+          }
+          
+          // Дополнительная проверка на множественные выделения после обработки дефолтного офиса
+          setTimeout(() => {
+            const selectedCards = document.querySelectorAll('.office-card.ring.ring-brand-blue');
+            if (selectedCards.length > 1) {
+              console.log(`После выделения дефолтного офиса всё ещё обнаружено ${selectedCards.length} выделенных карточек, исправляем...`);
+              
+              // Оставляем выделенной только первую видимую карточку
+              document.querySelectorAll('.office-card').forEach(card => {
+                card.classList.remove('ring', 'ring-brand-blue');
+              });
+              
+              const visibleSelectedCards = Array.from(selectedCards).filter(card => !card.classList.contains('hidden'));
+              if (visibleSelectedCards.length > 0) {
+                visibleSelectedCards[0].classList.add('ring', 'ring-brand-blue');
+                visibleSelectedCards[0].click(); // Обновляем информационную панель
+              }
+            }
+          }, 50);
+        })
+        .catch(error => {
+          console.error('Ошибка при загрузке дефолтного офиса:', error);
+        });
+    }, 100); // Отложенная загрузка дефолтного офиса
   }
 
   // Обработчик пагинации
@@ -1008,8 +1284,109 @@ function initContactsPage() {
     // Общее количество страниц
     const totalPages = Math.ceil(allOffices.length / itemsPerPage);
 
+    // Функция для создания элементов пагинации
+    function updatePaginationButtons(currentPage, totalPages) {
+      const paginationContainer = document.querySelector('.pagination-container nav');
+      if (!paginationContainer) return;
+      
+      // Очищаем текущую пагинацию, оставляя только кнопки "Вперед" и "Назад"
+      const prevButton = paginationContainer.querySelector('button:first-child');
+      const nextButton = paginationContainer.querySelector('button:last-child');
+      
+      while (paginationContainer.children.length > 2) {
+        paginationContainer.removeChild(paginationContainer.children[1]);
+      }
+
+      // Обновляем состояние кнопок "Вперед" и "Назад"
+      if (prevButton) {
+        if (currentPage === 1) {
+          prevButton.setAttribute('disabled', 'disabled');
+          prevButton.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+          prevButton.removeAttribute('disabled');
+          prevButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      }
+
+      if (nextButton) {
+        if (currentPage === totalPages) {
+          nextButton.setAttribute('disabled', 'disabled');
+          nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+          nextButton.removeAttribute('disabled');
+          nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      }
+      
+      // Создаем новые кнопки пагинации с логикой "1 2 3 ... n"
+      let pagesToShow = [];
+      
+      if (totalPages <= 5) {
+        // Если страниц меньше 5, показываем все
+        for (let i = 1; i <= totalPages; i++) {
+          pagesToShow.push(i);
+        }
+      } else {
+        // Всегда показываем первую страницу
+        pagesToShow.push(1);
+        
+        // Логика отображения средних страниц
+        if (currentPage <= 3) {
+          // Для первых трех страниц: 1 2 3 4 ... n
+          pagesToShow.push(2, 3, 4);
+        } else if (currentPage >= totalPages - 2) {
+          // Для последних трех страниц: 1 ... n-3 n-2 n-1 n
+          pagesToShow.push(totalPages - 3, totalPages - 2, totalPages - 1);
+        } else {
+          // Для средних страниц: 1 ... p-1 p p+1 ... n
+          pagesToShow.push(currentPage - 1, currentPage, currentPage + 1);
+        }
+        
+        // Всегда показываем последнюю страницу
+        pagesToShow.push(totalPages);
+      }
+      
+      // Удаляем дубликаты и сортируем
+      pagesToShow = [...new Set(pagesToShow)].sort((a, b) => a - b);
+      
+      // Добавляем кнопки пагинации
+      let lastPage = 0;
+      for (const page of pagesToShow) {
+        // Если есть пропуск в страницах, добавляем многоточие
+        if (page - lastPage > 1) {
+          const ellipsis = document.createElement('span');
+          ellipsis.className = 'w-8 h-8 flex items-center justify-center';
+          ellipsis.textContent = '...';
+          paginationContainer.insertBefore(ellipsis, nextButton);
+        }
+        
+        // Создаем кнопку страницы
+        const pageButton = document.createElement('button');
+        if (page === currentPage) {
+          pageButton.className = 'pagination-number pagination-button w-8 h-8 flex items-center justify-center rounded bg-brand-blue text-white font-bold';
+        } else {
+          pageButton.className = 'pagination-number pagination-button w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors';
+        }
+        pageButton.textContent = page;
+        
+        // Добавляем обработчик клика
+        pageButton.addEventListener('click', function() {
+          const pageNumber = parseInt(this.textContent);
+          showOfficesPage(pageNumber);
+        });
+        
+        paginationContainer.insertBefore(pageButton, nextButton);
+        lastPage = page;
+      }
+    }
+
     // Функция для отображения офисов на определенной странице
     function showOfficesPage(page) {
+      // Перед сменой страницы снимаем выделение со всех карточек
+      document.querySelectorAll('.office-card').forEach(card => {
+        card.classList.remove('ring', 'ring-brand-blue');
+      });
+      
       // Скрываем все офисы
       allOffices.forEach(office => {
         office.classList.add('hidden');
@@ -1023,43 +1400,56 @@ function initContactsPage() {
         office.classList.remove('hidden');
       });
 
-      // Обновляем активную кнопку в пагинации
-      document.querySelectorAll('.pagination-number').forEach(btn => {
-        if (parseInt(btn.textContent) === page) {
-          btn.classList.remove('bg-brand-light', 'text-brand-gray', 'hover:bg-brand-blue', 'hover:text-white');
-          btn.classList.add('bg-brand-blue', 'text-white', 'font-bold');
-        } else {
-          btn.classList.remove('bg-brand-blue', 'text-white', 'font-bold');
-          btn.classList.add('bg-brand-light', 'text-brand-gray', 'hover:bg-brand-blue', 'hover:text-white');
-        }
-      });
-
-      // Обновляем состояние кнопок "Вперед" и "Назад"
-      const prevButton = document.querySelector('.pagination-prev');
-      const nextButton = document.querySelector('.pagination-next');
-
-      if (prevButton) {
-        if (page === 1) {
-          prevButton.setAttribute('disabled', 'disabled');
-          prevButton.classList.add('opacity-50', 'cursor-not-allowed');
-        } else {
-          prevButton.removeAttribute('disabled');
-          prevButton.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
-      }
-
-      if (nextButton) {
-        if (page === totalPages) {
-          nextButton.setAttribute('disabled', 'disabled');
-          nextButton.classList.add('opacity-50', 'cursor-not-allowed');
-        } else {
-          nextButton.removeAttribute('disabled');
-          nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
-      }
+      // Обновляем пагинацию
+      updatePaginationButtons(page, totalPages);
 
       // Сохраняем текущую страницу
       currentPage = page;
+      
+      // После смены страницы загружаем дефолтный офис для новой страницы
+      setTimeout(() => {
+        // Проверяем текущие выделения
+        const currentSelectedCards = document.querySelectorAll('.office-card.ring.ring-brand-blue:not(.hidden)');
+        
+        // Если нет выделенных карточек на текущей странице, выделяем дефолтную или первую
+        if (currentSelectedCards.length === 0) {
+          const visibleCards = Array.from(document.querySelectorAll('.office-card:not(.hidden)'));
+          if (visibleCards.length > 0) {
+            // Проверяем, есть ли дефолтный офис на текущей странице
+            fetch(`${BASE_PATH}assets/data/default-office.json`)
+              .then(response => response.json())
+              .then(defaultOffice => {
+                let defaultCardOnCurrentPage = null;
+                
+                for (const card of visibleCards) {
+                  const cardCity = card.getAttribute('data-city');
+                  const cardAddress = card.querySelector('h3')?.textContent;
+                  
+                  if (cardCity === defaultOffice.city || 
+                     (cardAddress && cardAddress.includes(defaultOffice.address))) {
+                    defaultCardOnCurrentPage = card;
+                    break;
+                  }
+                }
+                
+                // Если нашли дефолтный офис на текущей странице - выделяем его, 
+                // иначе выделяем первый видимый офис
+                const cardToSelect = defaultCardOnCurrentPage || visibleCards[0];
+                cardToSelect.classList.add('ring', 'ring-brand-blue');
+                
+                // Также обновляем информационную панель
+                cardToSelect.click();
+              })
+              .catch(error => {
+                console.error('Ошибка при поиске дефолтного офиса на новой странице:', error);
+                // Если ошибка, просто выбираем первый видимый офис
+                const firstVisibleCard = visibleCards[0];
+                firstVisibleCard.classList.add('ring', 'ring-brand-blue');
+                firstVisibleCard.click();
+              });
+          }
+        }
+      }, 50);
     }
 
     // Инициализация пагинации
@@ -1102,7 +1492,8 @@ function initContactsPage() {
           });
         });
 
-        // Скрываем офисы, которые не должны отображаться на текущей странице
+        // Обновляем пагинацию и показываем текущую страницу
+        updatePaginationButtons(currentPage, totalPages);
         showOfficesPage(currentPage);
       }
     }
@@ -1126,6 +1517,11 @@ function initContactsPage() {
 
         // Обновляем количество страниц
         const newTotalPages = Math.ceil(allOffices.length / itemsPerPage);
+
+        // Снимаем выделение со всех карточек перед фильтрацией
+        document.querySelectorAll('.office-card').forEach(card => {
+          card.classList.remove('ring', 'ring-brand-blue');
+        });
 
         // Показываем первую страницу с отфильтрованными результатами
         showOfficesPage(1);
