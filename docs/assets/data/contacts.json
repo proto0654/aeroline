@@ -4,426 +4,399 @@
   "offices": [
     {
       "city": "Москва",
-      "address": "ул. Тверская, 22, БЦ «Капитал Плаза», 5 этаж",
-      "type": "Центральный офис Россия",
-      "phone": "+7 812 200 30 20",
-      "email": "info@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [55.7656, 37.6050]
-    },
-    {
-      "city": "Москва",
-      "address": "Кутузовский проспект, 36, БЦ «Кутузовский», 12 этаж",
-      "type": "Региональный офис Центр",
-      "phone": "+7 495 678 45 12",
-      "email": "moscow.nord@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [55.7360, 37.5255]
-    },
-    {
-      "city": "Москва",
-      "address": "ул. Большая Дмитровка, 9, БЦ «Времена года», 8 этаж",
-      "type": "Корпоративный центр",
+      "address": "Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»",
+      "type": "Центральный офис",
       "phone": "+7 495 123 45 67",
-      "email": "corporate@aeroline.com",
+      "email": "moscow.center@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.7610, 37.6140]
+      "coordinates": [55.789461, 37.551735]
+    },
+    {
+      "city": "Москва",
+      "address": "ул Лесная, д 7, БЦ «Белые Сады»",
+      "type": "Дополнительный офис",
+      "phone": "+7 495 123 45 68",
+      "email": "moscow.north@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [55.77879, 37.5877]
+    },
+    {
+      "city": "Москва",
+      "address": "Пресненская набережная, 12, БЦ «Башня Федерация»",
+      "type": "Офис продаж",
+      "phone": "+7 495 123 45 70",
+      "email": "moscow.city@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [55.749633, 37.537434]
     },
     {
       "city": "Санкт-Петербург",
-      "address": "Набережная реки Мойки, 58, БЦ «Морской», 7 этаж",
-      "type": "Региональный офис Россия",
-      "phone": "+7 812 336 65 85",
-      "email": "spb@aeroline.com",
+      "address": "Московский просп., д. 212, БЦ «Московский»",
+      "type": "Северо-Западный офис",
+      "phone": "+7 812 765 43 21",
+      "email": "spb.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [59.9343, 30.3101]
+      "coordinates": [59.8521, 30.3273]
     },
     {
       "city": "Санкт-Петербург",
-      "address": "Лиговский проспект, 27, БЦ «Пушкинский», 3 этаж",
-      "type": "Представительство Северо-Запад",
-      "phone": "+7 812 456 78 90",
-      "email": "spb.center@aeroline.com",
+      "address": "Пискаревский просп., д. 2, корп. 2, БЦ «Бенуа»",
+      "type": "Офис развития",
+      "phone": "+7 812 765 43 23",
+      "email": "spb.piskarevsky@aeroline.com",
       "mapLink": "#",
-      "coordinates": [59.9240, 30.3540]
+      "coordinates": [59.958949, 30.405969]
     },
     {
       "city": "Новосибирск",
-      "address": "ул. Ленина, 52, БЦ «Гринвич», 6 этаж",
-      "type": "Региональный офис Россия",
-      "phone": "+7 383 209 32 45",
-      "email": "nsk@aeroline.com",
+      "address": "ул. Ленина, 21/1 корпус 1, ТОЦ «Манхэттен»",
+      "type": "Сибирский офис",
+      "phone": "+7 383 543 21 00",
+      "email": "nsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.0304, 82.9238]
+      "coordinates": [55.028739, 82.905823]
+    },
+    {
+      "city": "Новосибирск",
+      "address": "Красный проспект, 82, ДЦ «СОВНАРХОЗ»",
+      "type": "Представительство",
+      "phone": "+7 383 543 21 03",
+      "email": "nsk.sales@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [55.046966, 82.916720]
     },
     {
       "city": "Екатеринбург",
-      "address": "ул. Бориса Ельцина, 3, БЦ «Президент», 18 этаж",
-      "type": "Региональный офис Россия",
-      "phone": "+7 343 288 77 95",
-      "email": "ekb@aeroline.com",
+      "address": "8 Марта ул., 51, БЦ «Саммит»",
+      "type": "Уральский офис",
+      "phone": "+7 343 987 65 43",
+      "email": "ekb.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.8398, 60.5979]
+      "coordinates": [56.823592, 60.605613]
+    },
+    {
+      "city": "Екатеринбург",
+      "address": "Улица Малышева, 51, БЦ «Высоцкий»",
+      "type": "Офис обслуживания",
+      "phone": "+7 343 987 65 45",
+      "email": "ekb.service@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [56.8361, 60.6146]
     },
     {
       "city": "Казань",
-      "address": "ул. Баумана, 68, БЦ «Казанский», 5 этаж",
-      "type": "Региональный офис Россия",
-      "phone": "+7 843 500 57 32",
-      "email": "kazan@aeroline.com",
+      "address": "Сибгата Хакима, 62, БЦ «UNO»",
+      "type": "Поволжский офис",
+      "phone": "+7 843 210 98 76",
+      "email": "kazan.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.7942, 49.1221]
+      "coordinates": [55.815079, 49.143865]
     },
     {
-      "city": "Краснодар",
-      "address": "ул. Северная, 327, БЦ «Кубанский», 9 этаж",
-      "type": "Региональный офис Россия",
-      "phone": "+7 861 203 45 66",
-      "email": "krasnodar@aeroline.com",
+      "city": "Казань",
+      "address": "Спартаковская ул., 6, БЦ «Suvar Plaza»",
+      "type": "Дополнительный офис",
+      "phone": "+7 843 210 98 77",
+      "email": "kazan.south@aeroline.com",
       "mapLink": "#",
-      "coordinates": [45.0402, 38.9760]
-    },
-    {
-      "city": "Владивосток",
-      "address": "ул. Фокина, 20, БЦ «Тихоокеанский», 4 этаж",
-      "type": "Дальневосточный офис Россия",
-      "phone": "+7 423 202 54 88",
-      "email": "vlad@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [43.1160, 131.8845]
-    },
-    {
-      "city": "Иркутск",
-      "address": "ул. Сухэ-Батора, 1, БЦ «Центральный», 6 этаж",
-      "type": "Восточно-Сибирский офис",
-      "phone": "+7 3952 48 56 72",
-      "email": "irkutsk@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [52.2882, 104.2818]
-    },
-    {
-      "city": "Сочи",
-      "address": "Курортный проспект, 75, БЦ «Приморский», 3 этаж",
-      "type": "Черноморский офис",
-      "phone": "+7 862 225 72 44",
-      "email": "sochi@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [43.5852, 39.7231]
+      "coordinates": [55.778871, 49.129573]
     },
     {
       "city": "Нижний Новгород",
-      "address": "ул. Максима Горького, 117, БЦ «Волга», 7 этаж",
+      "address": "Мотальный переулок, 8, БЦ «Бугров Бизнес Парк»",
       "type": "Волжский офис",
-      "phone": "+7 831 429 01 20",
-      "email": "nn@aeroline.com",
+      "phone": "+7 831 654 32 10",
+      "email": "nn.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.3267, 44.0058]
-    },
-    {
-      "city": "Ростов-на-Дону",
-      "address": "ул. Пушкинская, 166, БЦ «Дон», 8 этаж",
-      "type": "Южный офис",
-      "phone": "+7 863 302 02 24",
-      "email": "rostov@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [47.2220, 39.7187]
-    },
-    {
-      "city": "Самара",
-      "address": "ул. Самарская, 190, БЦ «Премьер», 5 этаж",
-      "type": "Поволжский офис",
-      "phone": "+7 846 212 93 44",
-      "email": "samara@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [53.1986, 50.1139]
-    },
-    {
-      "city": "Красноярск",
-      "address": "ул. Дубровинского, 100, БЦ «Енисей», 4 этаж",
-      "type": "Сибирский офис",
-      "phone": "+7 391 223 54 92",
-      "email": "krasnoyarsk@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [56.0105, 92.8525]
-    },
-    {
-      "city": "Тюмень",
-      "address": "ул. Володарского, 20, БЦ «Столыпин», 6 этаж",
-      "type": "Западно-Сибирский офис",
-      "phone": "+7 3452 56 78 11",
-      "email": "tyumen@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [57.1530, 65.5343]
-    },
-    {
-      "city": "Уфа",
-      "address": "ул. Коммунистическая, 116, БЦ «Капитал», 7 этаж",
-      "type": "Башкирский офис",
-      "phone": "+7 347 229 48 41",
-      "email": "ufa@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [54.7351, 55.9587]
-    },
-    {
-      "city": "Хабаровск",
-      "address": "ул. Тургенева, 48, БЦ «Амур», 3 этаж",
-      "type": "Дальневосточный офис",
-      "phone": "+7 4212 47 85 10",
-      "email": "khv@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [48.4729, 135.0573]
-    },
-    {
-      "city": "Пермь",
-      "address": "ул. Куйбышева, 114, БЦ «Пермь», 8 этаж",
-      "type": "Уральский офис",
-      "phone": "+7 342 207 48 52",
-      "email": "perm@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [58.0104, 56.2294]
+      "coordinates": [56.2945, 43.9475]
     },
     {
       "city": "Челябинск",
-      "address": "ул. Энгельса, 44, БЦ «Уральский», 12 этаж",
+      "address": "Ленина проспект, 26а, БЦ «ВИДГОФ (Бовид)»",
       "type": "Южно-Уральский офис",
-      "phone": "+7 351 225 13 47",
-      "email": "chelyabinsk@aeroline.com",
+      "phone": "+7 351 111 22 33",
+      "email": "chel.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.1598, 61.4025]
+      "coordinates": [55.161749, 61.431569]
     },
     {
-      "city": "Калининград",
-      "address": "Московский проспект, 40, БЦ «Кёнигсберг», 5 этаж",
-      "type": "Балтийский офис",
-      "phone": "+7 4012 31 99 22",
-      "email": "kaliningrad@aeroline.com",
+      "city": "Самара",
+      "address": "Стара Загора, 27, ОЦ «Информатика»",
+      "type": "Поволжский филиал",
+      "phone": "+7 846 333 44 55",
+      "email": "samara.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.7195, 20.4993]
+      "coordinates": [53.224854, 50.199879]
     },
     {
       "city": "Омск",
-      "address": "ул. Ленина, 10, БЦ «Омский», 7 этаж",
+      "address": "Проспект Карла Маркса, 24, ТЦ «Каскад»",
       "type": "Западно-Сибирский офис",
-      "phone": "+7 3812 33 78 90",
-      "email": "omsk@aeroline.com",
+      "phone": "+7 3812 77 88 99",
+      "email": "omsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.9893, 73.3682]
+      "coordinates": [54.962902, 73.38475]
     },
     {
-      "city": "Воронеж",
-      "address": "ул. Кольцовская, 35, БЦ «Петровский», 4 этаж",
-      "type": "Центрально-Черноземный офис",
-      "phone": "+7 473 239 52 01",
-      "email": "voronezh@aeroline.com",
+      "city": "Ростов-на-Дону",
+      "address": "Улица Суворова, 91, БЦ «на Суворова»",
+      "type": "Южный федеральный округ офис",
+      "phone": "+7 863 222 11 00",
+      "email": "rostov.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [51.6615, 39.2002]
+      "coordinates": [47.2269, 39.7327]
+    },
+    {
+      "city": "Уфа",
+      "address": "Проспект Октября, 132/3, БЦ «Капитал»",
+      "type": "Региональное представительство",
+      "phone": "+7 347 212 34 56",
+      "email": "ufa.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [54.7675, 55.9983]
+    },
+    {
+      "city": "Красноярск",
+      "address": "Улица Ленина, 118, БЦ «Спасский»",
+      "type": "Восточно-Сибирский офис",
+      "phone": "+7 391 234 56 78",
+      "email": "krasnoyarsk.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [56.0125, 92.8687]
+    },
+    {
+      "city": "Пермь",
+      "address": "Комсомольский проспект, 100, БЦ «Белый дом»",
+      "type": "Представительство",
+      "phone": "+7 342 567 89 01",
+      "email": "perm.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [58.0069, 56.2483]
     },
     {
       "city": "Волгоград",
-      "address": "Проспект Ленина, 102, БЦ «Волгоград-Сити», 9 этаж",
-      "type": "Нижневолжский офис",
-      "phone": "+7 8442 26 85 91",
-      "email": "volgograd@aeroline.com",
+      "address": "Проспект Ленина, 54, БЦ «Волгоград-Сити»",
+      "type": "Южный офис продаж",
+      "phone": "+7 8442 78 90 12",
+      "email": "volgograd.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [48.7008, 44.5169]
+      "coordinates": [48.7188, 44.5204]
     },
     {
-      "city": "Ярославль",
-      "address": "ул. Свободы, 2, БЦ «Ярославский», 6 этаж",
-      "type": "Ярославский офис",
-      "phone": "+7 4852 30 76 68",
-      "email": "yaroslavl@aeroline.com",
+      "city": "Воронеж",
+      "address": "Плехановская улица, 53, БЦ «Галерея Чижова»",
+      "type": "Центр обслуживания",
+      "phone": "+7 473 345 67 89",
+      "email": "voronezh.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [57.6265, 39.8938]
+      "coordinates": [51.6669, 39.1989]
     },
     {
       "city": "Саратов",
-      "address": "ул. Чапаева, 54, БЦ «Саратов», 8 этаж",
-      "type": "Поволжский офис",
-      "phone": "+7 8452 27 93 01",
-      "email": "saratov@aeroline.com",
+      "address": "Улица Московская, 106, БЦ «Ковчег»",
+      "type": "Региональный склад",
+      "phone": "+7 8452 90 12 34",
+      "email": "saratov.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [51.5331, 46.0341]
+      "coordinates": [51.5309, 46.0306]
     },
     {
-      "city": "Мурманск",
-      "address": "ул. Карла Маркса, 25, БЦ «Северное Сияние», 2 этаж",
-      "type": "Северный офис",
-      "phone": "+7 8152 55 79 24",
-      "email": "murmansk@aeroline.com",
+      "city": "Краснодар",
+      "address": "Улица Красная, 176, БЦ «Кристалл»",
+      "type": "Кубанский офис",
+      "phone": "+7 861 234 56 78",
+      "email": "krasnodar.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [68.9706, 33.0749]
+      "coordinates": [45.0416, 38.9744]
     },
     {
-      "city": "Тверь",
-      "address": "ул. Новоторжская, 18, БЦ «Тверца», 4 этаж",
-      "type": "Центральный офис",
-      "phone": "+7 4822 32 98 77",
-      "email": "tver@aeroline.com",
+      "city": "Тюмень",
+      "address": "Улица Республики, 143, БЦ «Нобель»",
+      "type": "Филиал Уральского региона",
+      "phone": "+7 3452 76 54 32",
+      "email": "tyumen.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.8587, 35.9238]
-    },
-    {
-      "city": "Астрахань",
-      "address": "ул. Ленина, 20, БЦ «Лотос», 3 этаж",
-      "type": "Южный офис",
-      "phone": "+7 8512 48 97 20",
-      "email": "astrakhan@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [46.3588, 48.0534]
-    },
-    {
-      "city": "Томск",
-      "address": "Проспект Ленина, 82, БЦ «Томь», 5 этаж",
-      "type": "Сибирский офис",
-      "phone": "+7 3822 51 58 67",
-      "email": "tomsk@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [56.4887, 84.9523]
-    },
-    {
-      "city": "Ставрополь",
-      "address": "Проспект Карла Маркса, 10, БЦ «Южный», 6 этаж",
-      "type": "Северо-Кавказский офис",
-      "phone": "+7 8652 94 42 78",
-      "email": "stavropol@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [45.0445, 41.9690]
-    },
-    {
-      "city": "Якутск",
-      "address": "Проспект Ленина, 50, БЦ «Полярный», 4 этаж",
-      "type": "Северный офис",
-      "phone": "+7 4112 40 20 44",
-      "email": "yakutsk@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [62.0272, 129.7321]
-    },
-    {
-      "city": "Кемерово",
-      "address": "Проспект Советский, 60, БЦ «Шахтер», 8 этаж",
-      "type": "Кузбасский офис",
-      "phone": "+7 3842 77 27 86",
-      "email": "kemerovo@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [55.3450, 86.0622]
+      "coordinates": [57.1499, 65.5492]
     },
     {
       "city": "Ижевск",
-      "address": "ул. Центральная, 11, БЦ «Ижевский», 7 этаж",
-      "type": "Приволжский офис",
-      "phone": "+7 3412 93 66 72",
-      "email": "izhevsk@aeroline.com",
+      "address": "Улица Пушкинская, 268, БЦ «Эльгрин»",
+      "type": "Приволжский филиал",
+      "phone": "+7 3412 12 34 56",
+      "email": "izhevsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.8493, 53.2045]
+      "coordinates": [56.8488, 53.2206]
     },
     {
       "city": "Барнаул",
-      "address": "Проспект Ленина, 39, БЦ «Алтайский», 5 этаж",
+      "address": "Улица Ленина, 39, БЦ «Крафт»",
       "type": "Алтайский офис",
-      "phone": "+7 3852 58 75 91",
-      "email": "barnaul@aeroline.com",
+      "phone": "+7 3852 98 76 54",
+      "email": "barnaul.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [53.3547, 83.7697]
+      "coordinates": [53.3484, 83.7788]
     },
     {
-      "city": "Тула",
-      "address": "ул. Октябрьская, 20, БЦ «Тульский Кремль», 6 этаж",
-      "type": "Центральный офис",
-      "phone": "+7 4872 25 13 69",
-      "email": "tula@aeroline.com",
+      "city": "Иркутск",
+      "address": "Улица Карла Маркса, 40, БЦ «Московские ряды»",
+      "type": "Восточно-Сибирский филиал",
+      "phone": "+7 3952 45 67 89",
+      "email": "irkutsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.1931, 37.6173]
+      "coordinates": [52.2858, 104.2831]
     },
     {
-      "city": "Петрозаводск",
-      "address": "Проспект Ленина, 38, БЦ «Онего», 3 этаж",
-      "type": "Северо-Западный офис",
-      "phone": "+7 8142 76 97 30",
-      "email": "ptz@aeroline.com",
+      "city": "Хабаровск",
+      "address": "Улица Муравьева-Амурского, 4, БЦ «Парус»",
+      "type": "Дальневосточный офис",
+      "phone": "+7 4212 32 10 98",
+      "email": "khabarovsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [61.7890, 34.3640]
+      "coordinates": [48.4831, 135.0748]
     },
     {
-      "city": "Пенза",
-      "address": "ул. Суворова, 11, БЦ «Пензенский», 8 этаж",
-      "type": "Поволжский офис",
-      "phone": "+7 8412 68 73 29",
-      "email": "penza@aeroline.com",
+      "city": "Ярославль",
+      "address": "Улица Свободы, 2, БЦ «Галерея»",
+      "type": "Центральный федеральный округ офис",
+      "phone": "+7 4852 77 66 55",
+      "email": "yaroslavl.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [53.1945, 45.0195]
+      "coordinates": [57.6256, 39.8856]
     },
     {
-      "city": "Улан-Удэ",
-      "address": "ул. Ленина, 20, БЦ «Байкальский», 4 этаж",
-      "type": "Восточно-Сибирский офис",
-      "phone": "+7 3012 46 25 77",
-      "email": "ulan-ude@aeroline.com",
+      "city": "Владивосток",
+      "address": "Улица Светланская, 106, БЦ «Владивосток-Сити»",
+      "type": "Тихоокеанский офис",
+      "phone": "+7 4232 54 32 10",
+      "email": "vladivostok.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [51.8335, 107.5841]
+      "coordinates": [43.1189, 131.8986]
     },
     {
-      "city": "Архангельск",
-      "address": "Проспект Троицкий, 11, БЦ «Поморский», 5 этаж",
-      "type": "Северный офис",
-      "phone": "+7 8182 20 55 13",
-      "email": "arkhangelsk@aeroline.com",
+      "city": "Махачкала",
+      "address": "Проспект Имама Шамиля, 65, БЦ «Махачкала»",
+      "type": "Северо-Кавказский офис",
+      "phone": "+7 8722 43 21 09",
+      "email": "makhachkala.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [64.5399, 40.5157]
+      "coordinates": [42.9818, 47.4975]
+    },
+    {
+      "city": "Томск",
+      "address": "Проспект Ленина, 82А, БЦ «Вертикаль»",
+      "type": "Сибирский региональный офис",
+      "phone": "+7 3822 65 43 21",
+      "email": "tomsk.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [56.4862, 84.9458]
+    },
+    {
+      "city": "Оренбург",
+      "address": "Улица Советская, 38, БЦ «Восход»",
+      "type": "Южно-Уральский филиал",
+      "phone": "+7 3532 99 88 77",
+      "email": "orenburg.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [51.777, 55.097]
+    },
+    {
+      "city": "Кемерово",
+      "address": "Проспект Советский, 58, БЦ «Кемерово-Сити»",
+      "type": "Кузбасский офис",
+      "phone": "+7 3842 44 55 66",
+      "email": "kemerovo.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [55.3942, 86.0772]
+    },
+    {
+      "city": "Астрахань",
+      "address": "Улица Кирова, 87, БЦ «Лотос»",
+      "type": "Южный офис",
+      "phone": "+7 8512 11 22 33",
+      "email": "astrakhan.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [46.3477, 48.0401]
+    },
+    {
+      "city": "Липецк",
+      "address": "Улица Зегеля, 21, БЦ «Авантаж»",
+      "type": "Центрально-Черноземный офис",
+      "phone": "+7 4742 55 44 33",
+      "email": "lipetsk.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [52.6101, 39.5786]
     },
     {
       "city": "Киров",
-      "address": "ул. Московская, 100, БЦ «Вятский», 6 этаж",
+      "address": "Улица Воровского, 44, БЦ «Кристалл»",
       "type": "Волго-Вятский офис",
-      "phone": "+7 8332 57 60 24",
-      "email": "kirov@aeroline.com",
+      "phone": "+7 8332 66 77 88",
+      "email": "kirov.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [58.6035, 49.6680]
+      "coordinates": [58.5991, 49.669]
+    },
+    {
+      "city": "Севастополь",
+      "address": "Улица Ленина, 30, БЦ «Адмирал»",
+      "type": "Крымский офис",
+      "phone": "+7 8692 90 12 34",
+      "email": "sevastopol.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [44.6167, 33.5255]
+    },
+    {
+      "city": "Тула",
+      "address": "Проспект Ленина, 85, БЦ «Парус»",
+      "type": "Тульский офис",
+      "phone": "+7 4872 78 90 12",
+      "email": "tula.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [54.1952, 37.6186]
+    },
+    {
+      "city": "Курск",
+      "address": "Улица Ленина, 12, БЦ «Central Park»",
+      "type": "Курский филиал",
+      "phone": "+7 4712 11 22 33",
+      "email": "kursk.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [51.7345, 36.1918]
+    },
+    {
+      "city": "Рязань",
+      "address": "Улица Почтовая, 61, БЦ «Рязань-Сити»",
+      "type": "Рязанский офис",
+      "phone": "+7 4912 33 44 55",
+      "email": "ryazan.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [54.6291, 39.7369]
+    },
+    {
+      "city": "Белгород",
+      "address": "Проспект Славы, 80, БЦ «Белгород»",
+      "type": "Белгородский филиал",
+      "phone": "+7 4722 66 77 88",
+      "email": "belgorod.main@aeroline.com",
+      "mapLink": "#",
+      "coordinates": [50.5976, 36.5815]
     },
     {
       "city": "Владимир",
-      "address": "ул. Большая Московская, 1, БЦ «Золотые ворота», 2 этаж",
-      "type": "Центральный офис",
-      "phone": "+7 4922 32 63 98",
-      "email": "vladimir@aeroline.com",
+      "address": "Улица Большая Московская, 59, БЦ «Гермес»",
+      "type": "Владимирский офис",
+      "phone": "+7 4922 12 34 56",
+      "email": "vladimir.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.1290, 40.4066]
+      "coordinates": [56.1287, 40.4075]
     },
     {
-      "city": "Сургут",
-      "address": "ул. Островского, 14, БЦ «Сургутский», 4 этаж",
-      "type": "Ханты-Мансийский офис",
-      "phone": "+7 3462 55 09 76",
-      "email": "surgut@aeroline.com",
+      "city": "Калининград",
+      "address": "Проспект Мира, 80, БЦ «Морской»",
+      "type": "Западный офис",
+      "phone": "+7 4012 98 76 54",
+      "email": "kaliningrad.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [61.2540, 73.3961]
-    },
-    {
-      "city": "Чита",
-      "address": "ул. Ленина, 98, БЦ «Читинский», 5 этаж",
-      "type": "Восточно-Сибирский офис",
-      "phone": "+7 3022 32 49 63",
-      "email": "chita@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [52.0330, 113.5010]
-    },
-    {
-      "city": "Благовещенск",
-      "address": "ул. Амурская, 255, БЦ «Благовещенский», 6 этаж",
-      "type": "Дальневосточный офис",
-      "phone": "+7 4162 59 46 72",
-      "email": "blagoveshchensk@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [50.2906, 127.5271]
-    },
-    {
-      "city": "Южно-Сахалинск",
-      "address": "ул. Коммунистический проспект, 32, БЦ «Сахалинский», 2 этаж",
-      "type": "Дальневосточный офис",
-      "phone": "+7 4242 46 98 20",
-      "email": "sakhalin@aeroline.com",
-      "mapLink": "#",
-      "coordinates": [46.9591, 142.7380]
+      "coordinates": [54.7171, 20.4851]
     }
   ],
   "pagination": {

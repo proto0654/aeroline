@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main.165ec263.css">
+  <link rel="stylesheet" href="./assets/css/main.9f07fb9b.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -140,35 +140,32 @@
 
   <!-- Фильтр по городу -->
   <div class="flex justify-center mb-6 md:mb-10">
-    <div class="relative">
-      <select id="cityFilter" class="flex items-center bg-brand-light border border-brand-gray/20 rounded-lg px-5 py-3 text-brand-gray text-base md:text-lg shadow-sm appearance-none pr-10">
+    <div class="relative w-full max-w-xs">
+      <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
         <option value="all">Все города</option>
         <option value="г. Москва">г. Москва</option>
         <option value="г. Екатеринбург">г. Екатеринбург</option>
         <option value="г. Новосибирск">г. Новосибирск</option>
         <option value="г. Санкт-Петербург">г. Санкт-Петербург</option>
       </select>
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-brand-gray">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
-      </div>
+      <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
     </div>
   </div>
 
   <!-- Список вакансий -->
   <section class="space-y-4 md:space-y-6 mb-10 w-full" id="vacancies-list">
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden md:p-1" data-location="г. Москва, ул. Ленинградская 15, БЦ &quot;Метрополис&quot;">
-      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Ленинградская 15, БЦ &quot;Метрополис&quot;">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h5 md:text-h4 text-brand-gray mb-1 text-left">Менеджер по работе с ключевыми клиентами</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left">от 120 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Ленинградская 15, БЦ &quot;Метрополис&quot;</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по работе с ключевыми клиентами</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 120 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Ленинградская 15, БЦ &quot;Метрополис&quot;</span></div>
         </div>
-        <div class="bg-white p-2 rounded-full ml-5 md:ml-0">
-          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
       </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
@@ -207,17 +204,18 @@
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden md:p-1" data-location="г. Екатеринбург, ул. Малышева 51">
-      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Малышева 51">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h5 md:text-h4 text-brand-gray mb-1 text-left">Бухгалтер</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left">от 80 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Малышева 51</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Бухгалтер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 80 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Малышева 51</span></div>
         </div>
-        <div class="bg-white p-2 rounded-full ml-5 md:ml-0">
-          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
       </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
@@ -255,17 +253,18 @@
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden md:p-1" data-location="г. Новосибирск, ул. Станционная 60/1">
-      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Станционная 60/1">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h5 md:text-h4 text-brand-gray mb-1 text-left">Водитель-экспедитор</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left">от 90 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Станционная 60/1</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Водитель-экспедитор</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 90 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Станционная 60/1</span></div>
         </div>
-        <div class="bg-white p-2 rounded-full ml-5 md:ml-0">
-          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
       </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
@@ -303,17 +302,18 @@
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden md:p-1" data-location="г. Москва, Удаленная работа">
-      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, Удаленная работа">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h5 md:text-h4 text-brand-gray mb-1 text-left">UI/UX дизайнер</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left">от 140 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">UI/UX дизайнер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 140 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
         </div>
-        <div class="bg-white p-2 rounded-full ml-5 md:ml-0">
-          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
       </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
@@ -351,17 +351,18 @@
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden md:p-1" data-location="г. Санкт-Петербург, ул. Морская 15">
-      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Санкт-Петербург, ул. Морская 15">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h5 md:text-h4 text-brand-gray mb-1 text-left">Специалист по таможенному оформлению</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left">от 95 000 ₽ <span class="text-brand-gray font-normal">г. Санкт-Петербург, ул. Морская 15</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по таможенному оформлению</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 95 000 ₽ <span class="text-brand-gray font-normal">г. Санкт-Петербург, ул. Морская 15</span></div>
         </div>
-        <div class="bg-white p-2 rounded-full ml-5 md:ml-0">
-          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
       </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
@@ -399,17 +400,18 @@
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden md:p-1" data-location="г. Екатеринбург, ул. Малышева 51">
-      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Малышева 51">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h5 md:text-h4 text-brand-gray mb-1 text-left">Менеджер по маркетингу</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left">от 110 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Малышева 51</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по маркетингу</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 110 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Малышева 51</span></div>
         </div>
-        <div class="bg-white p-2 rounded-full ml-5 md:ml-0">
-          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
       </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
@@ -447,17 +449,18 @@
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden md:p-1" data-location="г. Новосибирск, ул. Красный проспект 82">
-      <button type="button" class="w-full flex justify-between items-start px-4 py-4 md:px-8 md:py-6 focus:outline-none vacancy-toggle">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Красный проспект 82">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h5 md:text-h4 text-brand-gray mb-1 text-left">Системный администратор</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left">от 85 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Красный проспект 82</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Системный администратор</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 85 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Красный проспект 82</span></div>
         </div>
-        <div class="bg-white p-2 rounded-full ml-5 md:ml-0">
-          <svg class="w-6 h-6 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
       </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-8 md:pb-6">
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
