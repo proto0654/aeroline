@@ -1,7 +1,7 @@
-const { execSync } = require('child_process');
-const fs = require('fs');
-const crypto = require('crypto');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import crypto from 'crypto';
+import path from 'path';
 
 console.log('Запуск сборки CSS с помощью Tailwind CLI...');
 
@@ -27,7 +27,7 @@ try {
   const hash = crypto.createHash('md5').update(cssContent).digest('hex').substring(0, 8);
   
   // Создаем имя файла с хешем
-  const hashedFileName = `main.${hash}.css`;
+  const hashedFileName = `main-${hash}.css`;
   const finalPath = path.join('./docs/assets/css', hashedFileName);
   
   // Перемещаем файл с новым именем
@@ -73,7 +73,7 @@ function cleanOldCssFiles(directory) {
     
     // Ищем и удаляем все хешированные CSS-файлы
     files.forEach(file => {
-      if (file.match(/^main\.[a-f0-9]+\.css$/)) {
+      if (file.match(/^main-[a-f0-9]+\.css$/)) {
         fs.unlinkSync(path.join(directory, file));
         deletedCount++;
       }
@@ -104,8 +104,8 @@ function updateHtmlFiles(hashedFileName) {
     
     // Заменяем ссылки на CSS-файл
     const updatedContent = content.replace(
-      /<link[^>]*href=['"](?:\.\/)?assets\/css\/main\.(?:[a-f0-9]+\.)?css['"][^>]*>/g,
-      `<link rel="stylesheet" href="assets/css/${hashedFileName}">`
+      /<link[^>]*href=['"](?:\.\/)?assets\/css\/[^"']+['"][^>]*>/g,
+      `<link rel="stylesheet" href="./assets/css/${hashedFileName}">`
     );
     
     // Записываем обновленный HTML-файл

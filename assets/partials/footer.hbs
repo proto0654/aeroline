@@ -104,31 +104,11 @@
   </div>
 </footer>
 
-<!-- Подключаем JavaScript в конце страницы с условным выбором пути -->
-{{#if_eq isDev true}}
-<script src="{{basePath}}main.js"></script>
+<!-- Подключение скриптов -->
+{{#if isDev}}
+<script type="module" src="{{basePath}}assets/js/main.js"></script>
 {{else}}
-<script src="{{basePath}}assets/main.js"></script>
-{{/if_eq}}
-
-<!-- Добавляем резервную ссылку на скрипт в случае, если основной путь не работает -->
-<script>
-  // Проверяем, был ли загружен скрипт
-  if (typeof BASE_PATH === 'undefined') {
-    // Если переменная не определена, значит скрипт не загрузился
-    console.log('Пытаемся загрузить скрипт из альтернативного пути...');
-    
-    // Создаем новый элемент script
-    const script = document.createElement('script');
-    script.src = './assets/js/main.js'; // Альтернативный путь
-    script.type = 'text/javascript';
-    script.async = true;
-    
-    // Добавляем скрипт в body
-    document.body.appendChild(script);
-  }
-</script>
-
+<script src="{{basePath}}assets/js/bundle.js"></script>
+{{/if}}
 </body>
-
 </html>

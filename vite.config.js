@@ -5,11 +5,12 @@ import fs from 'fs';
 import matter from 'front-matter';
 import { copyFileSync, mkdirSync } from 'fs';
 import { dirname } from 'path';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 // Функция для определения базового пути в зависимости от окружения
 function getBase() {
-  // Всегда используем относительный путь для корректной работы
-  return './';
+  return '/';
 }
 
 // Функция для чтения front matter из HTML-файлов
@@ -181,100 +182,123 @@ function copyDir(src, dest) {
   }
 }
 
-export default defineConfig({
-  base: getBase(),
-  plugins: [
-    // Добавляем плагин для правильной обработки tailwind при сборке
-    {
-      name: 'process-tailwind-css',
-      enforce: 'pre',
-      apply: 'build',
-      transform(src, id) {
-        if (id.endsWith('main.css') && src.includes('@tailwind')) {
-          console.log('Обработка Tailwind CSS при сборке...');
-          return;  // Возвращаем undefined, чтобы продолжить стандартную обработку
-        }
-      }
-    },
-    handlebars({
-      partialDirectory: resolve(__dirname, 'assets/partials'),
-      // Регистрируем дополнительные хелперы
-      helpers: {
-        // Хелпер lt (less than) для сравнения чисел
-        lt: (a, b) => a < b,
-        // Хелпер eq (equals) для сравнения значений
-        eq: (a, b) => a === b,
-        contains: (str, substr) => str.includes(substr),
-        // Хелпер для условий с is_dev
-        if_eq: function(a, b, opts) {
-          return a === b ? opts.fn(this) : opts.inverse(this);
+// Вспомогательная функция для безопасной проверки подстрок
+function safeContains(str, substr) {
+  return str?.includes?.(substr) || false;
+}
+
+export default defineConfig(({ command, mode }) => {
+  const isProduction = mode === 'production';
+  
+  return {
+    base: './',
+    build: {
+      outDir: 'docs',
+      emptyOutDir: true,
+      assetsInlineLimit: 0,
+      manifest: true,
+      rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html'),
+          contacts: resolve(__dirname, 'contacts.html'),
+          vacancies: resolve(__dirname, 'vacancies.html'),
+          payments: resolve(__dirname, 'payments.html'),
+          services: resolve(__dirname, 'services.html'),
+          news: resolve(__dirname, 'news.html'),
+          orderTracking: resolve(__dirname, 'order-tracking.html'),
+          helper: resolve(__dirname, 'helper.html')
         },
-        // Добавляем хелпер для генерации номеров страниц пагинации
-        pageNumbers: (currentPage, totalPages) => {
-          const pages = [];
-          for (let i = 1; i <= totalPages; i++) {
-            pages.push(i);
+        output: {
+          assetFileNames: (assetInfo) => {
+            if (/\.css$/.test(assetInfo.name)) {
+              return `assets/css/[name]-[hash].[ext]`;
+            }
+            
+            if (/\.(png|jpe?g|gif|svg|webp)$/.test(assetInfo.name)) {
+              return `assets/img/[name].[ext]`;
+            }
+            
+            if (/\.(woff2?|eot|ttf|otf)$/.test(assetInfo.name)) {
+              return `assets/fonts/[name].[ext]`;
+            }
+            
+            return `assets/[ext]/[name].[ext]`;
           }
-          return pages;
         }
       },
-      context: (pagePath) => {
-        const pageData = getPageData();
-        const filename = pagePath.split('/').pop();
-        
-        let contextData = {
-          // Глобальный контекст для всех шаблонов
-          siteName: 'Aeroline',
-          // Добавляем базовый путь для ссылок
-          basePath: getBase(),
-          // Определяем режим работы
-          isDev: process.env.NODE_ENV !== 'production', // true в режиме разработки, false в режиме сборки
-          // Добавляем контекст из front matter
-          ...pageData[filename]
-        };
-
-        // Если это главная страница, добавляем данные для слайдера
-        if (filename === 'index.html') {
-          contextData.sliders = getSlidersData();
-          // Добавляем данные новостей для главной страницы
-          contextData.newsData = getNewsData();
-          // Добавляем данные офиса по умолчанию для карты на главной странице
-          contextData.defaultOffice = getDefaultOfficeData();
-          // Добавляем все офисы, как на странице контактов
-          const contactsData = getContactsData();
-          if (contactsData.offices && contactsData.offices.length > 0) {
-            contextData.offices = contactsData.offices;
-            // Выбираем случайный офис для отображения на карте
-            const randomIndex = Math.floor(Math.random() * Math.min(9, contactsData.offices.length));
-            contextData.selectedOffice = contactsData.offices[randomIndex];
-            contextData.selectedOfficeIndex = randomIndex;
+      minify: isProduction,
+      sourcemap: !isProduction,
+    },
+    plugins: [
+      // Плагин для обработки Handlebars шаблонов
+      handlebars({
+        partialDirectory: resolve(__dirname, 'assets/partials'),
+        helpers: {
+          // Хелпер lt (less than) для сравнения чисел
+          lt: (a, b) => a < b,
+          // Хелпер eq (equals) для сравнения значений
+          eq: (a, b) => a === b,
+          contains: (str, substr) => safeContains(str, substr),
+          // Хелпер для условий с is_dev
+          if_eq: function(a, b, opts) {
+            return a === b ? opts.fn(this) : opts.inverse(this);
+          },
+          // Добавляем хелпер для генерации номеров страниц пагинации
+          pageNumbers: (currentPage, totalPages) => {
+            const pages = [];
+            for (let i = 1; i <= totalPages; i++) {
+              pages.push(i);
+            }
+            return pages;
           }
-        }
-
-        // Если это страница вакансий, добавляем данные о вакансиях
-        if (filename === 'vacancies.html') {
-          contextData.vacancies = getVacanciesData();
+        },
+        context(pagePath) {
+          const pageData = getPageData();
+          const fileName = pagePath.split('/').pop();
+          const pageContext = pageData[fileName] || {};
+          
+          // Общие данные для всех страниц
+          const commonData = {
+            title: 'Aeroline',
+            description: 'Транспортная компания Aeroline',
+            isProduction: isProduction,
+            isDev: !isProduction,
+            basePath: getBase(),
+            siteName: 'Aeroline'
+          };
+          
+          // Специфичные данные для разных страниц
+          let specificData = {};
+          
+          if (fileName === 'vacancies.html') {
+            specificData = { vacancies: getVacanciesData() };
           
           // Группируем вакансии по городам для фильтрации
           const cities = new Set();
-          contextData.vacancies.forEach(vacancy => {
+            specificData.vacancies.forEach(vacancy => {
             const city = vacancy.location.split(',')[0].trim();
             cities.add(city);
           });
-          contextData.cities = Array.from(cities);
-        }
-        
-        // Если это страница контактов, добавляем данные о контактах
-        if (filename === 'contacts.html') {
-          const contactsData = getContactsData();
-          
-          contextData = {
-            ...contextData,
-            ...contactsData
-          };
-          
-          // Добавляем данные офиса по умолчанию для карты на странице контактов
-          contextData.defaultOffice = getDefaultOfficeData();
+            specificData.cities = Array.from(cities);
+          } else if (fileName === 'index.html') {
+            specificData = { 
+              sliders: getSlidersData(),
+              newsData: getNewsData(),
+              defaultOffice: getDefaultOfficeData()
+            };
+            
+            // Добавляем все офисы, как на странице контактов
+            const contactsData = getContactsData();
+            if (contactsData.offices && contactsData.offices.length > 0) {
+              specificData.offices = contactsData.offices;
+              // Выбираем случайный офис для отображения на карте
+              const randomIndex = Math.floor(Math.random() * Math.min(9, contactsData.offices.length));
+              specificData.selectedOffice = contactsData.offices[randomIndex];
+              specificData.selectedOfficeIndex = randomIndex;
+            }
+          } else if (fileName === 'contacts.html') {
+            const contactsData = getContactsData();
+            specificData = { ...contactsData, defaultOffice: getDefaultOfficeData() };
           
           // Группируем офисы по городам для фильтрации
           const cities = new Set();
@@ -283,336 +307,112 @@ export default defineConfig({
               cities.add(office.city);
             });
           }
-          contextData.cities = Array.from(cities);
-        }
-        
-        // Если это страница новостей, добавляем данные о новостях
-        if (filename === 'news.html') {
-          const newsData = getNewsData();
+            specificData.cities = Array.from(cities);
+          } else if (fileName === 'news.html') {
+            specificData = { newsData: getNewsData() };
+          } else if (fileName === 'payments.html') {
+            specificData = { paymentsFaq: getPaymentsFaqData() };
+          }
           
-          contextData = {
-            ...contextData,
-            newsData: newsData
+          return {
+            ...commonData,
+            ...pageContext,
+            ...specificData
           };
         }
-        
-        // Если это страница платежей, добавляем данные о FAQ
-        if (filename === 'payments.html') {
-          contextData.paymentsFaq = getPaymentsFaqData();
-        }
-        
-        return contextData;
-      }
-    }),
-    {
-      name: 'copy-assets',
-      closeBundle() {
-        // Копируем директорию assets в docs
-        copyDir('assets', 'docs/assets');
-        
-        // Делаем дополнительную проверку и копирование иконок и логотипов, 
-        // чтобы они были доступны и в оригинальной структуре
-        try {
-          // Создаем необходимые директории, если они отсутствуют
-          if (!fs.existsSync('docs/assets/img')) {
-            mkdirSync('docs/assets/img', { recursive: true });
-          }
-          
-          // Убедимся, что подпапки существуют
-          if (!fs.existsSync('docs/assets/img/layout')) {
-            mkdirSync('docs/assets/img/layout', { recursive: true });
-          }
-          
-          if (!fs.existsSync('docs/assets/img/icons')) {
-            mkdirSync('docs/assets/img/icons', { recursive: true });
-          }
-          
-          // Логгинг для отладки
-          console.log('Successfully created image directories');
-        } catch (error) {
-          console.error('Error creating image directories:', error);
-        }
-      }
-    },
-    {
-      name: 'copy-main-js',
-      closeBundle() {
-        // Копируем main.js в папку assets для прямого подключения
-        try {
-          if (fs.existsSync('main.js')) {
-            // Убедимся, что директория существует
-            if (!fs.existsSync('docs/assets')) {
-              mkdirSync('docs/assets', { recursive: true });
+      }),
+      
+      // Плагин для обслуживания JS бандлов в режиме разработки
+      {
+        name: 'serve-js-bundles',
+        apply: 'serve',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            // Обработка запросов к main.js (для ссылок в HTML)
+            if (req.url === '/main.js' || req.url === '/assets/js/main.js') {
+              const mainJsPath = resolve(__dirname, 'assets/js/main.js');
+              if (fs.existsSync(mainJsPath)) {
+                res.setHeader('Content-Type', 'application/javascript');
+                const content = fs.readFileSync(mainJsPath, 'utf8');
+                res.end(content);
+                return;
+              }
             }
-            fs.copyFileSync('main.js', 'docs/assets/main.js');
             
-            // Дополнительно копируем его в js директорию для поддержки разных путей
-            if (!fs.existsSync('docs/assets/js')) {
-              mkdirSync('docs/assets/js', { recursive: true });
+            // Обработка запросов к bundle.js
+            if (req.url === '/assets/js/bundle.js') {
+              const bundlePath = resolve(__dirname, 'assets/js/bundle.js');
+              if (fs.existsSync(bundlePath)) {
+                res.setHeader('Content-Type', 'application/javascript');
+                res.end(fs.readFileSync(bundlePath, 'utf8'));
+                return;
+              }
             }
-            fs.copyFileSync('main.js', 'docs/assets/js/main.js');
             
-            console.log('Successfully copied main.js to docs/assets folder and docs/assets/js folder');
-          }
-        } catch (error) {
-          console.error('Error copying main.js file:', error);
+            next();
+          });
         }
-      }
-    },
-    {
-      name: 'fix-image-paths',
-      closeBundle() {
-        // Исправляем пути к изображениям в HTML файлах
-        try {
-          // Список файлов для обработки
-          const htmlFiles = ['index.html', 'vacancies.html', 'contacts.html', 'helper.html', 'payments.html', 'order-tracking.html', 'news.html', 'services.html'];
-          
-          // Находим хешированный CSS-файл
-          let cssFileName = null;
-          if (fs.existsSync('docs/assets/css')) {
-            const cssFiles = fs.readdirSync('docs/assets/css')
-              .filter(file => file.match(/^main\.[a-f0-9]+\.css$/));
-            
-            if (cssFiles.length > 0) {
-              cssFileName = cssFiles[0];
-              console.log(`Найден хешированный CSS-файл: ${cssFileName}`);
-            }
+      },
+      
+      // Плагин для копирования ресурсов при сборке
+      {
+        name: 'copy-assets',
+        apply: 'build',
+        closeBundle() {
+          // Копируем данные
+          if (fs.existsSync('./assets/data')) {
+            copyDir('./assets/data', './docs/assets/data');
           }
+          
+          // Создаем .nojekyll для GitHub Pages
+          fs.writeFileSync('./docs/.nojekyll', '');
+        }
+      },
+      
+      // Плагин для обновления ссылок на скрипты в HTML-файлах
+      {
+        name: 'update-html-links',
+        apply: 'build',
+        closeBundle() {
+          const htmlFiles = [
+            'index.html',
+            'contacts.html',
+            'vacancies.html',
+            'payments.html',
+            'services.html',
+            'news.html',
+            'order-tracking.html',
+            'helper.html'
+          ];
           
           htmlFiles.forEach(file => {
-            const filePath = `docs/${file}`;
+            const filePath = resolve(__dirname, 'docs', file);
             if (fs.existsSync(filePath)) {
-              let content = fs.readFileSync(filePath, 'utf-8');
-              
-              // Общее исправление путей к ресурсам
-              // Заменяем все относительные пути на правильную структуру
-              
-              // 1. Логотипы
-              content = content.replace(/src="\.\/assets\/img\/Logotype_aerline\.png"/g, 'src="./assets/img/layout/Logotype_aerline.png"');
-              content = content.replace(/src="\.\/assets\/img\/Logotype_aerline_white\.png"/g, 'src="./assets/img/layout/Logotype_aerline_white.png"');
-              
-              // 2. Общая обработка иконок
-              const iconFiles = ['logos_telegram', 'logos_whatsapp-icon', 'cube', 'q', 'messages3', 'callcalling', 'messages3_white', 'callcalling_white'];
-              iconFiles.forEach(icon => {
-                // Исправляем пути в любой части URL, искать везде, а не только после assets/img
-                content = content.replace(new RegExp(`src="[^"]*${icon}\\.svg"`, 'g'), `src="./assets/img/icons/${icon}.svg"`);
-              });
-              
-              // 3. Исправляем ссылки на скрипты
-              content = content.replace(/src="\.\/main\.js"/g, 'src="./assets/main.js"');
-              
-              // 4. Исправляем ссылки на стили с учетом хеширования
-              if (cssFileName) {
-                // Заменяем любые ссылки на main.css на хешированную версию
+              try {
+                let content = fs.readFileSync(filePath, 'utf8');
+                
+                // Заменяем пути к изображениям и другим ассетам
+                content = content.replace(/src="\/assets\//g, 'src="./assets/');
+                content = content.replace(/href="\/assets\//g, 'href="./assets/');
+                
+                // Заменяем пути к страницам
+                content = content.replace(/href="\//g, 'href="./');
+                
+                // Обновляем тег скрипта (без type="module")
                 content = content.replace(
-                  /<link[^>]*href=['"]\.?\/?(assets\/css\/main(?:\.[a-f0-9]+)?\.css)['"][^>]*>/g,
-                  `<link rel="stylesheet" href="./assets/css/${cssFileName}">`
+                  /<script[^>]*src="[^"]*bundle\.js"[^>]*><\/script>/g,
+                  '<script src="./assets/js/bundle.js"></script>'
                 );
-              } else {
-                // Если хешированного файла нет, используем обычный путь
-                content = content.replace(/href="\.\/assets\/css\/main\.css"/g, 'href="./assets/css/main.css"');
+                
+                fs.writeFileSync(filePath, content, 'utf8');
+                console.log(`Файл ${filePath} успешно обновлен`);
+              } catch (error) {
+                console.error(`Ошибка при обновлении файла ${filePath}:`, error);
               }
-              
-              fs.writeFileSync(filePath, content, 'utf-8');
-              console.log(`Fixed resources paths in ${file}`);
             }
           });
-        } catch (error) {
-          console.error('Error fixing resource paths:', error);
         }
       }
-    },
-    {
-      name: 'copy-nojekyll',
-      closeBundle() {
-        // Копируем файл .nojekyll в docs для GitHub Pages
-        try {
-          if (fs.existsSync('.nojekyll')) {
-            fs.copyFileSync('.nojekyll', 'docs/.nojekyll');
-            console.log('Successfully copied .nojekyll to docs folder');
-          }
-        } catch (error) {
-          console.error('Error copying .nojekyll file:', error);
-        }
-      }
-    },
-    {
-      name: 'verify-and-fix-assets',
-      closeBundle() {
-        // Проверка наличия всех необходимых ассетов и исправление проблем
-        try {
-          console.log('Проверка и исправление ассетов...');
-          
-          // 1. Проверка CSS
-          if (!fs.existsSync('docs/assets/css')) {
-            console.log('Директория CSS не найдена, создаем...');
-            mkdirSync('docs/assets/css', { recursive: true });
-          }
-          
-          // Проверяем наличие хешированного CSS-файла
-          const cssFiles = fs.readdirSync('docs/assets/css')
-            .filter(file => file.match(/^main\.[a-f0-9]+\.css$/) || file === 'main.css');
-          
-          if (cssFiles.length === 0) {
-            console.log('CSS файл не найден, копируем исходный...');
-            
-            // Если есть исходный CSS, копируем его
-            if (fs.existsSync('assets/css/main.css')) {
-              fs.copyFileSync('assets/css/main.css', 'docs/assets/css/main.css');
-              console.log('CSS файл скопирован из assets/css/main.css');
-            }
-          } else {
-            console.log(`Найдены CSS файлы: ${cssFiles.join(', ')}`);
-          }
-          
-          // 2. Проверка JS
-          if (!fs.existsSync('docs/assets/main.js')) {
-            console.log('main.js не найден в docs/assets, копируем...');
-            
-            if (!fs.existsSync('docs/assets')) {
-              mkdirSync('docs/assets', { recursive: true });
-            }
-            
-            if (fs.existsSync('main.js')) {
-              fs.copyFileSync('main.js', 'docs/assets/main.js');
-              console.log('main.js скопирован в docs/assets/main.js');
-            }
-          }
-          
-          // 3. Проверка дубликатов изображений (могут быть и в корне, и в подпапках)
-          const sourceIconsFiles = fs.readdirSync('assets/img/icons');
-          const sourceLayoutFiles = fs.readdirSync('assets/img/layout');
-          
-          if (fs.existsSync('docs/assets/img')) {
-            // Перебираем все файлы в docs/assets/img и проверяем, должны ли они быть в подпапке
-            const imgFiles = fs.readdirSync('docs/assets/img')
-              .filter(file => file.endsWith('.svg') || file.endsWith('.png') || file.endsWith('.jpg'));
-            
-            imgFiles.forEach(file => {
-              // Если файл должен быть в icons
-              if (sourceIconsFiles.includes(file)) {
-                if (!fs.existsSync(`docs/assets/img/icons/${file}`)) {
-                  // Создаем директорию, если нет
-                  if (!fs.existsSync('docs/assets/img/icons')) {
-                    mkdirSync('docs/assets/img/icons', { recursive: true });
-                  }
-                  
-                  // Копируем файл в подпапку
-                  fs.copyFileSync(`docs/assets/img/${file}`, `docs/assets/img/icons/${file}`);
-                  console.log(`Скопирован файл ${file} в icons подпапку`);
-                }
-              }
-              
-              // Если файл должен быть в layout
-              if (sourceLayoutFiles.includes(file)) {
-                if (!fs.existsSync(`docs/assets/img/layout/${file}`)) {
-                  // Создаем директорию, если нет
-                  if (!fs.existsSync('docs/assets/img/layout')) {
-                    mkdirSync('docs/assets/img/layout', { recursive: true });
-                  }
-                  
-                  // Копируем файл в подпапку
-                  fs.copyFileSync(`docs/assets/img/${file}`, `docs/assets/img/layout/${file}`);
-                  console.log(`Скопирован файл ${file} в layout подпапку`);
-                }
-              }
-            });
-          }
-          
-          // 4. Копируем circles.svg в директорию CSS для исправления путей в CSS
-          if (fs.existsSync('assets/img/layout/circles.svg')) {
-            // Создаем директорию css/img, если её нет
-            if (!fs.existsSync('docs/assets/css/img')) {
-              mkdirSync('docs/assets/css/img', { recursive: true });
-            }
-            // Копируем файл в css/img
-            fs.copyFileSync('assets/img/layout/circles.svg', 'docs/assets/css/img/circles.svg');
-            console.log('Скопирован circles.svg в директорию css/img для исправления путей в CSS');
-          }
-          
-          console.log('Проверка и исправление ассетов завершена');
-        } catch (error) {
-          console.error('Ошибка при проверке и исправлении ассетов:', error);
-        }
-      }
-    }
-  ],
-  server: {
-    open: true,
-    port: 3000,
-    host: true,
-    watch: {
-      usePolling: true,
-    },
-  },
-  build: {
-    outDir: 'docs',
-    emptyOutDir: true,
-    // Настраиваем минификацию, чтобы сохранить имена функций
-    minify: 'terser',
-    // Настраиваем postcss для правильной обработки tailwind
-    cssCodeSplit: true,
-    cssTarget: ['chrome52', 'firefox52', 'safari10'],
-    terserOptions: {
-      compress: {
-        // Отключаем агрессивную минификацию некоторых конструкций
-        drop_console: false,
-        drop_debugger: false,
-        pure_funcs: []
-      },
-      mangle: {
-        // Сохраняем важные имена функций
-        keep_fnames: /^init/
-      },
-      format: {
-        // Оставляем комментарии
-        comments: false
-      }
-    },
-    // Настройки для правильной обработки скриптов в режиме разработки и production
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        vacancies: resolve(__dirname, 'vacancies.html'),
-        contacts: resolve(__dirname, 'contacts.html'),
-        helper: resolve(__dirname, 'helper.html'),
-        payments: resolve(__dirname, 'payments.html'),
-        orderTracking: resolve(__dirname, 'order-tracking.html'),
-        news: resolve(__dirname, 'news.html'),
-        services: resolve(__dirname, 'services.html'),
-      },
-      output: {
-        // Именование файлов без хешей для простого открытия
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: (assetInfo) => {
-          // Сохраняем оригинальную структуру для ресурсов
-          if (assetInfo.name.endsWith('.css')) {
-            return 'assets/css/[name].[hash][extname]';
-          }
-          if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(assetInfo.name)) {
-            // Сохраняем структуру для изображений
-            const imgPath = assetInfo.name;
-            
-            // Проверяем, содержит ли путь подпапки
-            if (imgPath.includes('layout/')) {
-              return 'assets/img/layout/[name][extname]';
-            } else if (imgPath.includes('icons/')) {
-              return 'assets/img/icons/[name][extname]';
-            }
-            // Для остальных изображений
-            return 'assets/img/[name][extname]';
-          }
-          return 'assets/[name][extname]';
-        },
-        // Отключаем inlineDynamicImports, чтобы избежать ошибки с множественными input
-        inlineDynamicImports: false
-      }
-    },
-    // Отключаем инлайн для улучшения совместимости
-    assetsInlineLimit: 0,
-    assetsDir: 'assets',
-    // Отключаем source maps
-    sourcemap: false
-  },
+    ]
+  };
 }); 

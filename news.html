@@ -1,6 +1,6 @@
 {{> header}}
 
-<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+<main class="news-page container mx-auto max-w-[1920px] flex-grow flex flex-col">
   <!-- Заголовок страницы -->
   <section class="py-12 md:py-16 lg:py-20 relative overflow-hidden h-[150px] md:h-[500px] mb-4 max-w-[1200px] mx-auto w-full">
     <div class="flex flex-col items-center text-center relative z-10">
@@ -14,7 +14,7 @@
   <!-- Блок с фильтром по месяцам -->
   <section class="mb-8 md:mb-12 max-w-[1200px] mx-auto w-full">
     <div class="relative w-full md:w-1/4 mx-auto">
-      <select class="appearance-none bg-brand-light border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+      <select class="month-filter appearance-none bg-brand-light border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
         <option value="">{{newsData.currentMonth}}</option>
         {{#each newsData.months}}
         <option value="{{this}}">{{this}}</option>
@@ -25,21 +25,21 @@
   </section>
 
   <!-- Блок с новостями -->
-  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full">
-    <div class="space-y-6 md:space-y-8">
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full max-w-[100vw]">
+    <div class="space-y-6 md:space-y-8 [&_.news-content]:line-clamp-4 w-full px-4 xl:px-0">
       {{#each newsData.news}}
-      <div class="bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-        <div class="flex flex-col md:flex-row">
-          <div class="w-full md:w-1/4 rounded-2xl overflow-hidden m-5">
+      <div class="news-card py-4 bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex flex-col md:flex-row gap-4">
+          <div class="w-full md:w-2/5 rounded-2xl overflow-hidden px-4 ">
             {{#if image}}
-              <img src="{{image}}" alt="{{title}}" class="w-full object-cover min-h-[270px] rounded-2xl">
+              <img src="{{image}}" alt="{{title}}" class="w-full object-cover rounded-2xl aspect-video max-w-[100%]">
             {{else}}
-              <img src="https://picsum.photos/800/600?random={{id}}" alt="{{title}}" class="w-full object-cover min-h-[120px] max-h-[150px]">
+              <img src="{{basePath}}assets/img/layout/Logotype_aerline_light.png" alt="{{title}}" class="placeholder w-full object-contain min-h-[120px] h-full p-10">
             {{/if}}
           </div>
-          <div class="w-full md:w-3/4 p-6">
+          <div class="w-full md:w-3/5 px-4 md:py-4">
             <div class="flex items-start justify-between mb-4">
-              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray pr-4">{{title}}</h3>
+              <h3 class="news-title text-h5 md:text-h4 font-bold text-brand-gray pr-4">{{title}}</h3>
               {{#if isNew}}
               <div class="flex-shrink-0">
                 <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,10 +63,10 @@
               </div>
               {{/if}}
             </div>
-            <p class="text-brand-gray mb-6">{{content}}</p>
+            <p class="news-content text-brand-gray mb-6">{{content}}</p>
             <div class="flex justify-between items-center">
-              <div class="text-caption-form text-brand-gray">{{date}}</div>
-              <button class="text-brand-blue text-body-secondary">Подробнее</button>
+              <div class="news-date text-caption-form text-brand-gray">{{date}}</div>
+              <button class="news-details-btn text-brand-blue text-body-secondary hover:text-brand-blue-dark transition-colors" data-news-id="{{id}}">Подробнее</button>
             </div>
           </div>
         </div>
@@ -94,11 +94,9 @@
     </div>
   </section>
 
-  
-    <div class="bg-brand-light max-w-[1920px] mx-auto w-full 3xl:rounded-tl-3xl 3xl:rounded-tr-3xl">
-      {{> services-cards}}
-    </div>
-  
+  <div class="bg-brand-light max-w-[1920px] mx-auto w-full 3xl:rounded-tl-3xl 3xl:rounded-tr-3xl">
+    {{> services-cards}}
+  </div>
 </main>
 
 {{> footer}} 
