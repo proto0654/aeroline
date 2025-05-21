@@ -4,8 +4,14 @@
   
   <!-- Интерактивная карта -->
   <div class="relative w-full rounded-lg">
-    <!-- Контейнер для Leaflet карты -->
+    <!-- Контейнер для Яндекс.Карты -->
     <div id="map" class="w-full h-[80vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
+      <!-- Скрываем кнопку 'Открыть в Яндекс.Картах' -->
+      <style>
+        .ymaps-2-1-79-gotoymaps {
+          display: none !important;
+        }
+      </style>
       <!-- Стиль для скрытия атрибуции на мобильных устройствах -->
       <style>
         @media (max-width: 768px) {
@@ -55,7 +61,6 @@
     </div>
   </div>
   
-  <!-- Подключение стилей и скриптов для карты -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <!-- Подключение скрипта Яндекс.Карт -->
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=aa3c4d61-3793-4ff2-bdcc-e37451b213fc&lang=ru_RU" type="text/javascript"></script>
 </div> 
