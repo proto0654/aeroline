@@ -92,7 +92,7 @@
 
 /* Унифицированный hero-блок */
 .hero-section {
-  @apply py-12 md:py-16 lg:py-20 relative overflow-hidden max-w-[1920px] w-full mx-auto;
+  @apply  lg:py-20 relative overflow-hidden max-w-[1920px] w-full mx-auto;
 }
 
 .hero-section .hero-content {

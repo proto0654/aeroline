@@ -7,12 +7,12 @@
       <h1 class="hero-title">НОВОСТИ</h1>
     </div>
     <div class="hero-background">
-      <img src="{{basePath}}assets/img/layout/news-bg.jpg" alt="">
+      <img src="{{basePath}}assets/img/layout/news-bg.jpg" alt="" class="w-full h-full object-left object-cover md:object-center">
     </div>
   </section>
 
   <!-- Блок с фильтром по месяцам -->
-  <section class="mb-8 md:mb-12 max-w-[1200px] mx-auto w-full">
+  <section class="mb-8 md:my-12 max-w-[1200px] mx-auto w-full px-4">
     <div class="relative w-full md:w-1/4 mx-auto">
       <select class="month-filter appearance-none bg-brand-light border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
         <option value="">{{newsData.currentMonth}}</option>
@@ -28,16 +28,16 @@
   <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full max-w-[100vw]">
     <div class="news-grid space-y-6 md:space-y-8 [&_.news-content]:line-clamp-4 w-full px-4 xl:px-0">
       {{#each newsData.news}}
-      <div class="news-card py-4 bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-month="{{month}}">
+      <div class="news-card py-2 md:py-4 bg-brand-light border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-month="{{month}}">
         <div class="flex flex-col md:flex-row gap-4">
-          <div class="w-full md:w-2/5 rounded-2xl overflow-hidden px-4 ">
+          <div class="w-full md:w-2/5 rounded-2xl overflow-hidden px-2 md:px-4 ">
             {{#if image}}
               <img src="{{image}}" alt="{{title}}" class="w-full object-cover rounded-2xl aspect-video max-w-[100%]">
             {{else}}
               <img src="{{basePath}}assets/img/layout/Logotype_aerline_light.png" alt="{{title}}" class="placeholder w-full object-contain min-h-[120px] h-full p-10">
             {{/if}}
           </div>
-          <div class="w-full md:w-3/5 px-4 md:py-4">
+          <div class="w-full md:w-3/5 px-2 md:px-4 md:py-4">
             <div class="flex items-start justify-between mb-4">
               <h3 class="news-title text-h5 md:text-h4 font-bold text-brand-gray pr-4">{{title}}</h3>
               {{#if isNew}}
