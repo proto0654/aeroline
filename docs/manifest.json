@@ -35,6 +35,10 @@
     "file": "assets/img/q.svg",
     "src": "assets/img/icons/q.svg"
   },
+  "assets/img/icons/vuesax.svg": {
+    "file": "assets/img/vuesax.svg",
+    "src": "assets/img/icons/vuesax.svg"
+  },
   "assets/img/layout/Logotype_aerline_light.png": {
     "file": "assets/img/Logotype_aerline_light.png",
     "src": "assets/img/layout/Logotype_aerline_light.png"
@@ -172,7 +176,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "main.css": {
-    "file": "assets/css/main-10cb1791.css",
+    "file": "assets/css/main-bb314431.css",
     "src": "main.css"
   }
 }
