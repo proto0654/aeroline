@@ -90,6 +90,27 @@
   }
 }
 
+/* Унифицированный hero-блок */
+.hero-section {
+  @apply py-12 md:py-16 lg:py-20 relative overflow-hidden max-w-[1920px] w-full mx-auto;
+}
+
+.hero-section .hero-content {
+  @apply flex flex-col items-start p-4 md:items-center text-center relative z-10 min-h-[300px];
+}
+
+.hero-section .hero-title {
+  @apply text-h4 md:text-h2 font-bold text-brand-gray mb-4;
+}
+
+.hero-section .hero-background {
+  @apply absolute inset-0 z-0;
+}
+
+.hero-section .hero-background img {
+  @apply w-full h-full object-cover 3xl:rounded-3xl;
+}
+
 /* Медиа-запросы для мобильных версий */
 @layer utilities {
   @media (max-width: 767px) {
