@@ -12,15 +12,15 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main-3fa80b15.css">
+  <link rel="stylesheet" href="./assets/css/main-10cb1791.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
-    <div class="flex justify-between items-center py-4">
+    <div class="flex justify-between items-center py-2 md:py-4">
       <div class="logo flex items-center">
        <a href="./index.html">
-        <img src="./assets/img/Logotype_aerline.png" alt="Aeroline" class="h-11">
+        <img src="./assets/img/aeroline_logo.svg" alt="Aeroline" class="h-15 md:h-20">
        </a>
       </div>
       
@@ -82,9 +82,13 @@
   
   <!-- Мобильное меню на весь экран -->
   <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
-    <div class="w-[100vw] px-4 py-3 h-full flex flex-col justify-between max-h-[calc(100vh-50px)] h-full">
-      <div class="flex justify-between items-center pb-3 border-b border-gray-200 " id="mobile-menu-header">
-        <img src="./assets/img/Logotype_aerline.png" alt="Aeroline" class="h-10">
+    <div class="w-[100vw] px-3 py-2 h-full flex flex-col justify-between max-h-[calc(100vh-50px)] h-full">
+      <div class="flex justify-between items-center  border-b border-gray-200 " id="mobile-menu-header">
+       <div class="logo flex items-center">
+       <a href="./index.html">
+        <img src="./assets/img/aeroline_logo.svg" alt="Aeroline" class="h-15 md:h-20">
+       </a>
+      </div>
         <button id="mobile-close-btn" class="text-brand-blue bg-brand-light rounded-full p-3">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -182,7 +186,7 @@
         <!-- Информационная панель с данными офиса -->
         <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10">
           <div class="flex justify-between items-center mb-2">
-            <div class="font-bold text-2xl text-brand-gray">Екатеринбург</div>
+            <div class="font-bold text-2xl text-brand-gray">Москва</div>
             <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -190,10 +194,10 @@
             </button>
           </div>
           
-          <div class="text-brand-gray">8 Марта ул., 51, БЦ «Саммит»</div>
-          <div class="hidden lg:block text-brand-gray">Уральский офис</div>
-          <div class="hidden lg:block text-brand-gray">+7 343 987 65 43</div>
-          <div class="hidden lg:block text-brand-gray">ekb.main@aeroline.com</div>
+          <div class="text-brand-gray">ул Лесная, д 7, БЦ «Белые Сады»</div>
+          <div class="hidden lg:block text-brand-gray">Дополнительный офис</div>
+          <div class="hidden lg:block text-brand-gray">+7 495 123 45 68</div>
+          <div class="hidden lg:block text-brand-gray">moscow.north@aeroline.com</div>
           <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
         </div>
       </div>
@@ -840,6 +844,22 @@
 
         <button
           class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">3</button>
+
+        <span class="w-8 h-8 flex items-center justify-center">...</span>
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">4</button>
+
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">5</button>
+
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">6</button>
+
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">7</button>
+
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">8</button>
 
 
         <button

@@ -16,10 +16,10 @@
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
-    <div class="flex justify-between items-center py-4">
+    <div class="flex justify-between items-center py-2 md:py-4">
       <div class="logo flex items-center">
        <a href="{{basePath}}index.html">
-        <img src="{{basePath}}assets/img/layout/Logotype_aerline.png" alt="Aeroline" class="h-11">
+        <img src="{{basePath}}assets/img/layout/aeroline_logo.svg" alt="Aeroline" class="h-15 md:h-20">
        </a>
       </div>
       
@@ -81,9 +81,13 @@
   
   <!-- Мобильное меню на весь экран -->
   <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
-    <div class="w-[100vw] px-4 py-3 h-full flex flex-col justify-between max-h-[calc(100vh-50px)] h-full">
-      <div class="flex justify-between items-center pb-3 border-b border-gray-200 " id="mobile-menu-header">
-        <img src="{{basePath}}assets/img/layout/Logotype_aerline.png" alt="Aeroline" class="h-10">
+    <div class="w-[100vw] px-3 py-2 h-full flex flex-col justify-between max-h-[calc(100vh-50px)] h-full">
+      <div class="flex justify-between items-center  border-b border-gray-200 " id="mobile-menu-header">
+       <div class="logo flex items-center">
+       <a href="{{basePath}}index.html">
+        <img src="{{basePath}}assets/img/layout/aeroline_logo.svg" alt="Aeroline" class="h-15 md:h-20">
+       </a>
+      </div>
         <button id="mobile-close-btn" class="text-brand-blue bg-brand-light rounded-full p-3">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

@@ -35,10 +35,6 @@
     "file": "assets/img/q.svg",
     "src": "assets/img/icons/q.svg"
   },
-  "assets/img/layout/Logotype_aerline.png": {
-    "file": "assets/img/Logotype_aerline.png",
-    "src": "assets/img/layout/Logotype_aerline.png"
-  },
   "assets/img/layout/Logotype_aerline_light.png": {
     "file": "assets/img/Logotype_aerline_light.png",
     "src": "assets/img/layout/Logotype_aerline_light.png"
@@ -50,6 +46,10 @@
   "assets/img/layout/Logotype_aerline_white.png": {
     "file": "assets/img/Logotype_aerline_white.png",
     "src": "assets/img/layout/Logotype_aerline_white.png"
+  },
+  "assets/img/layout/aeroline_logo.svg": {
+    "file": "assets/img/aeroline_logo.svg",
+    "src": "assets/img/layout/aeroline_logo.svg"
   },
   "assets/img/layout/circles.svg": {
     "file": "assets/img/circles.svg",
@@ -172,7 +172,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "main.css": {
-    "file": "assets/css/main-3fa80b15.css",
+    "file": "assets/css/main-10cb1791.css",
     "src": "main.css"
   }
 }

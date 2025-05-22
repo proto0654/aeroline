@@ -56,7 +56,7 @@
               <div class="flex flex-col lg:flex-row h-full">
                 <div class="flex flex-col w-full lg:w-2/5"></div>
                 <div class="flex flex-col w-full lg:w-3/5 h-full items-start lg:pr-[15%]">
-                  <div class="relative h-full px-4 md:px-10 md:pr-12 w-full lg:min-h-[450px] before:content-none lg:before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-t from-white via-brand-light to-white before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
+                  <div class="relative h-full px-4 md:px-10 md:pr-12 w-full lg:min-h-[450px] before:content-none  before:absolute before:inset-0 before:bg-gradient-to-t from-white to-brand-[#ebebeb] before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
                     <h1
                       class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
                       {{title}}</h1>
@@ -164,7 +164,7 @@
               
             </div>
           </div>
-          <button class="bg-brand-gray text-white px-5 py-3 rounded-lg text-buttons w-full">Рассчитать</button>
+          <button class="bg-brand-gray text-white px-6 py-3 rounded-lg text-buttons">Рассчитать</button>
         </div>
 
 
@@ -284,7 +284,7 @@
               {{/if}}
             </div>
 
-            <p class="md:text-body-secondary text-brand-gray mb-6 line-clamp-4 md:line-clamp-none md:px-10">
+            <p class="md:text-body-secondary text-brand-gray mb-6 line-clamp-4 md:px-10 md:line-clamp-6">
               {{content}}
             </p>
 
@@ -335,6 +335,7 @@
           rounded-br-2xl
           border-dashed
           lg:border-b-0
+          lg:my-[-2px]
         ">
 
 
@@ -387,7 +388,8 @@
           border-l
           border-l-2
           
-          lg:mb-[-.05px]
+          lg:mb-[-2px]
+          lg:mt-[-2px]
           rounded-bl-none
           border-dashed 
           lg:rounded-tr-2xl 
@@ -459,7 +461,8 @@
           
           border-dashed 
           
-          lg:mt-[-0.5px]
+          lg:mt-[-2px]
+          
           lg:rounded-tl-2xl
           lg:rounded-bl-2xl
           lg:rounded-tr-none
@@ -592,10 +595,16 @@
           <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
 
           <form class="space-y-4">
-            <input type="text" placeholder="Имя"
-              class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
-            <input type="tel" placeholder="Номер телефона"
-              class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary">
+            <div class="relative">
+              <input type="text" placeholder="Имя"
+                class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
+              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
+            </div>
+            <div class="relative">
+              <input type="tel" placeholder="Номер телефона"
+                class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
+              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
+            </div>
 
             <button type="submit"
               class="bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons w-full">Отправить</button>
@@ -606,7 +615,7 @@
               </div>
               <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray leading-1.2">
                 Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой
-                конфиденциальности
+                конфиденциальности <span class="text-brand-red font-bold">*</span>
               </label>
             </div>
           </form>
