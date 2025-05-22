@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && vite build -c vite.build-js.config.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "node -e \"const now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }).replace(/[.,]/g, '-'); require('child_process').execSync('npm run build && git add . && git commit -m \\\"Обновление-' + now + '\\\" && git push origin', { stdio: 'inherit' });\""
   },
   "keywords": [
     "static",
