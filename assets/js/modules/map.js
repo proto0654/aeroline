@@ -356,8 +356,8 @@ export function initMap(offices, basePath) {
           });
         });
         
-        // Сбрасываем активный маркер при сбросе всех маркеров
-        activeMarker = null;
+        // НЕ сбрасываем активный маркер здесь
+        // activeMarker = null;
       };
     
       // Добавляем маркеры для каждого офиса
@@ -382,20 +382,30 @@ export function initMap(offices, basePath) {
       
         // Обработчик клика по маркеру
         marker.events.add('click', () => {
-          // Проверяем, является ли текущий маркер уже активным (повторный клик)
-          const isRepeatedClick = activeMarker === marker;
+          // Добавляем отладочную информацию для диагностики
+          console.log('Клик по маркеру');
           
-          if (isRepeatedClick) {
-            // Если это повторный клик, вызываем фокусировку с приближением
-            selectOfficeCard(
-              null, // карточка не известна
-              office, 
-              marker, 
-              map, 
-              marker.geometry.getCoordinates()
-            );
-          } else {
-            // Если это первый клик, только выделяем маркер без фокусировки
+          // Получаем текущий масштаб карты
+          const currentZoom = map.getZoom();
+          const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+          const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
+          
+          // Определяем, приближен ли сейчас маркер по ТЕКУЩЕМУ масштабу карты
+          // Используем строгое сравнение с officeZoom с погрешностью
+          const isCurrentlyZoomed = Math.abs(currentZoom - officeZoom) < 3;
+          
+          console.log('Текущий масштаб:', currentZoom);
+          console.log('Масштаб офиса:', officeZoom);
+          console.log('Начальный масштаб:', initialZoom);
+          console.log('Маркер сейчас приближен:', isCurrentlyZoomed);
+          console.log('Активный маркер:', activeMarker === marker ? 'Текущий' : (activeMarker ? 'Другой' : 'Нет'));
+          
+          // Проверяем, является ли текущий маркер уже активным
+          const isCurrentMarker = activeMarker === marker;
+          
+          if (!isCurrentMarker) {
+            console.log('Действие: Выделяем новый маркер без фокусировки');
+            // Если это новый маркер - выделяем его без фокусировки
             selectOfficeCardNoFocus(
               null, // карточка не известна
               office, 
@@ -405,6 +415,53 @@ export function initMap(offices, basePath) {
             
             // Запоминаем текущий активный маркер
             activeMarker = marker;
+          } 
+          else {
+            // Это клик по уже активному маркеру
+            if (!isCurrentlyZoomed) {
+              // Если маркер НЕ приближен (по фактическому масштабу) - приближаем его
+              console.log('Действие: Приближаем маркер');
+              selectOfficeCard(
+                null, // карточка не известна
+                office, 
+                marker, 
+                map, 
+                marker.geometry.getCoordinates()
+              );
+            }
+            else {
+              // Если маркер уже приближен - возвращаем к обзорному масштабу БЕЗ смещения центра
+              console.log('Действие: Отдаляем маркер, сохраняем позицию и меняем только масштаб');
+              
+              // Получаем начальный масштаб для текущего устройства
+              console.log('Целевой масштаб:', initialZoom);
+              
+              // Получаем текущий центр карты
+              const currentCenter = map.getCenter();
+              console.log('Сохраняем текущий центр карты:', currentCenter);
+              
+              // Явно указываем, что маркер должен остаться активным
+              // Получаем текущий зум для корректного размера  
+              const markerProps = getMarkerSizeForZoom(initialZoom);
+              
+              // Создаем URL для синего маркера
+              const activeMarkerUrl = createColoredMarkerIcon(ACTIVE_MARKER_COLOR);
+              
+              // Сначала меняем ТОЛЬКО масштаб с анимацией, но сохраняем текущий центр
+              map.setZoom(initialZoom, { duration: 300 });
+              
+              // Обеспечиваем, чтобы маркер остался активным после изменения масштаба
+              setTimeout(() => {
+                // Проверяем, что marker все еще существует
+                if (marker && marker.options) {
+                  marker.options.set({
+                    iconImageHref: activeMarkerUrl,
+                    iconImageSize: markerProps.size,
+                    iconImageOffset: markerProps.offset
+                  });
+                }
+              }, 350); // Небольшая задержка после анимации
+            }
           }
         });
       });
@@ -416,6 +473,10 @@ export function initMap(offices, basePath) {
       map.events.add('boundschange', function(e) {
         if (e.get('oldZoom') !== e.get('newZoom')) {
           updateAllMarkersSize(e.get('newZoom'));
+          
+          // Добавляем логирование при изменении масштаба
+          const newZoom = e.get('newZoom');
+          console.log('Масштаб изменился на:', newZoom);
         }
       });
       
@@ -464,20 +525,30 @@ export function initMap(offices, basePath) {
             
             // Добавляем обработчик клика
             defaultMarker.events.add('click', () => {
-              // Проверяем, является ли текущий маркер уже активным (повторный клик)
-              const isRepeatedClick = activeMarker === defaultMarker;
+              // Добавляем отладочную информацию для диагностики
+              console.log('Клик по дефолтному маркеру');
               
-              if (isRepeatedClick) {
-                // Если это повторный клик, вызываем фокусировку с приближением
-                selectOfficeCard(
-                  null, // карточка не известна
-                  defaultOfficeData, 
-                  defaultMarker, 
-                  map, 
-                  defaultOfficeData.coordinates
-                );
-              } else {
-                // Если это первый клик, только выделяем маркер без фокусировки
+              // Получаем текущий масштаб карты
+              const currentZoom = map.getZoom();
+              const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+              const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
+              
+              // Определяем, приближен ли сейчас маркер по ТЕКУЩЕМУ масштабу карты
+              // Используем строгое сравнение с officeZoom с погрешностью
+              const isCurrentlyZoomed = Math.abs(currentZoom - officeZoom) < 3;
+              
+              console.log('Текущий масштаб:', currentZoom);
+              console.log('Масштаб офиса:', officeZoom);
+              console.log('Начальный масштаб:', initialZoom);
+              console.log('Дефолтный маркер сейчас приближен:', isCurrentlyZoomed);
+              console.log('Активный маркер:', activeMarker === defaultMarker ? 'Текущий дефолтный' : (activeMarker ? 'Другой' : 'Нет'));
+              
+              // Проверяем, является ли текущий маркер уже активным
+              const isCurrentMarker = activeMarker === defaultMarker;
+              
+              if (!isCurrentMarker) {
+                console.log('Действие: Выделяем новый дефолтный маркер без фокусировки');
+                // Если это новый маркер - выделяем его без фокусировки
                 selectOfficeCardNoFocus(
                   null, // карточка не известна
                   defaultOfficeData, 
@@ -487,6 +558,53 @@ export function initMap(offices, basePath) {
                 
                 // Запоминаем текущий активный маркер
                 activeMarker = defaultMarker;
+              } 
+              else {
+                // Это клик по уже активному маркеру
+                if (!isCurrentlyZoomed) {
+                  // Если маркер НЕ приближен (по фактическому масштабу) - приближаем его
+                  console.log('Действие: Приближаем дефолтный маркер');
+                  selectOfficeCard(
+                    null, // карточка не известна
+                    defaultOfficeData, 
+                    defaultMarker, 
+                    map, 
+                    defaultOfficeData.coordinates
+                  );
+                }
+                else {
+                  // Если маркер уже приближен - возвращаем к обзорному масштабу БЕЗ смещения центра
+                  console.log('Действие: Отдаляем дефолтный маркер, сохраняем позицию и меняем только масштаб');
+                  
+                  // Получаем начальный масштаб для текущего устройства
+                  console.log('Целевой масштаб:', initialZoom);
+                  
+                  // Получаем текущий центр карты
+                  const currentCenter = map.getCenter();
+                  console.log('Сохраняем текущий центр карты:', currentCenter);
+                  
+                  // Явно указываем, что маркер должен остаться активным
+                  // Получаем текущий зум для корректного размера  
+                  const markerProps = getMarkerSizeForZoom(initialZoom);
+                  
+                  // Создаем URL для синего маркера
+                  const activeMarkerUrl = createColoredMarkerIcon(ACTIVE_MARKER_COLOR);
+                  
+                  // Сначала меняем ТОЛЬКО масштаб с анимацией, но сохраняем текущий центр
+                  map.setZoom(initialZoom, { duration: 300 });
+                  
+                  // Обеспечиваем, чтобы маркер остался активным после изменения масштаба
+                  setTimeout(() => {
+                    // Проверяем, что defaultMarker все еще существует
+                    if (defaultMarker && defaultMarker.options) {
+                      defaultMarker.options.set({
+                        iconImageHref: activeMarkerUrl,
+                        iconImageSize: markerProps.size,
+                        iconImageOffset: markerProps.offset
+                      });
+                    }
+                  }, 350); // Небольшая задержка после анимации
+                }
               }
             });
             
@@ -556,7 +674,7 @@ export function initMap(offices, basePath) {
               marker.geometry.getCoordinates()
             );
             
-            // Устанавливаем текущий маркер как активный
+            // Устанавливаем текущий маркер как активный с приближением
             activeMarker = marker;
           }
         });
@@ -578,7 +696,7 @@ export function initMap(offices, basePath) {
             // Используем централизованную функцию для сброса выделения без центрирования карты
             selectOfficeCardNoFocus(null);
             
-            // Сбрасываем активный маркер, так как панель закрыта
+            // Явно сбрасываем активный маркер только при закрытии панели
             activeMarker = null;
           }
         });
@@ -612,8 +730,9 @@ export function initMap(offices, basePath) {
       map.events.add('click', (e) => {
         // Проверяем, не кликнули ли мы по маркеру
         if (!e.get('target').options) {
-          // Сбрасываем активный маркер при клике в пустую область карты
-          activeMarker = null;
+          // НЕ сбрасываем активный маркер при клике в пустую область карты
+          // Закомментировано, чтобы избежать сброса activeMarker
+          // activeMarker = null;
         }
       });
     });
