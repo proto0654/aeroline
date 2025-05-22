@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main-bb314431.css">
+  <link rel="stylesheet" href="./assets/css/main-6f37398c.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -171,21 +171,28 @@
       <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
         <option value="all">Все города</option>
         <option value="г. Москва">г. Москва</option>
-        <option value="г. Екатеринбург">г. Екатеринбург</option>
-        <option value="г. Новосибирск">г. Новосибирск</option>
+        <option value="г. Казань">г. Казань</option>
+        <option value="г. Ростов-на-Дону">г. Ростов-на-Дону</option>
         <option value="г. Санкт-Петербург">г. Санкт-Петербург</option>
+        <option value="г. Самара">г. Самара</option>
+        <option value="г. Новосибирск">г. Новосибирск</option>
+        <option value="г. Екатеринбург">г. Екатеринбург</option>
+        <option value="г. Краснодар">г. Краснодар</option>
+        <option value="г. Владивосток">г. Владивосток</option>
+        <option value="г. Челябинск">г. Челябинск</option>
+        <option value="г. Уфа">г. Уфа</option>
       </select>
       <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
     </div>
   </div>
 
   <!-- Список вакансий -->
-  <section class="space-y-4 md:space-y-6 mb-10 w-full" id="vacancies-list">
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Ленинградская 15, БЦ &quot;Метрополис&quot;">
+  <section class="space-y-4 md:space-y-6 mb-10 w-full vacancies-container">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Тверская 22, БЦ &#x27;Галерея&#x27;">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по работе с ключевыми клиентами</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 120 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Ленинградская 15, БЦ &quot;Метрополис&quot;</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по продажам корпоративных решений</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 130 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Тверская 22, БЦ &#x27;Галерея&#x27;</span></div>
         </div>
         <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
           <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -197,45 +204,45 @@
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Развитие и поддержание долгосрочных отношений с ключевыми клиентами компании</li>
-              <li>Проведение переговоров на уровне первых лиц компаний</li>
-              <li>Подготовка коммерческих предложений и презентаций</li>
-              <li>Анализ рынка и конкурентной среды</li>
-              <li>Выполнение плановых показателей по продажам</li>
+              <li>Привлечение новых корпоративных клиентов</li>
+              <li>Проведение переговоров и заключение договоров</li>
+              <li>Разработка индивидуальных коммерческих предложений</li>
+              <li>Контроль выполнения договорных обязательств</li>
+              <li>Анализ потребностей клиентов</li>
             </ul>
             
             <div class="mb-2 font-semibold">Требования</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Опыт работы в сфере B2B продаж от 3-х лет</li>
-              <li>Высшее образование (желательно экономическое или техническое)</li>
-              <li>Опыт ведения крупных проектов</li>
-              <li>Знание английского языка на уровне не ниже Upper-Intermediate</li>
+              <li>Опыт работы в B2B продажах от 3-х лет</li>
+              <li>Высшее образование (маркетинг, экономика или смежные)</li>
+              <li>Навыки ведения переговоров</li>
+              <li>Знание CRM-систем (Bitrix24, AmoCRM)</li>
             </ul>
             
             <div class="mb-2 font-semibold">Условия</div>
             <ul class="list-disc list-inside text-sm md:text-base">
               <li>Оформление по ТК РФ</li>
-              <li>Высокий уровень дохода: оклад + % от продаж</li>
-              <li>ДМС для сотрудника и членов семьи</li>
-              <li>Компенсация мобильной связи и транспортных расходов</li>
+              <li>Оклад + премии за выполнение плана</li>
+              <li>ДМС с первого дня</li>
+              <li>Компенсация проезда</li>
             </ul>
           </div>
           <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              <div class="mb-2 text-sm">+7 495 123 45 67</div>
-              <div class="mb-2 text-sm">Контактное лицо: Светлана Петрова</div>
-              <div class="mb-2 text-sm">Email: hr@aeroline.ru</div>
+              <div class="mb-2 text-sm">+7 495 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Ольга Смирнова</div>
+              <div class="mb-2 text-sm">Email: sales@aeroline.ru</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Малышева 51">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Казань, ул. Баумана 44">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Бухгалтер</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 80 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Малышева 51</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Финансовый аналитик</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 100 000 ₽ <span class="text-brand-gray font-normal">г. Казань, ул. Баумана 44</span></div>
         </div>
         <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
           <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -247,18 +254,18 @@
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Ведение бухгалтерского и налогового учета</li>
-              <li>Подготовка и сдача отчетности</li>
-              <li>Работа с первичной документацией</li>
-              <li>Начисление заработной платы</li>
+              <li>Анализ финансовой отчетности</li>
+              <li>Подготовка бюджетов и прогнозов</li>
+              <li>Оценка инвестиционных проектов</li>
+              <li>Мониторинг финансовых показателей</li>
             </ul>
             
             <div class="mb-2 font-semibold">Требования</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Высшее профильное образование</li>
-              <li>Опыт работы от 3-х лет</li>
-              <li>Знание 1С 8.3, Excel</li>
-              <li>Знание ОСНО, УСН</li>
+              <li>Высшее экономическое образование</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание Excel (включая Power Query)</li>
+              <li>Навыки работы с ERP-системами</li>
             </ul>
             
             <div class="mb-2 font-semibold">Условия</div>
@@ -266,25 +273,25 @@
               <li>График 5/2</li>
               <li>Официальное трудоустройство</li>
               <li>ДМС после испытательного срока</li>
-              <li>Корпоративное обучение</li>
+              <li>Корпоративные тренинги</li>
             </ul>
           </div>
           <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              <div class="mb-2 text-sm">+7 343 789 01 23</div>
-              <div class="mb-2 text-sm">Контактное лицо: Марина Иванова</div>
-              <div class="mb-2 text-sm">Email: finance@aeroline.ru</div>
+              <div class="mb-2 text-sm">+7 843 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Алексей Иванов</div>
+              <div class="mb-2 text-sm">Email: finance@kazancorp.ru</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Станционная 60/1">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Ростов-на-Дону, ул. Большая Садовая 115">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Водитель-экспедитор</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 90 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Станционная 60/1</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Логист</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 85 000 ₽ <span class="text-brand-gray font-normal">г. Ростов-на-Дону, ул. Большая Садовая 115</span></div>
         </div>
         <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
           <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -296,34 +303,34 @@
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Доставка грузов по городу и области</li>
-              <li>Работа с сопроводительной документацией</li>
-              <li>Контроль загрузки/разгрузки</li>
-              <li>Поддержание автомобиля в исправном состоянии</li>
+              <li>Организация транспортной логистики</li>
+              <li>Оптимизация маршрутов доставки</li>
+              <li>Взаимодействие с транспортными компаниями</li>
+              <li>Контроль сроков доставки</li>
             </ul>
             
             <div class="mb-2 font-semibold">Требования</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Права категории B, C</li>
-              <li>Опыт работы от 2-х лет</li>
-              <li>Знание города</li>
-              <li>Ответственность и пунктуальность</li>
+              <li>Опыт работы в логистике от 2-х лет</li>
+              <li>Знание 1С и TMS-систем</li>
+              <li>Навыки планирования</li>
+              <li>Ответственность и организованность</li>
             </ul>
             
             <div class="mb-2 font-semibold">Условия</div>
             <ul class="list-disc list-inside text-sm md:text-base">
               <li>График 5/2</li>
-              <li>Новый автопарк</li>
-              <li>Компенсация ГСМ</li>
-              <li>Своевременная оплата</li>
+              <li>Оформление по ТК РФ</li>
+              <li>Компенсация мобильной связи</li>
+              <li>Корпоративный транспорт</li>
             </ul>
           </div>
           <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              <div class="mb-2 text-sm">+7 383 234 56 78</div>
-              <div class="mb-2 text-sm">Контактное лицо: Николай Петров</div>
-              <div class="mb-2 text-sm">Email: transport@aeroline.ru</div>
+              <div class="mb-2 text-sm">+7 863 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Виктор Соколов</div>
+              <div class="mb-2 text-sm">Email: logistics@aeroline.ru</div>
             </div>
           </div>
         </div>
@@ -332,8 +339,8 @@
     <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, Удаленная работа">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">UI/UX дизайнер</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 140 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Frontend-разработчик</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 150 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
         </div>
         <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
           <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -345,17 +352,360 @@
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Разработка пользовательских интерфейсов</li>
-              <li>Создание прототипов и макетов</li>
-              <li>Проведение UX-исследований</li>
-              <li>Работа в команде с разработчиками</li>
+              <li>Разработка интерфейсов веб-приложений</li>
+              <li>Оптимизация производительности фронтенда</li>
+              <li>Интеграция с API backend</li>
+              <li>Тестирование и отладка кода</li>
             </ul>
             
             <div class="mb-2 font-semibold">Требования</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
               <li>Опыт работы от 3-х лет</li>
-              <li>Владение Figma, Adobe Creative Suite</li>
-              <li>Понимание принципов UI/UX дизайна</li>
+              <li>Владение JavaScript, React, TypeScript</li>
+              <li>Знание HTML, CSS, Webpack</li>
+              <li>Опыт работы с Git</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Удаленная работа</li>
+              <li>Гибкий график</li>
+              <li>Оплата подписок на профессиональные инструменты</li>
+              <li>Участие в хакатонах</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Мария Кузнецова</div>
+              <div class="mb-2 text-sm">Email: dev@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Санкт-Петербург, ул. Невский проспект 78">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по кадрам</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 75 000 ₽ <span class="text-brand-gray font-normal">г. Санкт-Петербург, ул. Невский проспект 78</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Ведение кадрового делопроизводства</li>
+              <li>Подбор персонала</li>
+              <li>Организация корпоративных мероприятий</li>
+              <li>Контроль соблюдения трудового законодательства</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Высшее образование (HR или юриспруденция)</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание 1С: ЗУП</li>
+              <li>Коммуникабельность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>ДМС</li>
+              <li>Корпоративные скидки</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 812 345 67 89</div>
+              <div class="mb-2 text-sm">Контактное лицо: Екатерина Новикова</div>
+              <div class="mb-2 text-sm">Email: hr@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Самара, ул. Молодогвардейская 204">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по закупкам</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 90 000 ₽ <span class="text-brand-gray font-normal">г. Самара, ул. Молодогвардейская 204</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Поиск и выбор поставщиков</li>
+              <li>Проведение переговоров с поставщиками</li>
+              <li>Контроль качества и сроков поставок</li>
+              <li>Анализ цен и условий закупок</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в закупках от 2-х лет</li>
+              <li>Высшее образование</li>
+              <li>Навыки ведения переговоров</li>
+              <li>Знание Excel и ERP-систем</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Оформление по ТК РФ</li>
+              <li>Бонусы за оптимизацию затрат</li>
+              <li>Корпоративное обучение</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 846 789 01 23</div>
+              <div class="mb-2 text-sm">Контактное лицо: Ирина Павлова</div>
+              <div class="mb-2 text-sm">Email: procurement@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Горская 2">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Инженер по эксплуатации зданий</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 80 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Горская 2</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Обслуживание инженерных систем зданий</li>
+              <li>Контроль за состоянием оборудования</li>
+              <li>Планирование ремонтных работ</li>
+              <li>Взаимодействие с подрядчиками</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Техническое образование</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание систем вентиляции и кондиционирования</li>
+              <li>Ответственность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>Компенсация ГСМ</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 383 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Сергей Ковалев</div>
+              <div class="mb-2 text-sm">Email: facility@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Профсоюзная 56">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по работе с ключевыми клиентами (IT)</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 135 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Профсоюзная 56</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Управление отношениями с IT-клиентами</li>
+              <li>Подготовка технико-коммерческих предложений</li>
+              <li>Сопровождение сделок</li>
+              <li>Анализ потребностей клиентов</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в IT-продажах от 3-х лет</li>
+              <li>Высшее образование (IT или экономика)</li>
+              <li>Знание английского языка (Advanced)</li>
+              <li>Навыки работы с CRM</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Оформление по ТК РФ</li>
+              <li>Оклад + бонусы</li>
+              <li>ДМС для сотрудника и семьи</li>
+              <li>Корпоративный ноутбук</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Татьяна Григорьева</div>
+              <div class="mb-2 text-sm">Email: it_sales@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Ленина 50">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Аналитик данных</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 120 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Ленина 50</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Сбор и обработка данных</li>
+              <li>Построение аналитических моделей</li>
+              <li>Создание дашбордов в BI-системах</li>
+              <li>Подготовка отчетов для руководства</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы с Python или R</li>
+              <li>Знание SQL</li>
+              <li>Опыт работы с Power BI или Tableau</li>
+              <li>Высшее образование (математика, IT)</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Удаленная работа</li>
+              <li>Гибкий график</li>
+              <li>Оплата профессиональных курсов</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 343 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Андрей Мельников</div>
+              <div class="mb-2 text-sm">Email: analytics@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Краснодар, ул. Красная 155">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Водитель грузового транспорта</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 95 000 ₽ <span class="text-brand-gray font-normal">г. Краснодар, ул. Красная 155</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Перевозка грузов по региону</li>
+              <li>Контроль технического состояния транспорта</li>
+              <li>Работа с транспортной документацией</li>
+              <li>Соблюдение сроков доставки</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Права категории C, E</li>
+              <li>Опыт работы от 3-х лет</li>
+              <li>Знание ПДД</li>
+              <li>Ответственность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Новый автопарк</li>
+              <li>Компенсация ГСМ</li>
+              <li>Стабильные выплаты</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 861 789 01 23</div>
+              <div class="mb-2 text-sm">Контактное лицо: Михаил Козлов</div>
+              <div class="mb-2 text-sm">Email: transport@krasnodar.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, Удаленная работа">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Графический дизайнер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 110 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Создание визуального контента для маркетинга</li>
+              <li>Разработка брендбуков</li>
+              <li>Подготовка макетов для печати</li>
+              <li>Работа с анимацией</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы от 3-х лет</li>
+              <li>Владение Adobe Photoshop, Illustrator</li>
+              <li>Понимание основ типографики</li>
               <li>Наличие портфолио</li>
             </ul>
             
@@ -363,26 +713,26 @@
             <ul class="list-disc list-inside text-sm md:text-base">
               <li>Удаленная работа</li>
               <li>Гибкий график</li>
-              <li>Оплата подписок на профессиональные сервисы</li>
-              <li>Участие в конференциях</li>
+              <li>Оплата подписок на Adobe</li>
+              <li>Участие в выставках</li>
             </ul>
           </div>
           <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              <div class="mb-2 text-sm">+7 495 345 67 89</div>
-              <div class="mb-2 text-sm">Контактное лицо: Анна Козлова</div>
+              <div class="mb-2 text-sm">+7 495 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Елизавета Романова</div>
               <div class="mb-2 text-sm">Email: design@aeroline.ru</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Санкт-Петербург, ул. Морская 15">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Владивосток, ул. Светланская 83">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по таможенному оформлению</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 95 000 ₽ <span class="text-brand-gray font-normal">г. Санкт-Петербург, ул. Морская 15</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по ВЭД</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 100 000 ₽ <span class="text-brand-gray font-normal">г. Владивосток, ул. Светланская 83</span></div>
         </div>
         <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
           <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -394,17 +744,213 @@
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Подготовка таможенных деклараций</li>
-              <li>Проверка товаросопроводительных документов</li>
-              <li>Взаимодействие с таможенными органами</li>
-              <li>Консультирование клиентов</li>
+              <li>Организация международных поставок</li>
+              <li>Подготовка экспортной документации</li>
+              <li>Взаимодействие с таможенными брокерами</li>
+              <li>Контроль логистики</li>
             </ul>
             
             <div class="mb-2 font-semibold">Требования</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в ВЭД от 2-х лет</li>
+              <li>Знание английского языка (Upper-Intermediate)</li>
               <li>Высшее образование</li>
+              <li>Знание международного законодательства</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Оформление по ТК РФ</li>
+              <li>ДМС</li>
+              <li>Корпоративное обучение</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 423 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Наталья Королева</div>
+              <div class="mb-2 text-sm">Email: ved@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Санкт-Петербург, ул. Большая Морская 20">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">SMM-менеджер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 90 000 ₽ <span class="text-brand-gray font-normal">г. Санкт-Петербург, ул. Большая Морская 20</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Ведение социальных сетей компании</li>
+              <li>Создание контент-планов</li>
+              <li>Запуск таргетированной рекламы</li>
+              <li>Анализ эффективности SMM-кампаний</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в SMM от 2-х лет</li>
+              <li>Знание инструментов аналитики</li>
+              <li>Креативность</li>
+              <li>Владение графическими редакторами</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Работа в офисе или удаленно</li>
+              <li>Бонусы за KPI</li>
+              <li>Оплата курсов</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 812 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Ксения Лебедева</div>
+              <div class="mb-2 text-sm">Email: smm@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Челябинск, ул. Труда 78">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Техник по обслуживанию оборудования</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 75 000 ₽ <span class="text-brand-gray font-normal">г. Челябинск, ул. Труда 78</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Обслуживание и ремонт производственного оборудования</li>
+              <li>Диагностика неисправностей</li>
+              <li>Ведение технической документации</li>
+              <li>Контроль запасных частей</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Среднее техническое образование</li>
               <li>Опыт работы от 2-х лет</li>
-              <li>Знание ВЭД и таможенного законодательства</li>
+              <li>Знание основ механики</li>
+              <li>Ответственность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>Компенсация ГСМ</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 351 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Владимир Степанов</div>
+              <div class="mb-2 text-sm">Email: tech@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Новый Арбат 21">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по продукту</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 140 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Новый Арбат 21</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Разработка стратегии развития продукта</li>
+              <li>Анализ рынка и конкурентов</li>
+              <li>Координация работы команды</li>
+              <li>Взаимодействие с клиентами</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы продакт-менеджером от 3-х лет</li>
+              <li>Высшее образование</li>
+              <li>Знание Agile/Scrum</li>
+              <li>Аналитическое мышление</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Работа в офисе</li>
+              <li>Бонусы за успешный запуск продукта</li>
+              <li>ДМС</li>
+              <li>Корпоративное обучение</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 789 01 23</div>
+              <div class="mb-2 text-sm">Контактное лицо: Артем Белов</div>
+              <div class="mb-2 text-sm">Email: product@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Уфа, ул. Ленина 70">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по охране труда</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 80 000 ₽ <span class="text-brand-gray font-normal">г. Уфа, ул. Ленина 70</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Контроль соблюдения норм охраны труда</li>
+              <li>Проведение инструктажей</li>
+              <li>Разработка локальных нормативных актов</li>
+              <li>Взаимодействие с надзорными органами</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Высшее образование (техносферная безопасность)</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание законодательства</li>
               <li>Уверенный пользователь ПК</li>
             </ul>
             
@@ -412,26 +958,75 @@
             <ul class="list-disc list-inside text-sm md:text-base">
               <li>График 5/2</li>
               <li>Оформление по ТК РФ</li>
-              <li>Корпоративное обучение</li>
+              <li>ДМС</li>
+              <li>Корпоративные скидки</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 347 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Олег Николаев</div>
+              <div class="mb-2 text-sm">Email: safety@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, Удаленная работа">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Backend-разработчик</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 160 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Разработка серверной части приложений</li>
+              <li>Оптимизация баз данных</li>
+              <li>Интеграция с внешними сервисами</li>
+              <li>Обеспечение безопасности API</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы с Python/Django от 3-х лет</li>
+              <li>Знание SQL, PostgreSQL</li>
+              <li>Опыт работы с REST API</li>
+              <li>Навыки работы с Docker</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Удаленная работа</li>
+              <li>Гибкий график</li>
+              <li>Оплата сертификаций</li>
               <li>ДМС</li>
             </ul>
           </div>
           <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              <div class="mb-2 text-sm">+7 812 567 89 01</div>
-              <div class="mb-2 text-sm">Контактное лицо: Елена Смирнова</div>
-              <div class="mb-2 text-sm">Email: customs@aeroline.ru</div>
+              <div class="mb-2 text-sm">+7 495 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Вадим Кравцов</div>
+              <div class="mb-2 text-sm">Email: backend@aeroline.ru</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Малышева 51">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Казань, ул. Кремлевская 25">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по маркетингу</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 110 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Малышева 51</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по работе с партнерами</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 115 000 ₽ <span class="text-brand-gray font-normal">г. Казань, ул. Кремлевская 25</span></div>
         </div>
         <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
           <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -443,44 +1038,44 @@
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Разработка маркетинговой стратегии</li>
-              <li>Управление рекламными кампаниями</li>
-              <li>Анализ эффективности маркетинговых активностей</li>
-              <li>Работа с подрядчиками</li>
+              <li>Поиск и привлечение новых партнеров</li>
+              <li>Поддержание отношений с текущими партнерами</li>
+              <li>Проведение переговоров</li>
+              <li>Контроль выполнения партнерских соглашений</li>
             </ul>
             
             <div class="mb-2 font-semibold">Требования</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Высшее образование в сфере маркетинга</li>
-              <li>Опыт работы от 3-х лет</li>
-              <li>Знание digital-инструментов</li>
-              <li>Аналитический склад ума</li>
+              <li>Опыт работы в партнерских программах от 2-х лет</li>
+              <li>Высшее образование</li>
+              <li>Навыки презентации</li>
+              <li>Знание английского языка</li>
             </ul>
             
             <div class="mb-2 font-semibold">Условия</div>
             <ul class="list-disc list-inside text-sm md:text-base">
-              <li>Работа в офисе</li>
-              <li>Бонусы за выполнение KPI</li>
-              <li>Корпоративное обучение</li>
-              <li>Компенсация спортзала</li>
+              <li>Оформление по ТК РФ</li>
+              <li>Бонусы за привлечение партнеров</li>
+              <li>ДМС</li>
+              <li>Компенсация проезда</li>
             </ul>
           </div>
           <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              <div class="mb-2 text-sm">+7 343 678 90 12</div>
-              <div class="mb-2 text-sm">Контактное лицо: Дмитрий Волков</div>
-              <div class="mb-2 text-sm">Email: marketing@aeroline.ru</div>
+              <div class="mb-2 text-sm">+7 843 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Лилия Хакимова</div>
+              <div class="mb-2 text-sm">Email: partners@aeroline.ru</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Красный проспект 82">
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Шефская 3">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
         <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Системный администратор</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 85 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Красный проспект 82</span></div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Складской работник</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 70 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Шефская 3</span></div>
         </div>
         <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
           <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -492,40 +1087,1173 @@
           <div class="md:col-span-2">
             <div class="mb-2 font-semibold">Обязанности</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Администрирование серверов Windows/Linux</li>
-              <li>Поддержка пользователей</li>
-              <li>Обеспечение информационной безопасности</li>
-              <li>Мониторинг работоспособности систем</li>
+              <li>Прием и отгрузка товаров</li>
+              <li>Комплектация заказов</li>
+              <li>Контроль складских остатков</li>
+              <li>Участие в инвентаризациях</li>
             </ul>
             
             <div class="mb-2 font-semibold">Требования</div>
             <ul class="list-disc list-inside text-sm md:text-base mb-4">
-              <li>Опыт работы от 2-х лет</li>
-              <li>Знание сетевых протоколов</li>
-              <li>Опыт виртуализации</li>
-              <li>Навыки скриптования</li>
+              <li>Опыт работы на складе от 1 года</li>
+              <li>Физическая выносливость</li>
+              <li>Ответственность</li>
+              <li>Знание складских программ</li>
             </ul>
             
             <div class="mb-2 font-semibold">Условия</div>
             <ul class="list-disc list-inside text-sm md:text-base">
               <li>График 5/2</li>
               <li>Официальное трудоустройство</li>
-              <li>Возможность удаленной работы</li>
-              <li>Оплата сертификаций</li>
+              <li>Компенсация питания</li>
+              <li>ДМС</li>
             </ul>
           </div>
           <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              <div class="mb-2 text-sm">+7 383 789 01 23</div>
-              <div class="mb-2 text-sm">Контактное лицо: Игорь Соколов</div>
-              <div class="mb-2 text-sm">Email: it@aeroline.ru</div>
+              <div class="mb-2 text-sm">+7 343 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Павел Зайцев</div>
+              <div class="mb-2 text-sm">Email: warehouse@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Садовая-Кудринская 11">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">PR-менеджер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 100 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Садовая-Кудринская 11</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Разработка PR-стратегии</li>
+              <li>Работа с медиа и блогерами</li>
+              <li>Организация мероприятий</li>
+              <li>Подготовка пресс-релизов</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в PR от 3-х лет</li>
+              <li>Высшее образование (PR, журналистика)</li>
+              <li>Креативность</li>
+              <li>Навыки копирайтинга</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Работа в офисе</li>
+              <li>Бонусы за успешные кампании</li>
+              <li>ДМС</li>
+              <li>Участие в конференциях</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Алина Морозова</div>
+              <div class="mb-2 text-sm">Email: pr@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Фрунзе 80">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по технической поддержке</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 70 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Фрунзе 80</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Обработка запросов пользователей</li>
+              <li>Диагностика и устранение технических проблем</li>
+              <li>Консультация клиентов по продуктам</li>
+              <li>Ведение базы знаний</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в техподдержке от 1 года</li>
+              <li>Знание ОС Windows, Linux</li>
+              <li>Коммуникабельность</li>
+              <li>Техническое образование</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2 или сменный</li>
+              <li>Официальное трудоустройство</li>
+              <li>ДМС</li>
+              <li>Оплата курсов</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 383 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Роман Егоров</div>
+              <div class="mb-2 text-sm">Email: support@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Тверская 22, БЦ &#x27;Галерея&#x27;">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по продажам корпоративных решений</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 130 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Тверская 22, БЦ &#x27;Галерея&#x27;</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Привлечение новых корпоративных клиентов</li>
+              <li>Проведение переговоров и заключение договоров</li>
+              <li>Разработка индивидуальных коммерческих предложений</li>
+              <li>Контроль выполнения договорных обязательств</li>
+              <li>Анализ потребностей клиентов</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в B2B продажах от 3-х лет</li>
+              <li>Высшее образование (маркетинг, экономика или смежные)</li>
+              <li>Навыки ведения переговоров</li>
+              <li>Знание CRM-систем (Bitrix24, AmoCRM)</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Оформление по ТК РФ</li>
+              <li>Оклад + премии за выполнение плана</li>
+              <li>ДМС с первого дня</li>
+              <li>Компенсация проезда</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Ольга Смирнова</div>
+              <div class="mb-2 text-sm">Email: sales@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Казань, ул. Баумана 44">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Финансовый аналитик</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 100 000 ₽ <span class="text-brand-gray font-normal">г. Казань, ул. Баумана 44</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Анализ финансовой отчетности</li>
+              <li>Подготовка бюджетов и прогнозов</li>
+              <li>Оценка инвестиционных проектов</li>
+              <li>Мониторинг финансовых показателей</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Высшее экономическое образование</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание Excel (включая Power Query)</li>
+              <li>Навыки работы с ERP-системами</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>ДМС после испытательного срока</li>
+              <li>Корпоративные тренинги</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 843 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Алексей Иванов</div>
+              <div class="mb-2 text-sm">Email: finance@kazancorp.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Ростов-на-Дону, ул. Большая Садовая 115">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Логист</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 85 000 ₽ <span class="text-brand-gray font-normal">г. Ростов-на-Дону, ул. Большая Садовая 115</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Организация транспортной логистики</li>
+              <li>Оптимизация маршрутов доставки</li>
+              <li>Взаимодействие с транспортными компаниями</li>
+              <li>Контроль сроков доставки</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в логистике от 2-х лет</li>
+              <li>Знание 1С и TMS-систем</li>
+              <li>Навыки планирования</li>
+              <li>Ответственность и организованность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Оформление по ТК РФ</li>
+              <li>Компенсация мобильной связи</li>
+              <li>Корпоративный транспорт</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 863 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Виктор Соколов</div>
+              <div class="mb-2 text-sm">Email: logistics@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, Удаленная работа">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Frontend-разработчик</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 150 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Разработка интерфейсов веб-приложений</li>
+              <li>Оптимизация производительности фронтенда</li>
+              <li>Интеграция с API backend</li>
+              <li>Тестирование и отладка кода</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы от 3-х лет</li>
+              <li>Владение JavaScript, React, TypeScript</li>
+              <li>Знание HTML, CSS, Webpack</li>
+              <li>Опыт работы с Git</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Удаленная работа</li>
+              <li>Гибкий график</li>
+              <li>Оплата подписок на профессиональные инструменты</li>
+              <li>Участие в хакатонах</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Мария Кузнецова</div>
+              <div class="mb-2 text-sm">Email: dev@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Санкт-Петербург, ул. Невский проспект 78">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по кадрам</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 75 000 ₽ <span class="text-brand-gray font-normal">г. Санкт-Петербург, ул. Невский проспект 78</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Ведение кадрового делопроизводства</li>
+              <li>Подбор персонала</li>
+              <li>Организация корпоративных мероприятий</li>
+              <li>Контроль соблюдения трудового законодательства</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Высшее образование (HR или юриспруденция)</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание 1С: ЗУП</li>
+              <li>Коммуникабельность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>ДМС</li>
+              <li>Корпоративные скидки</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 812 345 67 89</div>
+              <div class="mb-2 text-sm">Контактное лицо: Екатерина Новикова</div>
+              <div class="mb-2 text-sm">Email: hr@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Самара, ул. Молодогвардейская 204">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по закупкам</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 90 000 ₽ <span class="text-brand-gray font-normal">г. Самара, ул. Молодогвардейская 204</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Поиск и выбор поставщиков</li>
+              <li>Проведение переговоров с поставщиками</li>
+              <li>Контроль качества и сроков поставок</li>
+              <li>Анализ цен и условий закупок</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в закупках от 2-х лет</li>
+              <li>Высшее образование</li>
+              <li>Навыки ведения переговоров</li>
+              <li>Знание Excel и ERP-систем</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Оформление по ТК РФ</li>
+              <li>Бонусы за оптимизацию затрат</li>
+              <li>Корпоративное обучение</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 846 789 01 23</div>
+              <div class="mb-2 text-sm">Контактное лицо: Ирина Павлова</div>
+              <div class="mb-2 text-sm">Email: procurement@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Горская 2">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Инженер по эксплуатации зданий</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 80 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Горская 2</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Обслуживание инженерных систем зданий</li>
+              <li>Контроль за состоянием оборудования</li>
+              <li>Планирование ремонтных работ</li>
+              <li>Взаимодействие с подрядчиками</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Техническое образование</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание систем вентиляции и кондиционирования</li>
+              <li>Ответственность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>Компенсация ГСМ</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 383 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Сергей Ковалев</div>
+              <div class="mb-2 text-sm">Email: facility@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Профсоюзная 56">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по работе с ключевыми клиентами (IT)</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 135 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Профсоюзная 56</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Управление отношениями с IT-клиентами</li>
+              <li>Подготовка технико-коммерческих предложений</li>
+              <li>Сопровождение сделок</li>
+              <li>Анализ потребностей клиентов</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в IT-продажах от 3-х лет</li>
+              <li>Высшее образование (IT или экономика)</li>
+              <li>Знание английского языка (Advanced)</li>
+              <li>Навыки работы с CRM</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Оформление по ТК РФ</li>
+              <li>Оклад + бонусы</li>
+              <li>ДМС для сотрудника и семьи</li>
+              <li>Корпоративный ноутбук</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Татьяна Григорьева</div>
+              <div class="mb-2 text-sm">Email: it_sales@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Ленина 50">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Аналитик данных</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 120 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Ленина 50</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Сбор и обработка данных</li>
+              <li>Построение аналитических моделей</li>
+              <li>Создание дашбордов в BI-системах</li>
+              <li>Подготовка отчетов для руководства</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы с Python или R</li>
+              <li>Знание SQL</li>
+              <li>Опыт работы с Power BI или Tableau</li>
+              <li>Высшее образование (математика, IT)</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Удаленная работа</li>
+              <li>Гибкий график</li>
+              <li>Оплата профессиональных курсов</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 343 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Андрей Мельников</div>
+              <div class="mb-2 text-sm">Email: analytics@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Краснодар, ул. Красная 155">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Водитель грузового транспорта</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 95 000 ₽ <span class="text-brand-gray font-normal">г. Краснодар, ул. Красная 155</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Перевозка грузов по региону</li>
+              <li>Контроль технического состояния транспорта</li>
+              <li>Работа с транспортной документацией</li>
+              <li>Соблюдение сроков доставки</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Права категории C, E</li>
+              <li>Опыт работы от 3-х лет</li>
+              <li>Знание ПДД</li>
+              <li>Ответственность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Новый автопарк</li>
+              <li>Компенсация ГСМ</li>
+              <li>Стабильные выплаты</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 861 789 01 23</div>
+              <div class="mb-2 text-sm">Контактное лицо: Михаил Козлов</div>
+              <div class="mb-2 text-sm">Email: transport@krasnodar.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, Удаленная работа">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Графический дизайнер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 110 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Создание визуального контента для маркетинга</li>
+              <li>Разработка брендбуков</li>
+              <li>Подготовка макетов для печати</li>
+              <li>Работа с анимацией</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы от 3-х лет</li>
+              <li>Владение Adobe Photoshop, Illustrator</li>
+              <li>Понимание основ типографики</li>
+              <li>Наличие портфолио</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Удаленная работа</li>
+              <li>Гибкий график</li>
+              <li>Оплата подписок на Adobe</li>
+              <li>Участие в выставках</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Елизавета Романова</div>
+              <div class="mb-2 text-sm">Email: design@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Владивосток, ул. Светланская 83">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по ВЭД</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 100 000 ₽ <span class="text-brand-gray font-normal">г. Владивосток, ул. Светланская 83</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Организация международных поставок</li>
+              <li>Подготовка экспортной документации</li>
+              <li>Взаимодействие с таможенными брокерами</li>
+              <li>Контроль логистики</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в ВЭД от 2-х лет</li>
+              <li>Знание английского языка (Upper-Intermediate)</li>
+              <li>Высшее образование</li>
+              <li>Знание международного законодательства</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Оформление по ТК РФ</li>
+              <li>ДМС</li>
+              <li>Корпоративное обучение</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 423 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Наталья Королева</div>
+              <div class="mb-2 text-sm">Email: ved@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Санкт-Петербург, ул. Большая Морская 20">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">SMM-менеджер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 90 000 ₽ <span class="text-brand-gray font-normal">г. Санкт-Петербург, ул. Большая Морская 20</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Ведение социальных сетей компании</li>
+              <li>Создание контент-планов</li>
+              <li>Запуск таргетированной рекламы</li>
+              <li>Анализ эффективности SMM-кампаний</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в SMM от 2-х лет</li>
+              <li>Знание инструментов аналитики</li>
+              <li>Креативность</li>
+              <li>Владение графическими редакторами</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Работа в офисе или удаленно</li>
+              <li>Бонусы за KPI</li>
+              <li>Оплата курсов</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 812 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Ксения Лебедева</div>
+              <div class="mb-2 text-sm">Email: smm@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Челябинск, ул. Труда 78">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Техник по обслуживанию оборудования</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 75 000 ₽ <span class="text-brand-gray font-normal">г. Челябинск, ул. Труда 78</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Обслуживание и ремонт производственного оборудования</li>
+              <li>Диагностика неисправностей</li>
+              <li>Ведение технической документации</li>
+              <li>Контроль запасных частей</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Среднее техническое образование</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание основ механики</li>
+              <li>Ответственность</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>Компенсация ГСМ</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 351 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Владимир Степанов</div>
+              <div class="mb-2 text-sm">Email: tech@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Новый Арбат 21">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по продукту</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 140 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Новый Арбат 21</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Разработка стратегии развития продукта</li>
+              <li>Анализ рынка и конкурентов</li>
+              <li>Координация работы команды</li>
+              <li>Взаимодействие с клиентами</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы продакт-менеджером от 3-х лет</li>
+              <li>Высшее образование</li>
+              <li>Знание Agile/Scrum</li>
+              <li>Аналитическое мышление</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Работа в офисе</li>
+              <li>Бонусы за успешный запуск продукта</li>
+              <li>ДМС</li>
+              <li>Корпоративное обучение</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 789 01 23</div>
+              <div class="mb-2 text-sm">Контактное лицо: Артем Белов</div>
+              <div class="mb-2 text-sm">Email: product@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Уфа, ул. Ленина 70">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по охране труда</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 80 000 ₽ <span class="text-brand-gray font-normal">г. Уфа, ул. Ленина 70</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Контроль соблюдения норм охраны труда</li>
+              <li>Проведение инструктажей</li>
+              <li>Разработка локальных нормативных актов</li>
+              <li>Взаимодействие с надзорными органами</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Высшее образование (техносферная безопасность)</li>
+              <li>Опыт работы от 2-х лет</li>
+              <li>Знание законодательства</li>
+              <li>Уверенный пользователь ПК</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Оформление по ТК РФ</li>
+              <li>ДМС</li>
+              <li>Корпоративные скидки</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 347 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Олег Николаев</div>
+              <div class="mb-2 text-sm">Email: safety@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, Удаленная работа">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Backend-разработчик</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 160 000 ₽ <span class="text-brand-gray font-normal">г. Москва, Удаленная работа</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Разработка серверной части приложений</li>
+              <li>Оптимизация баз данных</li>
+              <li>Интеграция с внешними сервисами</li>
+              <li>Обеспечение безопасности API</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы с Python/Django от 3-х лет</li>
+              <li>Знание SQL, PostgreSQL</li>
+              <li>Опыт работы с REST API</li>
+              <li>Навыки работы с Docker</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Удаленная работа</li>
+              <li>Гибкий график</li>
+              <li>Оплата сертификаций</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 234 56 78</div>
+              <div class="mb-2 text-sm">Контактное лицо: Вадим Кравцов</div>
+              <div class="mb-2 text-sm">Email: backend@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Казань, ул. Кремлевская 25">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Менеджер по работе с партнерами</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 115 000 ₽ <span class="text-brand-gray font-normal">г. Казань, ул. Кремлевская 25</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Поиск и привлечение новых партнеров</li>
+              <li>Поддержание отношений с текущими партнерами</li>
+              <li>Проведение переговоров</li>
+              <li>Контроль выполнения партнерских соглашений</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в партнерских программах от 2-х лет</li>
+              <li>Высшее образование</li>
+              <li>Навыки презентации</li>
+              <li>Знание английского языка</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Оформление по ТК РФ</li>
+              <li>Бонусы за привлечение партнеров</li>
+              <li>ДМС</li>
+              <li>Компенсация проезда</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 843 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Лилия Хакимова</div>
+              <div class="mb-2 text-sm">Email: partners@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Екатеринбург, ул. Шефская 3">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Складской работник</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 70 000 ₽ <span class="text-brand-gray font-normal">г. Екатеринбург, ул. Шефская 3</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Прием и отгрузка товаров</li>
+              <li>Комплектация заказов</li>
+              <li>Контроль складских остатков</li>
+              <li>Участие в инвентаризациях</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы на складе от 1 года</li>
+              <li>Физическая выносливость</li>
+              <li>Ответственность</li>
+              <li>Знание складских программ</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2</li>
+              <li>Официальное трудоустройство</li>
+              <li>Компенсация питания</li>
+              <li>ДМС</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 343 456 78 90</div>
+              <div class="mb-2 text-sm">Контактное лицо: Павел Зайцев</div>
+              <div class="mb-2 text-sm">Email: warehouse@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Москва, ул. Садовая-Кудринская 11">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">PR-менеджер</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 100 000 ₽ <span class="text-brand-gray font-normal">г. Москва, ул. Садовая-Кудринская 11</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Разработка PR-стратегии</li>
+              <li>Работа с медиа и блогерами</li>
+              <li>Организация мероприятий</li>
+              <li>Подготовка пресс-релизов</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в PR от 3-х лет</li>
+              <li>Высшее образование (PR, журналистика)</li>
+              <li>Креативность</li>
+              <li>Навыки копирайтинга</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>Работа в офисе</li>
+              <li>Бонусы за успешные кампании</li>
+              <li>ДМС</li>
+              <li>Участие в конференциях</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 495 567 89 01</div>
+              <div class="mb-2 text-sm">Контактное лицо: Алина Морозова</div>
+              <div class="mb-2 text-sm">Email: pr@aeroline.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="г. Новосибирск, ул. Фрунзе 80">
+      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
+        <div>
+          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Специалист по технической поддержке</div>
+          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">от 70 000 ₽ <span class="text-brand-gray font-normal">г. Новосибирск, ул. Фрунзе 80</span></div>
+        </div>
+        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
+        <hr class="border-t border-t-2 border-white mb-4">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <div class="mb-2 font-semibold">Обязанности</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Обработка запросов пользователей</li>
+              <li>Диагностика и устранение технических проблем</li>
+              <li>Консультация клиентов по продуктам</li>
+              <li>Ведение базы знаний</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Требования</div>
+            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+              <li>Опыт работы в техподдержке от 1 года</li>
+              <li>Знание ОС Windows, Linux</li>
+              <li>Коммуникабельность</li>
+              <li>Техническое образование</li>
+            </ul>
+            
+            <div class="mb-2 font-semibold">Условия</div>
+            <ul class="list-disc list-inside text-sm md:text-base">
+              <li>График 5/2 или сменный</li>
+              <li>Официальное трудоустройство</li>
+              <li>ДМС</li>
+              <li>Оплата курсов</li>
+            </ul>
+          </div>
+          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
+            <div>
+              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
+              <div class="mb-2 text-sm">+7 383 678 90 12</div>
+              <div class="mb-2 text-sm">Контактное лицо: Роман Егоров</div>
+              <div class="mb-2 text-sm">Email: support@aeroline.ru</div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+  
+  <!-- Пагинация -->
+  <div class="flex justify-center mt-8 mb-8 pagination-container">
+    <!-- Здесь будут кнопки пагинации -->
+  </div>
 </main>
 
 </div> <!-- Закрытие обертки основного контента -->

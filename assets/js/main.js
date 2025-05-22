@@ -30,6 +30,7 @@ import { initContactsPage } from './modules/contacts-page.js';
 import { initVacanciesPage } from './modules/vacancies-page.js';
 import { initPaymentsPage } from './modules/payments-page.js';
 import { NewsPage } from './modules/news-page.js';
+import { Pagination } from './modules/pagination.js';
 import '../css/main.css';
 
 // Базовый путь для использования в скрипте
@@ -58,6 +59,7 @@ window.initHomePage = initHomePage;
 window.initContactsPage = initContactsPage;
 window.initVacanciesPage = initVacanciesPage;
 window.initPaymentsPage = initPaymentsPage;
+window.Pagination = Pagination;
 
 // Создаем флаг для отслеживания, была ли уже вызвана инициализация
 let isInitialized = false;

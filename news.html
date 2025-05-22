@@ -26,9 +26,9 @@
 
   <!-- Блок с новостями -->
   <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full max-w-[100vw]">
-    <div class="space-y-6 md:space-y-8 [&_.news-content]:line-clamp-4 w-full px-4 xl:px-0">
+    <div class="news-grid space-y-6 md:space-y-8 [&_.news-content]:line-clamp-4 w-full px-4 xl:px-0">
       {{#each newsData.news}}
-      <div class="news-card py-4 bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+      <div class="news-card py-4 bg-brand-light border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-month="{{month}}">
         <div class="flex flex-col md:flex-row gap-4">
           <div class="w-full md:w-2/5 rounded-2xl overflow-hidden px-4 ">
             {{#if image}}
@@ -75,22 +75,8 @@
     </div>
 
     <!-- Пагинация -->
-    <div class="flex justify-center mt-12">
-      <div class="flex space-x-2">
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg text-white bg-brand-blue">1</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">2</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">3</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-brand-gray hover:bg-brand-light transition-colors">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
+    <div class="pagination-container flex justify-center mt-12">
+      <!-- Здесь будут кнопки пагинации, динамически добавляемые JS -->
     </div>
   </section>
 

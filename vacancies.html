@@ -22,7 +22,7 @@
   </div>
 
   <!-- Список вакансий -->
-  <section class="space-y-4 md:space-y-6 mb-10 w-full" id="vacancies-list">
+  <section class="space-y-4 md:space-y-6 mb-10 w-full vacancies-container">
     {{#each vacancies}}
     <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="{{location}}">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
@@ -87,6 +87,11 @@
     </div>
     {{/each}}
   </section>
+  
+  <!-- Пагинация -->
+  <div class="flex justify-center mt-8 mb-8 pagination-container">
+    <!-- Здесь будут кнопки пагинации -->
+  </div>
 </main>
 
 {{> footer}}
