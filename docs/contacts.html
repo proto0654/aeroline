@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main-dd3bf1e9.css">
+  <link rel="stylesheet" href="./assets/css/main-fb74da6b.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -189,7 +189,7 @@
         <!-- Информационная панель с данными офиса -->
         <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10">
           <div class="flex justify-between items-center mb-2">
-            <div class="font-bold text-2xl text-brand-gray">Москва</div>
+            <div class="font-bold text-2xl text-brand-gray">Новосибирск</div>
             <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -197,10 +197,10 @@
             </button>
           </div>
           
-          <div class="text-brand-gray">Пресненская набережная, 12, БЦ «Башня Федерация»</div>
-          <div class="hidden lg:block text-brand-gray">Офис продаж</div>
-          <div class="hidden lg:block text-brand-gray">+7 495 123 45 70</div>
-          <div class="hidden lg:block text-brand-gray">moscow.city@aeroline.com</div>
+          <div class="text-brand-gray">Красный проспект, 82, ДЦ «СОВНАРХОЗ»</div>
+          <div class="hidden lg:block text-brand-gray">Представительство</div>
+          <div class="hidden lg:block text-brand-gray">+7 383 543 21 03</div>
+          <div class="hidden lg:block text-brand-gray">nsk.sales@aeroline.com</div>
           <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
         </div>
       </div>
@@ -213,6 +213,55 @@
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">
     <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
+    
+    <!-- Фильтр по городу -->
+    <div class="flex justify-center mb-6 md:mb-10">
+      <div class="relative w-full max-w-xs">
+        <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+          <option value="all">Все города</option>
+          <option value="Москва">Москва</option>
+          <option value="Санкт-Петербург">Санкт-Петербург</option>
+          <option value="Новосибирск">Новосибирск</option>
+          <option value="Екатеринбург">Екатеринбург</option>
+          <option value="Казань">Казань</option>
+          <option value="Нижний Новгород">Нижний Новгород</option>
+          <option value="Челябинск">Челябинск</option>
+          <option value="Самара">Самара</option>
+          <option value="Омск">Омск</option>
+          <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+          <option value="Уфа">Уфа</option>
+          <option value="Красноярск">Красноярск</option>
+          <option value="Пермь">Пермь</option>
+          <option value="Волгоград">Волгоград</option>
+          <option value="Воронеж">Воронеж</option>
+          <option value="Саратов">Саратов</option>
+          <option value="Краснодар">Краснодар</option>
+          <option value="Тюмень">Тюмень</option>
+          <option value="Ижевск">Ижевск</option>
+          <option value="Барнаул">Барнаул</option>
+          <option value="Иркутск">Иркутск</option>
+          <option value="Хабаровск">Хабаровск</option>
+          <option value="Ярославль">Ярославль</option>
+          <option value="Владивосток">Владивосток</option>
+          <option value="Махачкала">Махачкала</option>
+          <option value="Томск">Томск</option>
+          <option value="Оренбург">Оренбург</option>
+          <option value="Кемерово">Кемерово</option>
+          <option value="Астрахань">Астрахань</option>
+          <option value="Липецк">Липецк</option>
+          <option value="Киров">Киров</option>
+          <option value="Севастополь">Севастополь</option>
+          <option value="Тула">Тула</option>
+          <option value="Курск">Курск</option>
+          <option value="Рязань">Рязань</option>
+          <option value="Белгород">Белгород</option>
+          <option value="Владимир">Владимир</option>
+          <option value="Калининград">Калининград</option>
+        </select>
+        <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+      </div>
+    </div>
+    
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 offices-grid">
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
         data-city="Москва" data-coordinates="55.789461,37.551735" data-index="0">
@@ -837,13 +886,13 @@
       <nav class="inline-flex items-center space-x-1">
         <button
           class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors"
-          disabled>&lt;</button>
+          >&lt;</button>
 
         <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-blue text-white font-bold">1</button>
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">1</button>
 
         <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">2</button>
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-blue text-white font-bold">2</button>
 
         <button
           class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">3</button>

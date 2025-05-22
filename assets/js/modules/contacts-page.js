@@ -29,6 +29,9 @@ export function initContactsPage() {
     });
   }
 
+  // Инициализация фильтра по городам
+  initCityFilter();
+
   // Интерактивность с карточками офисов
   if (officeCards.length > 0) {
     officeCards.forEach(card => {
@@ -87,6 +90,98 @@ export function initContactsPage() {
 
   // Инициализация пагинации с callback-функциями
   initOfficesPagination();
+}
+
+/**
+ * Инициализация фильтра по городам
+ */
+function initCityFilter() {
+  const cityFilter = document.getElementById('cityFilter');
+  if (!cityFilter) return;
+
+  // Добавляем обработчик изменения выбранного города
+  cityFilter.addEventListener('change', function() {
+    const selectedCity = this.value;
+    
+    // Если выбраны все города, сбрасываем фильтр
+    if (selectedCity === 'all') {
+      // Если есть экземпляр пагинации, используем его метод для сброса фильтра
+      if (officesPagination) {
+        officesPagination.resetFilter();
+      } else {
+        // Ручной сброс фильтра, если пагинация ещё не инициализирована
+        document.querySelectorAll('.office-card').forEach(card => {
+          card.classList.remove('hidden');
+        });
+      }
+    } else {
+      // Фильтруем карточки по выбранному городу, если пагинация ещё не инициализирована
+      if (!officesPagination) {
+        document.querySelectorAll('.office-card').forEach(card => {
+          if (card.dataset.city === selectedCity) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      }
+    }
+    
+    // Обновляем карту, чтобы отображать только выбранные города
+    updateMapForFilteredOffices(selectedCity);
+  });
+}
+
+/**
+ * Обновление карты для отображения только отфильтрованных офисов
+ */
+function updateMapForFilteredOffices(selectedCity) {
+  if (typeof ymaps === 'undefined') return;
+  
+  ymaps.ready(function() {
+    const mapInstance = document.querySelector('#map')?.__yamap;
+    if (!mapInstance) return;
+    
+    // Сбрасываем все маркеры
+    if (typeof window.resetAllMarkers === 'function') {
+      window.resetAllMarkers();
+    }
+    
+    // Если выбраны все города, показываем все офисы на карте
+    if (selectedCity === 'all') {
+      // Показываем все офисы
+      const allOfficeCoordinates = [];
+      document.querySelectorAll('.office-card').forEach(card => {
+        if (card.dataset.coordinates) {
+          const coordinates = card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
+          if (coordinates.length === 2) {
+            allOfficeCoordinates.push(coordinates);
+          }
+        }
+      });
+      
+      // Устанавливаем оптимальный масштаб для всех офисов
+      if (typeof window.showAllOfficesOnMap === 'function' && allOfficeCoordinates.length > 0) {
+        window.showAllOfficesOnMap(allOfficeCoordinates);
+      }
+    } else {
+      // Показываем только офисы выбранного города
+      const filteredOfficeCoordinates = [];
+      document.querySelectorAll(`.office-card[data-city="${selectedCity}"]`).forEach(card => {
+        if (card.dataset.coordinates) {
+          const coordinates = card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
+          if (coordinates.length === 2) {
+            filteredOfficeCoordinates.push(coordinates);
+          }
+        }
+      });
+      
+      // Устанавливаем оптимальный масштаб для выбранных офисов
+      if (typeof window.showAllOfficesOnMap === 'function' && filteredOfficeCoordinates.length > 0) {
+        window.showAllOfficesOnMap(filteredOfficeCoordinates);
+      }
+    }
+  });
 }
 
 /**

@@ -12,6 +12,20 @@
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">
     <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
+    
+    <!-- Фильтр по городу -->
+    <div class="flex justify-center mb-6 md:mb-10">
+      <div class="relative w-full max-w-xs">
+        <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
+          <option value="all">Все города</option>
+          {{#each cities}}
+          <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+        <img src="{{basePath}}assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+      </div>
+    </div>
+    
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 offices-grid">
       {{#each offices}}
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"

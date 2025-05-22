@@ -309,6 +309,9 @@ export function initMap(offices, basePath) {
       const markers = new ymaps.GeoObjectCollection();
       const officeMarkers = {};
       
+      // Отслеживаем активный маркер для определения повторного клика
+      let activeMarker = null;
+      
       // Получаем начальные размеры маркеров
       const initialMarkerProps = getMarkerSizeForZoom(initialZoom);
       
@@ -352,6 +355,9 @@ export function initMap(offices, basePath) {
             iconImageOffset: markerProps.offset
           });
         });
+        
+        // Сбрасываем активный маркер при сбросе всех маркеров
+        activeMarker = null;
       };
     
       // Добавляем маркеры для каждого офиса
@@ -376,14 +382,30 @@ export function initMap(offices, basePath) {
       
         // Обработчик клика по маркеру
         marker.events.add('click', () => {
-          // Используем централизованную функцию выбора офиса
-          selectOfficeCard(
-            null, // карточка не известна
-            office, 
-            marker, 
-            map, 
-            marker.geometry.getCoordinates()
-          );
+          // Проверяем, является ли текущий маркер уже активным (повторный клик)
+          const isRepeatedClick = activeMarker === marker;
+          
+          if (isRepeatedClick) {
+            // Если это повторный клик, вызываем фокусировку с приближением
+            selectOfficeCard(
+              null, // карточка не известна
+              office, 
+              marker, 
+              map, 
+              marker.geometry.getCoordinates()
+            );
+          } else {
+            // Если это первый клик, только выделяем маркер без фокусировки
+            selectOfficeCardNoFocus(
+              null, // карточка не известна
+              office, 
+              marker, 
+              map
+            );
+            
+            // Запоминаем текущий активный маркер
+            activeMarker = marker;
+          }
         });
       });
     
@@ -442,14 +464,30 @@ export function initMap(offices, basePath) {
             
             // Добавляем обработчик клика
             defaultMarker.events.add('click', () => {
-              // Используем новую функцию selectOfficeCard для централизованного выделения офиса
-              selectOfficeCard(
-                null, // карточка не известна
-                defaultOfficeData, 
-                defaultMarker, 
-                map, 
-                defaultOfficeData.coordinates
-              );
+              // Проверяем, является ли текущий маркер уже активным (повторный клик)
+              const isRepeatedClick = activeMarker === defaultMarker;
+              
+              if (isRepeatedClick) {
+                // Если это повторный клик, вызываем фокусировку с приближением
+                selectOfficeCard(
+                  null, // карточка не известна
+                  defaultOfficeData, 
+                  defaultMarker, 
+                  map, 
+                  defaultOfficeData.coordinates
+                );
+              } else {
+                // Если это первый клик, только выделяем маркер без фокусировки
+                selectOfficeCardNoFocus(
+                  null, // карточка не известна
+                  defaultOfficeData, 
+                  defaultMarker, 
+                  map
+                );
+                
+                // Запоминаем текущий активный маркер
+                activeMarker = defaultMarker;
+              }
             });
             
             // Сохраняем маркер и добавляем на карту
@@ -490,6 +528,9 @@ export function initMap(offices, basePath) {
                 defaultMarker,
                 map
               );
+              
+              // Устанавливаем дефолтный маркер как активный
+              activeMarker = defaultMarker;
             }
           }
         })
@@ -505,7 +546,8 @@ export function initMap(offices, basePath) {
           const marker = officeMarkers[index];
           
           if (marker) {
-            // Используем централизованную функцию выбора офиса
+            // Здесь всегда фокусируем карту при клике на карточку офиса
+            // (поскольку пользователь явно сделал выбор через интерфейс)
             selectOfficeCard(
               this, 
               offices[index], 
@@ -513,6 +555,9 @@ export function initMap(offices, basePath) {
               map, 
               marker.geometry.getCoordinates()
             );
+            
+            // Устанавливаем текущий маркер как активный
+            activeMarker = marker;
           }
         });
       });
@@ -532,6 +577,9 @@ export function initMap(offices, basePath) {
             
             // Используем централизованную функцию для сброса выделения без центрирования карты
             selectOfficeCardNoFocus(null);
+            
+            // Сбрасываем активный маркер, так как панель закрыта
+            activeMarker = null;
           }
         });
       });
@@ -558,6 +606,15 @@ export function initMap(offices, basePath) {
           // Отключаем автоматическую подгонку карты под маркеры при ресайзе
           // чтобы сохранить выбранный пользователем масштаб
         }, 200);
+      });
+      
+      // Обработчик клика по карте для сброса активного маркера при клике в пустую область
+      map.events.add('click', (e) => {
+        // Проверяем, не кликнули ли мы по маркеру
+        if (!e.get('target').options) {
+          // Сбрасываем активный маркер при клике в пустую область карты
+          activeMarker = null;
+        }
       });
     });
   } catch (error) {

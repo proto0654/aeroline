@@ -444,4 +444,38 @@ export class Pagination {
       console.error('Pagination: Ошибка при программном применении фильтра:', error);
     }
   }
+  
+  /**
+   * Сброс фильтра и отображение всех элементов
+   */
+  resetFilter() {
+    try {
+      console.log('Pagination: Сброс фильтра');
+      
+      const filterElement = document.querySelector(this.filterSelector);
+      
+      if (filterElement) {
+        // Устанавливаем значение "все"
+        filterElement.value = 'all';
+        
+        // Сбрасываем фильтрацию
+        this.filteredItems = [...this.allItems];
+        
+        // Рассчитываем общее количество страниц
+        this.totalPages = Math.ceil(this.filteredItems.length / this.itemsPerPage);
+        
+        // Создаем элементы пагинации заново
+        this.createPaginationElements();
+        
+        // Показываем первую страницу
+        this.showPage(1);
+        
+        console.log('Pagination: Фильтр сброшен успешно');
+      } else {
+        console.warn('Pagination: Не удалось сбросить фильтр - элемент не найден:', this.filterSelector);
+      }
+    } catch (error) {
+      console.error('Pagination: Ошибка при сбросе фильтра:', error);
+    }
+  }
 } 

@@ -108,7 +108,7 @@
 }
 
 .hero-section .hero-background img {
-  @apply w-full h-full object-cover 3xl:rounded-3xl;
+  @apply w-full h-full 3xl:rounded-3xl;
 }
 
 /* Медиа-запросы для мобильных версий */
