@@ -84,31 +84,35 @@
 
       <div class="flex space-x-16">
         <div class="flex flex-col space-y-3">
-          <a href="{{basePath}}index.html" class="caps-regular hover:text-brand-blue transition-colors">Главная</a>
-          <a href="{{basePath}}services.html" class="caps-regular hover:text-brand-blue transition-colors">Услуги</a>
-          <a href="{{basePath}}payments.html" class="caps-regular hover:text-brand-blue transition-colors">Платежи</a>
+          <a href="{{basePath}}index.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Главная</a>
+          <a href="{{basePath}}services.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Услуги</a>
+          <a href="{{basePath}}payments.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Платежи</a>
         </div>
         <div class="flex flex-col space-y-3">
-          <a href="{{basePath}}news.html" class="caps-regular hover:text-brand-blue transition-colors">Новости</a>
-          <a href="{{basePath}}vacancies.html" class="caps-regular hover:text-brand-blue transition-colors">Вакансии</a>
-          <a href="{{basePath}}contacts.html" class="caps-regular hover:text-brand-blue transition-colors">Контакты</a>
+          <a href="{{basePath}}news.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Новости</a>
+          <a href="{{basePath}}vacancies.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Вакансии</a>
+          <a href="{{basePath}}contacts.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Контакты</a>
         </div>
       </div>
 
       <div class="flex flex-col space-y-3">
-        <a href="{{basePath}}order-tracking.html" class="caps-regular hover:text-brand-blue transition-colors">Отслеживание заказа</a>
-        <a href="{{basePath}}helper.html" class="caps-regular hover:text-brand-blue transition-colors">Страница «Помощник»</a>
-        <a href="{{basePath}}login.html" class="caps-regular hover:text-brand-blue transition-colors">Войти в личный кабинет</a>
+        <a href="{{basePath}}order-tracking.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
+        <a href="{{basePath}}helper.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
+        <a href="{{basePath}}login.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Войти в личный кабинет</a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- Подключение скриптов -->
-{{#if isDev}}
+<!-- Подключаем JavaScript в конце страницы с условным выбором пути -->
+{{#if_eq isDev true}}
 <script type="module" src="{{basePath}}assets/js/main.js"></script>
 {{else}}
 <script src="{{basePath}}assets/js/bundle.js"></script>
-{{/if}}
+{{/if_eq}}
+
+
+
 </body>
+
 </html>

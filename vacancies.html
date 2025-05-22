@@ -1,6 +1,6 @@
 {{> header}}
 
-<main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
+<main class="container mx-auto max-w-[1200px] flex-grow">
   <!-- Hero-блок -->
   <section class="hero-section">
     <div class="hero-content">
@@ -12,8 +12,8 @@
   </section>
 
   <!-- Фильтр по городу -->
-  <div class="flex justify-center mb-6 md:mb-10">
-    <div class="relative w-full max-w-xs">
+  <div class="flex justify-center mb-6 md:mb-10 px-4">
+    <div class="relative w-full md:max-w-xs">
       <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
         <option value="all">Все города</option>
         {{#each cities}}
@@ -25,7 +25,7 @@
   </div>
 
   <!-- Список вакансий -->
-  <section class="space-y-4 md:space-y-6 mb-10 w-full vacancies-container">
+  <section class="space-y-4 md:space-y-6 mb-10 w-full vacancies-container px-4">
     {{#each vacancies}}
     <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="{{location}}">
       <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
