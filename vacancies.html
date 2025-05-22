@@ -39,7 +39,7 @@
       </button>
       <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
         {{#if description}}
-        <div class="text-sm md:text-base">
+        <div class="text-base">
           <hr class="border-t border-t-2 border-white mb-4">
           {{description}}
         </div>
@@ -49,7 +49,7 @@
           <div class="md:col-span-2">
             {{#if duties}}
             <div class="mb-2 font-semibold">Обязанности</div>
-            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+            <ul class="list-disc list-inside text-base mb-4">
               {{#each duties}}
               <li>{{this}}</li>
               {{/each}}
@@ -58,7 +58,7 @@
             
             {{#if requirements}}
             <div class="mb-2 font-semibold">Требования</div>
-            <ul class="list-disc list-inside text-sm md:text-base mb-4">
+            <ul class="list-disc list-inside text-base mb-4">
               {{#each requirements}}
               <li>{{this}}</li>
               {{/each}}
@@ -78,9 +78,9 @@
             <div>
               <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
               {{#if contact}}
-              <div class="mb-2 text-sm">{{contact.phone}}</div>
-              <div class="mb-2 text-sm">Контактное лицо: {{contact.person}}</div>
-              <div class="mb-2 text-sm">Email: {{contact.email}}</div>
+              <div class="mb-2">{{contact.phone}}</div>
+              <div class="mb-2">Контактное лицо: {{contact.person}}</div>
+              <div class="mb-2">Email: {{contact.email}}</div>
               {{/if}}
             </div>
           </div>

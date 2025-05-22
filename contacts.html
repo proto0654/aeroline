@@ -2,16 +2,19 @@
 
 <main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
   <!-- Hero-блок -->
-  <section class="mb-4 md:mb-8">
-    <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-2 md:mb-4 uppercase">Контакты</h1>
+  <section class="hero-section">
+    <div class="flex-row justify-start">
+      <h1 class="hero-title">Контакты</h1>
+    </div>
     <p class="body-secondary caption-regular mb-4 md:mb-8">{{pageDescription}}</p>
     {{> map-section defaultOffice=defaultOffice}}
   </section>
 
+
   
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">
-    <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
+    <h2 class="text-h3 text-center md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
     
     <!-- Фильтр по городу -->
     <div class="flex justify-center mb-6 md:mb-10 w-full">

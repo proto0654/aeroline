@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main-2595be9a.css">
+  <link rel="stylesheet" href="./assets/css/main-c3454a70.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -661,6 +661,18 @@
   <!-- Секция с картой -->
   <div class="max-w-[1200px] mx-auto w-full mb-10">
     
+    <!-- Скрипт для передачи данных дефолтного офиса в JavaScript -->
+    <script>
+      window.defaultOfficeData = {
+        city: "Москва",
+        address: "Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»",
+        type: "Центральный офис",
+        phone: "+7 495 123 45 67",
+        email: "moscow.center@aeroline.com",
+        mapLink: "#",
+        coordinates: [55.789461, 37.551735]
+      };
+    </script>
     
     <!-- Интерактивная карта -->
     <div class="relative w-full rounded-lg">
@@ -683,9 +695,9 @@
       </div>
       
       <!-- Информационная панель с данными офиса -->
-      <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10">
+      <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10" data-coordinates="55.789461,37.551735">
         <div class="flex justify-between items-center mb-2">
-          <div class="font-bold text-2xl text-brand-gray">Екатеринбург</div>
+          <div class="font-bold text-2xl text-brand-gray">Москва</div>
           <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -693,10 +705,10 @@
           </button>
         </div>
         
-        <div class="text-brand-gray">8 Марта ул., 51, БЦ «Саммит»</div>
-        <div class="hidden lg:block text-brand-gray">Уральский офис</div>
-        <div class="hidden lg:block text-brand-gray">+7 343 987 65 43</div>
-        <div class="hidden lg:block text-brand-gray">ekb.main@aeroline.com</div>
+        <div class="text-brand-gray">Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»</div>
+        <div class="hidden lg:block text-brand-gray">Центральный офис</div>
+        <div class="hidden lg:block text-brand-gray">+7 495 123 45 67</div>
+        <div class="hidden lg:block text-brand-gray">moscow.center@aeroline.com</div>
         <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
       </div>
     </div>
@@ -1113,7 +1125,7 @@
     <div class="news-swiper-container relative md:bg-brand-light pb-10 overflow-hidden rounded-2xl">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between lg:pt-10">
             <div class="flex justify-between items-start mb-4 w-full md:px-10">
               <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Снижение цен на авиабилеты в Европе</h3>
               <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1144,14 +1156,14 @@
               Авиаотрасль демонстрирует заметное снижение цен на билеты по европейским направлениям благодаря возросшей конкуренции и увеличению числа рейсов. Эксперты отмечают, что стоимость перелетов на популярные маршруты, такие как Москва-Париж или Санкт-Петербург-Берлин, упала на 25-30% по сравнению с прошлым годом. Это стало возможным благодаря выходу на рынок новых лоукостеров и расширению маршрутных сетей крупными авиакомпаниями. Пассажиры, бронирующие билеты заранее, могут сэкономить до 35%. Кроме того, перевозчики внедряют гибкие тарифы, включая скидки для семей, студентов и участников программ лояльности. Улучшены условия изменения и отмены бронирований, что делает путешествия более доступными. В бизнес-классе также наблюдается снижение цен, что привлекает деловых путешественников. Авиакомпании активно используют цифровые платформы для продвижения специальных предложений, а некоторые внедряют технологии ИИ для персонализации цен. Ожидается, что тенденция сохранится в летний сезон, что сделает путешествия по Европе еще более привлекательными для туристов и бизнесменов.
             </p>
 
-            <div class="flex justify-between items-center w-full md:px-10 my-8">
+            <div class="flex justify-between items-center w-full md:px-10 my-4">
               <div class="text-caption-form text-brand-gray">20 июль 2024</div>
               <a href="./news.html" class="text-brand-blue md:text-body-secondary">Подробнее</a>
             </div>
           </div>
         </div>
         <div class="swiper-slide">
-          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between lg:pt-10">
             <div class="flex justify-between items-start mb-4 w-full md:px-10">
               <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Запуск высокоскоростного поезда Москва-Казань</h3>
               <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1182,14 +1194,14 @@
               В России начались испытания высокоскоростного поезда, который свяжет Москву и Казань. Новый маршрут позволит сократить время в пути с 11 часов до 3,5 часов, что станет значительным шагом в развитии транспортной инфраструктуры. Поезд, разработанный с использованием передовых технологий, оснащен системами энергосбережения и повышенного комфорта для пассажиров. Вагоны оборудованы Wi-Fi, эргономичными креслами и зонами для работы и отдыха. Проект реализован при поддержке международных партнеров, а общая стоимость составила более 1,2 триллиона рублей. Ожидается, что запуск маршрута в конце 2025 года увеличит пассажиропоток между регионами на 40%. Кроме того, проект способствует развитию туризма и деловых связей между Москвой и Казанью. На маршруте будут действовать гибкие тарифы, включая скидки для студентов и пенсионеров. Экологический аспект также учтен: поезд потребляет на 20% меньше энергии по сравнению с аналогами. Создано более 500 рабочих мест для обслуживания линии, что поддерживает местную экономику.
             </p>
 
-            <div class="flex justify-between items-center w-full md:px-10 my-8">
+            <div class="flex justify-between items-center w-full md:px-10 my-4">
               <div class="text-caption-form text-brand-gray">10 август 2024</div>
               <a href="./news.html" class="text-brand-blue md:text-body-secondary">Подробнее</a>
             </div>
           </div>
         </div>
         <div class="swiper-slide">
-          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between lg:pt-10">
             <div class="flex justify-between items-start mb-4 w-full md:px-10">
               <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Экологический проект в Сочи</h3>
               <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1220,14 +1232,14 @@
               В Сочи стартовал масштабный экологический проект, направленный на сохранение природных ресурсов Черноморского побережья. Инициатива включает восстановление лесных массивов, очистку прибрежных зон и внедрение систем переработки отходов. Проект, финансируемый на сумму 3 миллиарда рублей, объединяет усилия местных властей, экологов и волонтеров. В рамках программы высажено более 10 тысяч деревьев, а также установлены современные очистные сооружения, которые снизят загрязнение моря на 25%. Особое внимание уделяется защите редких видов флоры и фауны, включая восстановление мест обитания черноморских дельфинов. Местные жители активно участвуют в образовательных программах по экологии, что повышает осведомленность о важности сохранения природы. Проект также предусматривает создание новых туристических маршрутов, которые позволят гостям региона познакомиться с уникальной экосистемой. Ожидается, что к концу 2025 года Сочи станет образцом экологически устойчивого курорта, что привлечет больше туристов, заботящихся об окружающей среде.
             </p>
 
-            <div class="flex justify-between items-center w-full md:px-10 my-8">
+            <div class="flex justify-between items-center w-full md:px-10 my-4">
               <div class="text-caption-form text-brand-gray">25 сентябрь 2024</div>
               <a href="./news.html" class="text-brand-blue md:text-body-secondary">Подробнее</a>
             </div>
           </div>
         </div>
         <div class="swiper-slide">
-          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between lg:pt-10">
             <div class="flex justify-between items-start mb-4 w-full md:px-10">
               <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Открытие IT-хаба в Новосибирске</h3>
               <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1258,14 +1270,14 @@
               В Новосибирске открылся новый IT-хаб, который станет центром для развития технологий искусственного интеллекта и кибербезопасности. Проект, реализованный при поддержке государства и частных инвесторов, объединяет стартапы, крупные компании и научные институты. Хаб оснащен высокопроизводительными серверами, лабораториями для тестирования программного обеспечения и учебными центрами для подготовки специалистов. Общий объем инвестиций составил 2,5 миллиарда рублей. Ожидается, что хаб создаст более 2000 рабочих мест для программистов, аналитиков данных и инженеров. В рамках проекта запущены программы поддержки молодых стартапов, включая гранты и акселераторы. Хаб также станет площадкой для международного сотрудничества, привлекая экспертов из Европы и Азии. Особое внимание уделено разработке решений в области кибербезопасности для защиты данных государственных и частных организаций. Проект способствует позиционированию Новосибирска как одного из ключевых IT-центров России, что привлечет дополнительные инвестиции и укрепит экономику региона.
             </p>
 
-            <div class="flex justify-between items-center w-full md:px-10 my-8">
+            <div class="flex justify-between items-center w-full md:px-10 my-4">
               <div class="text-caption-form text-brand-gray">5 октябрь 2024</div>
               <a href="./news.html" class="text-brand-blue md:text-body-secondary">Подробнее</a>
             </div>
           </div>
         </div>
         <div class="swiper-slide">
-          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between pt-10">
+          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between lg:pt-10">
             <div class="flex justify-between items-start mb-4 w-full md:px-10">
               <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">Новая ветка метро в Санкт-Петербурге</h3>
               <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1296,7 +1308,7 @@
               В Санкт-Петербурге началось строительство новой ветки метрополитена, которая свяжет южные районы города с центром. Проект включает возведение шести станций с современным дизайном и инфраструктурой, адаптированной для маломобильных граждан. Новая ветка сократит время в пути для жителей пригородов на 40% и разгрузит существующие линии метро. Финансирование проекта составляет 80 миллиардов рублей, часть средств выделена из федерального бюджета. Станции будут оснащены энергоэффективными системами освещения и вентиляции, а также цифровыми информационными панелями. Особое внимание уделено безопасности: внедрены системы видеонаблюдения с функцией распознавания лиц. Строительство ведется с учетом сохранения исторического облика города, что вызвало необходимость использования сложных инженерных решений. Ожидается, что ветка будет запущена в 2027 году, а на этапе строительства создано более 3000 рабочих мест. Проект повысит транспортную доступность города и улучшит качество жизни горожан.
             </p>
 
-            <div class="flex justify-between items-center w-full md:px-10 my-8">
+            <div class="flex justify-between items-center w-full md:px-10 my-4">
               <div class="text-caption-form text-brand-gray">12 ноябрь 2024</div>
               <a href="./news.html" class="text-brand-blue md:text-body-secondary">Подробнее</a>
             </div>
@@ -1466,7 +1478,7 @@
           
           border-dashed 
           
-          lg:mt-0
+          lg:mt-[-1px]
           
           lg:rounded-tl-2xl
           lg:rounded-bl-2xl

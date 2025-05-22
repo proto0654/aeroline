@@ -189,9 +189,18 @@ function safeContains(str, substr) {
 
 export default defineConfig(({ command, mode }) => {
   const isProduction = mode === 'production';
+  // Определяем, используется ли HTTPS из аргументов командной строки
+  const useHttps = process.argv.includes('--https');
   
   return {
     base: './',
+    // Настройки сервера в зависимости от режима запуска
+    server: {
+      host: true,
+      // HTTPS только если указан аргумент --https
+      https: useHttps,
+      cors: true
+    },
     build: {
       outDir: 'docs',
       emptyOutDir: true,

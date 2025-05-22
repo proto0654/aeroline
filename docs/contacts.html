@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main-2595be9a.css">
+  <link rel="stylesheet" href="./assets/css/main-c3454a70.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -159,12 +159,26 @@
 </html> 
 <main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
   <!-- Hero-блок -->
-  <section class="mb-4 md:mb-8">
-    <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-2 md:mb-4 uppercase">Контакты</h1>
+  <section class="hero-section">
+    <div class="flex-row justify-start">
+      <h1 class="hero-title">Контакты</h1>
+    </div>
     <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте или воспользуйтесь списком ниже.</p>
     <!-- Секция с картой -->
     <div class="max-w-[1200px] mx-auto w-full mb-10">
       
+      <!-- Скрипт для передачи данных дефолтного офиса в JavaScript -->
+      <script>
+        window.defaultOfficeData = {
+          city: "Москва",
+          address: "Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»",
+          type: "Центральный офис",
+          phone: "+7 495 123 45 67",
+          email: "moscow.center@aeroline.com",
+          mapLink: "#",
+          coordinates: [55.789461, 37.551735]
+        };
+      </script>
       
       <!-- Интерактивная карта -->
       <div class="relative w-full rounded-lg">
@@ -187,7 +201,7 @@
         </div>
         
         <!-- Информационная панель с данными офиса -->
-        <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10">
+        <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10" data-coordinates="55.789461,37.551735">
           <div class="flex justify-between items-center mb-2">
             <div class="font-bold text-2xl text-brand-gray">Москва</div>
             <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
@@ -209,10 +223,11 @@
       <script src="https://api-maps.yandex.ru/2.1/?apikey=aa3c4d61-3793-4ff2-bdcc-e37451b213fc&lang=ru_RU" type="text/javascript"></script>
     </div>   </section>
 
+
   
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">
-    <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
+    <h2 class="text-h3 text-center md:text-h2 font-bold text-brand-gray mb-6 md:mb-8 uppercase">Контактная информация</h2>
     
     <!-- Фильтр по городу -->
     <div class="flex justify-center mb-6 md:mb-10 w-full">

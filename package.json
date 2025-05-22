@@ -4,7 +4,8 @@
   "description": "Статическая верстка сайта Aeroline с адаптивным дизайном и интерактивными элементами",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host --https",
+    "dev-local": "vite --host",
     "build": "vite build && vite build -c vite.build-js.config.js",
     "preview": "vite preview",
     "deploy": "node -e \"const now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }).replace(/[.,]/g, '-'); require('child_process').execSync('npm run build && git add . && git commit -m \\\"Обновление-' + now + '\\\" && git push origin', { stdio: 'inherit' });\""

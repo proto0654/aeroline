@@ -490,171 +490,222 @@ export function initMap(offices, basePath) {
       // Проверяем, есть ли уже выбранный офис в HTML
       const infoPanel = document.querySelector('.map-info-panel');
       
-      // Загружаем данные дефолтного офиса из JSON
-      fetch(`${basePath}assets/data/default-office.json`)
-        .then(response => response.json())
-        .then(defaultOfficeData => {
-          // Добавляем дефолтный офис в список, если его там еще нет
-          const defaultOfficeExists = offices.some(office => 
-            office.city === defaultOfficeData.city && 
-            office.address === defaultOfficeData.address
-          );
-          
-          if (!defaultOfficeExists && defaultOfficeData.coordinates) {
-            // Добавляем дефолтный офис в массив офисов
-            offices.push(defaultOfficeData);
-            
-            // Создаем маркер для дефолтного офиса
-            const defaultMarkerIndex = offices.length - 1;
-            
-            // Получаем текущий размер маркеров
-            const currentZoom = map.getZoom();
-            const markerProps = getMarkerSizeForZoom(currentZoom);
-            
-            // Создаем маркер с серым цветом по умолчанию
-            const defaultMarkerUrl = createColoredMarkerIcon(DEFAULT_MARKER_COLOR);
-            
-            const defaultMarker = new ymaps.Placemark(defaultOfficeData.coordinates, {
-              hintContent: defaultOfficeData.city
-            }, {
-              iconLayout: 'default#image',
-              iconImageHref: defaultMarkerUrl,
-              iconImageSize: markerProps.size,
-              iconImageOffset: markerProps.offset
-            });
-            
-            // Добавляем обработчик клика
-            defaultMarker.events.add('click', () => {
-              // Добавляем отладочную информацию для диагностики
-              console.log('Клик по дефолтному маркеру');
-              
-              // Получаем текущий масштаб карты
-              const currentZoom = map.getZoom();
-              const officeZoom = getZoomForDevice(mapConfig.officeZoom);
-              const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
-              
-              // Определяем, приближен ли сейчас маркер по ТЕКУЩЕМУ масштабу карты
-              // Используем строгое сравнение с officeZoom с погрешностью
-              const isCurrentlyZoomed = Math.abs(currentZoom - officeZoom) < 3;
-              
-              console.log('Текущий масштаб:', currentZoom);
-              console.log('Масштаб офиса:', officeZoom);
-              console.log('Начальный масштаб:', initialZoom);
-              console.log('Дефолтный маркер сейчас приближен:', isCurrentlyZoomed);
-              console.log('Активный маркер:', activeMarker === defaultMarker ? 'Текущий дефолтный' : (activeMarker ? 'Другой' : 'Нет'));
-              
-              // Проверяем, является ли текущий маркер уже активным
-              const isCurrentMarker = activeMarker === defaultMarker;
-              
-              if (!isCurrentMarker) {
-                console.log('Действие: Выделяем новый дефолтный маркер без фокусировки');
-                // Если это новый маркер - выделяем его без фокусировки
-                selectOfficeCardNoFocus(
-                  null, // карточка не известна
-                  defaultOfficeData, 
-                  defaultMarker, 
-                  map
-                );
-                
-                // Запоминаем текущий активный маркер
-                activeMarker = defaultMarker;
-              } 
-              else {
-                // Это клик по уже активному маркеру
-                if (!isCurrentlyZoomed) {
-                  // Если маркер НЕ приближен (по фактическому масштабу) - приближаем его
-                  console.log('Действие: Приближаем дефолтный маркер');
-                  selectOfficeCard(
-                    null, // карточка не известна
-                    defaultOfficeData, 
-                    defaultMarker, 
-                    map, 
-                    defaultOfficeData.coordinates
-                  );
-                }
-                else {
-                  // Если маркер уже приближен - возвращаем к обзорному масштабу БЕЗ смещения центра
-                  console.log('Действие: Отдаляем дефолтный маркер, сохраняем позицию и меняем только масштаб');
-                  
-                  // Получаем начальный масштаб для текущего устройства
-                  console.log('Целевой масштаб:', initialZoom);
-                  
-                  // Получаем текущий центр карты
-                  const currentCenter = map.getCenter();
-                  console.log('Сохраняем текущий центр карты:', currentCenter);
-                  
-                  // Явно указываем, что маркер должен остаться активным
-                  // Получаем текущий зум для корректного размера  
-                  const markerProps = getMarkerSizeForZoom(initialZoom);
-                  
-                  // Создаем URL для синего маркера
-                  const activeMarkerUrl = createColoredMarkerIcon(ACTIVE_MARKER_COLOR);
-                  
-                  // Сначала меняем ТОЛЬКО масштаб с анимацией, но сохраняем текущий центр
-                  map.setZoom(initialZoom, { duration: 300 });
-                  
-                  // Обеспечиваем, чтобы маркер остался активным после изменения масштаба
-                  setTimeout(() => {
-                    // Проверяем, что defaultMarker все еще существует
-                    if (defaultMarker && defaultMarker.options) {
-                      defaultMarker.options.set({
-                        iconImageHref: activeMarkerUrl,
-                        iconImageSize: markerProps.size,
-                        iconImageOffset: markerProps.offset
-                      });
-                    }
-                  }, 350); // Небольшая задержка после анимации
-                }
-              }
-            });
-            
-            // Сохраняем маркер и добавляем на карту
-            officeMarkers[defaultMarkerIndex] = defaultMarker;
-            markers.add(defaultMarker);
-            map.geoObjects.add(defaultMarker);
+      // Пытаемся получить данные дефолтного офиса из глобальной переменной или из DOM
+      let defaultOfficeData = null;
+      
+      // Проверяем, есть ли данные в глобальной переменной
+      if (window.defaultOfficeData) {
+        defaultOfficeData = window.defaultOfficeData;
+        processDefaultOffice(defaultOfficeData);
+      } 
+      // Если нет, пробуем извлечь из DOM
+      else if (infoPanel) {
+        const cityElement = infoPanel.querySelector('.font-bold.text-2xl.text-brand-gray');
+        const addressElement = infoPanel.querySelector('div:nth-of-type(2)');
+        const typeElement = infoPanel.querySelector('div:nth-of-type(3)');
+        const phoneElement = infoPanel.querySelector('div:nth-of-type(4)');
+        const emailElement = infoPanel.querySelector('div:nth-of-type(5)');
+        
+        if (cityElement) {
+          // Пытаемся получить координаты из data-атрибута
+          let coordinates = [55.789461, 37.551735]; // Дефолтные координаты
+          if (infoPanel.dataset.coordinates) {
+            const coordsArray = infoPanel.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
+            if (coordsArray.length === 2) {
+              coordinates = coordsArray;
+            }
           }
           
-          // Выделяем дефолтный офис и его маркер (если он не скрыт)
-          const defaultOfficeIndex = offices.findIndex(office => 
-            office.city === defaultOfficeData.city && 
-            office.address === defaultOfficeData.address
-          );
+          defaultOfficeData = {
+            city: cityElement.textContent,
+            address: addressElement ? addressElement.textContent : '',
+            type: typeElement ? typeElement.textContent : '',
+            phone: phoneElement ? phoneElement.textContent : '',
+            email: emailElement ? emailElement.textContent : '',
+            coordinates: coordinates
+          };
           
-          if (defaultOfficeIndex !== -1) {
-            const defaultMarker = officeMarkers[defaultOfficeIndex];
-            if (defaultMarker) {
-              // Находим карточку офиса, соответствующую дефолтному офису
-              const officeCards = document.querySelectorAll('.office-card');
-              let defaultCard = null;
-              
-              officeCards.forEach(card => {
-                const cardCity = card.dataset.city;
-                const addressDiv = card.querySelector('h3 + div.text-brand-gray');
-                const cardAddress = addressDiv ? addressDiv.textContent.trim() : '';
-                
-                if (cardCity === defaultOfficeData.city && 
-                   (cardAddress.includes(defaultOfficeData.address))) {
-                  defaultCard = card;
-                }
-              });
-              
-              // Используем централизованную функцию для выделения дефолтного офиса
-              // НО специальную версию без фокусировки карты, чтобы не приближать при инициализации
+          processDefaultOffice(defaultOfficeData);
+        }
+      }
+      
+      // Если не удалось получить данные из DOM или глобальной переменной, пробуем загрузить из JSON
+      if (!defaultOfficeData) {
+        try {
+          fetch(`${basePath}assets/data/default-office.json`)
+            .then(response => response.json())
+            .then(data => {
+              defaultOfficeData = data;
+              processDefaultOffice(defaultOfficeData);
+            })
+            .catch(error => {
+              console.error('Ошибка при загрузке дефолтного офиса:', error);
+            });
+        } catch (error) {
+          console.error('Ошибка при загрузке дефолтного офиса:', error);
+        }
+      }
+      
+      // Функция для обработки данных дефолтного офиса
+      function processDefaultOffice(defaultOfficeData) {
+        // Добавляем дефолтный офис в список, если его там еще нет
+        const defaultOfficeExists = offices.some(office => 
+          office.city === defaultOfficeData.city && 
+          office.address === defaultOfficeData.address
+        );
+        
+        if (!defaultOfficeExists && defaultOfficeData.coordinates) {
+          // Добавляем дефолтный офис в массив офисов
+          offices.push(defaultOfficeData);
+          
+          // Создаем маркер для дефолтного офиса
+          const defaultMarkerIndex = offices.length - 1;
+          
+          // Получаем текущий размер маркеров
+          const currentZoom = map.getZoom();
+          const markerProps = getMarkerSizeForZoom(currentZoom);
+          
+          // Создаем маркер с серым цветом по умолчанию
+          const defaultMarkerUrl = createColoredMarkerIcon(DEFAULT_MARKER_COLOR);
+          
+          const defaultMarker = new ymaps.Placemark(defaultOfficeData.coordinates, {
+            hintContent: defaultOfficeData.city
+          }, {
+            iconLayout: 'default#image',
+            iconImageHref: defaultMarkerUrl,
+            iconImageSize: markerProps.size,
+            iconImageOffset: markerProps.offset
+          });
+          
+          // Добавляем обработчик клика
+          defaultMarker.events.add('click', () => {
+            // Добавляем отладочную информацию для диагностики
+            console.log('Клик по дефолтному маркеру');
+            
+            // Получаем текущий масштаб карты
+            const currentZoom = map.getZoom();
+            const officeZoom = getZoomForDevice(mapConfig.officeZoom);
+            const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
+            
+            // Определяем, приближен ли сейчас маркер по ТЕКУЩЕМУ масштабу карты
+            // Используем строгое сравнение с officeZoom с погрешностью
+            const isCurrentlyZoomed = Math.abs(currentZoom - officeZoom) < 3;
+            
+            console.log('Текущий масштаб:', currentZoom);
+            console.log('Масштаб офиса:', officeZoom);
+            console.log('Начальный масштаб:', initialZoom);
+            console.log('Дефолтный маркер сейчас приближен:', isCurrentlyZoomed);
+            console.log('Активный маркер:', activeMarker === defaultMarker ? 'Текущий дефолтный' : (activeMarker ? 'Другой' : 'Нет'));
+            
+            // Проверяем, является ли текущий маркер уже активным
+            const isCurrentMarker = activeMarker === defaultMarker;
+            
+            if (!isCurrentMarker) {
+              console.log('Действие: Выделяем новый дефолтный маркер без фокусировки');
+              // Если это новый маркер - выделяем его без фокусировки
               selectOfficeCardNoFocus(
-                defaultCard, // может быть null, если карточка не найдена
-                offices[defaultOfficeIndex],
-                defaultMarker,
+                null, // карточка не известна
+                defaultOfficeData, 
+                defaultMarker, 
                 map
               );
               
-              // Устанавливаем дефолтный маркер как активный
+              // Запоминаем текущий активный маркер
               activeMarker = defaultMarker;
+            } 
+            else {
+              // Это клик по уже активному маркеру
+              if (!isCurrentlyZoomed) {
+                // Если маркер НЕ приближен (по фактическому масштабу) - приближаем его
+                console.log('Действие: Приближаем дефолтный маркер');
+                selectOfficeCard(
+                  null, // карточка не известна
+                  defaultOfficeData, 
+                  defaultMarker, 
+                  map, 
+                  defaultOfficeData.coordinates
+                );
+              }
+              else {
+                // Если маркер уже приближен - возвращаем к обзорному масштабу БЕЗ смещения центра
+                console.log('Действие: Отдаляем дефолтный маркер, сохраняем позицию и меняем только масштаб');
+                
+                // Получаем начальный масштаб для текущего устройства
+                console.log('Целевой масштаб:', initialZoom);
+                
+                // Получаем текущий центр карты
+                const currentCenter = map.getCenter();
+                console.log('Сохраняем текущий центр карты:', currentCenter);
+                
+                // Явно указываем, что маркер должен остаться активным
+                // Получаем текущий зум для корректного размера  
+                const markerProps = getMarkerSizeForZoom(initialZoom);
+                
+                // Создаем URL для синего маркера
+                const activeMarkerUrl = createColoredMarkerIcon(ACTIVE_MARKER_COLOR);
+                
+                // Сначала меняем ТОЛЬКО масштаб с анимацией, но сохраняем текущий центр
+                map.setZoom(initialZoom, { duration: 300 });
+                
+                // Обеспечиваем, чтобы маркер остался активным после изменения масштаба
+                setTimeout(() => {
+                  // Проверяем, что defaultMarker все еще существует
+                  if (defaultMarker && defaultMarker.options) {
+                    defaultMarker.options.set({
+                      iconImageHref: activeMarkerUrl,
+                      iconImageSize: markerProps.size,
+                      iconImageOffset: markerProps.offset
+                    });
+                  }
+                }, 350); // Небольшая задержка после анимации
+              }
             }
+          });
+          
+          // Сохраняем маркер и добавляем на карту
+          officeMarkers[defaultMarkerIndex] = defaultMarker;
+          markers.add(defaultMarker);
+          map.geoObjects.add(defaultMarker);
+        }
+        
+        // Выделяем дефолтный офис и его маркер (если он не скрыт)
+        const defaultOfficeIndex = offices.findIndex(office => 
+          office.city === defaultOfficeData.city && 
+          office.address === defaultOfficeData.address
+        );
+        
+        if (defaultOfficeIndex !== -1) {
+          const defaultMarker = officeMarkers[defaultOfficeIndex];
+          if (defaultMarker) {
+            // Находим карточку офиса, соответствующую дефолтному офису
+            const officeCards = document.querySelectorAll('.office-card');
+            let defaultCard = null;
+            
+            officeCards.forEach(card => {
+              const cardCity = card.dataset.city;
+              const addressDiv = card.querySelector('h3 + div.text-brand-gray');
+              const cardAddress = addressDiv ? addressDiv.textContent.trim() : '';
+              
+              if (cardCity === defaultOfficeData.city && 
+                 (cardAddress.includes(defaultOfficeData.address))) {
+                defaultCard = card;
+              }
+            });
+            
+            // Используем централизованную функцию для выделения дефолтного офиса
+            // НО специальную версию без фокусировки карты, чтобы не приближать при инициализации
+            selectOfficeCardNoFocus(
+              defaultCard, // может быть null, если карточка не найдена
+              offices[defaultOfficeIndex],
+              defaultMarker,
+              map
+            );
+            
+            // Устанавливаем дефолтный маркер как активный
+            activeMarker = defaultMarker;
           }
-        })
-        .catch(error => {
-          console.error('Ошибка при загрузке дефолтного офиса:', error);
-        });
+        }
+      }
     
       // Обработчик клика по карточкам офисов на странице (если они есть)
       document.querySelectorAll('.office-card').forEach((card, cardIndex) => {
