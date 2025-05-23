@@ -103,6 +103,15 @@ export default {
         '39': '9.75rem',
         '40': '10rem',
       },
+      animation: {
+        'fade_in': 'fadeIn 1s ease-out forwards',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        }
+      }
     },
     // Настройка брейкпоинтов для mobile-first подхода
     screens: {
@@ -114,5 +123,56 @@ export default {
       '3xl': '1921px',
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.animation-delay-0': {
+          'animation-delay': '0ms',
+        },
+        '.animation-delay-100': {
+          'animation-delay': '100ms',
+        },
+        '.animation-delay-200': {
+          'animation-delay': '200ms',
+        },
+        '.animation-delay-300': {
+          'animation-delay': '300ms',
+        },
+        '.animation-delay-400': {
+          'animation-delay': '400ms',
+        },
+        '.animation-delay-500': {
+          'animation-delay': '500ms',
+        },
+        '.animation-delay-600': {
+          'animation-delay': '600ms',
+        },
+        '.animation-delay-700': {
+          'animation-delay': '700ms',
+        },
+        '.animation-delay-800': {
+          'animation-delay': '800ms',
+        },
+        '.animation-delay-900': {
+          'animation-delay': '900ms',
+        },
+        '.animation-delay-1000': {
+          'animation-delay': '1000ms',
+        },
+        '.animation-delay-1500': {
+          'animation-delay': '1500ms',
+        },
+        '.animation-delay-2000': {
+          'animation-delay': '2000ms',
+        },
+        '.animation-delay-2500': {
+          'animation-delay': '2500ms',
+        },
+        '.animation-delay-3000': {
+          'animation-delay': '3000ms',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+  ],
 }
