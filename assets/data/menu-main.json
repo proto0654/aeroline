@@ -1,0 +1,21 @@
+{
+  "header": [
+    { "title": "Главная", "url": "index.html", "key": "home" },
+    { "title": "Услуги", "url": "services.html", "key": "services" },
+    { "title": "Платежи", "url": "payments.html", "key": "payments" },
+    { "title": "Новости", "url": "news.html", "key": "news" },
+    { "title": "Вакансии", "url": "vacancies.html", "key": "vacancies" },
+    { "title": "Контакты", "url": "contacts.html", "key": "contacts" }
+  ],
+  "footer": [
+    { "title": "Главная", "url": "index.html", "key": "home" },
+    { "title": "Услуги", "url": "services.html", "key": "services" },
+    { "title": "Платежи", "url": "payments.html", "key": "payments" },
+    { "title": "Новости", "url": "news.html", "key": "news" },
+    { "title": "Вакансии", "url": "vacancies.html", "key": "vacancies" },
+    { "title": "Контакты", "url": "contacts.html", "key": "contacts" },
+    { "title": "Отслеживание заказа", "url": "order-tracking.html", "key": "order-tracking" },
+    { "title": "Страница «Помощник»", "url": "helper.html", "key": "helper" },
+    { "title": "Регистрация", "url": "user-create.html", "key": "user-create" }
+  ]
+} 

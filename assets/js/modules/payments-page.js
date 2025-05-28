@@ -94,4 +94,35 @@ export function initPaymentsPage() {
       alert('Платеж отправлен! Проверьте консоль для деталей.');
     });
   }
+
+  // DaisyUI tooltip: показывать по клику на мобильных и по наведению на десктопе
+  const orderHintTrigger = document.getElementById('order-hint-trigger');
+  if (orderHintTrigger) {
+    let tooltipVisible = false;
+
+    // Для мобильных: показывать/скрывать по клику
+    orderHintTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      tooltipVisible = !tooltipVisible;
+      if (tooltipVisible) {
+        this.setAttribute('data-tip-show', 'true');
+      } else {
+        this.removeAttribute('data-tip-show');
+      }
+    });
+
+    // Скрывать при клике вне подсказки
+    document.addEventListener('click', function (e) {
+      if (tooltipVisible && !orderHintTrigger.contains(e.target)) {
+        orderHintTrigger.removeAttribute('data-tip-show');
+        tooltipVisible = false;
+      }
+    });
+
+    // Для десктопа: скрывать при уходе мыши
+    orderHintTrigger.addEventListener('mouseleave', function () {
+      this.removeAttribute('data-tip-show');
+      tooltipVisible = false;
+    });
+  }
 } 

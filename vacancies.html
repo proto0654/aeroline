@@ -1,6 +1,18 @@
-{{> header}}
+{{> header menuType="main"}}
 
 <main class="container mx-auto max-w-[1200px] flex-grow">
+  <!-- Скрытые данные для JavaScript -->
+  <script type="application/json" id="initial-data">
+  {
+    "vacancies": {{{json vacancies}}},
+    "cities": {{{json cities}}}
+  }
+  </script>
+
+  <script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+  </script>
+
   <!-- Hero-блок -->
   <section class="hero-section">
     <div class="hero-content">
@@ -97,4 +109,4 @@
   </div>
 </main>
 
-{{> footer}}
+{{> footer menuType="main"}}

@@ -11,6 +11,7 @@ export default {
       colors: {
         'brand-blue': '#008DD2',    // Синий цвет из брендбука
         'brand-gray': '#4D4D4D',    // Темно-серый цвет из брендбука
+        'brand-gray-dark': '#222222',
         'brand-light': '#F4F6F9',   // Светло-серый цвет из брендбука
         'brand-white': '#FFFFFF',   // Белый цвет из брендбука
         'brand-blue-opacity': 'rgba(0, 141, 210, 0.2)',
@@ -27,12 +28,13 @@ export default {
         h4: '26px',
         h5: '20px',
         h6: '18px',
-        body: '24px',
+        body: '18px',
         'body-secondary': '20px',
         'caps-bold': '20px',
-        'buttons': '20px',
+        'buttons': '18px',
         'caps-regular': '18px',
         'caption-regular': '24px',
+        'caption-menu': '16px',
         'caption-light': '18px',
         'caption-form': '16px',
         'caption-form-light': '14px',
@@ -124,6 +126,7 @@ export default {
     },
   },
   plugins: [
+    require('daisyui'),
     function({ addUtilities }) {
       const newUtilities = {
         '.animation-delay-0': {
@@ -175,4 +178,51 @@ export default {
       addUtilities(newUtilities)
     }
   ],
+  daisyui: {
+    themes: [{
+      aeroline: {
+        "primary": "#008DD2",
+        "primary-content": "#FFFFFF",
+        "secondary": "#4D4D4D",
+        "secondary-content": "#FFFFFF",
+        "accent": "#F4F6F9",
+        "accent-content": "#4D4D4D",
+        "neutral": "#4D4D4D",
+        "neutral-content": "#FFFFFF",
+        "base-100": "#FFFFFF",
+        "base-200": "#F4F6F9",
+        "base-300": "#E5E7EB",
+        "base-content": "#4D4D4D",
+        "info": "#008DD2",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "error": "#EF4444",
+        "--rounded-box": "0.5rem",
+        "--rounded-btn": "0.5rem",
+        "--rounded-badge": "0.25rem",
+        "--animation-btn": "0.2s",
+        "--animation-input": "0.2s",
+        "--btn-text-case": "none",
+        "--btn-focus-scale": "0.98",
+        "--border-btn": "1px",
+        "--tab-border": "1px",
+        "--tab-radius": "0.5rem",
+        "--input-bg": "#FFFFFF",
+        "--input-border": "#E5E7EB",
+        "--input-focus-border": "#008DD2",
+        "--input-focus-ring": "2px",
+        "--input-focus-ring-color": "rgba(0, 141, 210, 0.2)",
+        "--scrollbar-track": "#F4F6F9",
+        "--scrollbar-thumb": "#E5E7EB",
+        "--scrollbar-thumb-hover": "#D1D5DB",
+      }
+    }],
+    base: true,
+    styled: true,
+    utils: true,
+    prefix: "",
+    logs: true,
+    themeRoot: ":root",
+    darkTheme: false,
+  },
 }

@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full overflow-x-hidden" data-theme="aeroline">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aeroline - Aeroline</title>
+  
+  <style>
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+      position: relative;
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/css/main-f7a63ad1.css">
+</head>
+<body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
+<header class="bg-white max-w-[1920px] mx-auto w-full">
+  <div class="container mx-auto px-4 max-w-[1200px]">
+    <div class="flex justify-between items-center py-2 md:py-4">
+      <div class="logo flex items-center">
+       <a href="./index.html">
+        <img src="./assets/img/aeroline_logo.svg" alt="Aeroline" class="h-15 md:h-20">
+       </a>
+      </div>
+      
+      <!-- Социальные иконки на десктопе -->
+      <div class="hidden lg:flex items-center space-x-6">
+        <div class="flex items-center space-x-3">
+          <a href="https://t.me/aeroline" class="text-brand-blue">
+          <img src="./assets/img/logos_telegram.svg" alt="Telegram" class="h-8 w-8">
+        </a>
+        <a href="https://wa.me/83912050025" class="text-brand-blue">
+          <img src="./assets/img/logos_whatsapp-icon.svg" alt="WhatsApp" class="h-8 w-8">
+        </a>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <a href="#" class="text-brand-blue">
+          <img src="./assets/img/cube.svg" alt="Cube" class="h-11 w-11">
+        </a>
+        <a href="./calculator.html" class="text-brand-blue">
+          <img src="./assets/img/vuesax.svg" alt="Question" class="h-9 w-9">
+        </a>
+        <a href="#" class="text-brand-blue">
+          <img src="./assets/img/q.svg" alt="Question" class="h-9 w-9">
+        </a>
+        </div>
+        <a href="./profile.html" class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block">Войти</a>
+      </div>
+      
+      <!-- Бургер-меню для мобильных устройств -->
+      <button id="burger-menu-btn" class="lg:hidden flex flex-col  items-center justify-center text-brand-blue bg-brand-light rounded-full p-3 space-y-1">
+        <span class="burger-line w-5 h-0.5 bg-brand-blue transition-transform duration-300"></span>
+        <span class="burger-line w-5 h-0.5 bg-brand-blue transition-opacity duration-300"></span>
+        <span class="burger-line w-5 h-0.5 bg-brand-blue transition-transform duration-300"></span>
+      </button>
+    </div>
+    
+    <!-- Навигация и контакты в десктопе -->
+    <div class="hidden lg:flex justify-between border-t border-gray-200">
+      <div class="text-body flex items-center space-x-4 py-3">
+        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue">
+          <img src="./assets/img/messages3.svg" alt="Email" class="h-6 w-6 mr-2">
+          mail@aeroline.su
+        </a>
+        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue">
+          <img src="./assets/img/callcalling.svg" alt="Phone" class="h-6 w-6 mr-2">
+          8 391 205 00 25
+        </a>
+      </div>
+      <nav class="md:block min-w-[35rem]">
+        <ul class="flex justify-between w-full items-center py-5 space-x-3 [&>li]:uppercase [&>li]:text-caption-menu [&>li]:font-medium">
+              <li><a href="./order-list.html" class="text-brand-gray hover:text-brand-blue transition-colors">Список заказов</a></li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Создать заказ
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="./order-new.html" class="text-brand-gray hover:text-brand-blue">Новый заказ</a></li>
+                  <li><a href="./bulk-order.html" class="text-brand-gray hover:text-brand-blue">Массовый заказ</a></li>
+                </ul>
+              </li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Сервис
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="./calculator.html" class="text-brand-gray hover:text-brand-blue">Калькулятор</a></li>
+                  <li><a href="./order-tracking.html" class="text-brand-gray hover:text-brand-blue">Отследить заказ</a></li>
+                </ul>
+              </li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Отчёты
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="./service-acts.html" class="text-brand-gray hover:text-brand-blue">Акты оказания услуг</a></li>
+                  <li><a href="./reconciliation-act.html" class="text-brand-gray hover:text-brand-blue">Запросить акт сверки</a></li>
+                  <li><a href="./reports.html" class="text-brand-gray hover:text-brand-blue">Отчёты</a></li>
+                </ul>
+              </li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Аккаунт
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="./profile.html" class="text-brand-gray hover:text-brand-blue">Профиль</a></li>
+                  <li><a href="./cooperation.html" class="text-brand-gray hover:text-brand-blue">Данные о сотрудничестве</a></li>
+                  <li><a href="./user-create.html" class="text-brand-gray hover:text-brand-blue">Создание пользователя</a></li>
+                  <li><a href="./notifications.html" class="text-brand-gray hover:text-brand-blue">Информация об уведомлениях</a></li>
+                  <li><a href="./senders-receivers.html" class="text-brand-gray hover:text-brand-blue">Карточки отправителей и получателей</a></li>
+                </ul>
+              </li>
+              <li><a href="./helper.html" class="text-brand-gray hover:text-brand-blue transition-colors">Страница «Помощник»</a></li>
+        </ul>
+      </nav>
+      
+    </div>
+  </div>
+  
+  <!-- Мобильное меню на весь экран -->
+  <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
+    <div class="w-[100vw] px-3 py-2 h-[100vh] max-h-[100vh] flex flex-col gap-4  h-full overflow-y-auto">
+      <div class="flex justify-between items-center  border-b border-gray-200 " id="mobile-menu-header">
+       <div class="logo flex items-center">
+       <a href="./index.html">
+        <img src="./assets/img/aeroline_logo.svg" alt="Aeroline" class="h-15 md:h-20">
+       </a>
+      </div>
+        <button id="mobile-close-btn" class="text-brand-blue bg-brand-light rounded-full p-3 mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <nav class="px-2" id="mobile-menu-nav">
+        <ul class="space-y-[2vh]" id="mobile-menu-list">
+          <li><a href="./order-list.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Список заказов</a></li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Создать заказ
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="./order-new.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Новый заказ</a></li>
+              <li><a href="./bulk-order.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Массовый заказ</a></li>
+            </ul>
+          </li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Сервис
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="./calculator.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Калькулятор</a></li>
+              <li><a href="./order-tracking.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Отследить заказ</a></li>
+            </ul>
+          </li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Отчёты
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="./service-acts.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Акты оказания услуг</a></li>
+              <li><a href="./reconciliation-act.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Запросить акт сверки</a></li>
+              <li><a href="./reports.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Отчёты</a></li>
+            </ul>
+          </li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Аккаунт
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="./profile.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Профиль</a></li>
+              <li><a href="./cooperation.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Данные о сотрудничестве</a></li>
+              <li><a href="./user-create.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Создание пользователя</a></li>
+              <li><a href="./notifications.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Информация об уведомлениях</a></li>
+              <li><a href="./senders-receivers.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Карточки отправителей и получателей</a></li>
+            </ul>
+          </li>
+          <li><a href="./helper.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Страница «Помощник»</a></li>
+        </ul>
+      </nav>
+      
+      
+      <div class="w-full flex flex-col gap-5 mt-auto pt-10">
+        <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
+        <div class="flex items-center space-x-2" id="mobile-menu-social">
+          <a href="https://t.me/aeroline" class="text-white rounded-full">
+            <img src="./assets/img/logos_telegram.svg" alt="Telegram" class="h-10 w-10">
+          </a>
+          <a href="https://wa.me/83912050025" class="text-white rounded-full">
+            <img src="./assets/img/logos_whatsapp-icon.svg" alt="WhatsApp" class="h-10 w-10">
+          </a>
+          
+        </div>
+        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email">
+          <img src="./assets/img/messages3.svg" alt="Email" class="h-6 w-6 mx-2">
+          mail@aeroline.su
+        </a>
+        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone">
+          <img src="./assets/img/callcalling.svg" alt="Phone" class="h-6 w-6 mx-2">
+          8 391 205 00 25
+        </a>
+        
+      </div>
+      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end" id="mobile-menu-login">Войти</button>
+   
+      </div>
+       </div>
+  </div>
+</header>
+<div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
+</div>
+
+<!-- Модальное окно входа -->
+<div id="login-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
+    </button>
+    
+    <div class="modal-content">
+      <h3 class="text-h4 font-bold text-brand-gray mb-4">Вход в систему</h3>
+      
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <input type="email" id="login-email" name="email" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 placeholder="example@email.com"
+                 value="test@aeroline.su">
+        </div>
+        
+        <div>
+          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
+          <input type="password" id="login-password" name="password" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 placeholder="••••••••"
+                 value="password123">
+        </div>
+        
+        <div class="flex justify-end gap-3">
+          <button type="button" class="modal-close px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-blue-600 transition-colors">
+            Войти
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html> 
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  
+  <!-- Карточки отправителей и получателей -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div id="contacts-table" class="bg-white rounded-lg overflow-hidden">
+      <!-- Заголовок таблицы -->
+      <div class="border-b border-gray-200">
+        <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4">Карточки отправителей и получателей</h1>
+        
+        <!-- Табы и кнопка создания в одной строке -->
+        <div class="flex items-stretch md:items-center justify-between flex-col-reverse md:flex-row w-full mb-4 mt-2">
+          <div class="btn-group bg-gray-100 rounded-2xl p-2 gap-2 flex flex-col md:flex-row [&>button]:py-2 [&>button]:px-8 [&>button]:font-semibold">
+            <button
+              class="type-tab  
+               rounded-xl
+                     data-[active=true]:bg-white data-[active=true]:text-gray-800 data-[active=false]:bg-transparent data-[active=false]:text-gray-500"
+              data-type="all"
+              data-active="true"
+            >
+              ВСЕ
+            </button>
+            <button
+              class="type-tab 
+                     data-[active=true]:bg-white data-[active=true]:text-gray-800 rounded-xl data-[active=false]:bg-transparent data-[active=false]:text-gray-500"
+              data-type="Юр.лицо"
+              data-active="false"
+            >
+              ЮР.ЛИЦО
+            </button>
+            <button
+              class="type-tab rounded-xl
+                     data-[active=true]:bg-white data-[active=true]:text-gray-800 data-[active=false]:bg-transparent data-[active=false]:text-gray-500"
+              data-type="Физ.лицо"
+              data-active="false"
+            >
+              ФИЗ.ЛИЦО
+            </button>
+          </div>
+          <button type="button" id="create-btn" class="btn btn-primary rounded-xl px-8 my-5 py-3 font-semibold shadow">
+            Создать
+          </button>
+        </div>
+        
+        <!-- Поисковое поле над таблицей -->
+        <div class="w-full mb-4">
+          <div class="relative bg-gray-50 rounded-xl">
+            <input type="text" id="search-input" placeholder="Компания, ФИО или телефон"
+              class="w-full px-5 py-3 bg-transparent rounded-xl focus:outline-none text-gray-800 placeholder-gray-400 pr-12" />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Таблица -->
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50">
+            <tr class="whitespace-nowrap">
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">Действия</th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium w-10">Тип</th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="name" data-default-order="asc">
+                  ФИО / Название
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="phone" data-default-order="asc">
+                  Телефон
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="location" data-default-order="asc">
+                  Населенный пункт
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="address" data-default-order="asc">
+                  Адрес
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">Комментарий для курьера</th>
+              
+            </tr>
+          </thead>
+          <tbody class="listjs-container divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50" data-type="Физ.лицо" data-id="1">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Физ.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">Иванов Иван Иванович</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 999 99 99</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Красноярск, Красноярский край</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Ленина, д.111, кв.10</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Физ.лицо" data-id="2">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Физ.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">Петров Петр Петрович</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 888 77 66</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Москва, Московская область</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Тверская, д.25, кв.42</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Юр.лицо" data-id="3">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Юр.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">ООО СДЭК-ГЛОБАЛ</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 495 123 45 67</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Москва, Московская область</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Арбат, д.10, офис 15</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Юр.лицо" data-id="4">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="4">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="4">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Юр.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">ООО ЛОГИСТИК-ЦЕНТР</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 812 987 65 43</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Санкт-Петербург, Ленинградская область</td>
+              <td class="px-4 py-3 text-brand-gray address">пр. Невский, д.78, офис 320</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Физ.лицо" data-id="5">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Физ.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">Сидоров Алексей Владимирович</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 777 55 33</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Екатеринбург, Свердловская область</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Малышева, д.56, кв.89</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Юр.лицо" data-id="6">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="6">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="6">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Юр.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">ИП Кузнецова О.В.</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 222 33 44</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Новосибирск, Новосибирская область</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Ленина, д.15, офис 7</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Физ.лицо" data-id="7">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="7">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="7">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Физ.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">Смирнова Анна Николаевна</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 444 55 66</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Красноярск, Красноярский край</td>
+              <td class="px-4 py-3 text-brand-gray address">пр. Мира, д.120, кв.45</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Юр.лицо" data-id="8">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="8">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="8">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Юр.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">ООО ТРАНС-ЭКСПРЕСС</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 383 111 22 33</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Новосибирск, Новосибирская область</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Кирова, д.32, офис 401</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Физ.лицо" data-id="9">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="9">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="9">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Физ.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">Козлов Дмитрий Сергеевич</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 333 22 11</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Казань, Республика Татарстан</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Баумана, д.18, кв.73</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Юр.лицо" data-id="10">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Юр.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">ИП Соколов Р.М.</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 111 22 33</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Самара, Самарская область</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Куйбышева, д.95, офис 12</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Физ.лицо" data-id="11">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="11">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="11">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Физ.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">Орлова Елена Игоревна</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 999 555 66 77</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Уфа, Республика Башкортостан</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. Ленина, д.45, кв.28</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+            <tr class="hover:bg-gray-50" data-type="Юр.лицо" data-id="12">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="12">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="12">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">Юр.лицо</td>
+              <td class="px-4 py-3 text-brand-gray name">ООО БЫСТРАЯ ДОСТАВКА</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">+7 343 789 45 61</td>
+              <td class="px-4 py-3 text-brand-gray location">г. Екатеринбург, Свердловская область</td>
+              <td class="px-4 py-3 text-brand-gray address">ул. 8 Марта, д.51, офис 220</td>
+              <td class="px-4 py-3 text-brand-gray">
+                  —
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Пагинация -->
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-6">
+        <div class="text-sm text-base-content/70">
+          Показано <span id="items-count">0</span> из <span id="total-count">0</span> записей
+        </div>
+        <ul class="pagination join gap-2">
+          <!-- Стандартная пагинация List.js будет добавлена автоматически -->
+        </ul>
+      </div>
+    </div>
+    </div>
+  </section>
+ 
+</main>
+
+<!-- Модальное окно для создания новой карточки -->
+<div id="create-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
+    </button>
+    
+    <div class="modal-content">
+      <h3 class="text-h5 font-bold text-brand-gray mb-4">Создать новую карточку</h3>
+      
+      <form class="form space-y-4" id="create-form">
+        <div>
+          <label for="create-type" class="block text-brand-gray font-medium mb-2">Тип</label>
+          <select id="create-type" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue">
+            <option value="Юр.лицо">Юридическое лицо</option>
+            <option value="Физ.лицо">Физическое лицо</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="create-name" class="block text-brand-gray font-medium mb-2">ФИО / Название</label>
+          <input type="text" id="create-name" placeholder="Введите ФИО или название организации" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-phone" class="block text-brand-gray font-medium mb-2">Телефон</label>
+          <input type="tel" id="create-phone" placeholder="+7 (___) ___-__-__" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-location" class="block text-brand-gray font-medium mb-2">Населенный пункт</label>
+          <input type="text" id="create-location" placeholder="Введите населенный пункт" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-address" class="block text-brand-gray font-medium mb-2">Адрес</label>
+          <input type="text" id="create-address" placeholder="Введите адрес" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-comment" class="block text-brand-gray font-medium mb-2">Комментарий для курьера</label>
+          <textarea id="create-comment" placeholder="Введите комментарий" 
+                   class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue h-24"></textarea>
+        </div>
+        
+        <div class="flex gap-3 pt-2">
+          <button type="button" class="modal-close flex-1 px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="flex-1 px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-opacity-90 transition-colors">
+            Создать
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для редактирования -->
+<div id="edit-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
+    </button>
+    
+    <div class="modal-content">
+      <h3 class="text-h5 font-bold text-brand-gray mb-4">Редактировать карточку</h3>
+      
+      <form class="form space-y-4" id="edit-form">
+        <input type="hidden" id="edit-id">
+        
+        <div>
+          <label for="edit-type" class="block text-brand-gray font-medium mb-2">Тип</label>
+          <select id="edit-type" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue">
+            <option value="Юр.лицо">Юридическое лицо</option>
+            <option value="Физ.лицо">Физическое лицо</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="edit-name" class="block text-brand-gray font-medium mb-2">ФИО / Название</label>
+          <input type="text" id="edit-name" placeholder="Введите ФИО или название организации" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-phone" class="block text-brand-gray font-medium mb-2">Телефон</label>
+          <input type="tel" id="edit-phone" placeholder="+7 (___) ___-__-__" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-location" class="block text-brand-gray font-medium mb-2">Населенный пункт</label>
+          <input type="text" id="edit-location" placeholder="Введите населенный пункт" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-address" class="block text-brand-gray font-medium mb-2">Адрес</label>
+          <input type="text" id="edit-address" placeholder="Введите адрес" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-comment" class="block text-brand-gray font-medium mb-2">Комментарий для курьера</label>
+          <textarea id="edit-comment" placeholder="Введите комментарий" 
+                   class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue h-24"></textarea>
+        </div>
+        
+        <div class="flex gap-3 pt-2">
+          <button type="button" class="modal-close flex-1 px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="flex-1 px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-opacity-90 transition-colors">
+            Сохранить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для удаления -->
+<div id="delete-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
+    </button>
+    
+    <div class="modal-content">
+      <div class="mb-4 text-center">
+        <svg class="w-12 h-12 mx-auto text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+      </div>
+      
+      <h3 class="text-h5 font-bold text-brand-gray mb-2 text-center">Удаление карточки</h3>
+      <p class="text-body-secondary text-brand-gray mb-4 text-center">
+        Вы уверены, что хотите удалить карточку <span id="modal-contact-name" class="font-medium"></span>?
+      </p>
+      
+      <form class="form space-y-4" id="delete-form">
+        <input type="hidden" id="delete-id">
+        
+        <div class="flex gap-3">
+          <button type="button" class="modal-close flex-1 px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+            Удалить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Скрытые данные для JavaScript -->
+<script type="application/json" id="initial-data">
+{
+    "sendersReceivers": [{"id":1,"type":"Физ.лицо","name":"Иванов Иван Иванович","phone":"+7 999 999 99 99","location":"г. Красноярск, Красноярский край","address":"ул. Ленина, д.111, кв.10"},{"id":2,"type":"Физ.лицо","name":"Петров Петр Петрович","phone":"+7 999 888 77 66","location":"г. Москва, Московская область","address":"ул. Тверская, д.25, кв.42"},{"id":3,"type":"Юр.лицо","name":"ООО СДЭК-ГЛОБАЛ","phone":"+7 495 123 45 67","location":"г. Москва, Московская область","address":"ул. Арбат, д.10, офис 15"},{"id":4,"type":"Юр.лицо","name":"ООО ЛОГИСТИК-ЦЕНТР","phone":"+7 812 987 65 43","location":"г. Санкт-Петербург, Ленинградская область","address":"пр. Невский, д.78, офис 320"},{"id":5,"type":"Физ.лицо","name":"Сидоров Алексей Владимирович","phone":"+7 999 777 55 33","location":"г. Екатеринбург, Свердловская область","address":"ул. Малышева, д.56, кв.89"},{"id":6,"type":"Юр.лицо","name":"ИП Кузнецова О.В.","phone":"+7 999 222 33 44","location":"г. Новосибирск, Новосибирская область","address":"ул. Ленина, д.15, офис 7"},{"id":7,"type":"Физ.лицо","name":"Смирнова Анна Николаевна","phone":"+7 999 444 55 66","location":"г. Красноярск, Красноярский край","address":"пр. Мира, д.120, кв.45"},{"id":8,"type":"Юр.лицо","name":"ООО ТРАНС-ЭКСПРЕСС","phone":"+7 383 111 22 33","location":"г. Новосибирск, Новосибирская область","address":"ул. Кирова, д.32, офис 401"},{"id":9,"type":"Физ.лицо","name":"Козлов Дмитрий Сергеевич","phone":"+7 999 333 22 11","location":"г. Казань, Республика Татарстан","address":"ул. Баумана, д.18, кв.73"},{"id":10,"type":"Юр.лицо","name":"ИП Соколов Р.М.","phone":"+7 999 111 22 33","location":"г. Самара, Самарская область","address":"ул. Куйбышева, д.95, офис 12"},{"id":11,"type":"Физ.лицо","name":"Орлова Елена Игоревна","phone":"+7 999 555 66 77","location":"г. Уфа, Республика Башкортостан","address":"ул. Ленина, д.45, кв.28"},{"id":12,"type":"Юр.лицо","name":"ООО БЫСТРАЯ ДОСТАВКА","phone":"+7 343 789 45 61","location":"г. Екатеринбург, Свердловская область","address":"ул. 8 Марта, д.51, офис 220"}]
+}
+</script>
+
+<script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+</script>
+
+</div> <!-- Закрытие обертки основного контента -->
+<footer class="bg-brand-gray text-brand-white py-12 w-full">
+  <div class="container mx-auto px-4 max-w-[1200px]">
+    <!-- Мобильный футер -->
+    <div class="md:hidden flex flex-col items-start space-y-8">
+
+
+
+
+      <div class="flex flex-col w-full gap-y-10">
+        <img src="./assets/img/Logotype_aerline_white.png" alt="Aeroline" class="h-12 mb-4 object-contain object-left">
+        <nav class="w-full">
+          <div class="grid md:grid-cols-2 gap-y-6 gap-x-6">
+            <div class="flex flex-col space-y-3">
+              <a href="order-list.html" class="caps-regular block">Список заказов</a>
+              <a href="order-new.html" class="caps-regular block">Новый заказ</a>
+              <a href="bulk-order.html" class="caps-regular block">Массовый заказ</a>
+              <a href="service-acts.html" class="caps-regular block">Акты оказания услуг</a>
+              <a href="reconciliation-act.html" class="caps-regular block">Запросить акт сверки</a>
+              <a href="reports.html" class="caps-regular block">Отчёты</a>
+              <a href="order-tracking.html" class="caps-regular block">Отслеживание заказа</a>
+            </div>
+            <div class="flex flex-col space-y-3">
+              <a href="helper.html" class="caps-regular block">Страница «Помощник»</a>
+              <a href="calculator.html" class="caps-regular block">Калькулятор</a>
+              <a href="profile.html" class="caps-regular block">Профиль</a>
+              <a href="cooperation.html" class="caps-regular block">Данные о сотрудничестве</a>
+              <a href="user-create.html" class="caps-regular block">Создание пользователя</a>
+              <a href="notifications.html" class="caps-regular block">Информация об уведомлениях</a>
+              <a href="senders-receivers.html" class="caps-regular block">Карточки отправителей и получателей</a>
+            </div>
+          </div>
+        </nav>
+
+
+        <div class="flex flex-col items-stretch gap-y-2">
+          <div class="flex items-center space-x-4 my-6">
+            <a href="https://t.me/aeroline" class="text-white">
+              <img src="./assets/img/logos_telegram.svg" alt="Telegram" class="h-8 w-8">
+            </a>
+
+            <a href="https://wa.me/83912050025" class="text-white">
+              <img src="./assets/img/logos_whatsapp-icon.svg" alt="WhatsApp" class="h-8 w-8">
+            </a>
+          </div>
+          <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center mb-2">
+            <img src="./assets/img/messages3_white.svg" alt="Email" class="h-6 w-6 mr-2">
+            mail@aeroline.su
+          </a>
+          <a href="tel:83912050025" class="body-secondary flex items-center mb-8">
+            <img src="./assets/img/callcalling_white.svg" alt="Phone" class="h-6 w-6 mr-2">
+            8 391 205 00 25
+          </a>
+        </div>
+      </div>
+
+
+
+      <div class="w-full d-flex justify-between flex-row flex-nowrap">
+        <p class="caption-regular text-white/50 mb-2 d-inline w-1/2">@2025</p>
+        <a href="./privacy.html" class="text-body-secondary text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
+      </div>
+    </div>
+
+    <!-- Десктопный футер -->
+    <div class="hidden md:flex justify-between">
+      <div class="flex flex-col items-start">
+        <img src="./assets/img/Logotype_aerline_white.png" alt="Aeroline" class="h-11 mb-8">
+        <p class="caption-regular text-white/50">@2025</p>
+        <a href="./privacy.html" class="text-body text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
+      </div>
+
+      <div class="flex flex-col">
+        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3 hover:text-brand-blue transition-colors">
+          <img src="./assets/img/messages3_white.svg" alt="Email" class="h-6 w-6 mr-2">
+          mail@aeroline.su
+        </a>
+        <a href="tel:83912050025" class="caption-regular flex items-center mb-4 hover:text-brand-blue transition-colors">
+          <img src="./assets/img/callcalling_white.svg" alt="Phone" class="h-6 w-6 mr-2">
+          8 391 205 00 25
+        </a>
+        <div class="flex items-center space-x-3">
+          <a href="https://t.me/aeroline" class="text-white hover:opacity-80 transition-opacity">
+            <img src="./assets/img/logos_telegram.svg" alt="Telegram" class="h-8 w-8">
+          </a>
+          <a href="https://wa.me/83912050025" class="text-white hover:opacity-80 transition-opacity">
+            <img src="./assets/img/logos_whatsapp-icon.svg" alt="WhatsApp" class="h-8 w-8">
+          </a>
+        </div>
+      </div>
+
+      <div class="flex [&>*]:px-10 ml-10 uppercase">
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="order-list.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Список заказов</a>
+          <a href="order-new.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Новый заказ</a>
+          <a href="bulk-order.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Массовый заказ</a>
+          <a href="service-acts.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Акты оказания услуг</a>
+          <a href="reconciliation-act.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Запросить акт сверки</a>
+          <a href="reports.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Отчёты</a>
+          <a href="order-tracking.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
+        </div>
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="helper.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
+          <a href="calculator.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Калькулятор</a>
+          <a href="profile.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Профиль</a>
+          <a href="cooperation.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Данные о сотрудничестве</a>
+          <a href="user-create.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Создание пользователя</a>
+          <a href="notifications.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Информация об уведомлениях</a>
+          <a href="senders-receivers.html" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">Карточки отправителей и получателей</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Подключаем JavaScript в конце страницы с условным выбором пути -->
+<script src="./assets/js/bundle.js"></script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+{{> header menuType="user"}}
+
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  
+  <!-- Карточки отправителей и получателей -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div id="contacts-table" class="bg-white rounded-lg overflow-hidden">
+      <!-- Заголовок таблицы -->
+      <div class="border-b border-gray-200">
+        <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4">Карточки отправителей и получателей</h1>
+        
+        <!-- Табы и кнопка создания в одной строке -->
+        <div class="flex items-stretch md:items-center justify-between flex-col-reverse md:flex-row w-full mb-4 mt-2">
+          <div class="btn-group bg-gray-100 rounded-2xl p-2 gap-2 flex flex-col md:flex-row [&>button]:py-2 [&>button]:px-8 [&>button]:font-semibold">
+            <button
+              class="type-tab  
+               rounded-xl
+                     data-[active=true]:bg-white data-[active=true]:text-gray-800 data-[active=false]:bg-transparent data-[active=false]:text-gray-500"
+              data-type="all"
+              data-active="true"
+            >
+              ВСЕ
+            </button>
+            <button
+              class="type-tab 
+                     data-[active=true]:bg-white data-[active=true]:text-gray-800 rounded-xl data-[active=false]:bg-transparent data-[active=false]:text-gray-500"
+              data-type="Юр.лицо"
+              data-active="false"
+            >
+              ЮР.ЛИЦО
+            </button>
+            <button
+              class="type-tab rounded-xl
+                     data-[active=true]:bg-white data-[active=true]:text-gray-800 data-[active=false]:bg-transparent data-[active=false]:text-gray-500"
+              data-type="Физ.лицо"
+              data-active="false"
+            >
+              ФИЗ.ЛИЦО
+            </button>
+          </div>
+          <button type="button" id="create-btn" class="btn btn-primary rounded-xl px-8 my-5 py-3 font-semibold shadow">
+            Создать
+          </button>
+        </div>
+        
+        <!-- Поисковое поле над таблицей -->
+        <div class="w-full mb-4">
+          <div class="relative bg-gray-50 rounded-xl">
+            <input type="text" id="search-input" placeholder="Компания, ФИО или телефон"
+              class="w-full px-5 py-3 bg-transparent rounded-xl focus:outline-none text-gray-800 placeholder-gray-400 pr-12" />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Таблица -->
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50">
+            <tr class="whitespace-nowrap">
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">Действия</th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium w-10">Тип</th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="name" data-default-order="asc">
+                  ФИО / Название
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="phone" data-default-order="asc">
+                  Телефон
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="location" data-default-order="asc">
+                  Населенный пункт
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">
+                <button class="sort flex items-center gap-1 bg-transparent border-none cursor-pointer text-inherit font-inherit transition-colors hover:text-brand-blue" data-sort="address" data-default-order="asc">
+                  Адрес
+                  <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="px-4 py-3 text-left text-brand-gray font-medium">Комментарий для курьера</th>
+              
+            </tr>
+          </thead>
+          <tbody class="listjs-container divide-y divide-gray-200">
+            {{#each sendersReceivers}}
+            <tr class="hover:bg-gray-50" data-type="{{type}}" data-id="{{id}}">
+
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button class="edit-btn text-brand-blue hover:text-brand-blue-dark transition-colors" data-id="{{id}}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="{{id}}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="px-4 py-3 text-brand-gray type">{{type}}</td>
+              <td class="px-4 py-3 text-brand-gray name">{{name}}</td>
+              <td class="px-4 py-3 text-brand-gray phone whitespace-nowrap">{{phone}}</td>
+              <td class="px-4 py-3 text-brand-gray location">{{location}}</td>
+              <td class="px-4 py-3 text-brand-gray address">{{address}}</td>
+              <td class="px-4 py-3 text-brand-gray">
+                {{#if comment}}
+                  {{comment}}
+                {{else}}
+                  —
+                {{/if}}
+              </td>
+              
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Пагинация -->
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-6">
+        <div class="text-sm text-base-content/70">
+          Показано <span id="items-count">0</span> из <span id="total-count">0</span> записей
+        </div>
+        <ul class="pagination join gap-2">
+          <!-- Стандартная пагинация List.js будет добавлена автоматически -->
+        </ul>
+      </div>
+    </div>
+    </div>
+  </section>
+ 
+</main>
+
+<!-- Модальное окно для создания новой карточки -->
+<div id="create-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
+    </button>
+    
+    <div class="modal-content">
+      <h3 class="text-h5 font-bold text-brand-gray mb-4">Создать новую карточку</h3>
+      
+      <form class="form space-y-4" id="create-form">
+        <div>
+          <label for="create-type" class="block text-brand-gray font-medium mb-2">Тип</label>
+          <select id="create-type" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue">
+            <option value="Юр.лицо">Юридическое лицо</option>
+            <option value="Физ.лицо">Физическое лицо</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="create-name" class="block text-brand-gray font-medium mb-2">ФИО / Название</label>
+          <input type="text" id="create-name" placeholder="Введите ФИО или название организации" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-phone" class="block text-brand-gray font-medium mb-2">Телефон</label>
+          <input type="tel" id="create-phone" placeholder="+7 (___) ___-__-__" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-location" class="block text-brand-gray font-medium mb-2">Населенный пункт</label>
+          <input type="text" id="create-location" placeholder="Введите населенный пункт" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-address" class="block text-brand-gray font-medium mb-2">Адрес</label>
+          <input type="text" id="create-address" placeholder="Введите адрес" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="create-comment" class="block text-brand-gray font-medium mb-2">Комментарий для курьера</label>
+          <textarea id="create-comment" placeholder="Введите комментарий" 
+                   class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue h-24"></textarea>
+        </div>
+        
+        <div class="flex gap-3 pt-2">
+          <button type="button" class="modal-close flex-1 px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="flex-1 px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-opacity-90 transition-colors">
+            Создать
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для редактирования -->
+<div id="edit-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
+    </button>
+    
+    <div class="modal-content">
+      <h3 class="text-h5 font-bold text-brand-gray mb-4">Редактировать карточку</h3>
+      
+      <form class="form space-y-4" id="edit-form">
+        <input type="hidden" id="edit-id">
+        
+        <div>
+          <label for="edit-type" class="block text-brand-gray font-medium mb-2">Тип</label>
+          <select id="edit-type" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue">
+            <option value="Юр.лицо">Юридическое лицо</option>
+            <option value="Физ.лицо">Физическое лицо</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="edit-name" class="block text-brand-gray font-medium mb-2">ФИО / Название</label>
+          <input type="text" id="edit-name" placeholder="Введите ФИО или название организации" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-phone" class="block text-brand-gray font-medium mb-2">Телефон</label>
+          <input type="tel" id="edit-phone" placeholder="+7 (___) ___-__-__" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-location" class="block text-brand-gray font-medium mb-2">Населенный пункт</label>
+          <input type="text" id="edit-location" placeholder="Введите населенный пункт" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-address" class="block text-brand-gray font-medium mb-2">Адрес</label>
+          <input type="text" id="edit-address" placeholder="Введите адрес" 
+                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                 required>
+        </div>
+        
+        <div>
+          <label for="edit-comment" class="block text-brand-gray font-medium mb-2">Комментарий для курьера</label>
+          <textarea id="edit-comment" placeholder="Введите комментарий" 
+                   class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue h-24"></textarea>
+        </div>
+        
+        <div class="flex gap-3 pt-2">
+          <button type="button" class="modal-close flex-1 px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="flex-1 px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-opacity-90 transition-colors">
+            Сохранить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для удаления -->
+<div id="delete-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
+    </button>
+    
+    <div class="modal-content">
+      <div class="mb-4 text-center">
+        <svg class="w-12 h-12 mx-auto text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+      </div>
+      
+      <h3 class="text-h5 font-bold text-brand-gray mb-2 text-center">Удаление карточки</h3>
+      <p class="text-body-secondary text-brand-gray mb-4 text-center">
+        Вы уверены, что хотите удалить карточку <span id="modal-contact-name" class="font-medium"></span>?
+      </p>
+      
+      <form class="form space-y-4" id="delete-form">
+        <input type="hidden" id="delete-id">
+        
+        <div class="flex gap-3">
+          <button type="button" class="modal-close flex-1 px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+            Удалить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Скрытые данные для JavaScript -->
+<script type="application/json" id="initial-data">
+{
+    "sendersReceivers": {{{json sendersReceivers}}}
+}
+</script>
+
+<script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+</script>
+
+{{> footer menuType="user"}} 

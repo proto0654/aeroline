@@ -3,7 +3,9 @@
  * Модуль для функциональности главной страницы
  */
 
-import { loadSwiper } from './slider.js';
+import { loadSwiper, initSwiperSlider } from './slider.js';
+import { createAutocompleteInput } from './autocomplete.js';
+import { modalManager } from './modal-manager.js';
 
 /**
  * Функция для инициализации главной страницы
@@ -284,10 +286,42 @@ export function initHomePage() {
   }
 
   // Инициализация кнопки "Стать клиентом"
-  const clientButton = document.querySelector('.relative.bg-brand-light button');
+  const clientButton = document.getElementById('become-client-btn');
   if (clientButton) {
     clientButton.addEventListener('click', function () {
-      alert('Форма для отправки заявки будет открыта');
+      modalManager.open('become-client-modal', {
+        onOpen: (modal) => {
+          // Инициализируем обработчик формы после открытия модального окна
+          const form = modal.querySelector('#become-client-form');
+          if (form) {
+            form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              
+              // Проверяем валидность формы
+              if (this.checkValidity()) {
+                const formData = {
+                  name: document.getElementById('client-name').value,
+                  phone: document.getElementById('client-phone').value,
+                  email: document.getElementById('client-email').value,
+                  type: document.getElementById('client-type').value,
+                  comment: document.getElementById('client-comment').value
+                };
+                
+                console.log('Заявка на становление клиентом:', formData);
+                
+                // Здесь будет отправка данных на сервер
+                alert(`Спасибо за заявку, ${formData.name}! Мы свяжемся с вами в ближайшее время.`);
+                
+                // Закрываем модальное окно и сбрасываем форму
+                modalManager.close(modal);
+                this.reset();
+              } else {
+                this.reportValidity();
+              }
+            });
+          }
+        }
+      });
     });
   }
 
@@ -323,390 +357,79 @@ export function initHomePage() {
 } 
 
 /**
- * Инициализация автокомплита для полей выбора городов
+ * Инициализация автокомплита для полей выбора объектов
  */
 function initAutocomplete() {
-  console.log('Инициализация автокомплита для полей выбора городов');
-  
-  // Получаем данные городов из загруженных данных офисов
-  let cities = [];
-  
-  // Проверяем, есть ли данные офисов в глобальной переменной
+  console.log('Инициализация автокомплита для полей выбора объектов');
+
+  // Получаем данные офисов (ПВЗ/склады)
+  let offices = [];
   if (window.officesData && window.officesData.length > 0) {
-    console.log('Получаем города из данных офисов:', window.officesData.length);
-    
-    // Собираем уникальные города из данных офисов
-    const citySet = new Set();
-    window.officesData.forEach(office => {
-      if (office.city) {
-        citySet.add(office.city);
-      }
-    });
-    
-    cities = Array.from(citySet);
-    console.log('Получили уникальные города:', cities.length);
+    offices = window.officesData;
+    console.log('Используем офисы из window.officesData:', offices.length);
   } else {
-    // Если данных нет в глобальной переменной, ищем их в DOM структуре
-    console.log('Ищем данные офисов в DOM-структуре');
+    // Если нет глобальных данных, ищем в DOM
     const officeElements = document.querySelectorAll('#offices-data .office-data');
-    if (officeElements && officeElements.length) {
-      console.log('Найдены элементы данных офисов:', officeElements.length);
-      const citySet = new Set();
-      officeElements.forEach(officeElem => {
-        const city = officeElem.dataset.city;
-        if (city) {
-          citySet.add(city);
-        }
-      });
-      
-      cities = Array.from(citySet);
-      console.log('Получили уникальные города из DOM:', cities.length);
-    } else {
-      // Если нигде не нашли данные городов, используем стандартный набор
-      console.log('Не найдены данные офисов, используем стандартный набор городов');
-      cities = ['Новосибирск', 'Красноярск', 'Иркутск', 'Абакан', 'Томск'];
-    }
+    offices = Array.from(officeElements).map(el => ({
+      city: el.dataset.city,
+      address: el.dataset.address,
+      type: el.dataset.type,
+      phone: el.dataset.phone,
+      email: el.dataset.email,
+      coordinates: el.dataset.coordinates
+    }));
+    console.log('Офисы из DOM:', offices.length);
   }
-  
-  console.log('Список городов для автокомплита:', cities);
-  
-  // Заменяем select'ы на input с автокомплитом
-  setupAutocompleteInputs(cities);
+
+  setupAutocompleteInputs(offices);
+  setupCityLinks(offices);
 }
 
 /**
- * Настройка полей ввода с автокомплитом
- * @param {Array} cities - массив городов для автокомплита
+ * Настройка полей ввода с автокомплитом для офисов
  */
-function setupAutocompleteInputs(cities) {
-  console.log('Настройка полей ввода с автокомплитом');
-  
-  // Находим контейнеры с select-элементами
-  const fromSelectContainer = document.querySelector('.flex.md\\:flex-row.flex-col .relative.w-full');
-  const toSelectContainer = document.querySelectorAll('.flex.md\\:flex-row.flex-col .relative.w-full')[1];
-  
+function setupAutocompleteInputs(offices) {
+  console.log('Настройка полей ввода с автокомплитом для офисов');
+  const fromSelectContainer = document.querySelector('select.from').closest('.relative.w-full');
+  const toSelectContainer = document.querySelector('select.to').closest('.relative.w-full');
   if (!fromSelectContainer || !toSelectContainer) {
-    console.error('Не найдены контейнеры для полей выбора городов');
-    
-    // Подробная диагностика селекторов
-    const flexContainers = document.querySelectorAll('.flex.md\\:flex-row.flex-col');
-    console.log('Найдено flex-контейнеров:', flexContainers.length);
-    
-    flexContainers.forEach((container, index) => {
-      const relativeContainers = container.querySelectorAll('.relative.w-full');
-      console.log(`Flex-контейнер #${index+1} содержит ${relativeContainers.length} relative-контейнеров`);
-    });
-    
+    console.error('Не найдены контейнеры для полей выбора объектов');
     return;
   }
-  
-  console.log('Найдены контейнеры для полей выбора', {
-    fromContainer: !!fromSelectContainer,
-    toContainer: !!toSelectContainer
-  });
-  
-  // Создаем и настраиваем поля для автокомплита
-  createAutocompleteInput(fromSelectContainer, cities, 'from-city', 'Откуда');
-  createAutocompleteInput(toSelectContainer, cities, 'to-city', 'Куда');
-  
-  // Обработчик для кнопки переключения городов
-  const switchButton = document.querySelector('.flex.md\\:flex-row.flex-col button.w-12');
-  if (switchButton) {
-    console.log('Найдена кнопка переключения городов');
-    switchButton.addEventListener('click', function() {
-      const fromInput = document.querySelector('#from-city-input');
-      const toInput = document.querySelector('#to-city-input');
-      
-      if (fromInput && toInput) {
-        const fromValue = fromInput.value;
-        fromInput.value = toInput.value;
-        toInput.value = fromValue;
-        console.log('Выполнено переключение значений полей:', { 
-          newFromValue: fromInput.value, 
-          newToValue: toInput.value 
-        });
-      } else {
-        console.warn('Не найдены поля ввода для переключения');
-      }
-    });
-  } else {
-    console.warn('Не найдена кнопка переключения городов');
-  }
-  
-  // Настраиваем быстрый выбор городов для поля "Откуда"
-  const firstSelectContainer = fromSelectContainer.parentElement;
-  const fromQuickCityLinks = firstSelectContainer.querySelectorAll('.cursor-pointer');
-  if (fromQuickCityLinks.length > 0) {
-    console.log(`Найдено ${fromQuickCityLinks.length} ссылок быстрого выбора для поля "Откуда"`);
-    fromQuickCityLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        const fromInput = document.querySelector('#from-city-input');
-        if (fromInput) {
-          fromInput.value = this.textContent.trim();
-          console.log('Быстрый выбор города "Откуда":', fromInput.value);
-          // Закрываем список, если он открыт
-          const suggestList = document.querySelector('#from-city-suggestions');
-          if (suggestList) {
-            suggestList.classList.add('hidden');
-          }
-        } else {
-          console.warn('Не найдено поле ввода "Откуда" для быстрого выбора');
-        }
-      });
-    });
-  } else {
-    console.warn('Не найдены ссылки быстрого выбора для поля "Откуда"');
-  }
-  
-  // Настраиваем быстрый выбор городов для поля "Куда"
-  const secondSelectContainer = toSelectContainer.parentElement;
-  const toQuickCityLinks = secondSelectContainer.querySelectorAll('.cursor-pointer');
-  if (toQuickCityLinks.length > 0) {
-    console.log(`Найдено ${toQuickCityLinks.length} ссылок быстрого выбора для поля "Куда"`);
-    toQuickCityLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        const toInput = document.querySelector('#to-city-input');
-        if (toInput) {
-          toInput.value = this.textContent.trim();
-          console.log('Быстрый выбор города "Куда":', toInput.value);
-          // Закрываем список, если он открыт
-          const suggestList = document.querySelector('#to-city-suggestions');
-          if (suggestList) {
-            suggestList.classList.add('hidden');
-          }
-        } else {
-          console.warn('Не найдено поле ввода "Куда" для быстрого выбора');
-        }
-      });
-    });
-  } else {
-    console.warn('Не найдены ссылки быстрого выбора для поля "Куда"');
-  }
+  createAutocompleteInput(fromSelectContainer, offices, 'from-city', 'Откуда');
+  createAutocompleteInput(toSelectContainer, offices, 'to-city', 'Куда');
 }
 
 /**
- * Создание поля ввода с автокомплитом
- * @param {HTMLElement} container - контейнер для размещения поля
- * @param {Array} cities - массив городов для автокомплита
- * @param {string} id - идентификатор для элементов
- * @param {string} placeholder - текст placeholder
+ * Настройка обработчиков клика для ссылок городов
  */
-function createAutocompleteInput(container, cities, id, placeholder) {
-  console.log(`Создание поля автокомплита ${id} с плейсхолдером "${placeholder}"`);
+function setupCityLinks(offices) {
+  // Находим все контейнеры с городами
+  const cityContainers = document.querySelectorAll('.flex.md\\:flex-row.flex-col .flex.flex-row.flex-wrap.gap-2');
   
-  // Сохраняем иконку (стрелку) из существующего select
-  const existingArrow = container.querySelector('img');
-  let arrowHTML = '';
-  if (existingArrow) {
-    const arrowSrc = existingArrow.src;
-    arrowHTML = `<img src="${arrowSrc}" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-10">`;
-    console.log(`Найдена существующая иконка стрелки для ${id}`);
-  } else {
-    console.warn(`Не найдена иконка стрелки для ${id}`);
-  }
-  
-  // Создаем разметку для поля с автокомплитом
-  const autocompleteHTML = `
-    <div class="relative w-full">
-      <input 
-        id="${id}-input" 
-        type="text" 
-        class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-1 focus:ring-brand-blue text-body-secondary"
-        placeholder="${placeholder}" 
-        autocomplete="off"
-        required
-      >
-      <button type="button" class="absolute right-0 top-0 h-full w-12 text-gray-400 focus:outline-none z-10"></button>
-      ${arrowHTML}
-      <ul 
-        id="${id}-suggestions" 
-        class="absolute w-full bg-white border border-gray-200 rounded-md shadow-md mt-1 max-h-60 overflow-y-auto hidden z-20"
-      ></ul>
-    </div>
-  `;
-  
-  // Заменяем содержимое контейнера
-  container.innerHTML = autocompleteHTML;
-  console.log(`Вставлена HTML-разметка для поля ${id}`);
-  
-  // Получаем ссылки на новые элементы
-  const input = document.getElementById(`${id}-input`);
-  const list = document.getElementById(`${id}-suggestions`);
-  const toggleButton = container.querySelector('button');
-  
-  if (!input || !list || !toggleButton) {
-    console.error(`Не удалось создать элементы автокомплита для ${id}`, {
-      input: !!input,
-      list: !!list,
-      toggleButton: !!toggleButton
-    });
-    return;
-  }
-  
-  console.log(`Созданы элементы автокомплита для ${id}`);
-  
-  let currentIndex = -1;
-  
-  // Функция обновления списка подсказок
-  function updateSuggestions(filtered) {
-    console.log(`Обновление списка подсказок для ${id}:`, filtered.length);
-    list.innerHTML = '';
-    currentIndex = -1;
+  cityContainers.forEach((container, index) => {
+    // Получаем соответствующее поле ввода
+    const input = document.getElementById(index === 0 ? 'from-city-input' : 'to-city-input');
+    if (!input) return;
 
-    filtered.forEach((item, index) => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      li.className = 'px-4 py-2 hover:bg-blue-100 cursor-pointer';
-      li.addEventListener('click', () => {
-        input.value = item;
-        list.classList.add('hidden');
-        console.log(`Выбран город "${item}" в поле ${id}`);
+    // Добавляем обработчик клика для каждого города
+    container.querySelectorAll('span').forEach(citySpan => {
+      citySpan.addEventListener('click', () => {
+        const cityName = citySpan.textContent.trim();
+        
+        // Устанавливаем значение в поле ввода
+        input.value = cityName;
+        
+        // Фокусируемся на поле ввода
+        input.focus();
+        
+        // Небольшая задержка перед вызовом событий
+        setTimeout(() => {
+          // Вызываем события для активации поиска и выпадающего списка
+          input.dispatchEvent(new Event('focus', { bubbles: true }));
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }, 50);
       });
-      list.appendChild(li);
     });
-
-    list.classList.remove('hidden');
-  }
-  
-  // Функция для отображения всех городов в выпадающем списке
-  function showAllSuggestions() {
-    console.log(`Показываем все города для ${id}:`, cities.length);
-    list.innerHTML = '';
-    currentIndex = -1;
-    
-    cities.forEach((item, index) => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      li.className = 'px-4 py-2 hover:bg-blue-100 cursor-pointer';
-      li.addEventListener('click', () => {
-        input.value = item;
-        list.classList.add('hidden');
-        console.log(`Выбран город "${item}" в поле ${id} из полного списка`);
-      });
-      list.appendChild(li);
-    });
-    
-    list.classList.remove('hidden');
-  }
-  
-  // Обработчик клика по кнопке-стрелке
-  toggleButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (list.classList.contains('hidden')) {
-      // Если список скрыт, показываем все города
-      showAllSuggestions();
-      console.log(`Открыт полный список городов для ${id}`);
-    } else {
-      // Если список уже виден, скрываем его
-      list.classList.add('hidden');
-      console.log(`Закрыт список городов для ${id}`);
-    }
   });
-  
-  // Обработчик ввода текста
-  input.addEventListener('input', () => {
-    const value = input.value.toLowerCase();
-    if (!value) {
-      list.classList.add('hidden');
-      return;
-    }
-
-    const filtered = cities.filter(item => item.toLowerCase().startsWith(value));
-    if (filtered.length === 0) {
-      list.classList.add('hidden');
-      console.log(`Не найдено совпадений для "${value}" в поле ${id}`);
-      return;
-    }
-
-    updateSuggestions(filtered);
-    console.log(`Найдено ${filtered.length} совпадений для "${value}" в поле ${id}`);
-  });
-  
-  // Обработчик нажатия клавиш (стрелки и Enter)
-  input.addEventListener('keydown', (e) => {
-    const items = list.querySelectorAll('li');
-    if (list.classList.contains('hidden') || items.length === 0) {
-      // При нажатии стрелки вниз на пустом поле, показываем все города
-      if (e.key === 'ArrowDown' && input.value.trim() === '') {
-        e.preventDefault();
-        showAllSuggestions();
-        console.log(`Показан полный список городов по нажатию стрелки вниз в поле ${id}`);
-        return;
-      }
-      return;
-    }
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      currentIndex = (currentIndex + 1) % items.length;
-      highlightItem(items);
-      console.log(`Выделен следующий элемент (${currentIndex}) в списке ${id}`);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-      highlightItem(items);
-      console.log(`Выделен предыдущий элемент (${currentIndex}) в списке ${id}`);
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (currentIndex >= 0 && currentIndex < items.length) {
-        input.value = items[currentIndex].textContent;
-        list.classList.add('hidden');
-        console.log(`Выбран город "${items[currentIndex].textContent}" через Enter в поле ${id}`);
-      }
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      list.classList.add('hidden');
-      console.log(`Закрыт список городов через Escape для ${id}`);
-    }
-  });
-  
-  // Функция подсветки выбранного элемента
-  function highlightItem(items) {
-    items.forEach((item, index) => {
-      item.classList.toggle('bg-blue-100', index === currentIndex);
-    });
-    
-    // Прокрутка до выделенного элемента, если он не виден
-    if (currentIndex >= 0) {
-      const selectedItem = items[currentIndex];
-      const listRect = list.getBoundingClientRect();
-      const itemRect = selectedItem.getBoundingClientRect();
-      
-      if (itemRect.bottom > listRect.bottom) {
-        // Если элемент ниже видимой области - прокручиваем вниз
-        selectedItem.scrollIntoView(false);
-      } else if (itemRect.top < listRect.top) {
-        // Если элемент выше видимой области - прокручиваем вверх
-        selectedItem.scrollIntoView(true);
-      }
-    }
-  }
-  
-  // Скрываем список при клике вне
-  document.addEventListener('click', (e) => {
-    if (!list.contains(e.target) && e.target !== input && e.target !== toggleButton) {
-      list.classList.add('hidden');
-    }
-  });
-  
-  // Показываем список при фокусе, если есть текст
-  input.addEventListener('focus', () => {
-    const value = input.value.toLowerCase();
-    if (!value) return;
-    
-    const filtered = cities.filter(item => item.toLowerCase().startsWith(value));
-    if (filtered.length > 0) {
-      updateSuggestions(filtered);
-      console.log(`Показаны совпадения при фокусе для ${id}`);
-    }
-  });
-  
-  // Подгонка стилей для списка
-  list.style.maxHeight = '200px';
-  list.style.overflowY = 'auto';
-  list.style.overscrollBehavior = 'contain';
-  
-  console.log(`Инициализация поля ${id} завершена`);
 } 

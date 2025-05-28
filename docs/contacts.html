@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="h-full overflow-x-hidden">
+<html lang="ru" class="h-full overflow-x-hidden" data-theme="aeroline">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main-2e1e0051.css">
+  <link rel="stylesheet" href="./assets/css/main-f7a63ad1.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -39,14 +39,14 @@
           <a href="#" class="text-brand-blue">
           <img src="./assets/img/cube.svg" alt="Cube" class="h-11 w-11">
         </a>
-        <a href="#" class="text-brand-blue">
+        <a href="./calculator.html" class="text-brand-blue">
           <img src="./assets/img/vuesax.svg" alt="Question" class="h-9 w-9">
         </a>
         <a href="#" class="text-brand-blue">
           <img src="./assets/img/q.svg" alt="Question" class="h-9 w-9">
         </a>
         </div>
-        <button class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary">Войти</button>
+        <a href="./profile.html" class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block">Войти</a>
       </div>
       
       <!-- Бургер-меню для мобильных устройств -->
@@ -59,24 +59,24 @@
     
     <!-- Навигация и контакты в десктопе -->
     <div class="hidden lg:flex justify-between border-t border-gray-200">
-      <div class="flex items-center space-x-4 py-3">
-        <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center text-brand-blue">
+      <div class="text-body flex items-center space-x-4 py-3">
+        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue">
           <img src="./assets/img/messages3.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="flex items-center text-brand-blue body-secondary">
+        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue">
           <img src="./assets/img/callcalling.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
       </div>
-      <nav class="md:block">
-        <ul class="flex justify-start items-center py-3 space-x-8">
-          <li><a href="./index.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">ГЛАВНАЯ</a></li>
-          <li><a href="./services.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">УСЛУГИ</a></li>
-          <li><a href="./payments.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">ПЛАТЕЖИ</a></li>
-          <li><a href="./news.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">НОВОСТИ</a></li>
-          <li><a href="./vacancies.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">ВАКАНСИИ</a></li>
-          <li><a href="./contacts.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">КОНТАКТЫ</a></li>
+      <nav class="md:block min-w-[35rem]">
+        <ul class="flex justify-between w-full items-center py-5 space-x-3 [&>li]:uppercase [&>li]:text-caption-menu [&>li]:font-medium">
+          <li><a href="./index.html" class="text-brand-gray hover:text-brand-blue transition-colors">Главная</a></li>
+          <li><a href="./services.html" class="text-brand-gray hover:text-brand-blue transition-colors">Услуги</a></li>
+          <li><a href="./payments.html" class="text-brand-gray hover:text-brand-blue transition-colors">Платежи</a></li>
+          <li><a href="./news.html" class="text-brand-gray hover:text-brand-blue transition-colors">Новости</a></li>
+          <li><a href="./vacancies.html" class="text-brand-gray hover:text-brand-blue transition-colors">Вакансии</a></li>
+          <li><a href="./contacts.html" class="text-brand-gray hover:text-brand-blue transition-colors">Контакты</a></li>
         </ul>
       </nav>
       
@@ -85,7 +85,7 @@
   
   <!-- Мобильное меню на весь экран -->
   <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
-    <div class="w-[100vw] px-3 py-2 h-full flex flex-col justify-between max-h-[calc(100vh-50px)] h-full">
+    <div class="w-[100vw] px-3 py-2 h-[100vh] max-h-[100vh] flex flex-col gap-4  h-full overflow-y-auto">
       <div class="flex justify-between items-center  border-b border-gray-200 " id="mobile-menu-header">
        <div class="logo flex items-center">
        <a href="./index.html">
@@ -106,13 +106,13 @@
           <li><a href="./payments.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Платежи</a></li>
           <li><a href="./news.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Новости</a></li>
           <li><a href="./vacancies.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Вакансии</a></li>
-          <li><a href="./order-tracking.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Отслеживание заказа</a></li>
-          <li><a href="./helper.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Страница «Помощник»</a></li>
           <li><a href="./contacts.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Контакты</a></li>
         </ul>
       </nav>
       
-      <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
+      
+      <div class="w-full flex flex-col gap-5 mt-auto pt-10">
+        <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
         <div class="flex items-center space-x-2" id="mobile-menu-social">
           <a href="https://t.me/aeroline" class="text-white rounded-full">
             <img src="./assets/img/logos_telegram.svg" alt="Telegram" class="h-10 w-10">
@@ -132,29 +132,55 @@
         </a>
         
       </div>
-      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings" id="mobile-menu-login">Войти</button>
-    </div>
+      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end" id="mobile-menu-login">Войти</button>
+   
+      </div>
+       </div>
   </div>
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
-<!-- Modal Container -->
-<div id="modal-container" class="fixed inset-0 z-50 hidden">
-  <!-- Overlay -->
-  <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
-  
-  <!-- Modal -->
-  <div class="modal fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:max-w-[calc(100%-4rem)] xl:max-w-[800px] bg-white md:rounded-2xl p-6 transition-all duration-300 opacity-0 scale-95 max-h-[100vh] md:max-h-[calc(90vh-4rem)] overflow-y-auto h-full">
-    <!-- Close Button -->
-    <button class="modal-close absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+</div>
+
+<!-- Модальное окно входа -->
+<div id="login-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
     </button>
     
-    <!-- Dynamic Content Container -->
-    <div class="modal-content"></div>
+    <div class="modal-content">
+      <h3 class="text-h4 font-bold text-brand-gray mb-4">Вход в систему</h3>
+      
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <input type="email" id="login-email" name="email" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 placeholder="example@email.com"
+                 value="test@aeroline.su">
+        </div>
+        
+        <div>
+          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
+          <input type="password" id="login-password" name="password" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 placeholder="••••••••"
+                 value="password123">
+        </div>
+        
+        <div class="flex justify-end gap-3">
+          <button type="button" class="modal-close px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-blue-600 transition-colors">
+            Войти
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</div> </div>
+</div>
 </body>
 </html> 
 <main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
@@ -203,7 +229,7 @@
         <!-- Информационная панель с данными офиса -->
         <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10" data-coordinates="55.789461,37.551735">
           <div class="flex justify-between items-center mb-2">
-            <div class="font-bold text-2xl text-brand-gray">Москва</div>
+            <div class="font-bold text-2xl text-brand-gray">Санкт-Петербург</div>
             <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -211,11 +237,11 @@
             </button>
           </div>
           
-          <div class="text-brand-gray">Пресненская набережная, 12, БЦ «Башня Федерация»</div>
-          <div class="hidden lg:block text-brand-gray">Офис продаж</div>
-          <div class="hidden lg:block text-brand-gray">+7 495 123 45 70</div>
-          <div class="hidden lg:block text-brand-gray">moscow.city@aeroline.com</div>
-          <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular hover:bg-blue-700 transition-colors">Подробнее</button>
+          <div class="text-brand-gray">Пискаревский просп., д. 2, корп. 2, БЦ «Бенуа»</div>
+          <div class="hidden lg:block text-brand-gray">Офис развития</div>
+          <div class="hidden lg:block text-brand-gray">+7 812 765 43 23</div>
+          <div class="hidden lg:block text-brand-gray">spb.piskarevsky@aeroline.com</div>
+          <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular btn">Подробнее</button>
         </div>
       </div>
       
@@ -223,7 +249,19 @@
       <script src="https://api-maps.yandex.ru/2.1/?apikey=aa3c4d61-3793-4ff2-bdcc-e37451b213fc&lang=ru_RU" type="text/javascript"></script>
     </div>   </section>
 
+  <!-- Скрытые данные для JavaScript -->
+  <script type="application/json" id="initial-data">
+  {
+    "offices": [{"city":"Москва","address":"Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»","type":"Центральный офис","phone":"+7 495 123 45 67","email":"moscow.center@aeroline.com","mapLink":"#","coordinates":[55.789461,37.551735]},{"city":"Москва","address":"ул Лесная, д 7, БЦ «Белые Сады»","type":"Дополнительный офис","phone":"+7 495 123 45 68","email":"moscow.north@aeroline.com","mapLink":"#","coordinates":[55.77879,37.5877]},{"city":"Москва","address":"Пресненская набережная, 12, БЦ «Башня Федерация»","type":"Офис продаж","phone":"+7 495 123 45 70","email":"moscow.city@aeroline.com","mapLink":"#","coordinates":[55.749633,37.537434]},{"city":"Санкт-Петербург","address":"Московский просп., д. 212, БЦ «Московский»","type":"Северо-Западный офис","phone":"+7 812 765 43 21","email":"spb.main@aeroline.com","mapLink":"#","coordinates":[59.8521,30.3273]},{"city":"Санкт-Петербург","address":"Пискаревский просп., д. 2, корп. 2, БЦ «Бенуа»","type":"Офис развития","phone":"+7 812 765 43 23","email":"spb.piskarevsky@aeroline.com","mapLink":"#","coordinates":[59.958949,30.405969]},{"city":"Новосибирск","address":"ул. Ленина, 21/1 корпус 1, ТОЦ «Манхэттен»","type":"Сибирский офис","phone":"+7 383 543 21 00","email":"nsk.main@aeroline.com","mapLink":"#","coordinates":[55.028739,82.905823]},{"city":"Новосибирск","address":"Красный проспект, 82, ДЦ «СОВНАРХОЗ»","type":"Представительство","phone":"+7 383 543 21 03","email":"nsk.sales@aeroline.com","mapLink":"#","coordinates":[55.046966,82.91672]},{"city":"Екатеринбург","address":"8 Марта ул., 51, БЦ «Саммит»","type":"Уральский офис","phone":"+7 343 987 65 43","email":"ekb.main@aeroline.com","mapLink":"#","coordinates":[56.823592,60.605613]},{"city":"Екатеринбург","address":"Улица Малышева, 51, БЦ «Высоцкий»","type":"Офис обслуживания","phone":"+7 343 987 65 45","email":"ekb.service@aeroline.com","mapLink":"#","coordinates":[56.8361,60.6146]},{"city":"Казань","address":"Сибгата Хакима, 62, БЦ «UNO»","type":"Поволжский офис","phone":"+7 843 210 98 76","email":"kazan.main@aeroline.com","mapLink":"#","coordinates":[55.815079,49.143865]},{"city":"Казань","address":"Спартаковская ул., 6, БЦ «Suvar Plaza»","type":"Дополнительный офис","phone":"+7 843 210 98 77","email":"kazan.south@aeroline.com","mapLink":"#","coordinates":[55.778871,49.129573]},{"city":"Нижний Новгород","address":"Мотальный переулок, 8, БЦ «Бугров Бизнес Парк»","type":"Волжский офис","phone":"+7 831 654 32 10","email":"nn.main@aeroline.com","mapLink":"#","coordinates":[56.2945,43.9475]},{"city":"Челябинск","address":"Ленина проспект, 26а, БЦ «ВИДГОФ (Бовид)»","type":"Южно-Уральский офис","phone":"+7 351 111 22 33","email":"chel.main@aeroline.com","mapLink":"#","coordinates":[55.161749,61.431569]},{"city":"Самара","address":"Стара Загора, 27, ОЦ «Информатика»","type":"Поволжский филиал","phone":"+7 846 333 44 55","email":"samara.main@aeroline.com","mapLink":"#","coordinates":[53.224854,50.199879]},{"city":"Омск","address":"Проспект Карла Маркса, 24, ТЦ «Каскад»","type":"Западно-Сибирский офис","phone":"+7 3812 77 88 99","email":"omsk.main@aeroline.com","mapLink":"#","coordinates":[54.962902,73.38475]},{"city":"Ростов-на-Дону","address":"Улица Суворова, 91, БЦ «на Суворова»","type":"Южный федеральный округ офис","phone":"+7 863 222 11 00","email":"rostov.main@aeroline.com","mapLink":"#","coordinates":[47.2269,39.7327]},{"city":"Уфа","address":"Проспект Октября, 132/3, БЦ «Капитал»","type":"Региональное представительство","phone":"+7 347 212 34 56","email":"ufa.main@aeroline.com","mapLink":"#","coordinates":[54.7675,55.9983]},{"city":"Красноярск","address":"Улица Ленина, 118, БЦ «Спасский»","type":"Восточно-Сибирский офис","phone":"+7 391 234 56 78","email":"krasnoyarsk.main@aeroline.com","mapLink":"#","coordinates":[56.0125,92.8687]},{"city":"Пермь","address":"Комсомольский проспект, 100, БЦ «Белый дом»","type":"Представительство","phone":"+7 342 567 89 01","email":"perm.main@aeroline.com","mapLink":"#","coordinates":[58.0069,56.2483]},{"city":"Волгоград","address":"Проспект Ленина, 54, БЦ «Волгоград-Сити»","type":"Южный офис продаж","phone":"+7 8442 78 90 12","email":"volgograd.main@aeroline.com","mapLink":"#","coordinates":[48.7188,44.5204]},{"city":"Воронеж","address":"Плехановская улица, 53, БЦ «Галерея Чижова»","type":"Центр обслуживания","phone":"+7 473 345 67 89","email":"voronezh.main@aeroline.com","mapLink":"#","coordinates":[51.6669,39.1989]},{"city":"Саратов","address":"Улица Московская, 106, БЦ «Ковчег»","type":"Региональный склад","phone":"+7 8452 90 12 34","email":"saratov.main@aeroline.com","mapLink":"#","coordinates":[51.5309,46.0306]},{"city":"Краснодар","address":"Улица Красная, 176, БЦ «Кристалл»","type":"Кубанский офис","phone":"+7 861 234 56 78","email":"krasnodar.main@aeroline.com","mapLink":"#","coordinates":[45.0416,38.9744]},{"city":"Тюмень","address":"Улица Республики, 143, БЦ «Нобель»","type":"Филиал Уральского региона","phone":"+7 3452 76 54 32","email":"tyumen.main@aeroline.com","mapLink":"#","coordinates":[57.1499,65.5492]},{"city":"Ижевск","address":"Улица Пушкинская, 268, БЦ «Эльгрин»","type":"Приволжский филиал","phone":"+7 3412 12 34 56","email":"izhevsk.main@aeroline.com","mapLink":"#","coordinates":[56.8488,53.2206]},{"city":"Барнаул","address":"Улица Ленина, 39, БЦ «Крафт»","type":"Алтайский офис","phone":"+7 3852 98 76 54","email":"barnaul.main@aeroline.com","mapLink":"#","coordinates":[53.3484,83.7788]},{"city":"Иркутск","address":"Улица Карла Маркса, 40, БЦ «Московские ряды»","type":"Восточно-Сибирский филиал","phone":"+7 3952 45 67 89","email":"irkutsk.main@aeroline.com","mapLink":"#","coordinates":[52.2858,104.2831]},{"city":"Хабаровск","address":"Улица Муравьева-Амурского, 4, БЦ «Парус»","type":"Дальневосточный офис","phone":"+7 4212 32 10 98","email":"khabarovsk.main@aeroline.com","mapLink":"#","coordinates":[48.4831,135.0748]},{"city":"Ярославль","address":"Улица Свободы, 2, БЦ «Галерея»","type":"Центральный федеральный округ офис","phone":"+7 4852 77 66 55","email":"yaroslavl.main@aeroline.com","mapLink":"#","coordinates":[57.6256,39.8856]},{"city":"Владивосток","address":"Улица Светланская, 106, БЦ «Владивосток-Сити»","type":"Тихоокеанский офис","phone":"+7 4232 54 32 10","email":"vladivostok.main@aeroline.com","mapLink":"#","coordinates":[43.1189,131.8986]},{"city":"Махачкала","address":"Проспект Имама Шамиля, 65, БЦ «Махачкала»","type":"Северо-Кавказский офис","phone":"+7 8722 43 21 09","email":"makhachkala.main@aeroline.com","mapLink":"#","coordinates":[42.9818,47.4975]},{"city":"Томск","address":"Проспект Ленина, 82А, БЦ «Вертикаль»","type":"Сибирский региональный офис","phone":"+7 3822 65 43 21","email":"tomsk.main@aeroline.com","mapLink":"#","coordinates":[56.4862,84.9458]},{"city":"Оренбург","address":"Улица Советская, 38, БЦ «Восход»","type":"Южно-Уральский филиал","phone":"+7 3532 99 88 77","email":"orenburg.main@aeroline.com","mapLink":"#","coordinates":[51.777,55.097]},{"city":"Кемерово","address":"Проспект Советский, 58, БЦ «Кемерово-Сити»","type":"Кузбасский офис","phone":"+7 3842 44 55 66","email":"kemerovo.main@aeroline.com","mapLink":"#","coordinates":[55.3942,86.0772]},{"city":"Астрахань","address":"Улица Кирова, 87, БЦ «Лотос»","type":"Южный офис","phone":"+7 8512 11 22 33","email":"astrakhan.main@aeroline.com","mapLink":"#","coordinates":[46.3477,48.0401]},{"city":"Липецк","address":"Улица Зегеля, 21, БЦ «Авантаж»","type":"Центрально-Черноземный офис","phone":"+7 4742 55 44 33","email":"lipetsk.main@aeroline.com","mapLink":"#","coordinates":[52.6101,39.5786]},{"city":"Киров","address":"Улица Воровского, 44, БЦ «Кристалл»","type":"Волго-Вятский офис","phone":"+7 8332 66 77 88","email":"kirov.main@aeroline.com","mapLink":"#","coordinates":[58.5991,49.669]},{"city":"Севастополь","address":"Улица Ленина, 30, БЦ «Адмирал»","type":"Крымский офис","phone":"+7 8692 90 12 34","email":"sevastopol.main@aeroline.com","mapLink":"#","coordinates":[44.6167,33.5255]},{"city":"Тула","address":"Проспект Ленина, 85, БЦ «Парус»","type":"Тульский офис","phone":"+7 4872 78 90 12","email":"tula.main@aeroline.com","mapLink":"#","coordinates":[54.1952,37.6186]},{"city":"Курск","address":"Улица Ленина, 12, БЦ «Central Park»","type":"Курский филиал","phone":"+7 4712 11 22 33","email":"kursk.main@aeroline.com","mapLink":"#","coordinates":[51.7345,36.1918]},{"city":"Рязань","address":"Улица Почтовая, 61, БЦ «Рязань-Сити»","type":"Рязанский офис","phone":"+7 4912 33 44 55","email":"ryazan.main@aeroline.com","mapLink":"#","coordinates":[54.6291,39.7369]},{"city":"Белгород","address":"Проспект Славы, 80, БЦ «Белгород»","type":"Белгородский филиал","phone":"+7 4722 66 77 88","email":"belgorod.main@aeroline.com","mapLink":"#","coordinates":[50.5976,36.5815]},{"city":"Владимир","address":"Улица Большая Московская, 59, БЦ «Гермес»","type":"Владимирский офис","phone":"+7 4922 12 34 56","email":"vladimir.main@aeroline.com","mapLink":"#","coordinates":[56.1287,40.4075]},{"city":"Калининград","address":"Проспект Мира, 80, БЦ «Морской»","type":"Западный офис","phone":"+7 4012 98 76 54","email":"kaliningrad.main@aeroline.com","mapLink":"#","coordinates":[54.7171,20.4851]}],
+    "cities": ["Москва","Санкт-Петербург","Новосибирск","Екатеринбург","Казань","Нижний Новгород","Челябинск","Самара","Омск","Ростов-на-Дону","Уфа","Красноярск","Пермь","Волгоград","Воронеж","Саратов","Краснодар","Тюмень","Ижевск","Барнаул","Иркутск","Хабаровск","Ярославль","Владивосток","Махачкала","Томск","Оренбург","Кемерово","Астрахань","Липецк","Киров","Севастополь","Тула","Курск","Рязань","Белгород","Владимир","Калининград"],
+    "pagination": {"currentPage":1,"totalPages":8},
+    "defaultOffice": {"city":"Москва","address":"Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»","type":"Центральный офис","phone":"+7 495 123 45 67","email":"moscow.center@aeroline.com","mapLink":"#","coordinates":[55.789461,37.551735]}
+  }
+  </script>
 
+  <script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+  </script>
   
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">
@@ -231,55 +269,65 @@
     
     <!-- Фильтр по городу -->
     <div class="flex justify-center mb-6 md:mb-10 w-full">
-      <div class="relative w-full md:max-w-xs">
-        <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
-          <option value="all">Все города</option>
-          <option value="Москва">Москва</option>
-          <option value="Санкт-Петербург">Санкт-Петербург</option>
-          <option value="Новосибирск">Новосибирск</option>
-          <option value="Екатеринбург">Екатеринбург</option>
-          <option value="Казань">Казань</option>
-          <option value="Нижний Новгород">Нижний Новгород</option>
-          <option value="Челябинск">Челябинск</option>
-          <option value="Самара">Самара</option>
-          <option value="Омск">Омск</option>
-          <option value="Ростов-на-Дону">Ростов-на-Дону</option>
-          <option value="Уфа">Уфа</option>
-          <option value="Красноярск">Красноярск</option>
-          <option value="Пермь">Пермь</option>
-          <option value="Волгоград">Волгоград</option>
-          <option value="Воронеж">Воронеж</option>
-          <option value="Саратов">Саратов</option>
-          <option value="Краснодар">Краснодар</option>
-          <option value="Тюмень">Тюмень</option>
-          <option value="Ижевск">Ижевск</option>
-          <option value="Барнаул">Барнаул</option>
-          <option value="Иркутск">Иркутск</option>
-          <option value="Хабаровск">Хабаровск</option>
-          <option value="Ярославль">Ярославль</option>
-          <option value="Владивосток">Владивосток</option>
-          <option value="Махачкала">Махачкала</option>
-          <option value="Томск">Томск</option>
-          <option value="Оренбург">Оренбург</option>
-          <option value="Кемерово">Кемерово</option>
-          <option value="Астрахань">Астрахань</option>
-          <option value="Липецк">Липецк</option>
-          <option value="Киров">Киров</option>
-          <option value="Севастополь">Севастополь</option>
-          <option value="Тула">Тула</option>
-          <option value="Курск">Курск</option>
-          <option value="Рязань">Рязань</option>
-          <option value="Белгород">Белгород</option>
-          <option value="Владимир">Владимир</option>
-          <option value="Калининград">Калининград</option>
-        </select>
-        <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+      <div class="form flex items-center gap-2">
+        <div class="relative w-full md:max-w-xs">
+          <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 w-full focus:outline-none text-body-secondary">
+            <option value="all">Все города</option>
+            <option value="Москва">Москва</option>
+            <option value="Санкт-Петербург">Санкт-Петербург</option>
+            <option value="Новосибирск">Новосибирск</option>
+            <option value="Екатеринбург">Екатеринбург</option>
+            <option value="Казань">Казань</option>
+            <option value="Нижний Новгород">Нижний Новгород</option>
+            <option value="Челябинск">Челябинск</option>
+            <option value="Самара">Самара</option>
+            <option value="Омск">Омск</option>
+            <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+            <option value="Уфа">Уфа</option>
+            <option value="Красноярск">Красноярск</option>
+            <option value="Пермь">Пермь</option>
+            <option value="Волгоград">Волгоград</option>
+            <option value="Воронеж">Воронеж</option>
+            <option value="Саратов">Саратов</option>
+            <option value="Краснодар">Краснодар</option>
+            <option value="Тюмень">Тюмень</option>
+            <option value="Ижевск">Ижевск</option>
+            <option value="Барнаул">Барнаул</option>
+            <option value="Иркутск">Иркутск</option>
+            <option value="Хабаровск">Хабаровск</option>
+            <option value="Ярославль">Ярославль</option>
+            <option value="Владивосток">Владивосток</option>
+            <option value="Махачкала">Махачкала</option>
+            <option value="Томск">Томск</option>
+            <option value="Оренбург">Оренбург</option>
+            <option value="Кемерово">Кемерово</option>
+            <option value="Астрахань">Астрахань</option>
+            <option value="Липецк">Липецк</option>
+            <option value="Киров">Киров</option>
+            <option value="Севастополь">Севастополь</option>
+            <option value="Тула">Тула</option>
+            <option value="Курск">Курск</option>
+            <option value="Рязань">Рязань</option>
+            <option value="Белгород">Белгород</option>
+            <option value="Владимир">Владимир</option>
+            <option value="Калининград">Калининград</option>
+          </select>
+          <img src="./assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+        </div>
+        <button
+          type="button"
+          id="city-filter-reset"
+          class="px-4 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md bg-brand-gray hover:bg-brand-gray-dark btn-gray py-3 h-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue"
+          title="Сбросить фильтр"
+        >Сброс</button>
       </div>
     </div>
     
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 offices-grid">
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Москва" data-coordinates="55.789461,37.551735" data-index="0">
+        data-index="0"
+        data-city="Москва"
+        data-coordinates="55.789461,37.551735">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -290,10 +338,12 @@
           <div class="text-brand-gray">+7 495 123 45 67</div>
           <div class="text-brand-gray">moscow.center@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Москва" data-coordinates="55.77879,37.5877" data-index="1">
+        data-index="1"
+        data-city="Москва"
+        data-coordinates="55.77879,37.5877">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -304,10 +354,12 @@
           <div class="text-brand-gray">+7 495 123 45 68</div>
           <div class="text-brand-gray">moscow.north@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Москва" data-coordinates="55.749633,37.537434" data-index="2">
+        data-index="2"
+        data-city="Москва"
+        data-coordinates="55.749633,37.537434">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -318,10 +370,12 @@
           <div class="text-brand-gray">+7 495 123 45 70</div>
           <div class="text-brand-gray">moscow.city@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Санкт-Петербург" data-coordinates="59.8521,30.3273" data-index="3">
+        data-index="3"
+        data-city="Санкт-Петербург"
+        data-coordinates="59.8521,30.3273">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -332,10 +386,12 @@
           <div class="text-brand-gray">+7 812 765 43 21</div>
           <div class="text-brand-gray">spb.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Санкт-Петербург" data-coordinates="59.958949,30.405969" data-index="4">
+        data-index="4"
+        data-city="Санкт-Петербург"
+        data-coordinates="59.958949,30.405969">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -346,10 +402,12 @@
           <div class="text-brand-gray">+7 812 765 43 23</div>
           <div class="text-brand-gray">spb.piskarevsky@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Новосибирск" data-coordinates="55.028739,82.905823" data-index="5">
+        data-index="5"
+        data-city="Новосибирск"
+        data-coordinates="55.028739,82.905823">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -360,10 +418,12 @@
           <div class="text-brand-gray">+7 383 543 21 00</div>
           <div class="text-brand-gray">nsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Новосибирск" data-coordinates="55.046966,82.91672" data-index="6">
+        data-index="6"
+        data-city="Новосибирск"
+        data-coordinates="55.046966,82.91672">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -374,10 +434,12 @@
           <div class="text-brand-gray">+7 383 543 21 03</div>
           <div class="text-brand-gray">nsk.sales@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Екатеринбург" data-coordinates="56.823592,60.605613" data-index="7">
+        data-index="7"
+        data-city="Екатеринбург"
+        data-coordinates="56.823592,60.605613">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -388,10 +450,12 @@
           <div class="text-brand-gray">+7 343 987 65 43</div>
           <div class="text-brand-gray">ekb.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Екатеринбург" data-coordinates="56.8361,60.6146" data-index="8">
+        data-index="8"
+        data-city="Екатеринбург"
+        data-coordinates="56.8361,60.6146">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -402,10 +466,12 @@
           <div class="text-brand-gray">+7 343 987 65 45</div>
           <div class="text-brand-gray">ekb.service@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Казань" data-coordinates="55.815079,49.143865" data-index="9">
+        data-index="9"
+        data-city="Казань"
+        data-coordinates="55.815079,49.143865">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -416,10 +482,12 @@
           <div class="text-brand-gray">+7 843 210 98 76</div>
           <div class="text-brand-gray">kazan.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Казань" data-coordinates="55.778871,49.129573" data-index="10">
+        data-index="10"
+        data-city="Казань"
+        data-coordinates="55.778871,49.129573">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -430,10 +498,12 @@
           <div class="text-brand-gray">+7 843 210 98 77</div>
           <div class="text-brand-gray">kazan.south@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Нижний Новгород" data-coordinates="56.2945,43.9475" data-index="11">
+        data-index="11"
+        data-city="Нижний Новгород"
+        data-coordinates="56.2945,43.9475">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -444,10 +514,12 @@
           <div class="text-brand-gray">+7 831 654 32 10</div>
           <div class="text-brand-gray">nn.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Челябинск" data-coordinates="55.161749,61.431569" data-index="12">
+        data-index="12"
+        data-city="Челябинск"
+        data-coordinates="55.161749,61.431569">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -458,10 +530,12 @@
           <div class="text-brand-gray">+7 351 111 22 33</div>
           <div class="text-brand-gray">chel.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Самара" data-coordinates="53.224854,50.199879" data-index="13">
+        data-index="13"
+        data-city="Самара"
+        data-coordinates="53.224854,50.199879">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -472,10 +546,12 @@
           <div class="text-brand-gray">+7 846 333 44 55</div>
           <div class="text-brand-gray">samara.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Омск" data-coordinates="54.962902,73.38475" data-index="14">
+        data-index="14"
+        data-city="Омск"
+        data-coordinates="54.962902,73.38475">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -486,10 +562,12 @@
           <div class="text-brand-gray">+7 3812 77 88 99</div>
           <div class="text-brand-gray">omsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Ростов-на-Дону" data-coordinates="47.2269,39.7327" data-index="15">
+        data-index="15"
+        data-city="Ростов-на-Дону"
+        data-coordinates="47.2269,39.7327">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -500,10 +578,12 @@
           <div class="text-brand-gray">+7 863 222 11 00</div>
           <div class="text-brand-gray">rostov.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Уфа" data-coordinates="54.7675,55.9983" data-index="16">
+        data-index="16"
+        data-city="Уфа"
+        data-coordinates="54.7675,55.9983">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -514,10 +594,12 @@
           <div class="text-brand-gray">+7 347 212 34 56</div>
           <div class="text-brand-gray">ufa.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Красноярск" data-coordinates="56.0125,92.8687" data-index="17">
+        data-index="17"
+        data-city="Красноярск"
+        data-coordinates="56.0125,92.8687">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -528,10 +610,12 @@
           <div class="text-brand-gray">+7 391 234 56 78</div>
           <div class="text-brand-gray">krasnoyarsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Пермь" data-coordinates="58.0069,56.2483" data-index="18">
+        data-index="18"
+        data-city="Пермь"
+        data-coordinates="58.0069,56.2483">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -542,10 +626,12 @@
           <div class="text-brand-gray">+7 342 567 89 01</div>
           <div class="text-brand-gray">perm.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Волгоград" data-coordinates="48.7188,44.5204" data-index="19">
+        data-index="19"
+        data-city="Волгоград"
+        data-coordinates="48.7188,44.5204">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -556,10 +642,12 @@
           <div class="text-brand-gray">+7 8442 78 90 12</div>
           <div class="text-brand-gray">volgograd.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Воронеж" data-coordinates="51.6669,39.1989" data-index="20">
+        data-index="20"
+        data-city="Воронеж"
+        data-coordinates="51.6669,39.1989">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -570,10 +658,12 @@
           <div class="text-brand-gray">+7 473 345 67 89</div>
           <div class="text-brand-gray">voronezh.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Саратов" data-coordinates="51.5309,46.0306" data-index="21">
+        data-index="21"
+        data-city="Саратов"
+        data-coordinates="51.5309,46.0306">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -584,10 +674,12 @@
           <div class="text-brand-gray">+7 8452 90 12 34</div>
           <div class="text-brand-gray">saratov.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Краснодар" data-coordinates="45.0416,38.9744" data-index="22">
+        data-index="22"
+        data-city="Краснодар"
+        data-coordinates="45.0416,38.9744">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -598,10 +690,12 @@
           <div class="text-brand-gray">+7 861 234 56 78</div>
           <div class="text-brand-gray">krasnodar.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Тюмень" data-coordinates="57.1499,65.5492" data-index="23">
+        data-index="23"
+        data-city="Тюмень"
+        data-coordinates="57.1499,65.5492">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -612,10 +706,12 @@
           <div class="text-brand-gray">+7 3452 76 54 32</div>
           <div class="text-brand-gray">tyumen.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Ижевск" data-coordinates="56.8488,53.2206" data-index="24">
+        data-index="24"
+        data-city="Ижевск"
+        data-coordinates="56.8488,53.2206">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -626,10 +722,12 @@
           <div class="text-brand-gray">+7 3412 12 34 56</div>
           <div class="text-brand-gray">izhevsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Барнаул" data-coordinates="53.3484,83.7788" data-index="25">
+        data-index="25"
+        data-city="Барнаул"
+        data-coordinates="53.3484,83.7788">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -640,10 +738,12 @@
           <div class="text-brand-gray">+7 3852 98 76 54</div>
           <div class="text-brand-gray">barnaul.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Иркутск" data-coordinates="52.2858,104.2831" data-index="26">
+        data-index="26"
+        data-city="Иркутск"
+        data-coordinates="52.2858,104.2831">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -654,10 +754,12 @@
           <div class="text-brand-gray">+7 3952 45 67 89</div>
           <div class="text-brand-gray">irkutsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Хабаровск" data-coordinates="48.4831,135.0748" data-index="27">
+        data-index="27"
+        data-city="Хабаровск"
+        data-coordinates="48.4831,135.0748">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -668,10 +770,12 @@
           <div class="text-brand-gray">+7 4212 32 10 98</div>
           <div class="text-brand-gray">khabarovsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Ярославль" data-coordinates="57.6256,39.8856" data-index="28">
+        data-index="28"
+        data-city="Ярославль"
+        data-coordinates="57.6256,39.8856">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -682,10 +786,12 @@
           <div class="text-brand-gray">+7 4852 77 66 55</div>
           <div class="text-brand-gray">yaroslavl.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Владивосток" data-coordinates="43.1189,131.8986" data-index="29">
+        data-index="29"
+        data-city="Владивосток"
+        data-coordinates="43.1189,131.8986">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -696,10 +802,12 @@
           <div class="text-brand-gray">+7 4232 54 32 10</div>
           <div class="text-brand-gray">vladivostok.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Махачкала" data-coordinates="42.9818,47.4975" data-index="30">
+        data-index="30"
+        data-city="Махачкала"
+        data-coordinates="42.9818,47.4975">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -710,10 +818,12 @@
           <div class="text-brand-gray">+7 8722 43 21 09</div>
           <div class="text-brand-gray">makhachkala.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Томск" data-coordinates="56.4862,84.9458" data-index="31">
+        data-index="31"
+        data-city="Томск"
+        data-coordinates="56.4862,84.9458">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -724,10 +834,12 @@
           <div class="text-brand-gray">+7 3822 65 43 21</div>
           <div class="text-brand-gray">tomsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Оренбург" data-coordinates="51.777,55.097" data-index="32">
+        data-index="32"
+        data-city="Оренбург"
+        data-coordinates="51.777,55.097">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -738,10 +850,12 @@
           <div class="text-brand-gray">+7 3532 99 88 77</div>
           <div class="text-brand-gray">orenburg.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Кемерово" data-coordinates="55.3942,86.0772" data-index="33">
+        data-index="33"
+        data-city="Кемерово"
+        data-coordinates="55.3942,86.0772">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -752,10 +866,12 @@
           <div class="text-brand-gray">+7 3842 44 55 66</div>
           <div class="text-brand-gray">kemerovo.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Астрахань" data-coordinates="46.3477,48.0401" data-index="34">
+        data-index="34"
+        data-city="Астрахань"
+        data-coordinates="46.3477,48.0401">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -766,10 +882,12 @@
           <div class="text-brand-gray">+7 8512 11 22 33</div>
           <div class="text-brand-gray">astrakhan.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Липецк" data-coordinates="52.6101,39.5786" data-index="35">
+        data-index="35"
+        data-city="Липецк"
+        data-coordinates="52.6101,39.5786">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -780,10 +898,12 @@
           <div class="text-brand-gray">+7 4742 55 44 33</div>
           <div class="text-brand-gray">lipetsk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Киров" data-coordinates="58.5991,49.669" data-index="36">
+        data-index="36"
+        data-city="Киров"
+        data-coordinates="58.5991,49.669">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -794,10 +914,12 @@
           <div class="text-brand-gray">+7 8332 66 77 88</div>
           <div class="text-brand-gray">kirov.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Севастополь" data-coordinates="44.6167,33.5255" data-index="37">
+        data-index="37"
+        data-city="Севастополь"
+        data-coordinates="44.6167,33.5255">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -808,10 +930,12 @@
           <div class="text-brand-gray">+7 8692 90 12 34</div>
           <div class="text-brand-gray">sevastopol.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Тула" data-coordinates="54.1952,37.6186" data-index="38">
+        data-index="38"
+        data-city="Тула"
+        data-coordinates="54.1952,37.6186">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -822,10 +946,12 @@
           <div class="text-brand-gray">+7 4872 78 90 12</div>
           <div class="text-brand-gray">tula.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Курск" data-coordinates="51.7345,36.1918" data-index="39">
+        data-index="39"
+        data-city="Курск"
+        data-coordinates="51.7345,36.1918">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -836,10 +962,12 @@
           <div class="text-brand-gray">+7 4712 11 22 33</div>
           <div class="text-brand-gray">kursk.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Рязань" data-coordinates="54.6291,39.7369" data-index="40">
+        data-index="40"
+        data-city="Рязань"
+        data-coordinates="54.6291,39.7369">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -850,10 +978,12 @@
           <div class="text-brand-gray">+7 4912 33 44 55</div>
           <div class="text-brand-gray">ryazan.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Белгород" data-coordinates="50.5976,36.5815" data-index="41">
+        data-index="41"
+        data-city="Белгород"
+        data-coordinates="50.5976,36.5815">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -864,10 +994,12 @@
           <div class="text-brand-gray">+7 4722 66 77 88</div>
           <div class="text-brand-gray">belgorod.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Владимир" data-coordinates="56.1287,40.4075" data-index="42">
+        data-index="42"
+        data-city="Владимир"
+        data-coordinates="56.1287,40.4075">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -878,10 +1010,12 @@
           <div class="text-brand-gray">+7 4922 12 34 56</div>
           <div class="text-brand-gray">vladimir.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
       <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-city="Калининград" data-coordinates="54.7171,20.4851" data-index="43">
+        data-index="43"
+        data-city="Калининград"
+        data-coordinates="54.7171,20.4851">
         <div>
           <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
@@ -892,7 +1026,7 @@
           <div class="text-brand-gray">+7 4012 98 76 54</div>
           <div class="text-brand-gray">kaliningrad.main@aeroline.com</div>
         </div>
-        <a href="#" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
+        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
       </div>
     </div>
 
@@ -949,18 +1083,20 @@
       <div class="flex flex-col w-full gap-y-10">
         <img src="./assets/img/Logotype_aerline_white.png" alt="Aeroline" class="h-12 mb-4 object-contain object-left">
         <nav class="w-full">
-          <div class="grid grid-cols-2 gap-y-6 gap-x-0">
-            <a href="./index.html" class="caps-regular block">Главная</a>
-            <a href="./news.html" class="caps-regular block">Новости</a>
-            <a href="./services.html" class="caps-regular block">Услуги</a>
-            <a href="./vacancies.html" class="caps-regular block">Вакансии</a>
-            <a href="./payments.html" class="caps-regular block">Платежи</a>
-            <a href="./contacts.html" class="caps-regular block">Контакты</a>
-          </div>
-          <div class="mt-20 md:mt-0">
-            <a href="./order-tracking.html" class="caps-regular block mb-3">Отслеживание заказа</a>
-            <a href="./helper.html" class="caps-regular block mb-3">Страница «Помощник»</a>
-            <a href="./login.html" class="caps-regular block">Войти в личный кабинет</a>
+          <div class="grid md:grid-cols-2 gap-y-6 gap-x-6">
+            <div class="flex flex-col space-y-3">
+              <a href="index.html" class="caps-regular block">Главная</a>
+              <a href="services.html" class="caps-regular block">Услуги</a>
+              <a href="payments.html" class="caps-regular block">Платежи</a>
+              <a href="news.html" class="caps-regular block">Новости</a>
+              <a href="vacancies.html" class="caps-regular block">Вакансии</a>
+            </div>
+            <div class="flex flex-col space-y-3">
+              <a href="contacts.html" class="caps-regular block">Контакты</a>
+              <a href="order-tracking.html" class="caps-regular block">Отслеживание заказа</a>
+              <a href="helper.html" class="caps-regular block">Страница «Помощник»</a>
+              <a href="user-create.html" class="caps-regular block">Регистрация</a>
+            </div>
           </div>
         </nav>
 
@@ -990,7 +1126,7 @@
 
       <div class="w-full d-flex justify-between flex-row flex-nowrap">
         <p class="caption-regular text-white/50 mb-2 d-inline w-1/2">@2025</p>
-        <a href="./privacy.html" class="caption-regular text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
+        <a href="./privacy.html" class="text-body-secondary text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
       </div>
     </div>
 
@@ -999,7 +1135,7 @@
       <div class="flex flex-col items-start">
         <img src="./assets/img/Logotype_aerline_white.png" alt="Aeroline" class="h-11 mb-8">
         <p class="caption-regular text-white/50">@2025</p>
-        <a href="./privacy.html" class="caption-regular text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
+        <a href="./privacy.html" class="text-body text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
       </div>
 
       <div class="flex flex-col">
@@ -1021,23 +1157,20 @@
         </div>
       </div>
 
-      <div class="flex space-x-16">
-        <div class="flex flex-col space-y-3">
-          <a href="./index.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Главная</a>
-          <a href="./services.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Услуги</a>
-          <a href="./payments.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Платежи</a>
+      <div class="flex [&>*]:px-10 ml-10 uppercase">
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="index.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Главная</a>
+          <a href="services.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Услуги</a>
+          <a href="payments.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Платежи</a>
+          <a href="news.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Новости</a>
+          <a href="vacancies.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Вакансии</a>
         </div>
-        <div class="flex flex-col space-y-3">
-          <a href="./news.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Новости</a>
-          <a href="./vacancies.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Вакансии</a>
-          <a href="./contacts.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Контакты</a>
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="contacts.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Контакты</a>
+          <a href="order-tracking.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
+          <a href="helper.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
+          <a href="user-create.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Регистрация</a>
         </div>
-      </div>
-
-      <div class="flex flex-col space-y-3">
-        <a href="./order-tracking.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
-        <a href="./helper.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
-        <a href="./login.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Войти в личный кабинет</a>
       </div>
     </div>
   </div>

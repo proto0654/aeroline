@@ -3,6 +3,8 @@
  * Модуль для работы с UI-компонентами
  */
 
+import { PhoneValidator, domReady } from './utils.js';
+
 /**
  * Функция инициализации бургер-меню
  */
@@ -188,4 +190,38 @@ export function initPaymentTabs() {
       });
     });
   }
-} 
+}
+
+/**
+ * Инициализация тогглов мобильного меню
+ */
+export function initMobileMenuToggles() {
+  const toggles = document.querySelectorAll('.mobile-menu-toggle');
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', function () {
+      const submenu = this.parentElement.querySelector('.mobile-menu-submenu');
+      const icon = this.querySelector('svg');
+      if (!submenu) return;
+      if (submenu.classList.contains('hidden')) {
+        submenu.classList.remove('hidden');
+        submenu.style.maxHeight = submenu.scrollHeight + 'px';
+        icon.classList.add('rotate-180');
+      } else {
+        submenu.classList.add('hidden');
+        submenu.style.maxHeight = null;
+        icon.classList.remove('rotate-180');
+      }
+    });
+  });
+}
+
+// Инициализация маски и валидации для всех телефонов
+export function initPhoneInputs() {
+  document.querySelectorAll('input[type="tel"]').forEach(input => {
+    new PhoneValidator(input);
+  });
+}
+
+domReady(() => {
+  initPhoneInputs();
+}); 

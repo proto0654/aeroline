@@ -48,6 +48,9 @@
     "not dead"
   ],
   "dependencies": {
+    "daisyui": "^5.0.37",
+    "flatpickr": "^4.6.13",
+    "list.js": "^2.3.1",
     "swiper": "^11.2.6"
   }
 }

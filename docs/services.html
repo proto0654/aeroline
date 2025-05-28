@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="h-full overflow-x-hidden">
+<html lang="ru" class="h-full overflow-x-hidden" data-theme="aeroline">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
       position: relative;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/main-2e1e0051.css">
+  <link rel="stylesheet" href="./assets/css/main-f7a63ad1.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <header class="bg-white max-w-[1920px] mx-auto w-full">
@@ -39,14 +39,14 @@
           <a href="#" class="text-brand-blue">
           <img src="./assets/img/cube.svg" alt="Cube" class="h-11 w-11">
         </a>
-        <a href="#" class="text-brand-blue">
+        <a href="./calculator.html" class="text-brand-blue">
           <img src="./assets/img/vuesax.svg" alt="Question" class="h-9 w-9">
         </a>
         <a href="#" class="text-brand-blue">
           <img src="./assets/img/q.svg" alt="Question" class="h-9 w-9">
         </a>
         </div>
-        <button class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary">Войти</button>
+        <a href="./profile.html" class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block">Войти</a>
       </div>
       
       <!-- Бургер-меню для мобильных устройств -->
@@ -59,24 +59,24 @@
     
     <!-- Навигация и контакты в десктопе -->
     <div class="hidden lg:flex justify-between border-t border-gray-200">
-      <div class="flex items-center space-x-4 py-3">
-        <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center text-brand-blue">
+      <div class="text-body flex items-center space-x-4 py-3">
+        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue">
           <img src="./assets/img/messages3.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="flex items-center text-brand-blue body-secondary">
+        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue">
           <img src="./assets/img/callcalling.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
       </div>
-      <nav class="md:block">
-        <ul class="flex justify-start items-center py-3 space-x-8">
-          <li><a href="./index.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">ГЛАВНАЯ</a></li>
-          <li><a href="./services.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">УСЛУГИ</a></li>
-          <li><a href="./payments.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">ПЛАТЕЖИ</a></li>
-          <li><a href="./news.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">НОВОСТИ</a></li>
-          <li><a href="./vacancies.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">ВАКАНСИИ</a></li>
-          <li><a href="./contacts.html" class="caps-regular text-brand-gray hover:text-brand-blue transition-colors">КОНТАКТЫ</a></li>
+      <nav class="md:block min-w-[35rem]">
+        <ul class="flex justify-between w-full items-center py-5 space-x-3 [&>li]:uppercase [&>li]:text-caption-menu [&>li]:font-medium">
+          <li><a href="./index.html" class="text-brand-gray hover:text-brand-blue transition-colors">Главная</a></li>
+          <li><a href="./services.html" class="text-brand-gray hover:text-brand-blue transition-colors">Услуги</a></li>
+          <li><a href="./payments.html" class="text-brand-gray hover:text-brand-blue transition-colors">Платежи</a></li>
+          <li><a href="./news.html" class="text-brand-gray hover:text-brand-blue transition-colors">Новости</a></li>
+          <li><a href="./vacancies.html" class="text-brand-gray hover:text-brand-blue transition-colors">Вакансии</a></li>
+          <li><a href="./contacts.html" class="text-brand-gray hover:text-brand-blue transition-colors">Контакты</a></li>
         </ul>
       </nav>
       
@@ -85,7 +85,7 @@
   
   <!-- Мобильное меню на весь экран -->
   <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
-    <div class="w-[100vw] px-3 py-2 h-full flex flex-col justify-between max-h-[calc(100vh-50px)] h-full">
+    <div class="w-[100vw] px-3 py-2 h-[100vh] max-h-[100vh] flex flex-col gap-4  h-full overflow-y-auto">
       <div class="flex justify-between items-center  border-b border-gray-200 " id="mobile-menu-header">
        <div class="logo flex items-center">
        <a href="./index.html">
@@ -106,13 +106,13 @@
           <li><a href="./payments.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Платежи</a></li>
           <li><a href="./news.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Новости</a></li>
           <li><a href="./vacancies.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Вакансии</a></li>
-          <li><a href="./order-tracking.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Отслеживание заказа</a></li>
-          <li><a href="./helper.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Страница «Помощник»</a></li>
           <li><a href="./contacts.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Контакты</a></li>
         </ul>
       </nav>
       
-      <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
+      
+      <div class="w-full flex flex-col gap-5 mt-auto pt-10">
+        <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
         <div class="flex items-center space-x-2" id="mobile-menu-social">
           <a href="https://t.me/aeroline" class="text-white rounded-full">
             <img src="./assets/img/logos_telegram.svg" alt="Telegram" class="h-10 w-10">
@@ -132,29 +132,55 @@
         </a>
         
       </div>
-      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings" id="mobile-menu-login">Войти</button>
-    </div>
+      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end" id="mobile-menu-login">Войти</button>
+   
+      </div>
+       </div>
   </div>
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
-<!-- Modal Container -->
-<div id="modal-container" class="fixed inset-0 z-50 hidden">
-  <!-- Overlay -->
-  <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
-  
-  <!-- Modal -->
-  <div class="modal fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:max-w-[calc(100%-4rem)] xl:max-w-[800px] bg-white md:rounded-2xl p-6 transition-all duration-300 opacity-0 scale-95 max-h-[100vh] md:max-h-[calc(90vh-4rem)] overflow-y-auto h-full">
-    <!-- Close Button -->
-    <button class="modal-close absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+</div>
+
+<!-- Модальное окно входа -->
+<div id="login-modal" class="modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box max-w-md bg-brand-light">
+    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
     </button>
     
-    <!-- Dynamic Content Container -->
-    <div class="modal-content"></div>
+    <div class="modal-content">
+      <h3 class="text-h4 font-bold text-brand-gray mb-4">Вход в систему</h3>
+      
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <input type="email" id="login-email" name="email" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 placeholder="example@email.com"
+                 value="test@aeroline.su">
+        </div>
+        
+        <div>
+          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
+          <input type="password" id="login-password" name="password" required 
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 placeholder="••••••••"
+                 value="password123">
+        </div>
+        
+        <div class="flex justify-end gap-3">
+          <button type="button" class="modal-close px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
+            Отмена
+          </button>
+          <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-blue-600 transition-colors">
+            Войти
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</div> </div>
+</div>
 </body>
 </html> <!-- Заголовок страницы -->
 <section class="hero-section">
@@ -165,7 +191,7 @@
     <img src="./assets/img/services-bg.jpg" alt="" class="w-full h-full object-cover">
   </div>
 </section>
-<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col overflow-x-hidden">
   
 
   <section class="services-section flex flex-col gap-6 p-4 max-w-[1200px] mx-auto md:my-20">
@@ -242,7 +268,7 @@
           <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 leading-1.2">Рассчитайте стоимость</h2>
           <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
           
-          <form class="space-y-4">
+          <form class="form space-y-4">
             <div class="relative">
               <input type="text" placeholder="Лицо компании" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
               <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
@@ -252,7 +278,7 @@
               <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
             </div>
             <div class="relative">
-              <input type="tel" placeholder="Номер телефона" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
+              <input type="tel" placeholder="+7 (___) ___-__-__" class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary" required>
               <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
             </div>
             <div class="relative">
@@ -409,18 +435,20 @@
       <div class="flex flex-col w-full gap-y-10">
         <img src="./assets/img/Logotype_aerline_white.png" alt="Aeroline" class="h-12 mb-4 object-contain object-left">
         <nav class="w-full">
-          <div class="grid grid-cols-2 gap-y-6 gap-x-0">
-            <a href="./index.html" class="caps-regular block">Главная</a>
-            <a href="./news.html" class="caps-regular block">Новости</a>
-            <a href="./services.html" class="caps-regular block">Услуги</a>
-            <a href="./vacancies.html" class="caps-regular block">Вакансии</a>
-            <a href="./payments.html" class="caps-regular block">Платежи</a>
-            <a href="./contacts.html" class="caps-regular block">Контакты</a>
-          </div>
-          <div class="mt-20 md:mt-0">
-            <a href="./order-tracking.html" class="caps-regular block mb-3">Отслеживание заказа</a>
-            <a href="./helper.html" class="caps-regular block mb-3">Страница «Помощник»</a>
-            <a href="./login.html" class="caps-regular block">Войти в личный кабинет</a>
+          <div class="grid md:grid-cols-2 gap-y-6 gap-x-6">
+            <div class="flex flex-col space-y-3">
+              <a href="index.html" class="caps-regular block">Главная</a>
+              <a href="services.html" class="caps-regular block">Услуги</a>
+              <a href="payments.html" class="caps-regular block">Платежи</a>
+              <a href="news.html" class="caps-regular block">Новости</a>
+              <a href="vacancies.html" class="caps-regular block">Вакансии</a>
+            </div>
+            <div class="flex flex-col space-y-3">
+              <a href="contacts.html" class="caps-regular block">Контакты</a>
+              <a href="order-tracking.html" class="caps-regular block">Отслеживание заказа</a>
+              <a href="helper.html" class="caps-regular block">Страница «Помощник»</a>
+              <a href="user-create.html" class="caps-regular block">Регистрация</a>
+            </div>
           </div>
         </nav>
 
@@ -450,7 +478,7 @@
 
       <div class="w-full d-flex justify-between flex-row flex-nowrap">
         <p class="caption-regular text-white/50 mb-2 d-inline w-1/2">@2025</p>
-        <a href="./privacy.html" class="caption-regular text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
+        <a href="./privacy.html" class="text-body-secondary text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
       </div>
     </div>
 
@@ -459,7 +487,7 @@
       <div class="flex flex-col items-start">
         <img src="./assets/img/Logotype_aerline_white.png" alt="Aeroline" class="h-11 mb-8">
         <p class="caption-regular text-white/50">@2025</p>
-        <a href="./privacy.html" class="caption-regular text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
+        <a href="./privacy.html" class="text-body text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
       </div>
 
       <div class="flex flex-col">
@@ -481,23 +509,20 @@
         </div>
       </div>
 
-      <div class="flex space-x-16">
-        <div class="flex flex-col space-y-3">
-          <a href="./index.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Главная</a>
-          <a href="./services.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Услуги</a>
-          <a href="./payments.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Платежи</a>
+      <div class="flex [&>*]:px-10 ml-10 uppercase">
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="index.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Главная</a>
+          <a href="services.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Услуги</a>
+          <a href="payments.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Платежи</a>
+          <a href="news.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Новости</a>
+          <a href="vacancies.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Вакансии</a>
         </div>
-        <div class="flex flex-col space-y-3">
-          <a href="./news.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Новости</a>
-          <a href="./vacancies.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Вакансии</a>
-          <a href="./contacts.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Контакты</a>
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="contacts.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Контакты</a>
+          <a href="order-tracking.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
+          <a href="helper.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
+          <a href="user-create.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Регистрация</a>
         </div>
-      </div>
-
-      <div class="flex flex-col space-y-3">
-        <a href="./order-tracking.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
-        <a href="./helper.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
-        <a href="./login.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Войти в личный кабинет</a>
       </div>
     </div>
   </div>

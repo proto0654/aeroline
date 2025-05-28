@@ -158,4 +158,47 @@ export function getDeviceType() {
   const width = window.innerWidth;
   if (width < 768) return 'mobile';
   return 'desktop';
+}
+
+// Класс для маски и валидации номера телефона (принимает +7 и 8, не мешает редактированию)
+export class PhoneValidator {
+  constructor(input) {
+    this.input = input;
+    this.init();
+  }
+
+  init() {
+    this.input.placeholder = '+7 (___) ___-__-__';
+    this.input.addEventListener('blur', this.onBlur.bind(this));
+    this.input.addEventListener('input', this.onInput.bind(this));
+  }
+
+  onInput(e) {
+    // Удаляем невалидные символы (разрешаем только цифры, +, пробел, -, (, ))
+    const allowed = /[\d\+\-\(\) ]/g;
+    let filtered = this.input.value.match(allowed);
+    if (filtered) {
+      this.input.value = filtered.join('');
+    } else {
+      this.input.value = '';
+    }
+    // Не форматируем, чтобы не мешать курсору
+    this.input.setCustomValidity('');
+  }
+
+  onBlur(e) {
+    let value = this.input.value.replace(/[^\d\+]/g, '');
+    // Приводим 8 к +7
+    if (value.startsWith('8')) value = '+7' + value.slice(1);
+    if (value.startsWith('+7')) {
+      if (value.length === 12) {
+        // Форматируем красиво
+        const num = value.replace(/\D/g, '');
+        this.input.value = `+7 (${num.slice(1,4)}) ${num.slice(4,7)}-${num.slice(7,9)}-${num.slice(9,11)}`;
+        this.input.setCustomValidity('');
+        return;
+      }
+    }
+    this.input.setCustomValidity('Введите корректный номер телефона');
+  }
 } 

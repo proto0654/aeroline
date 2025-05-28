@@ -422,6 +422,37 @@ export class Pagination {
   }
   
   /**
+   * Обновление пагинации на основе видимых элементов (для фильтрации)
+   */
+  updateVisibleItems() {
+    try {
+      console.log('Pagination: Обновление видимых элементов');
+      
+      // Получаем только видимые элементы
+      this.filteredItems = this.allItems.filter(item => {
+        if (this.useDisplayNone) {
+          return item.style.display !== 'none';
+        } else {
+          return !item.classList.contains('hidden');
+        }
+      });
+      
+      console.log('Pagination: Видимых элементов:', this.filteredItems.length);
+      
+      // Рассчитываем общее количество страниц на основе видимых элементов
+      this.totalPages = Math.ceil(this.filteredItems.length / this.itemsPerPage);
+      
+      // Создаем элементы пагинации заново
+      this.createPaginationElements();
+      
+      // Показываем первую страницу с видимыми элементами
+      this.showPage(1);
+    } catch (error) {
+      console.error('Pagination: Ошибка при обновлении видимых элементов:', error);
+    }
+  }
+  
+  /**
    * Применение фильтра программно
    * @param {string} filterValue - Значение фильтра
    */
@@ -455,9 +486,6 @@ export class Pagination {
       const filterElement = document.querySelector(this.filterSelector);
       
       if (filterElement) {
-        // Устанавливаем значение "все"
-        filterElement.value = 'all';
-        
         // Сбрасываем фильтрацию
         this.filteredItems = [...this.allItems];
         

@@ -6,6 +6,9 @@
 console.log('main.js: Начало загрузки');
 
 import { getBasePath, domReady } from './modules/utils.js';
+import { modalManager } from './modules/modal-manager.js';
+import { LoginManager } from './modules/login.js';
+import { DateRangePicker } from './modules/date-range-picker.js';
 import { 
   selectOfficeCard, 
   selectOfficeCardNoFocus, 
@@ -23,7 +26,8 @@ import {
   initTitleAnimations, 
   initForms, 
   initFaqAccordion, 
-  initPaymentTabs 
+  initPaymentTabs,
+  initMobileMenuToggles
 } from './modules/ui.js';
 import { initHomePage } from './modules/home-page.js';
 import { initContactsPage } from './modules/contacts-page.js';
@@ -31,6 +35,9 @@ import { initVacanciesPage } from './modules/vacancies-page.js';
 import { initPaymentsPage } from './modules/payments-page.js';
 import { NewsPage } from './modules/news-page.js';
 import { Pagination } from './modules/pagination.js';
+import { initServiceActsPage } from './modules/service-acts-page.js';
+import { initSendersReceiversPage } from './modules/senders-receivers-page.js';
+import './pages/profile.js';
 import '../css/main.css';
 
 // Базовый путь для использования в скрипте
@@ -39,6 +46,8 @@ console.log('Определен базовый путь:', BASE_PATH);
 
 // Экспортируем все функции в глобальный контекст для совместимости с устаревшим кодом
 window.BASE_PATH = BASE_PATH;
+window.modalManager = modalManager;
+window.DateRangePicker = DateRangePicker;
 window.initMap = initMap;
 window.selectOfficeCard = selectOfficeCard;
 window.selectOfficeCardNoFocus = selectOfficeCardNoFocus;
@@ -60,6 +69,8 @@ window.initContactsPage = initContactsPage;
 window.initVacanciesPage = initVacanciesPage;
 window.initPaymentsPage = initPaymentsPage;
 window.Pagination = Pagination;
+window.initServiceActsPage = initServiceActsPage;
+window.initSendersReceiversPage = initSendersReceiversPage;
 
 // Создаем флаг для отслеживания, была ли уже вызвана инициализация
 let isInitialized = false;
@@ -76,6 +87,9 @@ function initializePage() {
 
   // Инициализация форм
   initForms();
+
+  // Инициализация модуля входа
+  new LoginManager();
 
   // Проверяем, есть ли элемент карты на странице
   const mapContainer = document.getElementById('map');
@@ -195,10 +209,19 @@ function initializePage() {
   } else if (currentPage === 'news.html') {
     console.log('Инициализация страницы новостей...');
     new NewsPage();
+  } else if (currentPage === 'service-acts.html') {
+    console.log('Инициализация страницы актов оказания услуг...');
+    initServiceActsPage();
+  } else if (currentPage === 'senders-receivers.html') {
+    console.log('Инициализация страницы карточек отправителей и получателей...');
+    initSendersReceiversPage();
   }
 
   // Анимация заголовков (для всех страниц)
   initTitleAnimations();
+
+  // Инициализация тогглов мобильного меню
+  initMobileMenuToggles();
 
   console.log('=== Инициализация страницы завершена ===');
 }

@@ -15,6 +15,10 @@
     "file": "assets/img/cube.svg",
     "src": "assets/img/icons/cube.svg"
   },
+  "assets/img/icons/edit.svg": {
+    "file": "assets/img/edit.svg",
+    "src": "assets/img/icons/edit.svg"
+  },
   "assets/img/icons/logos_telegram.svg": {
     "file": "assets/img/logos_telegram.svg",
     "src": "assets/img/icons/logos_telegram.svg"
@@ -30,6 +34,18 @@
   "assets/img/icons/messages3_white.svg": {
     "file": "assets/img/messages3_white.svg",
     "src": "assets/img/icons/messages3_white.svg"
+  },
+  "assets/img/icons/order-tracking/Component 1-1.svg": {
+    "file": "assets/img/Component 1-1.svg",
+    "src": "assets/img/icons/order-tracking/Component 1-1.svg"
+  },
+  "assets/img/icons/order-tracking/Component 1-2.svg": {
+    "file": "assets/img/Component 1-2.svg",
+    "src": "assets/img/icons/order-tracking/Component 1-2.svg"
+  },
+  "assets/img/icons/order-tracking/Component 1.svg": {
+    "file": "assets/img/Component 1.svg",
+    "src": "assets/img/icons/order-tracking/Component 1.svg"
   },
   "assets/img/icons/q.svg": {
     "file": "assets/img/q.svg",
@@ -66,6 +82,10 @@
   "assets/img/layout/news-bg.jpg": {
     "file": "assets/img/news-bg.jpg",
     "src": "assets/img/layout/news-bg.jpg"
+  },
+  "assets/img/layout/order-tracking-img.png": {
+    "file": "assets/img/order-tracking-img.png",
+    "src": "assets/img/layout/order-tracking-img.png"
   },
   "assets/img/layout/payments-hero.png": {
     "file": "assets/img/payments-hero.png",
@@ -110,6 +130,30 @@
   "assets/img/mens-hands.png": {
     "file": "assets/img/mens-hands.png",
     "src": "assets/img/mens-hands.png"
+  },
+  "assets/img/news/563x304 (1).jpg": {
+    "file": "assets/img/563x304 (1).jpg",
+    "src": "assets/img/news/563x304 (1).jpg"
+  },
+  "assets/img/news/563x304.jpg": {
+    "file": "assets/img/563x304.jpg",
+    "src": "assets/img/news/563x304.jpg"
+  },
+  "assets/img/news/800x400 (1).jpg": {
+    "file": "assets/img/800x400 (1).jpg",
+    "src": "assets/img/news/800x400 (1).jpg"
+  },
+  "assets/img/news/800x400 (2).jpg": {
+    "file": "assets/img/800x400 (2).jpg",
+    "src": "assets/img/news/800x400 (2).jpg"
+  },
+  "assets/img/news/800x400.jpg": {
+    "file": "assets/img/800x400.jpg",
+    "src": "assets/img/news/800x400.jpg"
+  },
+  "assets/img/news/scale_1200 (1).jpg": {
+    "file": "assets/img/scale_1200 (1).jpg",
+    "src": "assets/img/news/scale_1200 (1).jpg"
   },
   "assets/img/pilot.png": {
     "file": "assets/img/pilot.png",
@@ -176,7 +220,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "main.css": {
-    "file": "assets/css/main-2e1e0051.css",
+    "file": "assets/css/main-f7a63ad1.css",
     "src": "main.css"
   }
 }

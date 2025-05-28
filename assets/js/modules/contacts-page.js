@@ -3,8 +3,9 @@
  * Модуль для функциональности страницы контактов
  */
 
-import { selectOfficeCardNoFocus } from './map.js';
+import { selectOfficeCardNoFocus, selectOfficeCard } from './map.js';
 import { Pagination } from './pagination.js';
+import { createAutocompleteInput } from './autocomplete.js';
 
 // Экземпляр пагинации
 let officesPagination = null;
@@ -34,7 +35,7 @@ export function initContactsPage() {
 
   // Интерактивность с карточками офисов
   if (officeCards.length > 0) {
-    officeCards.forEach(card => {
+    officeCards.forEach((card, index) => {
       // При наведении подсвечиваем карточку
       card.addEventListener('mouseenter', function () {
         this.classList.add('shadow-md');
@@ -47,8 +48,158 @@ export function initContactsPage() {
         this.style.transform = 'translateY(0)';
       });
 
-      // При клике на карточку показываем офис на карте - нет необходимости дублировать обработчики,
-      // они уже добавлены в initMap. Мы только обрабатываем событие для карты, если она инициализирована.
+      // Добавляем обработчик клика по карточке
+      card.addEventListener('click', function(e) {
+        // Если клик был по ссылке "Посмотреть на карте", обрабатываем его отдельно
+        if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#map') {
+          console.log('Клик по ссылке "Посмотреть на карте", индекс:', index);
+          
+          // Получаем данные офиса из карточки
+          const officeData = {
+            city: card.dataset.city || card.querySelector('h3')?.textContent.trim(),
+            address: card.querySelector('.text-brand-gray')?.textContent.trim(),
+            type: card.querySelectorAll('.text-brand-gray')[1]?.textContent.trim(),
+            phone: card.querySelectorAll('.text-brand-gray')[2]?.textContent.trim(),
+            email: card.querySelectorAll('.text-brand-gray')[3]?.textContent.trim()
+          };
+          
+          // Получаем координаты
+          const coordinates = card.dataset.coordinates ? 
+            card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim())) : null;
+          
+          if (coordinates && coordinates.length === 2) {
+            // Ждем инициализации карты
+            if (typeof ymaps !== 'undefined') {
+              ymaps.ready(() => {
+                let mapInstance = document.querySelector('#map')?.__yamap;
+                
+                if (!mapInstance && window.mapInstance) {
+                  mapInstance = window.mapInstance;
+                }
+                
+                if (!mapInstance && window.currentMap) {
+                  mapInstance = window.currentMap;
+                }
+                
+                if (mapInstance && window.officeMarkers && window.officeMarkers[index]) {
+                  // Используем функцию выбора офиса с центрированием карты и приближением
+                  selectOfficeCard(
+                    card,
+                    officeData,
+                    window.officeMarkers[index],
+                    mapInstance,
+                    coordinates
+                  );
+                  
+                  // Устанавливаем маркер как активный
+                  const marker = window.officeMarkers[index];
+                  if (marker && marker.events && typeof window.setActiveMarker === 'function') {
+                    window.setActiveMarker(marker);
+                  }
+                } else if (window.officeMarkers && window.officeMarkers[index]) {
+                  const marker = window.officeMarkers[index];
+                  if (marker && marker.events) {
+                    marker.events.fire('click');
+                  }
+                  selectOfficeCardNoFocus(card, officeData);
+                } else {
+                  selectOfficeCardNoFocus(card, officeData);
+                }
+              });
+            } else {
+              selectOfficeCardNoFocus(card, officeData);
+            }
+          }
+          return;
+        }
+        
+        e.preventDefault();
+        console.log('Клик по карточке офиса, индекс:', index);
+        
+        // Получаем данные офиса из карточки
+        const officeData = {
+          city: card.dataset.city || card.querySelector('h3')?.textContent.trim(),
+          address: card.querySelector('.text-brand-gray')?.textContent.trim(),
+          type: card.querySelectorAll('.text-brand-gray')[1]?.textContent.trim(),
+          phone: card.querySelectorAll('.text-brand-gray')[2]?.textContent.trim(),
+          email: card.querySelectorAll('.text-brand-gray')[3]?.textContent.trim()
+        };
+        
+        console.log('Данные офиса:', officeData);
+        
+        // Получаем координаты
+        const coordinates = card.dataset.coordinates ? 
+          card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim())) : null;
+        
+        console.log('Координаты:', coordinates);
+        console.log('Доступны ли Яндекс.Карты:', typeof ymaps !== 'undefined');
+        console.log('Доступны ли маркеры:', !!window.officeMarkers);
+        
+        if (coordinates && coordinates.length === 2) {
+          // Ждем инициализации карты
+          if (typeof ymaps !== 'undefined') {
+            ymaps.ready(() => {
+              // Пробуем разные способы получения экземпляра карты
+              let mapInstance = document.querySelector('#map')?.__yamap;
+              
+              // Альтернативный способ получения карты
+              if (!mapInstance && window.mapInstance) {
+                mapInstance = window.mapInstance;
+              }
+              
+              // Еще один способ - через глобальную переменную
+              if (!mapInstance && window.currentMap) {
+                mapInstance = window.currentMap;
+              }
+              
+              console.log('Экземпляр карты:', !!mapInstance);
+              console.log('Маркер для индекса', index, ':', !!window.officeMarkers?.[index]);
+              
+              if (mapInstance && window.officeMarkers && window.officeMarkers[index]) {
+                console.log('Вызываем selectOfficeCard с приближением');
+                // Используем функцию выбора офиса с центрированием карты и приближением
+                selectOfficeCard(
+                  card,
+                  officeData,
+                  window.officeMarkers[index],
+                  mapInstance,
+                  coordinates
+                );
+                
+                // Дополнительно: имитируем клик по маркеру для активации логики приближения
+                const marker = window.officeMarkers[index];
+                if (marker && marker.events) {
+                  console.log('Устанавливаем маркер как активный');
+                  // Устанавливаем маркер как активный
+                  if (typeof window.setActiveMarker === 'function') {
+                    window.setActiveMarker(marker);
+                  }
+                }
+              } else if (window.officeMarkers && window.officeMarkers[index]) {
+                console.log('Карта не найдена, но маркер есть - пробуем прямой вызов функции маркера');
+                // Если карта не найдена, но маркер есть, попробуем симулировать клик по маркеру
+                const marker = window.officeMarkers[index];
+                if (marker && marker.events) {
+                  // Симулируем клик по маркеру
+                  marker.events.fire('click');
+                }
+                // И все равно выделяем карточку
+                selectOfficeCardNoFocus(card, officeData);
+              } else {
+                console.log('Карта не готова, используем selectOfficeCardNoFocus');
+                // Если карта не готова, просто выделяем карточку и показываем информацию
+                selectOfficeCardNoFocus(card, officeData);
+              }
+            });
+          } else {
+            console.log('Яндекс.Карты не загружены');
+            // Если Яндекс.Карты не загружены, просто выделяем карточку
+            selectOfficeCardNoFocus(card, officeData);
+          }
+        } else {
+          console.log('Некорректные координаты');
+        }
+      });
     });
     
     // Скрываем информационную панель при инициализации
@@ -57,35 +208,15 @@ export function initContactsPage() {
       infoPanel.classList.add('hidden');
     }
     
-    // Отложенная инициализация карты для показа всех офисов, как на главной
+    // Отложенная инициализация для показа офиса по умолчанию
     setTimeout(() => {
-      // Сначала снимаем все выделения с карточек
-      selectOfficeCardNoFocus(null);
-      
-      // Собираем координаты всех офисов для инициализации карты
-      const allOfficeCoordinates = [];
-      officeCards.forEach(card => {
-        if (card.dataset.coordinates) {
-          const coordinates = card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
-          if (coordinates.length === 2) {
-            allOfficeCoordinates.push(coordinates);
-          }
-        }
-      });
-      
-      // Если есть координаты офисов и карта доступна, устанавливаем карту в отдаленный вид
-      if (allOfficeCoordinates.length > 0 && typeof ymaps !== 'undefined') {
-        ymaps.ready(function() {
-          const mapInstance = document.querySelector('#map')?.__yamap;
-          if (mapInstance) {
-            // Сбрасываем активные маркеры
-            if (typeof window.resetAllMarkers === 'function') {
-              window.resetAllMarkers();
-            }
-          }
-        });
+      // Показываем офис по умолчанию
+      const defaultOffice = window.initialData?.defaultOffice;
+      if (defaultOffice) {
+        console.log('Показываем офис по умолчанию');
+        selectOfficeCardNoFocus(null, defaultOffice);
       }
-    }, 300);
+    }, 1000);
   }
 
   // Инициализация пагинации с callback-функциями
@@ -96,29 +227,66 @@ export function initContactsPage() {
  * Инициализация фильтра по городам
  */
 function initCityFilter() {
-  const cityFilter = document.getElementById('cityFilter');
-  if (!cityFilter) return;
+  const cityFilterContainer = document.querySelector('.form .relative.w-full');
+  if (!cityFilterContainer) return;
 
-  // Добавляем обработчик изменения выбранного города
-  cityFilter.addEventListener('change', function() {
-    const selectedCity = this.value;
-    
-    // Если выбраны все города, сбрасываем фильтр
-    if (selectedCity === 'all') {
-      // Если есть экземпляр пагинации, используем его метод для сброса фильтра
+  // Получаем список уникальных городов из офисов
+  const offices = window.initialData?.offices || [];
+  const uniqueCities = Array.from(new Set(offices.map(office => office.city && office.city.trim()))).filter(Boolean);
+
+  // Создаем поле автокомплита для фильтра по городам
+  createAutocompleteInput(cityFilterContainer, offices, 'city-filter', 'Все города', { onlyCities: true });
+
+  // Получаем ссылку на созданное поле ввода
+  const cityInput = document.getElementById('city-filter-input');
+  if (!cityInput) return;
+
+  // Получаем кнопку сброса
+  const resetButton = document.getElementById('city-filter-reset');
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      // Очищаем поле ввода
+      cityInput.value = '';
+      // Сбрасываем фильтр
       if (officesPagination) {
         officesPagination.resetFilter();
       } else {
-        // Ручной сброс фильтра, если пагинация ещё не инициализирована
+        document.querySelectorAll('.office-card').forEach(card => {
+          card.classList.remove('hidden');
+        });
+      }
+      // Обновляем карту и показываем офис по умолчанию
+      updateMapForFilteredOffices('Все города');
+      const defaultOffice = window.initialData?.defaultOffice;
+      if (defaultOffice) {
+        selectOfficeCardNoFocus(null, defaultOffice);
+      }
+    });
+  }
+
+  // Общая функция фильтрации карточек
+  function filterOfficeCardsByCity(selectedCity) {
+    console.log('Фильтрация по городу:', selectedCity);
+    
+    // Если выбраны все города, сбрасываем фильтр
+    if (selectedCity === 'Все города') {
+      if (officesPagination) {
+        officesPagination.resetFilter();
+      } else {
         document.querySelectorAll('.office-card').forEach(card => {
           card.classList.remove('hidden');
         });
       }
     } else {
-      // Фильтруем карточки по выбранному городу, если пагинация ещё не инициализирована
-      if (!officesPagination) {
+      // Фильтруем по выбранному городу
+      if (officesPagination) {
+        // Используем метод пагинации для фильтрации
+        officesPagination.applyFilter(selectedCity);
+      } else {
+        // Ручная фильтрация, если пагинация ещё не инициализирована
         document.querySelectorAll('.office-card').forEach(card => {
-          if (card.dataset.city === selectedCity) {
+          const cardCity = card.dataset.city ? card.dataset.city.trim() : '';
+          if (cardCity === selectedCity.trim()) {
             card.classList.remove('hidden');
           } else {
             card.classList.add('hidden');
@@ -127,8 +295,16 @@ function initCityFilter() {
       }
     }
     
-    // Обновляем карту, чтобы отображать только выбранные города
     updateMapForFilteredOffices(selectedCity);
+    const defaultOffice = window.initialData?.defaultOffice;
+    if (defaultOffice) {
+      selectOfficeCardNoFocus(null, defaultOffice);
+    }
+  }
+
+  // Добавляем обработчик выбора города из автокомплита
+  cityInput.addEventListener('citySelected', function(e) {
+    filterOfficeCardsByCity(e.detail.city);
   });
 }
 
@@ -148,7 +324,7 @@ function updateMapForFilteredOffices(selectedCity) {
     }
     
     // Если выбраны все города, показываем все офисы на карте
-    if (selectedCity === 'all') {
+    if (selectedCity === 'Все города') {
       // Показываем все офисы
       const allOfficeCoordinates = [];
       document.querySelectorAll('.office-card').forEach(card => {
@@ -167,8 +343,9 @@ function updateMapForFilteredOffices(selectedCity) {
     } else {
       // Показываем только офисы выбранного города
       const filteredOfficeCoordinates = [];
-      document.querySelectorAll(`.office-card[data-city="${selectedCity}"]`).forEach(card => {
-        if (card.dataset.coordinates) {
+      document.querySelectorAll('.office-card').forEach(card => {
+        const cardCity = card.dataset.city;
+        if (cardCity === selectedCity && card.dataset.coordinates) {
           const coordinates = card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
           if (coordinates.length === 2) {
             filteredOfficeCoordinates.push(coordinates);
@@ -197,7 +374,7 @@ function initOfficesPagination() {
     itemSelector: '.office-card',
     paginationSelector: '.pagination-container',
     itemsPerPage: 9, // Количество офисов на странице
-    filterSelector: '#cityFilter',
+    filterSelector: '#city-filter-input',
     filterAttribute: 'data-city',
     
     // Callback перед сменой страницы
@@ -208,20 +385,13 @@ function initOfficesPagination() {
     
     // Callback после отрисовки страницы
     afterPageRender: (page) => {
-      // После смены страницы загружаем дефолтный офис для новой страницы
+      // После смены страницы показываем офис по умолчанию
       setTimeout(() => {
-        // Проверяем текущие выделения
-        const currentSelectedCards = document.querySelectorAll('.office-card.ring.ring-brand-blue:not(.hidden)');
-        
-        // Если нет выделенных карточек на текущей странице, выделяем дефолтную или первую
-        if (currentSelectedCards.length === 0) {
-          const visibleCards = Array.from(document.querySelectorAll('.office-card:not(.hidden)'));
-          if (visibleCards.length > 0) {
-            // Выделяем первую видимую карточку
-            visibleCards[0].click();
-          }
+        const defaultOffice = window.initialData?.defaultOffice;
+        if (defaultOffice) {
+          selectOfficeCardNoFocus(null, defaultOffice);
         }
-      }, 50);
+      }, 100);
     }
   });
 } 

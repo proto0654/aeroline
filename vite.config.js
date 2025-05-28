@@ -18,7 +18,28 @@ function getPageData() {
   const pages = {};
   
   // Список файлов для обработки
-  const files = ['index.html', 'vacancies.html', 'contacts.html', 'helper.html', 'payments.html', 'order-tracking.html', 'news.html', 'services.html'];
+  const files = [
+    'index.html',
+    'vacancies.html',
+    'contacts.html',
+    'helper.html',
+    'payments.html',
+    'order-tracking.html',
+    'news.html',
+    'services.html',
+    'service-acts.html',
+    'senders-receivers.html',
+    'profile.html',
+    'modal-test.html',
+    'reconciliation-act.html',
+    'notifications.html',
+    'cooperation.html',
+    'calculator.html',
+    'order-new.html',
+    'bulk-order.html',
+    'user-create.html',
+    'order-list.html'
+  ];
   
   files.forEach(file => {
     try {
@@ -126,6 +147,19 @@ function getNewsData() {
   }
 }
 
+// Загрузка данных отправителей и получателей из JSON
+function getSendersReceiversData() {
+  try {
+    const data = fs.readFileSync('./assets/data/senders-receivers.json', 'utf-8');
+    const parsedData = JSON.parse(data);
+    console.log('Данные отправителей и получателей:', parsedData.length);
+    return parsedData;
+  } catch (error) {
+    console.error('Error reading senders-receivers data:', error);
+    return [];
+  }
+}
+
 // Загрузка данных офиса по умолчанию из JSON
 function getDefaultOfficeData() {
   try {
@@ -150,6 +184,39 @@ function getPaymentsFaqData() {
     return JSON.parse(faqData);
   } catch (error) {
     console.error('Error reading payments FAQ data:', error);
+    return [];
+  }
+}
+
+// Загрузка данных о сервисных актах
+function getServiceActsData() {
+  try {
+    const serviceActsData = fs.readFileSync('./assets/data/service-acts.json', 'utf-8');
+    return JSON.parse(serviceActsData);
+  } catch (error) {
+    console.error('Error reading service acts data:', error);
+    return [];
+  }
+}
+
+// Загрузка данных основного меню
+function getMainMenuData() {
+  try {
+    const menuData = fs.readFileSync('./assets/data/menu-main.json', 'utf-8');
+    return JSON.parse(menuData);
+  } catch (error) {
+    console.error('Error reading main menu data:', error);
+    return [];
+  }
+}
+
+// Загрузка данных меню пользователя
+function getUserMenuData() {
+  try {
+    const menuData = fs.readFileSync('./assets/data/menu-user.json', 'utf-8');
+    return JSON.parse(menuData);
+  } catch (error) {
+    console.error('Error reading user menu data:', error);
     return [];
   }
 }
@@ -215,7 +282,19 @@ export default defineConfig(({ command, mode }) => {
           services: resolve(__dirname, 'services.html'),
           news: resolve(__dirname, 'news.html'),
           orderTracking: resolve(__dirname, 'order-tracking.html'),
-          helper: resolve(__dirname, 'helper.html')
+          helper: resolve(__dirname, 'helper.html'),
+          serviceActs: resolve(__dirname, 'service-acts.html'),
+          sendersReceivers: resolve(__dirname, 'senders-receivers.html'),
+          profile: resolve(__dirname, 'profile.html'),
+          modalTest: resolve(__dirname, 'modal-test.html'),
+          reconciliationAct: resolve(__dirname, 'reconciliation-act.html'),
+          notifications: resolve(__dirname, 'notifications.html'),
+          cooperation: resolve(__dirname, 'cooperation.html'),
+          calculator: resolve(__dirname, 'calculator.html'),
+          orderNew: resolve(__dirname, 'order-new.html'),
+          bulkOrder: resolve(__dirname, 'bulk-order.html'),
+          userCreate: resolve(__dirname, 'user-create.html'),
+          orderList: resolve(__dirname, 'order-list.html')
         },
         output: {
           assetFileNames: (assetInfo) => {
@@ -238,6 +317,14 @@ export default defineConfig(({ command, mode }) => {
       minify: isProduction,
       sourcemap: !isProduction,
     },
+    css: {
+      postcss: {
+        plugins: [
+          tailwindcss,
+          autoprefixer,
+        ],
+      },
+    },
     plugins: [
       // Плагин для обработки Handlebars шаблонов
       handlebars({
@@ -259,6 +346,33 @@ export default defineConfig(({ command, mode }) => {
               pages.push(i);
             }
             return pages;
+          },
+          json: function(context) {
+            return JSON.stringify(context);
+          },
+          // Хелпер для создания плоского списка меню без вложенности
+          flattenMenu: function(menu) {
+            const flattened = [];
+            menu.forEach(item => {
+              if (item.submenu) {
+                item.submenu.forEach(subitem => {
+                  flattened.push(subitem);
+                });
+              } else {
+                flattened.push(item);
+              }
+            });
+            return flattened;
+          },
+          // Хелпер для получения первой половины массива
+          firstHalf: function(array) {
+            const half = Math.ceil(array.length / 2);
+            return array.slice(0, half);
+          },
+          // Хелпер для получения второй половины массива
+          secondHalf: function(array) {
+            const half = Math.ceil(array.length / 2);
+            return array.slice(half);
           }
         },
         context(pagePath) {
@@ -273,7 +387,9 @@ export default defineConfig(({ command, mode }) => {
             isProduction: isProduction,
             isDev: !isProduction,
             basePath: getBase(),
-            siteName: 'Aeroline'
+            siteName: 'Aeroline',
+            mainMenu: getMainMenuData(),
+            userMenu: getUserMenuData()
           };
           
           // Специфичные данные для разных страниц
@@ -282,12 +398,12 @@ export default defineConfig(({ command, mode }) => {
           if (fileName === 'vacancies.html') {
             specificData = { vacancies: getVacanciesData() };
           
-          // Группируем вакансии по городам для фильтрации
-          const cities = new Set();
+            // Группируем вакансии по городам для фильтрации
+            const cities = new Set();
             specificData.vacancies.forEach(vacancy => {
-            const city = vacancy.location.split(',')[0].trim();
-            cities.add(city);
-          });
+              const city = vacancy.location.split(',')[0].trim();
+              cities.add(city);
+            });
             specificData.cities = Array.from(cities);
           } else if (fileName === 'index.html') {
             specificData = { 
@@ -309,18 +425,22 @@ export default defineConfig(({ command, mode }) => {
             const contactsData = getContactsData();
             specificData = { ...contactsData, defaultOffice: getDefaultOfficeData() };
           
-          // Группируем офисы по городам для фильтрации
-          const cities = new Set();
-          if (contactsData.offices && contactsData.offices.length > 0) {
-            contactsData.offices.forEach(office => {
-              cities.add(office.city);
-            });
-          }
+            // Группируем офисы по городам для фильтрации
+            const cities = new Set();
+            if (contactsData.offices && contactsData.offices.length > 0) {
+              contactsData.offices.forEach(office => {
+                cities.add(office.city);
+              });
+            }
             specificData.cities = Array.from(cities);
           } else if (fileName === 'news.html') {
             specificData = { newsData: getNewsData() };
           } else if (fileName === 'payments.html') {
             specificData = { paymentsFaq: getPaymentsFaqData() };
+          } else if (fileName === 'service-acts.html') {
+            specificData = { serviceActs: getServiceActsData() };
+          } else if (fileName === 'senders-receivers.html') {
+            specificData = { sendersReceivers: getSendersReceiversData() };
           }
           
           return {
@@ -391,7 +511,19 @@ export default defineConfig(({ command, mode }) => {
             'services.html',
             'news.html',
             'order-tracking.html',
-            'helper.html'
+            'helper.html',
+            'service-acts.html',
+            'senders-receivers.html',
+            'profile.html',
+            'modal-test.html',
+            'reconciliation-act.html',
+            'notifications.html',
+            'cooperation.html',
+            'calculator.html',
+            'order-new.html',
+            'bulk-order.html',
+            'user-create.html',
+            'order-list.html'
           ];
           
           htmlFiles.forEach(file => {

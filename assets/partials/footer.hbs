@@ -10,18 +10,36 @@
       <div class="flex flex-col w-full gap-y-10">
         <img src="{{basePath}}assets/img/layout/Logotype_aerline_white.png" alt="Aeroline" class="h-12 mb-4 object-contain object-left">
         <nav class="w-full">
-          <div class="grid grid-cols-2 gap-y-6 gap-x-0">
-            <a href="{{basePath}}index.html" class="caps-regular block">Главная</a>
-            <a href="{{basePath}}news.html" class="caps-regular block">Новости</a>
-            <a href="{{basePath}}services.html" class="caps-regular block">Услуги</a>
-            <a href="{{basePath}}vacancies.html" class="caps-regular block">Вакансии</a>
-            <a href="{{basePath}}payments.html" class="caps-regular block">Платежи</a>
-            <a href="{{basePath}}contacts.html" class="caps-regular block">Контакты</a>
-          </div>
-          <div class="mt-20 md:mt-0">
-            <a href="{{basePath}}order-tracking.html" class="caps-regular block mb-3">Отслеживание заказа</a>
-            <a href="{{basePath}}helper.html" class="caps-regular block mb-3">Страница «Помощник»</a>
-            <a href="{{basePath}}login.html" class="caps-regular block">Войти в личный кабинет</a>
+          <div class="grid md:grid-cols-2 gap-y-6 gap-x-6">
+            {{#if (eq menuType "main")}}
+            {{#with (firstHalf mainMenu.footer)}}
+            <div class="flex flex-col space-y-3">
+              {{#each this}}
+              <a href="{{../basePath}}{{url}}" class="caps-regular block">{{title}}</a>
+              {{/each}}
+            </div>
+            {{/with}}
+            {{#with (secondHalf mainMenu.footer)}}
+            <div class="flex flex-col space-y-3">
+              {{#each this}}
+              <a href="{{../basePath}}{{url}}" class="caps-regular block">{{title}}</a>
+              {{/each}}
+            </div>
+            {{/with}}
+            {{else}}
+            {{#with (flattenMenu userMenu.footer)}}
+            <div class="flex flex-col space-y-3">
+              {{#each (firstHalf this)}}
+              <a href="{{../basePath}}{{url}}" class="caps-regular block">{{title}}</a>
+              {{/each}}
+            </div>
+            <div class="flex flex-col space-y-3">
+              {{#each (secondHalf this)}}
+              <a href="{{../basePath}}{{url}}" class="caps-regular block">{{title}}</a>
+              {{/each}}
+            </div>
+            {{/with}}
+            {{/if}}
           </div>
         </nav>
 
@@ -51,7 +69,7 @@
 
       <div class="w-full d-flex justify-between flex-row flex-nowrap">
         <p class="caption-regular text-white/50 mb-2 d-inline w-1/2">@2025</p>
-        <a href="{{basePath}}privacy.html" class="caption-regular text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
+        <a href="{{basePath}}privacy.html" class="text-body-secondary text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
       </div>
     </div>
 
@@ -60,7 +78,7 @@
       <div class="flex flex-col items-start">
         <img src="{{basePath}}assets/img/layout/Logotype_aerline_white.png" alt="Aeroline" class="h-11 mb-8">
         <p class="caption-regular text-white/50">@2025</p>
-        <a href="{{basePath}}privacy.html" class="caption-regular text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
+        <a href="{{basePath}}privacy.html" class="text-body text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
       </div>
 
       <div class="flex flex-col">
@@ -82,23 +100,36 @@
         </div>
       </div>
 
-      <div class="flex space-x-16">
-        <div class="flex flex-col space-y-3">
-          <a href="{{basePath}}index.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Главная</a>
-          <a href="{{basePath}}services.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Услуги</a>
-          <a href="{{basePath}}payments.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Платежи</a>
+      <div class="flex [&>*]:px-10 ml-10 uppercase">
+        {{#if (eq menuType "main")}}
+        {{#with (firstHalf mainMenu.footer)}}
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          {{#each this}}
+          <a href="{{../basePath}}{{url}}" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">{{title}}</a>
+          {{/each}}
         </div>
-        <div class="flex flex-col space-y-3">
-          <a href="{{basePath}}news.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Новости</a>
-          <a href="{{basePath}}vacancies.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Вакансии</a>
-          <a href="{{basePath}}contacts.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Контакты</a>
+        {{/with}}
+        {{#with (secondHalf mainMenu.footer)}}
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          {{#each this}}
+          <a href="{{../basePath}}{{url}}" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">{{title}}</a>
+          {{/each}}
         </div>
-      </div>
-
-      <div class="flex flex-col space-y-3">
-        <a href="{{basePath}}order-tracking.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
-        <a href="{{basePath}}helper.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
-        <a href="{{basePath}}login.html" class="caps-regular hover:text-brand-blue transition-colors medium tracking-wide">Войти в личный кабинет</a>
+        {{/with}}
+        {{else}}
+        {{#with (flattenMenu userMenu.footer)}}
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          {{#each (firstHalf this)}}
+          <a href="{{../basePath}}{{url}}" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">{{title}}</a>
+          {{/each}}
+        </div>
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          {{#each (secondHalf this)}}
+          <a href="{{../basePath}}{{url}}" class="text-caption-menu hover:text-brand-blue transition-colors medium tracking-wide">{{title}}</a>
+          {{/each}}
+        </div>
+        {{/with}}
+        {{/if}}
       </div>
     </div>
   </div>
