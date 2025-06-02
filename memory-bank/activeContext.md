@@ -20,6 +20,7 @@
 - ✅ FIXED: Corrected button IDs in senders-receivers-page.js
 - ✅ FIXED: Fixed email modal in service-acts.html (closest() instead of classList.contains())
 - ✅ CREATED: Comprehensive modal-test.html page for testing all modal types
+- ✅ UPDATED: Styles for V-Calendar date selection in `assets/css/main.css` to improve visual appearance of selected dates and ranges.
 
 ## Modal System Status
 - **ModalManager**: Single unified system for all modals
@@ -47,6 +48,7 @@
 - Consider adding more modal features if needed (animations, custom callbacks)
 - Continue with other project features
 - Ensure all new pages use the unified modal system
+- ✅ Continue styling and refining UI components, such as the V-Calendar.
 
 ## Active Decisions
 - All modals MUST use ModalManager and DaisyUI structure
@@ -62,6 +64,7 @@
 - Modal system is now fully unified and consistent
 - All import errors resolved
 - All functionality tested and working
+- ✅ Styling for V-Calendar date selection has been updated and improved.
 - Ready for new features or bug fixes
 
 ## UI/Frontend Structure

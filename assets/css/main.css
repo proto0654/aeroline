@@ -1,6 +1,4 @@
-/* Импорт стилей flatpickr */
-@import 'flatpickr/dist/flatpickr.css';
-
+@import 'vanilla-calendar-pro/styles/index.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -1409,4 +1407,225 @@ footer a.text-white.hover\:opacity-80:hover img {
 
 .text-primary {
   color: var(--color-primary);
+}
+
+.vc {
+    --vc-accent-color: var(--color-primary);
+    --vc-background-color: var(--color-base-100);
+    --vc-border-color: var(--color-base-300);
+    --vc-border-radius: theme('borderRadius.lg'); /* 8px по умолчанию в Tailwind */
+    --vc-font-family: theme('fontFamily.sans'); /* Используем системный sans-serif или ваш основной шрифт */
+    --vc-text-color: var(--color-base-content);
+    --vc-hover-color: var(--color-base-200);
+    --vc-disabled-color: var(--color-base-300);
+    --vc-weekend-color: theme('colors.red.500'); /* Стандартный красный для выходных */
+    --vc-today-color: var(--color-primary);
+    /* Для --vc-range-color используем основной цвет с прозрачностью */
+    --vc-range-color-rgb: 0, 141, 210; /* RGB для #008DD2 */
+    --vc-range-color: rgba(var(--vc-range-color-rgb), 0.1);
+    --vc-selected-color: var(--color-primary);
+    --vc-selected-text-color: var(--color-primary-content);
+}
+
+.vc-container {
+    @apply border rounded-lg shadow-md;
+    border-color: var(--vc-border-color);
+    font-family: var(--vc-font-family);
+    background-color: var(--vc-background-color);
+    color: var(--vc-text-color);
+}
+
+.vc-header {
+    @apply p-2.5 border-b;
+    background-color: var(--vc-background-color);
+    border-color: var(--vc-border-color);
+}
+.vc-month, .vc-year{
+  @apply px-2;
+}
+.vc-months__month, .vc-years__year{
+  @apply text-brand-gray uppercase font-medium text-sm;
+}
+[data-calendar-day-today="true"] {
+  @apply text-brand-blue;
+}
+[data-vc-date][data-vc-date-today] [data-vc-date-btn]{
+  @apply !text-brand-blue text-caption-form border-brand-blue border border-solid rounded-full !font-medium;
+}
+[data-vc-date-month="next"]:before, [data-vc-date-month="prev"]:before{
+  @apply !hidden;
+} 
+[data-vc=month], .vc-week__day{
+  @apply uppercase;
+}
+[data-vc=controls]{
+  @apply top-2 uppercase;
+}
+
+
+[data-vc=grid]{
+  @apply md:flex-nowrap;
+}
+[data-vc-arrow]:before{
+  @apply border-t border-r border-brand-gray;
+}
+[data-vc-arrow=next]:before{
+  @apply rotate-45 scale-[.7];
+}
+[data-vc-arrow=prev]:before{
+  @apply -rotate-[135deg] scale-[.7];
+}
+.vc-date {
+    @apply relative text-center cursor-pointer transition-colors duration-200 ease-in-out p-0;
+    /* Убираем внутренний padding из .vc-date, чтобы кнопка занимала всё место */
+}
+
+.vc-date:hover {
+    background-color: var(--vc-hover-color);
+}
+
+.vc-date__btn {
+    @apply w-full h-full border-none bg-transparent cursor-pointer p-2 rounded-none transition-colors duration-200 ease-in-out;
+    /* p-2 для содержимого кнопки, rounded-none чтобы не конфликтовать с .vc-date */
+}
+
+.vc-date:hover .vc-date__btn {
+    background-color: transparent; /* Фон ховера будет на .vc-date */
+}
+.vc-date[data-vc-date-selected]{
+  @apply relative z-10 text-white;
+}
+
+
+/* Стили для ВСЕХ выбранных дат (начало, середина, конец) */
+.vc-date[data-vc-date-selected="first"],
+.vc-date[data-vc-date-selected="middle"],
+.vc-date[data-vc-date-selected="last"] {
+    color: var(--vc-selected-text-color);
+}
+
+.vc-date[data-vc-date-selected="first"] .vc-date__btn,
+.vc-date[data-vc-date-selected="middle"] .vc-date__btn,
+.vc-date[data-vc-date-selected="last"] .vc-date__btn {
+    color: var(--vc-selected-text-color);
+    font-weight: theme('fontWeight.bold');
+}
+
+/* Начальная дата диапазона */
+.vc-date[data-vc-date-selected="first"] {
+    background-color: var(--vc-range-color);
+    @apply rounded-l-full;
+    z-index: +1;
+}
+.vc-date[data-vc-date-selected]::before{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--vc-selected-color);
+  
+  border-radius: 50%;
+  z-index: -1;
+}
+.vc-date[data-vc-date-selected="first"]::before{
+  content: '';
+  position: absolute;
+  
+ 
+  background-color: var(--vc-selected-color);
+ 
+ 
+ 
+}
+.vc-date[data-vc-date-selected="last"]::before{
+  content: '';
+ 
+  background-color: var(--vc-selected-color);
+  
+}
+.vc-date[data-vc-date-selected="middle"]::before{
+  content: none;
+  
+}
+/* Конечная дата диапазона */
+.vc-date[data-vc-date-selected="last"] {
+    background-color: var(--vc-range-color);
+    @apply rounded-r-full;
+    z-index: +1;
+}
+
+
+/* Промежуточные даты диапазона */
+.vc-date[data-vc-date-selected="middle"] {
+    background-color: var(--vc-range-color);
+    color: var(--vc-text-color); /* Текст для промежуточных дат может быть обычным */
+    border-radius: 0;
+}
+.vc-date[data-vc-date-selected="middle"] .vc-date__btn {
+    color: var(--vc-text-color);
+    font-weight: theme('fontWeight.normal');
+}
+
+/* Если выбрана только одна дата (является и началом и концом) */
+.vc-date[data-vc-date-selected="first"][data-vc-date-selected="last"] {
+    background-color: var(--vc-selected-color);
+    @apply rounded-full;
+}
+
+/* Стили для сегодняшней даты */
+.vc-date[data-vc-date-today="true"] .vc-date__btn {
+    @apply ring-1 ring-inset;
+    ring-color: var(--vc-today-color);
+}
+
+/* Отключенные даты */
+.vc-date[data-vc-date-disabled="true"] {
+    background-color: transparent; /* Убираем фон для отключенных */
+    color: var(--vc-disabled-color);
+    @apply cursor-not-allowed opacity-50;
+}
+.vc-date[data-vc-date-disabled="true"] .vc-date__btn {
+    color: var(--vc-disabled-color);
+    @apply cursor-not-allowed;
+}
+
+/* Выходные дни */
+.vc-date[data-vc-date-weekend="true"] .vc-date__btn {
+    color: var(--vc-weekend-color);
+}
+
+/* Удаляем старые классы .day-* , если они больше не используются из JS */
+.day-first, .is-range-start,
+.day-last, .is-range-end,
+.day-selected, .is-selected,
+.day-in-range, .is-in-range,
+.day-first.day-last, .is-range-start.is-range-end {
+    /* Удаляем, так как теперь используются data-vc-date-selected атрибуты */
+}
+
+/* Стили для тултипа диапазона дат - можно оставить как есть или стилизовать Tailwind */
+.vc-date-range-tooltip {
+    @apply absolute bg-white text-gray-700 border border-gray-300 rounded-md p-2 text-xs shadow-lg z-10 pointer-events-none;
+    /* Используем переменные проекта для большей кастомизации, если нужно */
+    background-color: var(--vc-background-color);
+    color: var(--vc-text-color);
+    border-color: var(--vc-border-color);
+    border-radius: var(--vc-border-radius);
+    padding: theme('spacing.1') theme('spacing.2');
+    font-size: theme('fontSize.xs');
+}
+
+.vc-date-range-tooltip__row {
+    @apply flex justify-between py-0.5;
+}
+
+.vc-date-range-tooltip__label {
+    @apply font-bold mr-1;
+}
+
+.vc-date-range-tooltip__value {
+    color: var(--vc-accent-color);
 }

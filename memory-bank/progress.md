@@ -11,6 +11,7 @@
 - ✅ **COMPLETED**: Service acts page with List.js sorting and pagination
 - ✅ **COMPLETED**: DaisyUI theme system implementation
 - ✅ **COMPLETED**: All pages use consistent modal structure (div-based, not dialog)
+- ✅ **UPDATED**: Improved styling for V-Calendar date selection in `assets/css/main.css`.
 
 ## Modal System Status ✅
 - **ModalManager**: Single unified system handling all modals

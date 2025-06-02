@@ -37,7 +37,7 @@ import { NewsPage } from './modules/news-page.js';
 import { Pagination } from './modules/pagination.js';
 import { initServiceActsPage } from './modules/service-acts-page.js';
 import { initSendersReceiversPage } from './modules/senders-receivers-page.js';
-import './pages/profile.js';
+import './modules/profile.js';
 import '../css/main.css';
 
 // Базовый путь для использования в скрипте
@@ -248,8 +248,11 @@ function safeInitialize() {
   }
 }
 
-// Запуск инициализации после загрузки DOM
+// После загрузки DOM вызываем инициализацию
 domReady(safeInitialize);
 
-// Повторный вызов для страниц, где может быть проблема с загрузкой DOM
-window.addEventListener('load', safeInitialize); 
+// На случай, если DOMContentLoaded уже произошел
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+  console.log('DOM уже загружен, вызываем инициализацию напрямую');
+  safeInitialize();
+} 

@@ -8,6 +8,7 @@
 - HTML5 (structure)
 - List.js (table sorting and pagination)
 - Swiper (sliders)
+- V-Calendar (for date selection)
 
 ## Development Setup
 - Node.js and npm for dependency management
@@ -62,4 +63,5 @@ Main dependencies:
 - DaisyUI modal system
 - DaisyUI form components
 - DaisyUI navigation components
-- Custom modal manager for unified behavior 
+- Custom modal manager for unified behavior
+- V-Calendar component with custom styling 

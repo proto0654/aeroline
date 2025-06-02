@@ -44,17 +44,53 @@ export class ServiceActsPage {
   }
 
   initDateFilters() {
-    // Инициализируем выбор периода для запроса акта сверки
+    // Получаем контейнер для календаря
+    const container = document.getElementById('period-picker-container');
+    if (!container) return;
+    
+    // Очищаем контейнер, если там уже есть содержимое (для предотвращения дублирования)
+    container.innerHTML = '';
+    
+    // Получаем сегодняшнюю дату
+    const today = new Date();
+    
+    // Создаем дату для начала периода (первый день текущего месяца)
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    // Создаем дату для конца периода (сегодняшний день)
+    const endOfMonth = new Date(today);
+    
+    // Форматируем даты в ISO строки YYYY-MM-DD
+    const formatDateToISO = (date) => {
+      return date.toISOString().split('T')[0];
+    };
+
+    // Форматируем даты для отображения в поле ввода DD.MM.YYYY
+    const formatDateForDisplay = (date) => {
+      const d = new Date(date); // Убедимся, что работаем с объектом Date
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}.${month}.${year}`;
+    };
+
+    // const initialDisplayValue = `${formatDateForDisplay(startOfMonth)} - ${formatDateForDisplay(endOfMonth)}`; // Больше не формируем здесь начальное значение для поля
+
+    // Инициализируем выбор периода для запроса акта сверки с настроенными опциями
     this.periodPicker = new DateRangePicker({
-      containerId: 'period-picker-container',
-      inputId: 'period-picker',
-      placeholder: 'Выберите период для акта сверки',
-      autoApply: false, // теперь требуется подтверждение
-      defaultRange: false, // без дефолтного диапазона для запроса актов
+      selector: '#period-picker-container',
+      placeholder: 'Выберите период для акта сверки', // Это будет отображаться, если поле пустое
+      autoApply: true,
+      minDate: formatDateToISO(new Date(today.getFullYear() - 1, 0, 1)), 
+      maxDate: formatDateToISO(today),
+      // initialTextInputValue: initialDisplayValue, // Убираем передачу начального значения
       onRangeSelect: (range) => {
         console.log('Выбран период для акта сверки:', range);
+        // DateRangePicker сам обновит поле ввода через _updateInputValue
       }
     });
+    
+    // Календарь будет инициализирован без выбранных дат и поле ввода будет пустым (или с placeholder)
   }
 
   updateItemCounts() {

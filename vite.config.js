@@ -324,6 +324,12 @@ export default defineConfig(({ command, mode }) => {
           autoprefixer,
         ],
       },
+      // Добавляем импорт стилей календаря
+      preprocessorOptions: {
+        css: {
+          additionalData: `@import "vanilla-calendar-pro/styles/index.css";`
+        }
+      }
     },
     plugins: [
       // Плагин для обработки Handlebars шаблонов
