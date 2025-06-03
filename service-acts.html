@@ -113,10 +113,7 @@
               </div>
               <div class="form-control w-full">
                 <div id="period-picker-container" class="relative inline-block w-full max-w-[320px] md:max-w-[640px]">
-                  <input type="text" id="period-picker-input" placeholder="Выберите период" class="input input-bordered w-full pr-10" readonly>
-                  <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                  </svg>
+                  <div id="service-acts-datepicker-app"></div>
                 </div>
               </div>
               <button type="submit" class="btn-gray min-w-[6em] px-5 py-3 text-buttons">ОТПРАВИТЬ ЗАПРОС</button>
@@ -188,3 +185,5 @@
 </script>
 
 {{> footer menuType="user"}} 
+
+<script type="module" src="{{basePath}}assets/js/page-entrypoints/service-acts.js"></script> 

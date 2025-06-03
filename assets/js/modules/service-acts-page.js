@@ -3,19 +3,27 @@
  * Модуль для страницы актов оказания услуг
  */
 
+console.log('--- Debug: Attempting to import TableManager in service-acts-page.js ---');
 import { TableManager } from './table-manager.js';
-import { DateRangePicker } from './date-range-picker.js';
+console.log('--- Debug: TableManager imported successfully in service-acts-page.js ---');
+console.log('--- Debug: Attempting to import modalManager in service-acts-page.js ---');
 import { modalManager } from './modal-manager.js';
-
-export class ServiceActsPage {
+console.log('--- Debug: modalManager imported successfully in service-acts-page.js ---');
+console.log('--- Debug: Attempting to import mountDateRangePicker in service-acts-page.js ---');
+import { mountDateRangePicker } from '../../vue/entrypoints/lk-datepicker.js';
+console.log('--- Debug: mountDateRangePicker imported successfully in service-acts-page.js ---');
+console.log('--- Debug: Defining ServiceActsPage class ---');
+class ServiceActsPage {
   constructor() {
+    console.log('Инициализация класса');
     this.tableManager = null;
     this.emailModal = null;
-    this.periodPicker = null;
+    this.selectedDateRange = null; // Добавляем свойство для хранения выбранного диапазона
     this.init();
   }
 
   init() {
+    console.log('--- Debug: Start of init in service-acts-page.js ---');
     console.log('Инициализация страницы актов оказания услуг');
     
     // Проверяем, что мы на правильной странице
@@ -28,7 +36,8 @@ export class ServiceActsPage {
     this.initTable();
     this.initModal();
     this.initRequestForm();
-    this.initDateFilters();
+    this.initDateRangePicker(); // Добавляем вызов нового метода инициализации
+    console.log('--- Debug: End of init in service-acts-page.js ---');
   }
 
   initTable() {
@@ -43,54 +52,29 @@ export class ServiceActsPage {
     });
   }
 
-  initDateFilters() {
-    // Получаем контейнер для календаря
-    const container = document.getElementById('period-picker-container');
-    if (!container) return;
-    
-    // Очищаем контейнер, если там уже есть содержимое (для предотвращения дублирования)
-    container.innerHTML = '';
-    
-    // Получаем сегодняшнюю дату
-    const today = new Date();
-    
-    // Создаем дату для начала периода (первый день текущего месяца)
-    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    
-    // Создаем дату для конца периода (сегодняшний день)
-    const endOfMonth = new Date(today);
-    
-    // Форматируем даты в ISO строки YYYY-MM-DD
-    const formatDateToISO = (date) => {
-      return date.toISOString().split('T')[0];
-    };
-
-    // Форматируем даты для отображения в поле ввода DD.MM.YYYY
-    const formatDateForDisplay = (date) => {
-      const d = new Date(date); // Убедимся, что работаем с объектом Date
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      return `${day}.${month}.${year}`;
-    };
-
-    // const initialDisplayValue = `${formatDateForDisplay(startOfMonth)} - ${formatDateForDisplay(endOfMonth)}`; // Больше не формируем здесь начальное значение для поля
-
-    // Инициализируем выбор периода для запроса акта сверки с настроенными опциями
-    this.periodPicker = new DateRangePicker({
-      selector: '#period-picker-container',
-      placeholder: 'Выберите период для акта сверки', // Это будет отображаться, если поле пустое
-      autoApply: true,
-      minDate: formatDateToISO(new Date(today.getFullYear() - 1, 0, 1)), 
-      maxDate: formatDateToISO(today),
-      // initialTextInputValue: initialDisplayValue, // Убираем передачу начального значения
-      onRangeSelect: (range) => {
-        console.log('Выбран период для акта сверки:', range);
-        // DateRangePicker сам обновит поле ввода через _updateInputValue
-      }
-    });
-    
-    // Календарь будет инициализирован без выбранных дат и поле ввода будет пустым (или с placeholder)
+  initDateRangePicker() {
+    // Инициализируем Vue компонент DateRangePicker
+    console.log('ServiceActsPage: Инициализация Vue DateRangePicker');
+    const datePickerContainer = document.querySelector('#service-acts-datepicker-app');
+    if (datePickerContainer) {
+      this.datePickerApp = mountDateRangePicker(
+        '#service-acts-datepicker-app',
+        { placeholder: 'Выберите период для акта сверки' },
+        (range) => {
+          console.log('ServiceActsPage: Выбран период для акта сверки (Vue):', range);
+          this.selectedDateRange = range;
+          console.log('ServiceActsPage: Обновлен selectedDateRange:', this.selectedDateRange);
+        },
+        () => {
+          console.log('ServiceActsPage: Выбор периода для акта сверки сброшен (Vue)');
+          this.selectedDateRange = null;
+          console.log('ServiceActsPage: Сброшен selectedDateRange.');
+        }
+      );
+       console.log('ServiceActsPage: Vue DateRangePicker смонтирован.');
+    } else {
+      console.warn('ServiceActsPage: Контейнер #service-acts-datepicker-app не найден, Vue DateRangePicker не будет смонтирован.');
+    }
   }
 
   updateItemCounts() {
@@ -155,9 +139,10 @@ export class ServiceActsPage {
       e.preventDefault();
       
       const email = document.getElementById('email-input').value;
-      const periodData = this.periodPicker ? this.periodPicker.getValue() : null;
+      // Используем выбранный диапазон, сохраненный из коллбэка Vue компонента
+      const periodData = this.selectedDateRange;
       
-      if (!periodData || periodData.isEmpty) {
+      if (!periodData || !periodData.start || !periodData.end) {
         alert('Пожалуйста, выберите период для акта сверки');
         return;
       }
@@ -169,13 +154,25 @@ export class ServiceActsPage {
       alert(`Запрос на акт сверки за период ${periodData.formattedRange} отправлен на ${email}`);
       
       requestForm.reset();
-      if (this.periodPicker) {
-        this.periodPicker.clearSelection();
+      // Логика сброса выбранного диапазона должна быть реализована
+      // либо через передачу коллбэка сброса в mountDateRangePicker,
+      // либо путем получения ссылки на компонент через ref и вызова его метода.
+      // Пока оставляем без автоматического сброса после отправки формы.
+      console.warn('ServiceActsPage: Сброс выбранного диапазона после отправки формы не реализован.');
+
+      // Добавляем вызов метода сброса из Vue компонента
+      if (this.datePickerApp && this.datePickerApp._container?.__vue_app__?._instance?.proxy?.clearSelection) {
+        this.datePickerApp._container.__vue_app__._instance.proxy.clearSelection();
+        console.log('ServiceActsPage: Диапазон дат сброшен после отправки формы.');
+      } else {
+        console.warn('ServiceActsPage: Не удалось сбросить диапазон дат Vue компонента после отправки формы.');
       }
     });
   }
 }
 
+// Экспортируем пустую функцию для совместимости, если она используется в HTML как import
 export function initServiceActsPage() {
-  new ServiceActsPage();
+  console.log('initServiceActsPage called - Initializing ServiceActsPage module');
+  new ServiceActsPage(); // Создаем экземпляр класса и запускаем его инициализацию
 } 

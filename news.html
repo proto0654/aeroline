@@ -30,7 +30,9 @@
         <label class="label">
           <span class="label-text text-brand-gray font-medium">Фильтр по периоду</span>
         </label>
-        <div id="news-date-filter-container" class="[&>.flatpickr-wrapper]:w-full relative"></div>
+        <div id="news-date-filter-container" class="[&>.flatpickr-wrapper]:w-full relative">
+          <div id="news-datepicker-app"></div>
+        </div>
       </div>
 
       <!-- Кнопка сброса фильтров -->
@@ -121,3 +123,5 @@
 </div>
 
 {{> footer menuType="main"}} 
+
+<script type="module" src="{{basePath}}assets/js/page-entrypoints/news.js"></script> 

@@ -7,10 +7,14 @@ import { copyFileSync, mkdirSync } from 'fs';
 import { dirname } from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
+import vue from '@vitejs/plugin-vue';
+import { globSync } from 'glob';
+import path from 'path';
+import postcss from 'postcss';
 
 // Функция для определения базового пути в зависимости от окружения
 function getBase() {
-  return '/';
+  return '';
 }
 
 // Функция для чтения front matter из HTML-файлов
@@ -251,7 +255,92 @@ function copyDir(src, dest) {
 
 // Вспомогательная функция для безопасной проверки подстрок
 function safeContains(str, substr) {
-  return str?.includes?.(substr) || false;
+  return str && typeof str.includes === 'function' && str.includes(substr);
+}
+
+// Вспомогательная функция для получения всех HTML-файлов из build.rollupOptions.input
+function getAllHtmlInputFiles(inputOptions) {
+  const htmlFiles = {};
+  if (inputOptions && typeof inputOptions === 'object') {
+    for (const key in inputOptions) {
+      if (inputOptions[key].endsWith('.html')) {
+        htmlFiles[key] = inputOptions[key];
+      }
+    }
+  }
+  return htmlFiles;
+}
+
+// Кастомный плагин для обновления HTML-файлов после сборки
+// Этот плагин копирует собранные HTML-файлы из временной директории Vite (если она используется)
+// или просто убеждается, что они находятся в outDir
+function updateHtmlFilesPlugin() {
+  let config;
+  return {
+    name: 'update-html-files',
+    apply: 'build',
+    enforce: 'post', // Выполнять после основного процесса сборки Vite
+    configResolved(resolvedConfig) {
+      config = resolvedConfig; // Сохраняем разрешенную конфигурацию
+    },
+    async closeBundle() {
+      const outDir = config.build.outDir || 'docs';
+      const inputHtmlFiles = getAllHtmlInputFiles(config.build.rollupOptions.input);
+
+      for (const key in inputHtmlFiles) {
+        const sourceHtmlPath = inputHtmlFiles[key]; // Путь к исходному HTML
+        const outputHtmlFileName = `${key === 'main' ? 'index' : key}.html`; // Имя выходного HTML файла
+        const finalOutputHtmlPath = resolve(outDir, outputHtmlFileName);
+
+        // Исходный файл (например, index.html) уже должен быть обработан Vite (включая Handlebars)
+        // и помещен в outDir. Этот плагин скорее для случаев, когда нужно дополнительное копирование
+        // или если бы HTML генерировались не через rollupOptions.input.
+        // В текущей конфигурации Vite сам поместит обработанные HTML в outDir.
+        // Этот плагин может быть избыточен для HTML, если Vite их корректно обрабатывает.
+        // Однако, если он использовался для копирования из другого места, это нужно проверить.
+        // Убедимся, что файл существует в outDir.
+        if (fs.existsSync(finalOutputHtmlPath)) {
+          console.log(`Файл ${finalOutputHtmlPath} успешно обновлен/создан Vite.`);
+        } else {
+           // Если Vite по какой-то причине не поместил HTML в outDir, копируем его
+           // Этого не должно происходить, если HTML указаны в rollupOptions.input
+          console.warn(`Файл ${finalOutputHtmlPath} не найден в директории сборки. Попытка скопировать из ${sourceHtmlPath}.`);
+          try {
+            if (!fs.existsSync(dirname(finalOutputHtmlPath))) {
+              mkdirSync(dirname(finalOutputHtmlPath), { recursive: true });
+            }
+            copyFileSync(sourceHtmlPath, finalOutputHtmlPath);
+            console.log(`Файл ${sourceHtmlPath} скопирован в ${finalOutputHtmlPath}`);
+          } catch (error) {
+            console.error(`Ошибка копирования HTML файла ${sourceHtmlPath} в ${finalOutputHtmlPath}:`, error);
+          }
+        }
+      }
+    }
+  };
+}
+
+// Функция для сбора всех entrypoints: JS из js и vue/entrypoints, а также все HTML из корня
+function getAllEntrypoints() {
+  const jsFiles = globSync('assets/js/**/*.js');
+  const vueEntrypoints = globSync('assets/vue/entrypoints/**/*.js');
+  const htmlFiles = globSync('*.html'); // Включаем HTML файлы из корня
+
+  const files = [...jsFiles, ...vueEntrypoints, ...htmlFiles];
+
+  const input = {};
+  files.forEach(file => {
+    if (file.endsWith('.html')) {
+      // Для HTML-файлов ключ — имя файла без расширения (например, 'index')
+      const name = file.replace(/\.html$/, '');
+      input[name] = path.resolve(__dirname, file);
+    } else {
+      // Для JS/Vue файлов ключ — путь от корня проекта без расширения (например, 'assets/js/main', 'assets/vue/entrypoints/lk-datepicker')
+      const name = file.replace(/\.js$/, ''); // Например, 'assets/js/main' или 'assets/vue/entrypoints/lk-datepicker'
+      input[name] = path.resolve(__dirname, file);
+    }
+  });
+  return input;
 }
 
 export default defineConfig(({ command, mode }) => {
@@ -259,79 +348,7 @@ export default defineConfig(({ command, mode }) => {
   // Определяем, используется ли HTTPS из аргументов командной строки
   const useHttps = process.argv.includes('--https');
   
-  return {
-    base: './',
-    // Настройки сервера в зависимости от режима запуска
-    server: {
-      host: true,
-      // HTTPS только если указан аргумент --https
-      https: useHttps,
-      cors: true
-    },
-    build: {
-      outDir: 'docs',
-      emptyOutDir: true,
-      assetsInlineLimit: 0,
-      manifest: true,
-      rollupOptions: {
-        input: {
-          main: resolve(__dirname, 'index.html'),
-          contacts: resolve(__dirname, 'contacts.html'),
-          vacancies: resolve(__dirname, 'vacancies.html'),
-          payments: resolve(__dirname, 'payments.html'),
-          services: resolve(__dirname, 'services.html'),
-          news: resolve(__dirname, 'news.html'),
-          orderTracking: resolve(__dirname, 'order-tracking.html'),
-          helper: resolve(__dirname, 'helper.html'),
-          serviceActs: resolve(__dirname, 'service-acts.html'),
-          sendersReceivers: resolve(__dirname, 'senders-receivers.html'),
-          profile: resolve(__dirname, 'profile.html'),
-          modalTest: resolve(__dirname, 'modal-test.html'),
-          reconciliationAct: resolve(__dirname, 'reconciliation-act.html'),
-          notifications: resolve(__dirname, 'notifications.html'),
-          cooperation: resolve(__dirname, 'cooperation.html'),
-          calculator: resolve(__dirname, 'calculator.html'),
-          orderNew: resolve(__dirname, 'order-new.html'),
-          bulkOrder: resolve(__dirname, 'bulk-order.html'),
-          userCreate: resolve(__dirname, 'user-create.html'),
-          orderList: resolve(__dirname, 'order-list.html')
-        },
-        output: {
-          assetFileNames: (assetInfo) => {
-            if (/\.css$/.test(assetInfo.name)) {
-              return `assets/css/[name]-[hash].[ext]`;
-            }
-            
-            if (/\.(png|jpe?g|gif|svg|webp)$/.test(assetInfo.name)) {
-              return `assets/img/[name].[ext]`;
-            }
-            
-            if (/\.(woff2?|eot|ttf|otf)$/.test(assetInfo.name)) {
-              return `assets/fonts/[name].[ext]`;
-            }
-            
-            return `assets/[ext]/[name].[ext]`;
-          }
-        }
-      },
-      minify: isProduction,
-      sourcemap: !isProduction,
-    },
-    css: {
-      postcss: {
-        plugins: [
-          tailwindcss,
-          autoprefixer,
-        ],
-      },
-      // Добавляем импорт стилей календаря
-      preprocessorOptions: {
-        css: {
-          additionalData: `@import "vanilla-calendar-pro/styles/index.css";`
-        }
-      }
-    },
-    plugins: [
+  const plugins = [
       // Плагин для обработки Handlebars шаблонов
       handlebars({
         partialDirectory: resolve(__dirname, 'assets/partials'),
@@ -559,7 +576,116 @@ export default defineConfig(({ command, mode }) => {
             }
           });
         }
+    },
+    vue(),
+    updateHtmlFilesPlugin(),
+    {
+      name: 'postcss-plugin',
+      apply: 'build',
+      enforce: 'post',
+      async generateBundle(options, bundle) {
+        for (const fileName in bundle) {
+          const file = bundle[fileName];
+          if (file.type === 'asset' && file.fileName.endsWith('.css')) {
+            console.log('--- CSS Asset in generateBundle ---');
+            console.log('fileName:', file.fileName);
+            console.log('source type:', typeof file.source);
+            console.log('source preview:', file.source.toString().substring(0, 100) + '...');
+            console.log('----------');
+
+            const css = file.source;
+            const processed = await postcss([tailwindcss, autoprefixer]).process(css, {
+              from: file.fileName,
+              to: file.fileName,
+            });
+            file.source = processed.css;
+          }
+        }
       }
-    ]
+    }
+  ];
+
+  return {
+    base: getBase(),
+    // Настройки сервера в зависимости от режима запуска
+    server: {
+      host: true,
+      // HTTPS только если указан аргумент --https
+      https: useHttps,
+      cors: true
+    },
+    build: {
+      outDir: 'docs',
+      emptyOutDir: true,
+      sourcemap: false,
+      minify: false,
+      assetsInlineLimit: 0,
+      manifest: true,
+      assetsDir: 'assets',
+      rollupOptions: {
+        input: getAllEntrypoints(),
+        output: {
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          chunkFileNames: 'assets/js/chunks/[name]-[hash].js',
+          assetFileNames: (assetInfo) => {
+            console.log('--- Asset Info (assetFileNames) ---');
+            console.log('name:', assetInfo.name);
+            console.log('type:', assetInfo.type);
+            console.log('----------');
+
+            // Для HTML-файлов
+            if (assetInfo.name && assetInfo.name.endsWith('.html')) {
+              return '[name].[extname]';
+            }
+
+            // Для всех других ассетов - явно определяем категорию по расширению
+            const fileName = assetInfo.name || '';
+            const extname = path.extname(fileName).toLowerCase();
+            
+            // Изображения
+            if (['.jpg', '.jpeg', '.png', '.gif', '.webp', '.avif', '.svg', '.ico'].includes(extname)) {
+              return 'assets/img/[name]-[hash][extname]';
+            }
+            
+            // CSS
+            if (extname === '.css') {
+              return 'assets/css/[name]-[hash][extname]';
+            }
+            
+            // Шрифты
+            if (['.woff', '.woff2', '.ttf', '.eot', '.otf'].includes(extname)) {
+              return 'assets/fonts/[name]-[hash][extname]';
+            }
+            
+            // Данные (JSON и др.)
+            if (['.json'].includes(extname)) {
+              return 'assets/data/[name]-[hash][extname]';
+            }
+            
+            // Все остальные ассеты - по умолчанию
+            return 'assets/[name]-[hash][extname]';
+          },
+        },
+      },
+    },
+    css: {
+      postcss: {
+        plugins: [
+          tailwindcss,
+          autoprefixer,
+        ],
+      },
+      preprocessorOptions: {
+        css: {
+          additionalData: `@import "vanilla-calendar-pro/styles/index.css";`
+        }
+      }
+    },
+    resolve: {
+      alias: {
+        'assets/': resolve(__dirname, 'assets/'),
+      },
+    },
+    plugins: plugins
   };
 }); 

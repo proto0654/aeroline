@@ -1,7 +1,7 @@
 # Product Context
 
 ## Purpose
-Aeroline is a web platform designed to provide users with convenient access to delivery services through a modern web interface.
+The project requires a streamlined and reliable build process suitable for static hosting platforms like GitHub Pages. The output in the `docs` folder should be easy to navigate, debug, and visually compare to the source code, especially for older parts of the application.
 
 ## Problems Solved
 1. Simplifies the process of placing and tracking deliveries
@@ -28,4 +28,15 @@ Aeroline is a web platform designed to provide users with convenient access to d
 6. Vacancies section
 7. News section
 8. Service acts management
-9. Reconciliation statements 
+9. Reconciliation statements
+
+## How it Should Work
+The new Vite build should take source files (HTML, Handlebars, JS, Vue, CSS, Assets) and produce a production-ready output in `docs` where:
+- HTML files are in the root.
+- JS files (entry points and modules) are in `docs/assets/js/` with structure and hashes.
+- Vue entry points are handled similarly.
+- CSS files are processed and placed in `docs/assets/css/` with structure and hashes.
+- **All other assets (images, fonts, SVG, etc.) are automatically placed in `docs/assets/` maintaining their original subfolder structure from the source `assets/` directory, with filenames including hashes.**
+
+## User Experience Goals
+Developers working with the project should have a simple `npm run build` command that produces a predictable, debuggable, and correctly linked output ready for deployment, without manual copying steps for assets. 

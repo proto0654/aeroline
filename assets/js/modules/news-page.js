@@ -1,10 +1,18 @@
+console.log('--- Debug: Start of news-page.js ---');
+console.log('--- Debug: Attempting to import Pagination in news-page.js ---');
 import { Pagination } from './pagination.js';
-import { DateRangePicker } from './date-range-picker.js';
+console.log('--- Debug: Pagination imported successfully in news-page.js ---');
+console.log('--- Debug: Attempting to import modalManager in news-page.js ---');
 import { modalManager } from './modal-manager.js';
+console.log('--- Debug: modalManager imported successfully in news-page.js ---');
+console.log('--- Debug: Attempting to import mountDateRangePicker in news-page.js ---');
+import { mountDateRangePicker } from '../../vue/entrypoints/lk-datepicker.js';
+console.log('--- Debug: mountDateRangePicker imported successfully in news-page.js ---');
 
 console.log('NewsPage: Модуль загружается...');
 
-export class NewsPage {
+console.log('--- Debug: Defining NewsPage class ---');
+class NewsPage {
   constructor() {
     console.log('NewsPage: Инициализация класса');
     this.modal = document.getElementById('news-modal');
@@ -17,14 +25,16 @@ export class NewsPage {
   }
 
   init() {
+    console.log('--- Debug: Start of init in news-page.js ---');
     console.log('NewsPage: Начало инициализации');
     this.sortNewsByDate();
     this.bindNewsDetailsButtons();
-    this.initDateFilter();
     this.initClearFiltersButton();
+    this.initDateFilter();
     console.log('NewsPage: Инициализация пагинации...');
     this.initPagination();
     console.log('NewsPage: Инициализация завершена');
+    console.log('--- Debug: End of init in news-page.js ---');
   }
 
   initPagination() {
@@ -55,17 +65,17 @@ export class NewsPage {
   initDateFilter() {
     // Инициализируем фильтр по диапазону дат
     console.log('NewsPage: Инициализация фильтра дат');
-    this.dateFilterPicker = new DateRangePicker({
-      containerId: 'news-date-filter-container',
-      inputId: 'news-date-filter',
-      placeholder: 'Выберите период для фильтрации',
-      autoApply: false, // теперь требуется подтверждение
-      defaultRange: true, // дефолтный диапазон (месяц назад - сегодня)
-      onRangeSelect: (range) => {
-        console.log('NewsPage: Получен диапазон дат:', range);
+    // Используем функцию монтирования из файла-острова
+    this.datePickerApp = mountDateRangePicker('#news-datepicker-app', {
+      placeholder: 'Выберите период для фильтрации'
+    }, (range) => {
+      console.log('NewsPage: Выбран период для новостей (Vue):', range);
         this.currentFilters.dateRange = range;
         this.applyFilters();
-      }
+    }, () => {
+      console.log('NewsPage: Выбор периода для новостей сброшен (Vue)');
+      this.currentFilters.dateRange = null;
+      this.applyFilters();
     });
   }
 
@@ -79,17 +89,21 @@ export class NewsPage {
   }
 
   clearAllFilters() {
-    // Сбрасываем фильтр по диапазону дат
-    if (this.dateFilterPicker) {
-      this.dateFilterPicker.clearSelection();
+    if (this.datePickerApp) {
+      // Обновляем логику сброса для взаимодействия с экземпляром Vue приложения
+      const vueInstance = this.datePickerApp._container?.__vue_app__?._instance?.proxy;
+      if (vueInstance && vueInstance.clearSelection) {
+        vueInstance.clearSelection();
+        console.log('NewsPage: Диапазон дат в Vue компоненте сброшен.');
+      } else {
+        console.warn('NewsPage: Не удалось вызвать метод clearSelection на экземпляре Vue компонента.');
+      }
     }
 
-    // Очищаем текущие фильтры
     this.currentFilters = {
       dateRange: null
     };
 
-    // Применяем пустые фильтры (показываем все новости)
     this.applyFilters();
   }
 
@@ -103,35 +117,27 @@ export class NewsPage {
     newsCards.forEach((card, index) => {
       let isVisible = true;
 
-      // Фильтр по диапазону дат
       if (this.currentFilters.dateRange && !this.currentFilters.dateRange.isEmpty) {
         const cardTimestamp = parseInt(card.dataset.timestamp);
         console.log(`NewsPage: Карточка ${index + 1} - timestamp:`, cardTimestamp);
         
         if (cardTimestamp) {
-          // Создаем даты без учета времени, используя UTC для избежания проблем с часовыми поясами
           const cardDate = new Date(cardTimestamp * 1000);
-          const startDate = this.currentFilters.dateRange.startDate;
-          const endDate = this.currentFilters.dateRange.endDate || this.currentFilters.dateRange.startDate;
+          const startTime = this.currentFilters.dateRange.start.getTime();
+          const endTime = this.currentFilters.dateRange.end.getTime();
 
-          // Нормализуем даты - приводим к началу дня в UTC
           const cardDateNormalized = new Date(Date.UTC(cardDate.getFullYear(), cardDate.getMonth(), cardDate.getDate()));
-          const startDateNormalized = new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()));
-          const endDateNormalized = new Date(Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()));
 
           console.log(`NewsPage: Карточка ${index + 1} - сравнение дат:`, {
             cardDate: cardDateNormalized.toISOString().split('T')[0],
-            startDate: startDateNormalized.toISOString().split('T')[0],
-            endDate: endDateNormalized.toISOString().split('T')[0],
+            startTime: new Date(startTime).toISOString().split('T')[0],
+            endTime: new Date(endTime).toISOString().split('T')[0],
             cardTime: cardDateNormalized.getTime(),
-            startTime: startDateNormalized.getTime(),
-            endTime: endDateNormalized.getTime()
+            startTime: startTime,
+            endTime: endTime
           });
 
-          // Сравниваем через getTime() для точности
           const cardTime = cardDateNormalized.getTime();
-          const startTime = startDateNormalized.getTime();
-          const endTime = endDateNormalized.getTime();
 
           if (cardTime < startTime || cardTime > endTime) {
             isVisible = false;
@@ -147,7 +153,6 @@ export class NewsPage {
         console.log(`NewsPage: Карточка ${index + 1} - фильтр не активен, показываем`);
       }
 
-      // Показываем или скрываем карточку
       if (isVisible) {
         card.classList.remove('hidden');
         visibleCount++;
@@ -158,7 +163,6 @@ export class NewsPage {
     
     console.log('NewsPage: Видимых карточек:', visibleCount);
     
-    // Обновляем пагинацию после фильтрации
     if (this.pagination) {
       this.pagination.updateVisibleItems();
     }
@@ -207,12 +211,10 @@ export class NewsPage {
     const modal = this.modal;
     const modalContent = modal.querySelector('.modal-content');
     
-    // Заполняем контент модального окна
     modalContent.querySelector('h2').textContent = newsContent.title;
     modalContent.querySelector('.news-text').textContent = newsContent.content;
     modalContent.querySelector('.text-caption-form').textContent = newsContent.date;
     
-    // Обрабатываем изображение
     const imageContainer = modalContent.querySelector('.news-image');
     if (newsContent.image && !newsContent.isPlaceholder) {
       imageContainer.innerHTML = `
@@ -226,7 +228,6 @@ export class NewsPage {
       imageContainer.innerHTML = '';
     }
     
-    // Открываем модальное окно через ModalManager
     modalManager.open(modal);
   }
 
@@ -240,18 +241,25 @@ export class NewsPage {
       return;
     }
 
-    // Сортируем новости по timestamp (от новых к старым)
     newsCards.sort((a, b) => {
       const timestampA = parseInt(a.dataset.timestamp) || 0;
       const timestampB = parseInt(b.dataset.timestamp) || 0;
-      return timestampB - timestampA; // Убывающий порядок (новые сверху)
+      return timestampB - timestampA;
     });
 
-    // Перестраиваем DOM в отсортированном порядке
     newsCards.forEach(card => {
       newsGrid.appendChild(card);
     });
 
     console.log('NewsPage: Новости отсортированы по дате (от новых к старым)');
   }
+}
+
+// Делаем экземпляр класса доступным глобально
+// window.newsPage = new NewsPage();
+
+// Экспортируем пустую функцию для совместимости, если она используется в HTML как import
+export function initNewsPage() {
+  console.log('initNewsPage called - Initializing NewsPage module');
+  new NewsPage(); // Создаем экземпляр класса и запускаем его инициализацию
 } 

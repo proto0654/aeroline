@@ -3,12 +3,12 @@
  * Основная точка входа в приложение
  */
 
-console.log('main.js: Начало загрузки');
+console.log('--- Debug: Start of main.js ---');
 
 import { getBasePath, domReady } from './modules/utils.js';
 import { modalManager } from './modules/modal-manager.js';
 import { LoginManager } from './modules/login.js';
-import { DateRangePicker } from './modules/date-range-picker.js';
+// import { DateRangePicker } from './modules/date-range-picker.js'; // Больше не используется после замены на Vue
 import { 
   selectOfficeCard, 
   selectOfficeCardNoFocus, 
@@ -29,16 +29,15 @@ import {
   initPaymentTabs,
   initMobileMenuToggles
 } from './modules/ui.js';
-import { initHomePage } from './modules/home-page.js';
-import { initContactsPage } from './modules/contacts-page.js';
-import { initVacanciesPage } from './modules/vacancies-page.js';
-import { initPaymentsPage } from './modules/payments-page.js';
-import { NewsPage } from './modules/news-page.js';
-import { Pagination } from './modules/pagination.js';
-import { initServiceActsPage } from './modules/service-acts-page.js';
-import { initSendersReceiversPage } from './modules/senders-receivers-page.js';
-import './modules/profile.js';
-import '../css/main.css';
+import './../css/main.css';
+// Импортируем специфичные для страниц модули, чтобы Vite их включил
+// import './modules/service-acts-page.js'; // Добавляем импорт для страницы актов
+// import './modules/news-page.js'; // Добавляем импорт для страницы новостей
+// Импорт функций монтирования Vue островов
+// import { mountServiceActsDatePicker } from 'assets/vue/islands/service-acts/date-picker.js'; // Удаляем статический импорт
+// import { mountNewsDatePicker } from 'assets/vue/islands/news/date-picker.js'; // Удаляем статический импорт
+
+console.log('main.js: Начало загрузки');
 
 // Базовый путь для использования в скрипте
 const BASE_PATH = getBasePath();
@@ -47,7 +46,6 @@ console.log('Определен базовый путь:', BASE_PATH);
 // Экспортируем все функции в глобальный контекст для совместимости с устаревшим кодом
 window.BASE_PATH = BASE_PATH;
 window.modalManager = modalManager;
-window.DateRangePicker = DateRangePicker;
 window.initMap = initMap;
 window.selectOfficeCard = selectOfficeCard;
 window.selectOfficeCardNoFocus = selectOfficeCardNoFocus;
@@ -64,13 +62,7 @@ window.initTitleAnimations = initTitleAnimations;
 window.initForms = initForms;
 window.initFaqAccordion = initFaqAccordion;
 window.initPaymentTabs = initPaymentTabs;
-window.initHomePage = initHomePage;
-window.initContactsPage = initContactsPage;
-window.initVacanciesPage = initVacanciesPage;
-window.initPaymentsPage = initPaymentsPage;
-window.Pagination = Pagination;
-window.initServiceActsPage = initServiceActsPage;
-window.initSendersReceiversPage = initSendersReceiversPage;
+window.initMobileMenuToggles = initMobileMenuToggles;
 
 // Создаем флаг для отслеживания, была ли уже вызвана инициализация
 let isInitialized = false;
@@ -80,6 +72,7 @@ let isInitializing = false;
  * Общая функция инициализации страницы
  */
 function initializePage() {
+  console.log('--- Debug: Start of initializePage in main.js ---');
   console.log('=== Начало инициализации страницы ===');
 
   // Инициализация мобильного меню
@@ -194,29 +187,6 @@ function initializePage() {
   
   console.log(`Текущий путь: ${pathname}, определена страница: ${currentPage || 'главная (индекс)'}`);
 
-  if (currentPage === '' || currentPage === 'index.html') {
-    console.log('Инициализация главной страницы...');
-    initHomePage();
-  } else if (currentPage === 'vacancies.html') {
-    console.log('Инициализация страницы вакансий...');
-    initVacanciesPage();
-  } else if (currentPage === 'contacts.html') {
-    console.log('Инициализация страницы контактов...');
-    initContactsPage();
-  } else if (currentPage === 'payments.html') {
-    console.log('Инициализация страницы платежей...');
-    initPaymentsPage();
-  } else if (currentPage === 'news.html') {
-    console.log('Инициализация страницы новостей...');
-    new NewsPage();
-  } else if (currentPage === 'service-acts.html') {
-    console.log('Инициализация страницы актов оказания услуг...');
-    initServiceActsPage();
-  } else if (currentPage === 'senders-receivers.html') {
-    console.log('Инициализация страницы карточек отправителей и получателей...');
-    initSendersReceiversPage();
-  }
-
   // Анимация заголовков (для всех страниц)
   initTitleAnimations();
 
@@ -224,6 +194,7 @@ function initializePage() {
   initMobileMenuToggles();
 
   console.log('=== Инициализация страницы завершена ===');
+  console.log('--- Debug: End of initializePage in main.js ---');
 }
 
 /**
