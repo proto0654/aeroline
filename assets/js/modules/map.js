@@ -291,13 +291,40 @@ export function selectOfficeCard(selectedCard, officeData = null, marker = null,
 
 /**
  * Инициализация карты с маркерами офисов
- * @param {Array} offices - массив офисов из JSON
- * @param {string} basePath - базовый путь для загрузки ресурсов
+ * @param {string} basePath - базовый путь для загрузки ресурсов (массив офисов теперь читается из data-атрибута элемента #map)
  */
-export function initMap(offices, basePath) {
+export function initMap(basePath) {
   try {
     // Ждем загрузки API Яндекс.Карт
     ymaps.ready(function() {
+      const mapElement = document.getElementById('map');
+      if (!mapElement) {
+        console.error('Элемент карты #map не найден!');
+        return;
+      }
+      
+      const officesDataAttr = mapElement.getAttribute('data-offices');
+      let offices = [];
+      
+      if (officesDataAttr) {
+        try {
+          offices = JSON.parse(officesDataAttr);
+          console.log('Данные офисов загружены из data-атрибута:', offices.length);
+        } catch (error) {
+          console.error('Ошибка при парсинге данных офисов из data-атрибута:', error);
+          // offices останется пустым массивом
+        }
+      } else {
+        // Удален лог о ненахождении данных, теперь это не ошибка, если атрибут пустой
+        console.log('Атрибут data-offices не найден или пуст. Инициализация карты без маркеров.');
+      }
+
+      // Если офисов нет, можно остановить инициализацию или показать пустую карту
+      if (!offices || offices.length === 0) {
+         console.log('Нет данных офисов для отображения на карте.');
+         // Продолжаем инициализацию пустой карты, если нет офисов
+      }
+
       // Центрируем карту с учетом типа устройства
       const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);
       const initialCenter = getCenterForDevice(mapConfig.initialView.center);
@@ -497,6 +524,9 @@ export function initMap(offices, basePath) {
       // Если есть маркеры, настраиваем отображение карты
       if (markers.getLength() > 0) {
         // Используем заданный в конфигурации масштаб и центр для текущего устройства
+        map.setCenter(initialCenter, initialZoom);
+      } else {
+        // Если маркеров нет, просто центрируем на начальной точке
         map.setCenter(initialCenter, initialZoom);
       }
     });

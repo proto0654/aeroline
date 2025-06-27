@@ -1,0 +1,9 @@
+
+/* Specific styles for this form if needed */
+/* The base styling for inputs will come from forms.css via BaseForm.vue */
+
+.vue-form-field[data-v-16bd0279] {
+  padding-right: 2.5rem;
+}
+
+/* Add any specific styles for this page if necessary */

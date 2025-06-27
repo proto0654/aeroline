@@ -1,7 +1,92 @@
 {
-  "_modulepreload-polyfill-DaKOjhqt.js": {
-    "file": "assets/js/chunks/modulepreload-polyfill-DaKOjhqt.js",
-    "name": "modulepreload-polyfill"
+  "_DateRangePickerVue-af4gKE2V.js": {
+    "file": "assets/js/chunks/DateRangePickerVue-af4gKE2V.js",
+    "name": "DateRangePickerVue",
+    "imports": [
+      "assets/vue/entrypoints/lk-datepicker.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js"
+    ]
+  },
+  "_DeleteConfirmModal-Bsx9uojj.css": {
+    "file": "assets/css/DeleteConfirmModal-Bsx9uojj.css",
+    "src": "_DeleteConfirmModal-Bsx9uojj.css"
+  },
+  "_DeleteConfirmModal-By-KeGne.js": {
+    "file": "assets/js/chunks/DeleteConfirmModal-By-KeGne.js",
+    "name": "DeleteConfirmModal",
+    "imports": [
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/DeleteConfirmModal-Bsx9uojj.css"
+    ]
+  },
+  "_EasyDataTableWrapper-CbXOgrOE.js": {
+    "file": "assets/js/chunks/EasyDataTableWrapper-CbXOgrOE.js",
+    "name": "EasyDataTableWrapper",
+    "imports": [
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css"
+    ]
+  },
+  "_EasyDataTableWrapper-Ev7WQvgQ.css": {
+    "file": "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css",
+    "src": "_EasyDataTableWrapper-Ev7WQvgQ.css"
+  },
+  "_NewsDetailModal-i-aPgz3Y.js": {
+    "file": "assets/js/chunks/NewsDetailModal-i-aPgz3Y.js",
+    "name": "NewsDetailModal",
+    "imports": [
+      "_runtime-dom.esm-bundler-D-nyHKmb.js"
+    ]
+  },
+  "__plugin-vue_export-helper-1tPrXgE0.js": {
+    "file": "assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_autocomplete-CjR2TxGO.js": {
+    "file": "assets/js/chunks/autocomplete-CjR2TxGO.js",
+    "name": "autocomplete"
+  },
+  "_global-modal-B-x-mtux.js": {
+    "file": "assets/js/chunks/global-modal-B-x-mtux.js",
+    "name": "global-modal",
+    "imports": [
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js"
+    ]
+  },
+  "_globalModal-Bn39zecy.js": {
+    "file": "assets/js/chunks/globalModal-Bn39zecy.js",
+    "name": "globalModal",
+    "imports": [
+      "_runtime-dom.esm-bundler-D-nyHKmb.js"
+    ]
+  },
+  "_index-7GPoofoh.js": {
+    "file": "assets/js/chunks/index-7GPoofoh.js",
+    "name": "index"
+  },
+  "_modal-manager-BXwv0V3q.js": {
+    "file": "assets/js/chunks/modal-manager-BXwv0V3q.js",
+    "name": "modal-manager"
+  },
+  "_pagination-5ZDBlBwd.js": {
+    "file": "assets/js/chunks/pagination-5ZDBlBwd.js",
+    "name": "pagination"
+  },
+  "_runtime-dom.esm-bundler-D-nyHKmb.js": {
+    "file": "assets/js/chunks/runtime-dom.esm-bundler-D-nyHKmb.js",
+    "name": "runtime-dom.esm-bundler"
+  },
+  "_slider-q_NEEFv1.js": {
+    "file": "assets/js/chunks/slider-q_NEEFv1.js",
+    "name": "slider"
   },
   "assets/img/double-arrow.svg": {
     "file": "assets/img/double-arrow-DkQhunId.svg",
@@ -58,10 +143,6 @@
   "assets/img/icons/vuesax.svg": {
     "file": "assets/img/vuesax-B2MydD8A.svg",
     "src": "assets/img/icons/vuesax.svg"
-  },
-  "assets/img/layout/Logotype_aerline_light.png": {
-    "file": "assets/img/Logotype_aerline_light-BjokHjWg.png",
-    "src": "assets/img/layout/Logotype_aerline_light.png"
   },
   "assets/img/layout/Logotype_aerline_sliced.png": {
     "file": "assets/img/Logotype_aerline_sliced-BwscNV8g.png",
@@ -128,36 +209,12 @@
     "src": "assets/img/layout/services-bg.jpg"
   },
   "assets/img/layout/vacancy-hero.jpg": {
-    "file": "assets/img/vacancy-hero-Bx4fWM4b.jpg",
+    "file": "assets/img/vacancy-hero-BxE00Vlq.jpg",
     "src": "assets/img/layout/vacancy-hero.jpg"
   },
   "assets/img/mens-hands.png": {
     "file": "assets/img/mens-hands-sM_EUFJA.png",
     "src": "assets/img/mens-hands.png"
-  },
-  "assets/img/news/563x304 (1).jpg": {
-    "file": "assets/img/563x304 (1)-KBSjg7Ja.jpg",
-    "src": "assets/img/news/563x304 (1).jpg"
-  },
-  "assets/img/news/563x304.jpg": {
-    "file": "assets/img/563x304-8PI7wwWf.jpg",
-    "src": "assets/img/news/563x304.jpg"
-  },
-  "assets/img/news/800x400 (1).jpg": {
-    "file": "assets/img/800x400 (1)-DehTG3JH.jpg",
-    "src": "assets/img/news/800x400 (1).jpg"
-  },
-  "assets/img/news/800x400 (2).jpg": {
-    "file": "assets/img/800x400 (2)-B-Ks_FTB.jpg",
-    "src": "assets/img/news/800x400 (2).jpg"
-  },
-  "assets/img/news/800x400.jpg": {
-    "file": "assets/img/800x400-Bd9KAYgL.jpg",
-    "src": "assets/img/news/800x400.jpg"
-  },
-  "assets/img/news/scale_1200 (1).jpg": {
-    "file": "assets/img/scale_1200 (1)-CloB-gPO.jpg",
-    "src": "assets/img/news/scale_1200 (1).jpg"
   },
   "assets/img/pilot.png": {
     "file": "assets/img/pilot-CV20KYFc.png",
@@ -224,312 +281,478 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/assets\\js\\main-BjpAztqv.js",
-    "name": "assets\\js\\main",
+    "file": "assets/js/mainJs-B6nrBSwm.js",
+    "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
     "imports": [
-      "assets/js/modules/utils.js",
-      "assets/js/modules/modal-manager.js",
-      "assets/js/modules/login.js",
-      "assets/js/modules/map.js",
-      "assets/js/modules/slider.js",
-      "assets/js/modules/ui.js"
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/main-CmssxDWk.css"
+      "assets/css/mainJs-Dpq_6fwN.css"
     ]
   },
-  "assets/js/modules/autocomplete.js": {
-    "file": "assets/js/assets\\js\\modules\\autocomplete-CjR2TxGO.js",
-    "name": "assets\\js\\modules\\autocomplete",
-    "src": "assets/js/modules/autocomplete.js",
-    "isEntry": true
-  },
-  "assets/js/modules/contacts-page.js": {
-    "file": "assets/js/assets\\js\\modules\\contacts-page-BOyk5AYS.js",
-    "name": "assets\\js\\modules\\contacts-page",
-    "src": "assets/js/modules/contacts-page.js",
+  "assets/js/modules/global-ui.js": {
+    "file": "assets/js/globalUiJs-bfub43N5.js",
+    "name": "globalUiJs",
+    "src": "assets/js/modules/global-ui.js",
     "isEntry": true,
     "imports": [
-      "assets/js/modules/map.js",
-      "assets/js/modules/pagination.js",
-      "assets/js/modules/autocomplete.js",
-      "assets/js/modules/utils.js"
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/globalUiJs-Bmjs9o48.css"
     ]
   },
-  "assets/js/modules/date-range-picker.js": {
-    "file": "assets/js/assets\\js\\modules\\date-range-picker-DIIJ71nP.js",
-    "name": "assets\\js\\modules\\date-range-picker",
-    "src": "assets/js/modules/date-range-picker.js",
-    "isEntry": true
-  },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/assets\\js\\modules\\home-page-CF8qOt14.js",
-    "name": "assets\\js\\modules\\home-page",
+    "file": "assets/js/homePageJs-Bui7BfHQ.js",
+    "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
     "imports": [
-      "assets/js/modules/slider.js",
-      "assets/js/modules/autocomplete.js",
-      "assets/js/modules/modal-manager.js",
-      "assets/js/modules/utils.js"
-    ]
-  },
-  "assets/js/modules/login.js": {
-    "file": "assets/js/assets\\js\\modules\\login-MQpmDG8h.js",
-    "name": "assets\\js\\modules\\login",
-    "src": "assets/js/modules/login.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/utils.js"
-    ]
-  },
-  "assets/js/modules/map.js": {
-    "file": "assets/js/assets\\js\\modules\\map-CARIFrPc.js",
-    "name": "assets\\js\\modules\\map",
-    "src": "assets/js/modules/map.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/utils.js"
-    ]
-  },
-  "assets/js/modules/modal-manager.js": {
-    "file": "assets/js/assets\\js\\modules\\modal-manager-BXwv0V3q.js",
-    "name": "assets\\js\\modules\\modal-manager",
-    "src": "assets/js/modules/modal-manager.js",
-    "isEntry": true
-  },
-  "assets/js/modules/news-page.js": {
-    "file": "assets/js/assets\\js\\modules\\news-page-BGq4V7Nf.js",
-    "name": "assets\\js\\modules\\news-page",
-    "src": "assets/js/modules/news-page.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/pagination.js",
-      "assets/js/modules/modal-manager.js",
-      "assets/vue/entrypoints/lk-datepicker.js"
-    ]
-  },
-  "assets/js/modules/order-tracking-page.js": {
-    "file": "assets/js/assets\\js\\modules\\order-tracking-page-Dr5VfTEr.js",
-    "name": "assets\\js\\modules\\order-tracking-page",
-    "src": "assets/js/modules/order-tracking-page.js",
-    "isEntry": true
-  },
-  "assets/js/modules/pagination.js": {
-    "file": "assets/js/assets\\js\\modules\\pagination-5ZDBlBwd.js",
-    "name": "assets\\js\\modules\\pagination",
-    "src": "assets/js/modules/pagination.js",
-    "isEntry": true
-  },
-  "assets/js/modules/payments-page.js": {
-    "file": "assets/js/assets\\js\\modules\\payments-page-HuWKBCTy.js",
-    "name": "assets\\js\\modules\\payments-page",
-    "src": "assets/js/modules/payments-page.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/ui.js",
-      "assets/js/modules/utils.js"
+      "_slider-q_NEEFv1.js",
+      "_autocomplete-CjR2TxGO.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_NewsDetailModal-i-aPgz3Y.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/homePageJs-Dx2n7P6X.css"
     ]
   },
   "assets/js/modules/profile-page.js": {
-    "file": "assets/js/assets\\js\\modules\\profile-page-B65luuBh.js",
-    "name": "assets\\js\\modules\\profile-page",
+    "file": "assets/js/profilePageJs-B65luuBh.js",
+    "name": "profilePageJs",
     "src": "assets/js/modules/profile-page.js",
     "isEntry": true
   },
-  "assets/js/modules/profile.js": {
-    "file": "assets/js/assets\\js\\modules\\profile-D_gCXfKn.js",
-    "name": "assets\\js\\modules\\profile",
-    "src": "assets/js/modules/profile.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/modal-manager.js"
-    ]
-  },
   "assets/js/modules/senders-receivers-page.js": {
-    "file": "assets/js/assets\\js\\modules\\senders-receivers-page-BWMi2Sn_.js",
-    "name": "assets\\js\\modules\\senders-receivers-page",
+    "file": "assets/js/sendersReceiversPageJs-BSR9iBMH.js",
+    "name": "sendersReceiversPageJs",
     "src": "assets/js/modules/senders-receivers-page.js",
     "isEntry": true,
     "imports": [
-      "assets/js/modules/table-manager.js",
-      "assets/js/modules/modal-manager.js"
+      "_index-7GPoofoh.js",
+      "_modal-manager-BXwv0V3q.js"
     ]
   },
   "assets/js/modules/service-acts-page.js": {
-    "file": "assets/js/assets\\js\\modules\\service-acts-page-COCCRZFf.js",
-    "name": "assets\\js\\modules\\service-acts-page",
+    "file": "assets/js/serviceActsPageJs-DBILjNPe.js",
+    "name": "serviceActsPageJs",
     "src": "assets/js/modules/service-acts-page.js",
     "isEntry": true,
     "imports": [
-      "assets/js/modules/table-manager.js",
-      "assets/js/modules/modal-manager.js",
-      "assets/vue/entrypoints/lk-datepicker.js"
-    ]
-  },
-  "assets/js/modules/services-page.js": {
-    "file": "assets/js/assets\\js\\modules\\services-page-CukvNfBi.js",
-    "name": "assets\\js\\modules\\services-page",
-    "src": "assets/js/modules/services-page.js",
-    "isEntry": true
-  },
-  "assets/js/modules/slider.js": {
-    "file": "assets/js/assets\\js\\modules\\slider-RQj1bYBM.js",
-    "name": "assets\\js\\modules\\slider",
-    "src": "assets/js/modules/slider.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/utils.js"
-    ]
-  },
-  "assets/js/modules/table-manager.js": {
-    "file": "assets/js/assets\\js\\modules\\table-manager-CPw7djFF.js",
-    "name": "assets\\js\\modules\\table-manager",
-    "src": "assets/js/modules/table-manager.js",
-    "isEntry": true
-  },
-  "assets/js/modules/ui.js": {
-    "file": "assets/js/assets\\js\\modules\\ui-IvxluLAz.js",
-    "name": "assets\\js\\modules\\ui",
-    "src": "assets/js/modules/ui.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/utils.js"
-    ]
-  },
-  "assets/js/modules/utils.js": {
-    "file": "assets/js/assets\\js\\modules\\utils-BNm1gLxD.js",
-    "name": "assets\\js\\modules\\utils",
-    "src": "assets/js/modules/utils.js",
-    "isEntry": true
-  },
-  "assets/js/modules/vacancies-page.js": {
-    "file": "assets/js/assets\\js\\modules\\vacancies-page-B_HRitI-.js",
-    "name": "assets\\js\\modules\\vacancies-page",
-    "src": "assets/js/modules/vacancies-page.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/pagination.js"
-    ]
-  },
-  "assets/js/page-entrypoints/contacts.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\contacts-Bbp9GlLg.js",
-    "name": "assets\\js\\page-entrypoints\\contacts",
-    "src": "assets/js/page-entrypoints/contacts.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/contacts-page.js",
-      "assets/js/modules/map.js",
-      "assets/js/modules/utils.js",
-      "assets/js/modules/pagination.js",
-      "assets/js/modules/autocomplete.js"
-    ]
-  },
-  "assets/js/page-entrypoints/index.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\index-m81eCIx6.js",
-    "name": "assets\\js\\page-entrypoints\\index",
-    "src": "assets/js/page-entrypoints/index.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/home-page.js",
-      "assets/js/modules/slider.js",
-      "assets/js/modules/utils.js",
-      "assets/js/modules/autocomplete.js",
-      "assets/js/modules/modal-manager.js"
-    ]
-  },
-  "assets/js/page-entrypoints/news.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\news-D6h0uh_j.js",
-    "name": "assets\\js\\page-entrypoints\\news",
-    "src": "assets/js/page-entrypoints/news.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/news-page.js",
-      "assets/js/modules/pagination.js",
-      "assets/js/modules/modal-manager.js",
-      "assets/vue/entrypoints/lk-datepicker.js"
-    ]
-  },
-  "assets/js/page-entrypoints/order-tracking.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\order-tracking-DFuwZfdJ.js",
-    "name": "assets\\js\\page-entrypoints\\order-tracking",
-    "src": "assets/js/page-entrypoints/order-tracking.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/order-tracking-page.js"
-    ]
-  },
-  "assets/js/page-entrypoints/payments.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\payments-DxcBy7S_.js",
-    "name": "assets\\js\\page-entrypoints\\payments",
-    "src": "assets/js/page-entrypoints/payments.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/payments-page.js",
-      "assets/js/modules/ui.js",
-      "assets/js/modules/utils.js"
-    ]
-  },
-  "assets/js/page-entrypoints/profile.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\profile-BRPNa6sc.js",
-    "name": "assets\\js\\page-entrypoints\\profile",
-    "src": "assets/js/page-entrypoints/profile.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/profile-page.js"
-    ]
-  },
-  "assets/js/page-entrypoints/senders-receivers.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\senders-receivers-c2wqtkuQ.js",
-    "name": "assets\\js\\page-entrypoints\\senders-receivers",
-    "src": "assets/js/page-entrypoints/senders-receivers.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/senders-receivers-page.js",
-      "assets/js/modules/table-manager.js",
-      "assets/js/modules/modal-manager.js"
-    ]
-  },
-  "assets/js/page-entrypoints/service-acts.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\service-acts-B2nC0EIh.js",
-    "name": "assets\\js\\page-entrypoints\\service-acts",
-    "src": "assets/js/page-entrypoints/service-acts.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/service-acts-page.js",
-      "assets/js/modules/table-manager.js",
-      "assets/js/modules/modal-manager.js",
-      "assets/vue/entrypoints/lk-datepicker.js"
-    ]
-  },
-  "assets/js/page-entrypoints/services.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\services-QRdThkaZ.js",
-    "name": "assets\\js\\page-entrypoints\\services",
-    "src": "assets/js/page-entrypoints/services.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/services-page.js"
-    ]
-  },
-  "assets/js/page-entrypoints/vacancies.js": {
-    "file": "assets/js/assets\\js\\page-entrypoints\\vacancies-LNw-gK-7.js",
-    "name": "assets\\js\\page-entrypoints\\vacancies",
-    "src": "assets/js/page-entrypoints/vacancies.js",
-    "isEntry": true,
-    "imports": [
-      "assets/js/modules/vacancies-page.js",
-      "assets/js/modules/pagination.js"
+      "_index-7GPoofoh.js"
     ]
   },
   "assets/vue/entrypoints/lk-datepicker.js": {
-    "file": "assets/js/assets\\vue\\entrypoints\\lk-datepicker-BAWDGYJK.js",
-    "name": "assets\\vue\\entrypoints\\lk-datepicker",
+    "file": "assets/js/lkDatepickerJs-h2a5w_ZO.js",
+    "name": "lkDatepickerJs",
     "src": "assets/vue/entrypoints/lk-datepicker.js",
     "isEntry": true,
+    "imports": [
+      "_runtime-dom.esm-bundler-D-nyHKmb.js"
+    ],
     "css": [
-      "assets/css/lk-datepicker-rzBy3Z-d.css"
+      "assets/css/lkDatepickerJs-rzBy3Z-d.css"
+    ]
+  },
+  "assets/vue/entrypoints/news-page.js": {
+    "file": "assets/js/newsPageVueJs-tdRJKT3p.js",
+    "name": "newsPageVueJs",
+    "src": "assets/vue/entrypoints/news-page.js",
+    "isEntry": true,
+    "imports": [
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_NewsDetailModal-i-aPgz3Y.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_DateRangePickerVue-af4gKE2V.js",
+      "assets/vue/entrypoints/lk-datepicker.js"
+    ],
+    "css": [
+      "assets/css/newsPageVueJs-BpPWH20r.css"
+    ]
+  },
+  "contacts.html": {
+    "file": "assets/js/contacts-BBaMwvyE.js",
+    "name": "contacts",
+    "src": "contacts.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_pagination-5ZDBlBwd.js",
+      "_autocomplete-CjR2TxGO.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/select-arrow-BP51TTpS.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "index.html": {
+    "file": "assets/js/main-Bxzp3SMY.js",
+    "name": "main",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "assets/js/modules/home-page.js",
+      "_globalModal-Bn39zecy.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_autocomplete-CjR2TxGO.js",
+      "_NewsDetailModal-i-aPgz3Y.js"
+    ],
+    "css": [
+      "assets/css/main-CjCMr60R.css"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/snow-flake-BFAJ6vTM.svg",
+      "assets/img/slide-three-ClaKcOil.png",
+      "assets/img/slide-fourth-BzvwDFsr.png",
+      "assets/img/search-CYPbi9xb.svg",
+      "assets/img/select-arrow-BP51TTpS.svg",
+      "assets/img/double-arrow-DkQhunId.svg",
+      "assets/img/request-for-calculation-D_Epmwlg.png",
+      "assets/img/sections-button-arrow-DwtEv55Z.svg",
+      "assets/img/shipping-JM3RDj5L.png",
+      "assets/img/track-Cu7Qp3LN.png",
+      "assets/img/feedback-DiNwoEie.png",
+      "assets/img/payment-BlCFAG8C.png",
+      "assets/img/tariffs-ByN9uM2m.png",
+      "assets/img/helper-DL7cmOck.png",
+      "assets/img/calculator-tItVAvRt.png",
+      "assets/img/international-BEmQ72HF.png",
+      "assets/img/mens-hands-sM_EUFJA.png",
+      "assets/img/Logotype_aerline_sliced-BwscNV8g.png",
+      "assets/img/circles-Cun3gczq.svg",
+      "assets/img/pilot-CV20KYFc.png",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "order-list.html": {
+    "file": "assets/js/orderList-DEXFbWUK.js",
+    "name": "orderList",
+    "src": "order-list.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_EasyDataTableWrapper-CbXOgrOE.js",
+      "_DeleteConfirmModal-By-KeGne.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js"
+    ],
+    "css": [
+      "assets/css/orderList-BwBC4xty.css"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "order-tracking.html": {
+    "file": "assets/js/orderTracking-DKICeoH_.js",
+    "name": "orderTracking",
+    "src": "order-tracking.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/search-CYPbi9xb.svg",
+      "assets/img/order-tracking-img-CkPtxPsa.png",
+      "assets/img/Component 1-1-CN7DWFsZ.svg",
+      "assets/img/Component 1-2-mR4BVpBn.svg",
+      "assets/img/Component 1-D8YgY9xC.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "payments.html": {
+    "file": "assets/js/payments-CIGHcAGm.js",
+    "name": "payments",
+    "src": "payments.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/payments-hero-DUi_PueL.png",
+      "assets/img/logos-L4pV1jbf.png",
+      "assets/img/payments-tabs1-BG4TGZAn.jpg",
+      "assets/img/payments-tabs2-D43FroUp.jpg",
+      "assets/img/payments-tabs3-Dz0ejBoT.jpg",
+      "assets/img/payments-tabs4-Bonz5wY3.jpg",
+      "assets/img/terminal-CuhRG-hB.png",
+      "assets/img/pribyl-CON5M6uL.png",
+      "assets/img/request-for-calculation-D_Epmwlg.png",
+      "assets/img/sections-button-arrow-DwtEv55Z.svg",
+      "assets/img/shipping-JM3RDj5L.png",
+      "assets/img/track-Cu7Qp3LN.png",
+      "assets/img/feedback-DiNwoEie.png",
+      "assets/img/payment-BlCFAG8C.png",
+      "assets/img/tariffs-ByN9uM2m.png",
+      "assets/img/helper-DL7cmOck.png",
+      "assets/img/calculator-tItVAvRt.png",
+      "assets/img/international-BEmQ72HF.png",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "profile.html": {
+    "file": "assets/js/profile-CF0vyEJK.js",
+    "name": "profile",
+    "src": "profile.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "assets/js/modules/profile-page.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/edit-Bxc_5xGJ.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "senders-receivers.html": {
+    "file": "assets/js/sendersReceivers-bcF_FoPi.js",
+    "name": "sendersReceivers",
+    "src": "senders-receivers.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_EasyDataTableWrapper-CbXOgrOE.js",
+      "_DeleteConfirmModal-By-KeGne.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js"
+    ],
+    "css": [
+      "assets/css/sendersReceivers-CKAOCJWs.css"
+    ],
+    "assets": [
+      "assets/img/select-arrow-BP51TTpS.svg",
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "service-acts.html": {
+    "file": "assets/js/serviceActs-CjwgiYgx.js",
+    "name": "serviceActs",
+    "src": "service-acts.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_DateRangePickerVue-af4gKE2V.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_globalModal-Bn39zecy.js",
+      "_EasyDataTableWrapper-CbXOgrOE.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "assets/vue/entrypoints/lk-datepicker.js"
+    ],
+    "css": [
+      "assets/css/serviceActs-DFK5ofIZ.css"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "services.html": {
+    "file": "assets/js/services-CvSKkMoH.js",
+    "name": "services",
+    "src": "services.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/services-bg-DayX8jcv.jpg",
+      "assets/img/shipping-JM3RDj5L.png",
+      "assets/img/calculator-tItVAvRt.png",
+      "assets/img/international-BEmQ72HF.png",
+      "assets/img/circles-Cun3gczq.svg",
+      "assets/img/delivery-man-Bpg7pyAz.png",
+      "assets/img/request-for-calculation-D_Epmwlg.png",
+      "assets/img/sections-button-arrow-DwtEv55Z.svg",
+      "assets/img/track-Cu7Qp3LN.png",
+      "assets/img/feedback-DiNwoEie.png",
+      "assets/img/payment-BlCFAG8C.png",
+      "assets/img/tariffs-ByN9uM2m.png",
+      "assets/img/helper-DL7cmOck.png",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "vacancies.html": {
+    "file": "assets/js/vacancies-B04joBs_.js",
+    "name": "vacancies",
+    "src": "vacancies.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-B-x-mtux.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_pagination-5ZDBlBwd.js",
+      "_runtime-dom.esm-bundler-D-nyHKmb.js",
+      "_globalModal-Bn39zecy.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/vacancy-hero-BxE00Vlq.jpg",
+      "assets/img/select-arrow-BP51TTpS.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
     ]
   }
 }

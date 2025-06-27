@@ -2,7 +2,7 @@
   <div>
     <date-picker
       v-model:value="dateRange"
-      type="date"
+      type="daterange"
       range
       placeholder="Выберите период"
       format="DD.MM.YYYY"
@@ -34,7 +34,7 @@ const props = defineProps({
 });
 
 // Определяем события, которые компонент может излучать
-const emit = defineEmits(['range-select', 'clear-selection']);
+const emit = defineEmits(['range-select', 'clear-selection', 'update:range']);
 
 // Состояние для выбранного диапазона
 const dateRange = ref(props.initialRange);
@@ -44,22 +44,26 @@ const locale = ref(langRu);
 
 // Синхронизация внутреннего состояния с начальным пропсом
 watch(() => props.initialRange, (newRange) => {
+  console.log('DateRangePickerVue: initialRange prop changed to:', newRange);
   dateRange.value = newRange;
+  console.log('DateRangePickerVue: dateRange updated to:', dateRange.value);
+}, { immediate: true }); // Добавляем immediate: true, чтобы запустить watcher сразу при монтировании
+
+// Отслеживание изменений dateRange и эмитирование события
+watch(dateRange, (newRange) => {
+  console.log('DateRangePickerVue: dateRange changed, emitting update:range', newRange);
+  // Emit null if range is cleared, otherwise emit the range array
+  if (!newRange || newRange.length !== 2 || !newRange[0] || !newRange[1]) {
+    emit('update:range', { start: null, end: null });
+  } else {
+    emit('update:range', { start: newRange[0], end: newRange[1] });
+  }
 });
 
 // Обработчик подтверждения выбора диапазона
 const handleConfirm = () => {
-  if (dateRange.value && dateRange.value.length === 2 && dateRange.value[0] && dateRange.value[1]) {
-    emit('range-select', {
-      start: dateRange.value[0],
-      end: dateRange.value[1],
-      formattedRange: formatRange(dateRange.value)
-    });
-  } else {
-     // Если выбранный диапазон невалиден после подтверждения, сбрасываем выбор
-     dateRange.value = null;
-     emit('clear-selection');
-  }
+  // Логика подтверждения теперь в watch, но это событие может быть полезно для других целей
+  console.log('DateRangePickerVue: confirmed selection', dateRange.value);
 };
 
 // Обработчик закрытия календаря (если нужно что-то делать при закрытии без подтверждения)

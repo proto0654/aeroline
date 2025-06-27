@@ -7,6 +7,10 @@ import { loadSwiper, initSwiperSlider } from './slider.js';
 import { createAutocompleteInput } from './autocomplete.js';
 import { modalManager } from './modal-manager.js';
 
+// Import Vue and the new component
+import { createApp } from 'vue';
+import HomePageNews from '../../vue/components/HomePageNews.vue';
+
 /**
  * Функция для инициализации главной страницы
  */
@@ -26,41 +30,6 @@ export function initHomePage() {
   // Новости уже были загружены через шаблонизатор в HTML
   console.log('Используем новости, уже загруженные через шаблонизатор');
   
-  // Инициализация карусели новостей
-  const newsCarousel = document.querySelector('.news-carousel');
-  const newsPrevButton = document.querySelector('.news-carousel button.absolute.left-0');
-  const newsNextButton = document.querySelector('.news-carousel button.absolute.right-0');
-
-  if (newsCarousel && newsPrevButton && newsNextButton) {
-    const newsItems = newsCarousel.querySelectorAll('.bg-brand-light');
-    let currentNewsIndex = 0;
-
-    // Функция для переключения новостей
-    const showNews = (index) => {
-      // Скрываем все новости
-      newsItems.forEach(item => {
-        item.style.display = 'none';
-      });
-
-      // Показываем текущую новость
-      newsItems[index].style.display = 'block';
-    };
-
-    // Обработчики для кнопок
-    newsPrevButton.addEventListener('click', () => {
-      currentNewsIndex = (currentNewsIndex - 1 + newsItems.length) % newsItems.length;
-      showNews(currentNewsIndex);
-    });
-
-    newsNextButton.addEventListener('click', () => {
-      currentNewsIndex = (currentNewsIndex + 1) % newsItems.length;
-      showNews(currentNewsIndex);
-    });
-
-    // Показываем первую новость при загрузке
-    showNews(currentNewsIndex);
-  }
-
   // Инициализация карусели на главной странице
   const carouselSlides = document.querySelectorAll('.carousel-slide');
   const prevButton = document.querySelector('.carousel-container .absolute.left-4');
@@ -285,46 +254,6 @@ export function initHomePage() {
     }
   }
 
-  // Инициализация кнопки "Стать клиентом"
-  const clientButton = document.getElementById('become-client-btn');
-  if (clientButton) {
-    clientButton.addEventListener('click', function () {
-      modalManager.open('become-client-modal', {
-        onOpen: (modal) => {
-          // Инициализируем обработчик формы после открытия модального окна
-          const form = modal.querySelector('#become-client-form');
-          if (form) {
-            form.addEventListener('submit', function(e) {
-              e.preventDefault();
-              
-              // Проверяем валидность формы
-              if (this.checkValidity()) {
-                const formData = {
-                  name: document.getElementById('client-name').value,
-                  phone: document.getElementById('client-phone').value,
-                  email: document.getElementById('client-email').value,
-                  type: document.getElementById('client-type').value,
-                  comment: document.getElementById('client-comment').value
-                };
-                
-                console.log('Заявка на становление клиентом:', formData);
-                
-                // Здесь будет отправка данных на сервер
-                alert(`Спасибо за заявку, ${formData.name}! Мы свяжемся с вами в ближайшее время.`);
-                
-                // Закрываем модальное окно и сбрасываем форму
-                modalManager.close(modal);
-                this.reset();
-              } else {
-                this.reportValidity();
-              }
-            });
-          }
-        }
-      });
-    });
-  }
-
   // Инициализация формы обратной связи
   const contactForm = document.querySelector('form.space-y-4');
   if (contactForm) {
@@ -351,6 +280,26 @@ export function initHomePage() {
         this.reportValidity();
       }
     });
+  }
+
+  // Mount the new Vue news component
+  const homePageNewsAppElement = document.getElementById('home-page-news-app');
+  if (homePageNewsAppElement) {
+    console.log('Found #home-page-news-app, mounting Vue component');
+    const app = createApp(HomePageNews);
+
+    // Use the existing Pinia store instance if available, otherwise create a new one
+    // This assumes createPinia() and app.use(pinia) are called elsewhere globally, e.g., in main.js
+    // const pinia = createPinia(); // Удаляем локальную инициализацию Pinia
+    // app.use(pinia); // Удаляем локальное использование Pinia
+
+    // Provide access to the global modal store if needed within the component setup
+    // app.provide('globalModalStore', useGlobalModalStore()); // This is one way, but importing directly in component is also fine
+
+    app.mount(homePageNewsAppElement);
+    console.log('HomePageNews component mounted.');
+  } else {
+    console.warn('Could not find #home-page-news-app element to mount Vue component.');
   }
 
   console.log('Инициализация главной страницы завершена');

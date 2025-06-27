@@ -6,8 +6,7 @@
   <script type="application/json" id="initial-data">
   {
     "sliders": {{{json sliders}}},
-    "offices": {{{json offices}}},
-    "defaultOffice": {{{json defaultOffice}}}
+    "offices": {{{json offices}}}
   }
   </script>
 
@@ -16,7 +15,8 @@
   </script>
 
   <!-- Секция с каруселью -->
-  <section id="swiper-section" class="bg-cover bg-center after:content-none xl:after:content-['']  before:content-none xl:before:content-[''] overflow-visible max-w-[1200px] mx-auto transition-opacity duration-300 ease-in-out animate-fadeIn duration-1000">
+  <section id="swiper-section"
+    class="bg-cover bg-center after:content-none xl:after:content-['']  before:content-none xl:before:content-[''] overflow-visible max-w-[1200px] mx-auto transition-opacity duration-300 ease-in-out animate-fadeIn duration-1000">
     <div class="swiper-container w-full relative rounded-lg overflow-visible max-w-[100vw] lg-h-[500px]">
       <div class="swiper-wrapper">
         {{#each sliders}}
@@ -26,7 +26,7 @@
           left-[5%] 
           blur-[2px]
           z-10 rotate-[-10deg]">
-          
+
           <img src="{{../basePath}}assets/img/slider/snow-flake.svg" alt="snowflake" class="absolute 
           top-[22%] 
           left-[25%] 
@@ -53,15 +53,18 @@
 
           <div class="flex flex-col lg:flex-row justify-between items-center relative h-full">
             <!-- Левая часть изображения -->
-            <div class="hidden lg:block absolute left-[-82%] w-[100%] h-full z-0 overflow-visible left-image-container scale-[1.3]">
+            <div
+              class="hidden lg:block absolute left-[-82%] w-[100%] h-full z-0 overflow-visible left-image-container scale-[1.3]">
               <img src="{{../basePath}}{{image}}" alt=""
                 class="h-full object-cover object-right absolute right-0 top-2/3 transform -translate-y-1/3">
             </div>
 
             <!-- Фоновое изображение для мобильной версии -->
-            <div class="block lg:hidden inset-0 max-w-[100vw] w-full h-full z-0 left-image-container translate-y-2/3 -translate-x-2/3 scale-150 origin-top-left pr-5">
+            <div
+              class="block lg:hidden inset-0 max-w-[100vw] w-full h-full z-0 left-image-container translate-y-2/3 -translate-x-2/3 scale-150 origin-top-left pr-5">
               <div class=""></div>
-              <img src="{{../basePath}}{{image}}" alt="{{altText}}" class="object-contain object-bottom h-full w-full mb-[10%]">
+              <img src="{{../basePath}}{{image}}" alt="{{altText}}"
+                class="object-contain object-bottom h-full w-full mb-[10%]">
             </div>
 
             <!-- Контентная часть -->
@@ -69,9 +72,9 @@
               <div class="flex flex-col lg:flex-row h-full">
                 <div class="flex flex-col w-full lg:w-2/5"></div>
                 <div class="flex flex-col w-full lg:w-3/5 h-full items-start lg:pr-[15%]">
-                  <div class="relative h-full px-4 md:px-10 md:pr-12 w-full lg:min-h-[450px] before:content-none  before:absolute before:inset-0 before:bg-gradient-to-t from-white to-brand-[#ebebeb] before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
-                    <h1
-                      class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
+                  <div
+                    class="relative h-full px-4 md:px-10 md:pr-12 w-full lg:min-h-[450px] before:content-none  before:absolute before:inset-0 before:bg-gradient-to-t from-white to-brand-[#ebebeb] before:left-0 before:top-0 before:w-full before:h-[calc(100%+100px)] before:z-0">
+                    <h1 class="text-h4 md:text-h3 font-bold text-brand-gray mb-4 md:mb-6 uppercase mt-10">
                       {{title}}</h1>
                     <button
                       class="btn-gray px-3 py-3 w-full md:w-auto rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons mb-5 px-7">{{buttonText}}</button>
@@ -84,8 +87,7 @@
             </div>
 
             <!-- Правая часть изображения -->
-            <div
-              class="hidden lg:block absolute right-[-93%] w-[100%] h-full z-0 right-image-container scale-[1.3]">
+            <div class="hidden lg:block absolute right-[-93%] w-[100%] h-full z-0 right-image-container scale-[1.3]">
               <img src="{{../basePath}}{{image}}" alt="{{altText}}"
                 class="h-full absolute left-[10%] top-2/3 transform -translate-y-1/3 object-cover object-left">
             </div>
@@ -95,11 +97,14 @@
       </div>
 
       <!-- Элементы управления -->
-      <div class="select-none flex flex-row swiper-nav-container justify-between md:justify-center px-4 md:px-0 items-center h-[40px] opacity-0 animate-fade_in animation-delay-1500">
+      <div
+        class="select-none flex flex-row swiper-nav-container justify-between md:justify-center px-4 md:px-0 items-center h-[40px] opacity-0 animate-fade_in animation-delay-1500">
         <div
           class="position-relative swiper-nav-arrow swiper-button-prev text-brand-blue after:text-lg p-4 lg:after:text-sm transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full rotate-180 cursor-pointer">
         </div>
-        <div class="swiper-pagination max-w-[6em] top-auto bottom-auto z-10 left-auto right-auto translate-x-0 translate-y-1/2 mt-3"></div>
+        <div
+          class="swiper-pagination max-w-[6em] top-auto bottom-auto z-10 left-auto right-auto translate-x-0 translate-y-1/2 mt-3">
+        </div>
         <div
           class="position-relative swiper-nav-arrow swiper-button-next text-brand-blue after:text-lg p-4 lg:after:text-sm transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full cursor-pointer">
         </div>
@@ -112,22 +117,24 @@
       <!-- Форма отслеживания -->
       <div class="bg-brand-light p-4 rounded-lg w-full md:w-2/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Отследить</h2>
-        <form class="form form-dark flex flex-row w-full gap-2" onsubmit="event.preventDefault(); alert('Пожалуйста, введите номер заказа');">
+        <form class="form form-dark flex flex-row w-full gap-2"
+          onsubmit="event.preventDefault(); alert('Пожалуйста, введите номер заказа');">
           <div class="flex items-center rounded-lg grow px-1">
-            <input type="text" placeholder="Номер заказа" class="border border-gray-200 px-4 py-3 w-full focus:outline-none text-body-secondary focus:border-gray!">
+            <input type="text" placeholder="Номер заказа"
+              class="border border-gray-200 px-4 py-3 w-full focus:outline-none text-body-secondary focus:border-gray!">
           </div>
-          <button class="btn-gray px-3 py-2 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons">
+          <button
+            class="btn-gray px-3 py-2 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons">
             <img src="{{basePath}}assets/img/search.svg" alt="Поиск" class="w-6 h-6"> Поиск
           </button>
         </form>
-        
+
         <div class="relative mt-2 w-full">
           <span
             class="text-sm text-base-content underline cursor-pointer tooltip tooltip-bottom block w-full md:w-auto md:max-w-[20rem] xl:inline-block"
             id="order-hint-trigger"
             data-tip="Обычно номер заказа можно найти в СМС, email, или в личном кабинете.&#10;Если у вас нет номера заказа — запросите его у продавца или отправителя."
-            tabindex="0"
-          >
+            tabindex="0">
             Где найти номер заказа?
           </span>
         </div>
@@ -136,7 +143,8 @@
       <!-- Форма расчета стоимости -->
       <div class="bg-brand-light p-4 rounded-lg w-full md:w-3/5">
         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Рассчитать стоимость и отправить груз</h2>
-        <form class="form form-dark flex md:flex-row flex-col items-start gap-2 mb-4" onsubmit="event.preventDefault(); alert('Расчет стоимости доставки: ...');">
+        <form class="form form-dark flex md:flex-row flex-col items-start gap-2 mb-4"
+          onsubmit="event.preventDefault(); alert('Расчет стоимости доставки: ...');">
           <div class="w-full">
             <div class="relative w-full">
               <select
@@ -146,17 +154,18 @@
                 <option value="krasnoyarsk">Красноярск</option>
                 <option value="irkutsk">Иркутск</option>
               </select>
-              
+
               <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
                 class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
             </div>
-            <div class="mb-0 md:mb-0 mt-2 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
+            <div
+              class="mb-0 md:mb-0 mt-2 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
               <span class="cursor-pointer underline leading-1.5">Новосибирск</span>
               <span class="cursor-pointer underline leading-1.5">Красноярск</span>
               <span class="cursor-pointer underline leading-1.5">Иркутск</span>
               <span class="cursor-pointer underline leading-1.5">Абакан</span>
               <span class="cursor-pointer underline leading-1.5">Томск</span>
-              
+
             </div>
           </div>
 
@@ -173,17 +182,18 @@
                 <option value="krasnoyarsk">Красноярск</option>
                 <option value="irkutsk">Иркутск</option>
               </select>
-              
+
               <img src="{{basePath}}assets/img/select-arrow.svg" alt=""
                 class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
             </div>
-            <div class="mb-4 md:mb-0 mt-2 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
+            <div
+              class="mb-4 md:mb-0 mt-2 md:mt-4 flex flex-row flex-wrap gap-2 text-caption-form text-brand-gray gap-x-2 gap-y-0">
               <span class="cursor-pointer underline leading-1.5">Новосибирск</span>
               <span class="cursor-pointer underline leading-1.5">Красноярск</span>
               <span class="cursor-pointer underline leading-1.5">Иркутск</span>
               <span class="cursor-pointer underline leading-1.5">Абакан</span>
               <span class="cursor-pointer underline leading-1.5">Томск</span>
-              
+
             </div>
           </div>
           <button class="btn-gray w-full md:w-auto text-white px-6 py-3 rounded-lg text-buttons">Рассчитать</button>
@@ -191,7 +201,7 @@
 
 
 
-        
+
       </div>
     </div>
   </section>
@@ -204,25 +214,21 @@
   <!-- Секция с картой -->
   <section class="max-w-[1200px] mx-auto w-full my-10 px-4 lg:xl-0">
     <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-2 md:mb-4">Контакты</h2>
-    <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте</p>
-  {{> map-section defaultOffice=defaultOffice}}
-  
-  <!-- Скрытый контейнер для хранения данных офисов -->
-  <div id="offices-data" class="hidden">
-    {{#each offices}}
-    <div class="office-data" 
-         data-city="{{city}}" 
-         data-address="{{address}}" 
-         data-type="{{type}}" 
-         data-phone="{{phone}}" 
-         data-email="{{email}}" 
-         data-coordinates="{{coordinates.[0]}},{{coordinates.[1]}}">
+    <p class="body-secondary caption-regular mb-4 md:mb-8">Наша компания имеет более 40 представительств по всей России.
+      Выберите одну из отмеченных точек на карте</p>
+    {{> map-section defaultOffice=defaultOffice}}
+
+    <!-- Скрытый контейнер для хранения данных офисов -->
+    <div id="offices-data" class="hidden">
+      {{#each offices}}
+      <div class="office-data" data-city="{{city}}" data-address="{{address}}" data-type="{{type}}"
+        data-phone="{{phone}}" data-email="{{email}}" data-coordinates="{{coordinates.[0]}},{{coordinates.[1]}}">
+      </div>
+      {{/each}}
     </div>
-    {{/each}}
-  </div>
-  
-  <!-- Скрытые данные для JavaScript -->
-  <script type="application/json" id="initial-data">
+
+    <!-- Скрытые данные для JavaScript -->
+    <script type="application/json" id="initial-data">
   {
       "offices": {{{json offices}}},
       "sliders": {{{json sliders}}},
@@ -230,15 +236,14 @@
   }
   </script>
 
-  <script>
-    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
-    document.addEventListener('DOMContentLoaded', function() {
+    <script>
+      window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+      document.addEventListener('DOMContentLoaded', function () {
         window.officesData = window.initialData.offices;
         console.log('Инициализированы данные офисов для карты:', window.officesData.length);
-    });
-  </script>
+      });
+    </script>
   </section>
-  
   <!-- Секция "Стать клиентом" -->
   <section
     class="lg:mt-20 max-w-[1200px] mx-auto relative px-4 w-full flex flex-row md:my-[60px] items-center">
@@ -247,7 +252,8 @@
         <div class="px-4 md:px-10 mt-20">
           <h2 class="leading-1 text-h3 md:text-h2 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h2>
         <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
-        <button id="become-client-btn" class=" btn bg-brand-blue text-white px-6 py-3 rounded-lg text-buttons">Стать клиентом</button>
+        <a href="/user-create.html" id="become-client-btn" class="btn px-6 py-3 rounded-lg text-buttons become-client-btn">Стать клиентом</a>
+        
         </div>
         <img class="w-full md:w-2/3 max-w-[600px] md:opacity-100 mx-auto md:min-h-[400px] object-contain object-bottom md:mx-0 md:mr-[-2%] md:mt-[-7%]"
         src="{{basePath}}assets/img/mens-hands.png" alt="Рукопожатие мужчин">
@@ -255,85 +261,27 @@
       
     </div>
   </section>
-
-  <!-- Секция новостей -->
-  <section class="mt-20 md:mt-16 lg:mt-20 max-w-[1200px] mx-auto mb-12 w-full px-4 xl:px-0">
-    <div class="flex flex-row justify-between items-center mb-6">
-      <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 md:mb-0">Новости</h2>
-      <a href="{{basePath}}news.html" class="max-w-[30vw] text-right text-brand-blue md:text-body-secondary leading-1.2">Смотреть все новости</a>
+  <!-- Секция с новостями (Vue компонент) -->
+  <section class="lg:mt-20 max-w-[1200px] mx-auto relative px-4 w-full flex flex-col mb-20 md:mb-0 md:mt-[60px]">
+    <div class="flex w-full justify-between mb-2 md:mb-4">
+      <h2 class="text-h3 md:text-h2 font-bold">Новости</h2>
+      <a href="/news" class="text-brand-blue underline">Посмотреть все</a>
     </div>
-
-    <div class="news-swiper-container relative md:bg-brand-light pb-10 overflow-hidden rounded-2xl">
-      <div class="swiper-wrapper">
-        {{#each newsData.news}}
-        {{#if (lt @index 3)}}
-        <div class="swiper-slide">
-          <div class="md:bg-brand-light rounded-lg md:px-10 flex flex-col justify-between md:pt-10">
-            <div class="flex justify-between items-start mb-4 w-full md:px-10">
-              <h3 class="text-h5 md:text-h4 font-bold text-brand-gray">{{title}}</h3>
-              {{#if isNew}}
-              <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g filter="url(#filter0_d_news_{{id}})">
-                  <circle cx="25" cy="25" r="5" fill="#008DD2"></circle>
-                </g>
-                <circle cx="25" cy="25" r="7" stroke="#008DD2"></circle>
-                <defs>
-                  <filter id="filter0_d_news_{{id}}" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB">
-                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"></feColorMatrix>
-                    <feOffset></feOffset>
-                    <feGaussianBlur stdDeviation="10"></feGaussianBlur>
-                    <feComposite in2="hardAlpha" operator="out"></feComposite>
-                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0 0.823529 0 0 0 1 0">
-                    </feColorMatrix>
-                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_{{id}}"></feBlend>
-                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_news_{{id}}" result="shape">
-                    </feBlend>
-                  </filter>
-                </defs>
-              </svg>
-              {{/if}}
-            </div>
-
-            <p class="md:text-body-secondary text-brand-gray mb-6 line-clamp-4 md:px-10 md:line-clamp-6">
-              {{content}}
-            </p>
-
-            <div class="flex justify-between items-center w-full md:px-10 my-4">
-              <div class="text-caption-form text-brand-gray">{{date}}</div>
-              <a href="{{../basePath}}news.html" class="text-brand-blue md:text-body-secondary">Подробнее</a>
-            </div>
-          </div>
-        </div>
-        {{/if}}
-        {{/each}}
-      </div>
-
-      <!-- Заменяем абсолютно позиционированные кнопки на flex-контейнер -->
-      <div class="select-none flex flex-row justify-between items-center h-[40px] mt-6 px-0 md:px-20 justify-center items-center">
-        <div
-          class="news-swiper-button-prev swiper-button-prev text-brand-blue after:text-lg p-4 lg:after:text-sm transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full rotate-180 cursor-pointer absolute top-1/2 -translate-y-1/2 left-0 lg:static lg:transform-none">
-        </div>
-        <div class="m-5 news-swiper-pagination max-w-[6em] top-auto bottom-auto z-10 left-auto right-auto translate-x-0 translate-y-1/2 mt-3"></div>
-        <div
-          class="news-swiper-button-next swiper-button-next text-brand-blue after:text-lg p-4 lg:after:text-sm transition-opacity h-10 w-10 shadow-none border-2 border-brand-blue rounded-full cursor-pointer absolute top-1/2 -translate-y-1/2 right-0 lg:static lg:transform-none">
-        </div>
-      </div>
-    </div>
+    <div id="home-page-news-app" class="w-full"></div>
   </section>
 
   <!-- Секция о компании -->
   <section class="px-4 xl:px-0 max-w-[1920px] mx-auto relative lg:py-40 md:py-10 md:py-20">
-    <img src="{{../basePath}}assets/img/layout/Logotype_aerline_sliced.png" alt="Логотип компании" class="absolute top-0 left-0 w-full h-full object-contain object-bottom">
+    <img src="{{../basePath}}assets/img/layout/Logotype_aerline_sliced.png" alt="Логотип компании"
+      class="absolute top-0 left-0 w-full h-full object-contain object-bottom">
     <div class="max-w-[1200px] mx-auto">
       <h2 class="text-h3 md:text-h2 font-bold mb-15 md:mb-10">О компании</h2>
-    <div class="relative">
+      <div class="relative">
 
 
-      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10 pl-7 md:pl-0 [&>div>h3]:mt-[-1em] md:[&>div>h3]:mt-0">
-        <div class="
+        <div
+          class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 relative z-10 pl-7 md:pl-0 [&>div>h3]:mt-[-1em] md:[&>div>h3]:mt-0">
+          <div class="
           relative 
           pt-0
           lg:pt-10
@@ -351,7 +299,7 @@
         ">
 
 
-          <div class="
+            <div class="
             point-pulse
             absolute
             w-[2rem]
@@ -367,7 +315,7 @@
             lg:-translate-x-1/2
             lg:-translate-y-1/2
         ">
-            <div class="
+              <div class="
                 point-pulse-inner
                 absolute
                 w-[1rem]
@@ -380,17 +328,18 @@
                 -translate-x-1/2
                 -translate-y-1/2
             "></div>
+            </div>
+
+            <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Aeroline since 2013</h3>
+            <p class="text-brand-gray">
+              Aeroline на&nbsp;рынке транспортно-экспедиционных услуг с&nbsp;2011&nbsp;года. За&nbsp;это&nbsp;время
+              мы&nbsp;прошли путь от&nbsp;региональной транспортной компании в&nbsp;г.&nbsp;Красноярск, оказывающей
+              услуги
+              Экспресс, до&nbsp;крупного логистического оператора на&nbsp;территории всей Сибири.
+            </p>
           </div>
 
-          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Aeroline since 2013</h3>
-          <p class="text-brand-gray">
-            Aeroline на&nbsp;рынке транспортно-экспедиционных услуг с&nbsp;2013&nbsp;года. За&nbsp;это&nbsp;время
-            мы&nbsp;прошли путь от&nbsp;региональной транспортной компании в&nbsp;г.&nbsp;Красноярск, оказывающей услуги
-            Экспресс, до&nbsp;крупного логистического оператора на&nbsp;территории всей Сибири.
-          </p>
-        </div>
-
-        <div class="
+          <div class="
           relative 
           pt-0
           lg:pt-10
@@ -414,7 +363,7 @@
           lg:rounded-bl-none
         ">
 
-          <div class="
+            <div class="
             point-pulse
             absolute
             w-[2rem]
@@ -432,7 +381,7 @@
             lg:translate-x-1/2
             lg:-translate-y-1/2
         ">
-            <div class="
+              <div class="
                 point-pulse-inner
                 absolute
                 w-[1rem]
@@ -447,19 +396,19 @@
             "></div>
 
 
-            
+
+            </div>
+
+            <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Расширение сети</h3>
+            <p class="text-brand-gray">
+              Мы&nbsp;не&nbsp;останавливаемся на&nbsp;достигнутом и&nbsp;продолжаем развивать географическую сеть
+              обслуживания для&nbsp;наших партнёров. Так, в&nbsp;2020&nbsp;году мы&nbsp;начали оказывать
+              транспортно-экспедиционные услуги по&nbsp;сборному сервису в&nbsp;Иркутской области,
+              а&nbsp;в&nbsp;2021&nbsp;году в&nbsp;республике Бурятия.
+            </p>
           </div>
 
-          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Расширение сети</h3>
-          <p class="text-brand-gray">
-            Мы&nbsp;не&nbsp;останавливаемся на&nbsp;достигнутом и&nbsp;продолжаем развивать географическую сеть
-            обслуживания для&nbsp;наших партнёров. Так, в&nbsp;2020&nbsp;году мы&nbsp;начали оказывать
-            транспортно-экспедиционные услуги по&nbsp;сборному сервису в&nbsp;Иркутской области,
-            а&nbsp;в&nbsp;2021&nbsp;году в&nbsp;республике Бурятия.
-          </p>
-        </div>
-
-        <div class="
+          <div class="
           relative 
           pt-0
           lg:pt-10
@@ -487,7 +436,7 @@
 
 
 
-          <div class="
+            <div class="
             point-pulse
             absolute
             w-[2rem]
@@ -505,7 +454,7 @@
             lg:-translate-x-1/2
             lg:translate-y-1/2
         ">
-            <div class="
+              <div class="
                 point-pulse-inner
                 absolute
                 w-[1rem]
@@ -518,17 +467,18 @@
                 -translate-x-1/2
                 -translate-y-1/2
             "></div>
+            </div>
+
+
+
+            <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Новые терминалы</h3>
+            <p class="text-brand-gray">
+              В&nbsp;течении нескольких лет&nbsp;открыты крупные терминалы в&nbsp;городах Красноярск, Новосибирск,
+              Иркутск, кросс-докинговые терминалы в&nbsp;городах Ачинск, Кемерово, Новокузнецк, Томск.
+            </p>
           </div>
 
-
-          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Новые терминалы</h3>
-          <p class="text-brand-gray">
-            В&nbsp;течении нескольких лет&nbsp;открыты крупные терминалы в&nbsp;городах Красноярск, Новосибирск,
-            Иркутск, кросс-докинговые терминалы в&nbsp;городах Ачинск, Кемерово, Новокузнецк, Томск.
-          </p>
-        </div>
-
-        <div class="
+          <div class="
           relative 
           pt-0
           lg:pt-10
@@ -546,7 +496,7 @@
 
 
 
-          <div class="
+            <div class="
             point-pulse
             absolute
             w-[2rem]
@@ -565,7 +515,7 @@
             lg:translate-x-1/2
             lg:translate-y-1/2
         ">
-            <div class="
+              <div class="
                 point-pulse-inner
                 absolute
                 w-[1rem]
@@ -578,59 +528,38 @@
                 -translate-x-1/2
                 -translate-y-1/2
             "></div>
+            </div>
+
+
+
+            <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Крупные партнеры</h3>
+            <p class="text-brand-gray">
+              За&nbsp;период роста компании, в&nbsp;перечне наших ключевых партнёров появились крупные федеральные
+              и&nbsp;транснациональные компании, с&nbsp;которыми мы&nbsp;сотрудничаем уже&nbsp;на&nbsp;протяжении
+              нескольких&nbsp;лет. Каждый год&nbsp;мы заключаем договора с&nbsp;новыми Партнёрами, которые доверяют нам,
+              оценивают наш&nbsp;сервис только на&nbsp;«отлично»!»
+            </p>
           </div>
-
-
-
-          <h3 class="text-h5 md:text-h4 font-bold text-brand-gray mb-3">Крупные партнеры</h3>
-          <p class="text-brand-gray">
-            За&nbsp;период роста компании, в&nbsp;перечне наших ключевых партнёров появились крупные федеральные
-            и&nbsp;транснациональные компании, с&nbsp;которыми мы&nbsp;сотрудничаем уже&nbsp;на&nbsp;протяжении
-            нескольких&nbsp;лет. Каждый год&nbsp;мы заключаем договора с&nbsp;новыми Партнёрами, которые доверяют нам,
-            оценивают наш&nbsp;сервис только на&nbsp;«отлично»!»
-          </p>
         </div>
       </div>
-    </div>
     </div>
   </section>
 
   <!-- Секция с контактной формой -->
-  <section class="bg-brand-light max-w-[1920px] mx-auto  w-full pt-[8%] md:pb-[5%] md:px-4 3xl:rounded-tl-3xl xl:rounded-tr-3xl">
+  <section
+    class="bg-brand-light max-w-[1920px] mx-auto  w-full pt-[8%] md:pb-[5%] md:px-4 3xl:rounded-tl-3xl xl:rounded-tr-3xl">
     <div id="contact-form" class="md:bg-white rounded-2xl relative w-auto max-w-[1200px] mx-auto">
       <!-- Добавляем фоновое изображение как элемент img вместо CSS background-image -->
-      <img src="{{basePath}}assets/img/layout/circles.svg" alt="Фоновые круги" class="absolute right-0 bottom-0 w-1/2 h-auto pointer-events-none z-0 opacity-80 select-none">
-      
+      <img src="{{basePath}}assets/img/layout/circles.svg" alt="Фоновые круги"
+        class="absolute right-0 bottom-0 w-1/2 h-auto pointer-events-none z-0 opacity-80 select-none">
+
       <div class="flex flex-col md:flex-row items-stretch relative z-10">
         <div class="w-full md:w-1/2 mb-6 md:mb-0 p-6 md:p-10 lg:px-20">
           <h2 class="text-h4 md:text-h2 font-bold text-brand-gray mb-3">Остались вопросы?</h2>
           <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами!</p>
 
-          <form class="form space-y-4">
-            <div class="relative">
-              <input type="text" placeholder="Имя"
-                class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary bg-brand-light" required>
-              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
-            </div>
-            <div class="relative">
-              <input type="tel" placeholder="+7 (___) ___-__-__"
-                class="px-4 py-3 rounded-lg border border-gray-200 w-full focus:outline-none focus:border-brand-blue text-body-secondary bg-brand-light" required>
-              <span class="text-brand-red absolute right-3 top-2.5 text-lg font-bold">*</span>
-            </div>
+          <div id="contact-form-app"></div>
 
-            <button type="submit"
-              class="btn text-white px-6 py-3 rounded-lg text-buttons w-full">Отправить</button>
-
-            <div class="flex items-start">
-              <div class="flex items-center h-6 mt-1">
-                <input id="consent-checkbox" type="checkbox" required class="w-4 h-4 border-gray-300 rounded">
-              </div>
-              <label for="consent-checkbox" class="ml-2 text-caption-form text-brand-gray leading-1.2">
-                Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой
-                конфиденциальности <span class="text-brand-red font-bold">*</span>
-              </label>
-            </div>
-          </form>
         </div>
 
         <div class="w-full md:w-1/2 flex justify-center md:justify-end md:items-end">
@@ -642,78 +571,10 @@
   </section>
 </main>
 
-<!-- Модальное окно "Стать клиентом" -->
-<div id="become-client-modal" class="modal">
-  <div class="modal-backdrop"></div>
-  <div class="modal-box max-w-md bg-brand-light">
-    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
-    </button>
-    
-    <div class="modal-content">
-      <h3 class="text-h4 font-bold text-brand-gray mb-4">Стать клиентом Aeroline</h3>
-      <p class="text-body-secondary text-brand-gray mb-6">Заполните форму и мы свяжемся с вами для оформления договора</p>
-      
-      <form class="form space-y-4" id="become-client-form">
-        <div>
-          <label for="client-name" class="block text-brand-gray font-medium mb-2">ФИО / Название организации</label>
-          <input type="text" id="client-name" placeholder="Введите ФИО или название организации" 
-                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                 required>
-        </div>
-        
-        <div>
-          <label for="client-phone" class="block text-brand-gray font-medium mb-2">Телефон</label>
-          <input type="tel" id="client-phone" placeholder="+7 (___) ___-__-__" 
-                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                 required>
-        </div>
-        
-        <div>
-          <label for="client-email" class="block text-brand-gray font-medium mb-2">Email</label>
-          <input type="email" id="client-email" placeholder="example@email.com" 
-                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                 required>
-        </div>
-        
-        <div>
-          <label for="client-type" class="block text-brand-gray font-medium mb-2">Тип клиента</label>
-          <select id="client-type" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue">
-            <option value="individual">Физическое лицо</option>
-            <option value="legal">Юридическое лицо</option>
-            <option value="entrepreneur">ИП</option>
-          </select>
-        </div>
-        
-        <div>
-          <label for="client-comment" class="block text-brand-gray font-medium mb-2">Комментарий</label>
-          <textarea id="client-comment" placeholder="Дополнительная информация" 
-                   class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue h-24"></textarea>
-        </div>
-        
-        <div class="flex items-start">
-          <div class="flex items-center h-6 mt-1">
-            <input id="client-consent" type="checkbox" required class="w-4 h-4 border-gray-300 rounded">
-          </div>
-          <label for="client-consent" class="ml-2 text-sm text-brand-gray leading-1.2">
-            Согласен на обработку персональных данных, ознакомлен с пользовательским соглашением и политикой
-            конфиденциальности <span class="text-brand-red font-bold">*</span>
-          </label>
-        </div>
-        
-        <div class="flex gap-3 pt-2">
-          <button type="button" class="modal-close flex-1 px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
-            Отмена
-          </button>
-          <button type="submit" class="flex-1 px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-opacity-90 transition-colors">
-            Отправить заявку
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+<!-- Подключаем глобальный скрипт Vue модального окна -->
+<script type="module" src="{{basePath}}assets/vue/entrypoints/global-modal.js"></script>
 
+<!-- Подключаем основной скрипт страницы -->
 <script type="module" src="{{basePath}}assets/js/page-entrypoints/index.js"></script>
 
 {{> footer menuType="main"}}

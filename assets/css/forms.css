@@ -1,0 +1,29 @@
+.aero-form input,
+.aero-form select,
+.aero-form textarea,
+.aero-form .mx-input {
+  @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue text-body-secondary bg-white;
+}
+.aero-form label {
+  @apply block text-brand-gray font-medium mb-2;
+}
+.aero-form .mx-datepicker{
+  @apply w-full;
+}
+
+.aero-form .mx-datepicker .mx-input{
+  @apply w-full px-4 py-3 h-auto;
+}
+.aero-form .base-form-error {
+  @apply mt-1 text-sm text-red-600;
+}
+
+/* Base styles for checkboxes */
+.aero-form input[type="checkbox"] {
+  @apply w-4 h-4 border-gray-300 rounded focus:ring-brand-blue focus:ring-2;
+}
+
+/* Base styles for checkbox labels (no specific class needed if they are always with input[type="checkbox"]) */
+.aero-form label[for][class*="ml-2"] {
+  @apply text-caption-form text-brand-gray leading-1.2;
+} 

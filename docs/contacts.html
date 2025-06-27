@@ -11,21 +11,22 @@
       position: relative;
     }
   </style>
-  <script type="module" crossorigin src="./assets/js/chunks/modulepreload-polyfill-DaKOjhqt.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\utils-BNm1gLxD.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\modal-manager-BXwv0V3q.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\login-MQpmDG8h.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\map-CARIFrPc.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\slider-RQj1bYBM.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\ui-IvxluLAz.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\main-BjpAztqv.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\pagination-5ZDBlBwd.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\autocomplete-CjR2TxGO.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\contacts-page-BOyk5AYS.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\page-entrypoints\contacts-Bbp9GlLg.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/css/main-CmssxDWk.css">
+  <script type="module" crossorigin src="./assets/js/contacts-BBaMwvyE.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/runtime-dom.esm-bundler-D-nyHKmb.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/globalModal-Bn39zecy.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/global-modal-B-x-mtux.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/slider-q_NEEFv1.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/modal-manager-BXwv0V3q.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/mainJs-B6nrBSwm.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/globalUiJs-bfub43N5.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/pagination-5ZDBlBwd.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/autocomplete-CjR2TxGO.js">
+  <link rel="stylesheet" crossorigin href="./assets/css/mainJs-Dpq_6fwN.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/globalUiJs-Bmjs9o48.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
+<div class="vue-app-mount-point"></div>
 <header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
     <div class="flex justify-between items-center py-2 md:py-4">
@@ -38,10 +39,10 @@
       <!-- Социальные иконки на десктопе -->
       <div class="hidden lg:flex items-center space-x-6">
         <div class="flex items-center space-x-3">
-          <a href="https://t.me/aeroline" class="text-brand-blue">
+          <a href="https://t.me/aeroline" class="text-brand-blue" target="_blank">
           <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
         </a>
-        <a href="https://wa.me/83912050025" class="text-brand-blue">
+        <a href="https://wa.me/83912050025" class="text-brand-blue" target="_blank">
           <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
         </a>
         </div>
@@ -57,7 +58,7 @@
           <img src="./assets/img/q-8XezpOIm.svg" alt="Question" class="h-9 w-9">
         </a>
         </div>
-        <a href="profile.html" class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block">Войти</a>
+        <button class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block open-login-modal-btn">Войти</button>
       </div>
       
       <!-- Бургер-меню для мобильных устройств -->
@@ -71,11 +72,11 @@
     <!-- Навигация и контакты в десктопе -->
     <div class="hidden lg:flex justify-between border-t border-gray-200">
       <div class="text-body flex items-center space-x-4 py-3">
-        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue">
+        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue" target="_blank">
           <img src="./assets/img/messages3-BrscMbdi.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue">
+        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue" target="_blank">
           <img src="./assets/img/callcalling-_7VMGJtF.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
@@ -125,75 +126,32 @@
       <div class="w-full flex flex-col gap-5 mt-auto pt-10">
         <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
         <div class="flex items-center space-x-2" id="mobile-menu-social">
-          <a href="https://t.me/aeroline" class="text-white rounded-full">
+          <a href="https://t.me/aeroline" class="text-white rounded-full" target="_blank">
             <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-10 w-10">
           </a>
-          <a href="https://wa.me/83912050025" class="text-white rounded-full">
+          <a href="https://wa.me/83912050025" class="text-white rounded-full" target="_blank">
             <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-10 w-10">
           </a>
           
         </div>
-        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email">
+        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email" target="_blank">
           <img src="./assets/img/messages3-BrscMbdi.svg" alt="Email" class="h-6 w-6 mx-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone">
+        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone" target="_blank">
           <img src="./assets/img/callcalling-_7VMGJtF.svg" alt="Phone" class="h-6 w-6 mx-2">
           8 391 205 00 25
         </a>
         
       </div>
-      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end" id="mobile-menu-login">Войти</button>
+      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end open-login-modal-btn" id="mobile-menu-login">Войти</button>
    
       </div>
        </div>
   </div>
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
-</div>
 
-<!-- Модальное окно входа -->
-<div id="login-modal" class="modal">
-  <div class="modal-backdrop"></div>
-  <div class="modal-box max-w-md bg-brand-light">
-    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
-    </button>
-    
-    <div class="modal-content">
-      <h3 class="text-h4 font-bold text-brand-gray mb-4">Вход в систему</h3>
-      
-      <form id="login-form" class="space-y-4">
-        <div>
-          <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-          <input type="email" id="login-email" name="email" required 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                 placeholder="example@email.com"
-                 value="test@aeroline.su">
-        </div>
-        
-        <div>
-          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
-          <input type="password" id="login-password" name="password" required 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                 placeholder="••••••••"
-                 value="password123">
-        </div>
-        
-        <div class="flex justify-end gap-3">
-          <button type="button" class="modal-close px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
-            Отмена
-          </button>
-          <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-blue-600 transition-colors">
-            Войти
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-</body>
-</html> 
 <main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
   <!-- Hero-блок -->
   <section class="hero-section">
@@ -204,23 +162,10 @@
     <!-- Секция с картой -->
     <div class="max-w-[1200px] mx-auto w-full mb-10">
       
-      <!-- Скрипт для передачи данных дефолтного офиса в JavaScript -->
-      <script>
-        window.defaultOfficeData = {
-          city: "Москва",
-          address: "Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»",
-          type: "Центральный офис",
-          phone: "+7 495 123 45 67",
-          email: "moscow.center@aeroline.com",
-          mapLink: "#",
-          coordinates: [55.789461, 37.551735]
-        };
-      </script>
-      
       <!-- Интерактивная карта -->
       <div class="relative w-full rounded-lg">
         <!-- Контейнер для Яндекс.Карты -->
-        <div id="map" class="w-full h-[80vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10">
+        <div id="map" class="w-full h-[80vh] md:h-[500px] min-h-[400px] rounded-2xl bg-gray-100 z-10" data-offices='[{&quot;city&quot;:&quot;Москва&quot;,&quot;address&quot;:&quot;Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»&quot;,&quot;type&quot;:&quot;Центральный офис&quot;,&quot;phone&quot;:&quot;+7 495 123 45 67&quot;,&quot;email&quot;:&quot;moscow.center@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.789461,37.551735]},{&quot;city&quot;:&quot;Москва&quot;,&quot;address&quot;:&quot;ул Лесная, д 7, БЦ «Белые Сады»&quot;,&quot;type&quot;:&quot;Дополнительный офис&quot;,&quot;phone&quot;:&quot;+7 495 123 45 68&quot;,&quot;email&quot;:&quot;moscow.north@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.77879,37.5877]},{&quot;city&quot;:&quot;Москва&quot;,&quot;address&quot;:&quot;Пресненская набережная, 12, БЦ «Башня Федерация»&quot;,&quot;type&quot;:&quot;Офис продаж&quot;,&quot;phone&quot;:&quot;+7 495 123 45 70&quot;,&quot;email&quot;:&quot;moscow.city@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.749633,37.537434]},{&quot;city&quot;:&quot;Санкт-Петербург&quot;,&quot;address&quot;:&quot;Московский просп., д. 212, БЦ «Московский»&quot;,&quot;type&quot;:&quot;Северо-Западный офис&quot;,&quot;phone&quot;:&quot;+7 812 765 43 21&quot;,&quot;email&quot;:&quot;spb.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[59.8521,30.3273]},{&quot;city&quot;:&quot;Санкт-Петербург&quot;,&quot;address&quot;:&quot;Пискаревский просп., д. 2, корп. 2, БЦ «Бенуа»&quot;,&quot;type&quot;:&quot;Офис развития&quot;,&quot;phone&quot;:&quot;+7 812 765 43 23&quot;,&quot;email&quot;:&quot;spb.piskarevsky@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[59.958949,30.405969]},{&quot;city&quot;:&quot;Новосибирск&quot;,&quot;address&quot;:&quot;ул. Ленина, 21/1 корпус 1, ТОЦ «Манхэттен»&quot;,&quot;type&quot;:&quot;Сибирский офис&quot;,&quot;phone&quot;:&quot;+7 383 543 21 00&quot;,&quot;email&quot;:&quot;nsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.028739,82.905823]},{&quot;city&quot;:&quot;Новосибирск&quot;,&quot;address&quot;:&quot;Красный проспект, 82, ДЦ «СОВНАРХОЗ»&quot;,&quot;type&quot;:&quot;Представительство&quot;,&quot;phone&quot;:&quot;+7 383 543 21 03&quot;,&quot;email&quot;:&quot;nsk.sales@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.046966,82.91672]},{&quot;city&quot;:&quot;Екатеринбург&quot;,&quot;address&quot;:&quot;8 Марта ул., 51, БЦ «Саммит»&quot;,&quot;type&quot;:&quot;Уральский офис&quot;,&quot;phone&quot;:&quot;+7 343 987 65 43&quot;,&quot;email&quot;:&quot;ekb.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[56.823592,60.605613]},{&quot;city&quot;:&quot;Екатеринбург&quot;,&quot;address&quot;:&quot;Улица Малышева, 51, БЦ «Высоцкий»&quot;,&quot;type&quot;:&quot;Офис обслуживания&quot;,&quot;phone&quot;:&quot;+7 343 987 65 45&quot;,&quot;email&quot;:&quot;ekb.service@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[56.8361,60.6146]},{&quot;city&quot;:&quot;Казань&quot;,&quot;address&quot;:&quot;Сибгата Хакима, 62, БЦ «UNO»&quot;,&quot;type&quot;:&quot;Поволжский офис&quot;,&quot;phone&quot;:&quot;+7 843 210 98 76&quot;,&quot;email&quot;:&quot;kazan.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.815079,49.143865]},{&quot;city&quot;:&quot;Казань&quot;,&quot;address&quot;:&quot;Спартаковская ул., 6, БЦ «Suvar Plaza»&quot;,&quot;type&quot;:&quot;Дополнительный офис&quot;,&quot;phone&quot;:&quot;+7 843 210 98 77&quot;,&quot;email&quot;:&quot;kazan.south@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.778871,49.129573]},{&quot;city&quot;:&quot;Нижний Новгород&quot;,&quot;address&quot;:&quot;Мотальный переулок, 8, БЦ «Бугров Бизнес Парк»&quot;,&quot;type&quot;:&quot;Волжский офис&quot;,&quot;phone&quot;:&quot;+7 831 654 32 10&quot;,&quot;email&quot;:&quot;nn.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[56.2945,43.9475]},{&quot;city&quot;:&quot;Челябинск&quot;,&quot;address&quot;:&quot;Ленина проспект, 26а, БЦ «ВИДГОФ (Бовид)»&quot;,&quot;type&quot;:&quot;Южно-Уральский офис&quot;,&quot;phone&quot;:&quot;+7 351 111 22 33&quot;,&quot;email&quot;:&quot;chel.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.161749,61.431569]},{&quot;city&quot;:&quot;Самара&quot;,&quot;address&quot;:&quot;Стара Загора, 27, ОЦ «Информатика»&quot;,&quot;type&quot;:&quot;Поволжский филиал&quot;,&quot;phone&quot;:&quot;+7 846 333 44 55&quot;,&quot;email&quot;:&quot;samara.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[53.224854,50.199879]},{&quot;city&quot;:&quot;Омск&quot;,&quot;address&quot;:&quot;Проспект Карла Маркса, 24, ТЦ «Каскад»&quot;,&quot;type&quot;:&quot;Западно-Сибирский офис&quot;,&quot;phone&quot;:&quot;+7 3812 77 88 99&quot;,&quot;email&quot;:&quot;omsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[54.962902,73.38475]},{&quot;city&quot;:&quot;Ростов-на-Дону&quot;,&quot;address&quot;:&quot;Улица Суворова, 91, БЦ «на Суворова»&quot;,&quot;type&quot;:&quot;Южный федеральный округ офис&quot;,&quot;phone&quot;:&quot;+7 863 222 11 00&quot;,&quot;email&quot;:&quot;rostov.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[47.2269,39.7327]},{&quot;city&quot;:&quot;Уфа&quot;,&quot;address&quot;:&quot;Проспект Октября, 132/3, БЦ «Капитал»&quot;,&quot;type&quot;:&quot;Региональное представительство&quot;,&quot;phone&quot;:&quot;+7 347 212 34 56&quot;,&quot;email&quot;:&quot;ufa.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[54.7675,55.9983]},{&quot;city&quot;:&quot;Красноярск&quot;,&quot;address&quot;:&quot;Улица Ленина, 118, БЦ «Спасский»&quot;,&quot;type&quot;:&quot;Восточно-Сибирский офис&quot;,&quot;phone&quot;:&quot;+7 391 234 56 78&quot;,&quot;email&quot;:&quot;krasnoyarsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[56.0125,92.8687]},{&quot;city&quot;:&quot;Пермь&quot;,&quot;address&quot;:&quot;Комсомольский проспект, 100, БЦ «Белый дом»&quot;,&quot;type&quot;:&quot;Представительство&quot;,&quot;phone&quot;:&quot;+7 342 567 89 01&quot;,&quot;email&quot;:&quot;perm.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[58.0069,56.2483]},{&quot;city&quot;:&quot;Волгоград&quot;,&quot;address&quot;:&quot;Проспект Ленина, 54, БЦ «Волгоград-Сити»&quot;,&quot;type&quot;:&quot;Южный офис продаж&quot;,&quot;phone&quot;:&quot;+7 8442 78 90 12&quot;,&quot;email&quot;:&quot;volgograd.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[48.7188,44.5204]},{&quot;city&quot;:&quot;Воронеж&quot;,&quot;address&quot;:&quot;Плехановская улица, 53, БЦ «Галерея Чижова»&quot;,&quot;type&quot;:&quot;Центр обслуживания&quot;,&quot;phone&quot;:&quot;+7 473 345 67 89&quot;,&quot;email&quot;:&quot;voronezh.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[51.6669,39.1989]},{&quot;city&quot;:&quot;Саратов&quot;,&quot;address&quot;:&quot;Улица Московская, 106, БЦ «Ковчег»&quot;,&quot;type&quot;:&quot;Региональный склад&quot;,&quot;phone&quot;:&quot;+7 8452 90 12 34&quot;,&quot;email&quot;:&quot;saratov.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[51.5309,46.0306]},{&quot;city&quot;:&quot;Краснодар&quot;,&quot;address&quot;:&quot;Улица Красная, 176, БЦ «Кристалл»&quot;,&quot;type&quot;:&quot;Кубанский офис&quot;,&quot;phone&quot;:&quot;+7 861 234 56 78&quot;,&quot;email&quot;:&quot;krasnodar.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[45.0416,38.9744]},{&quot;city&quot;:&quot;Тюмень&quot;,&quot;address&quot;:&quot;Улица Республики, 143, БЦ «Нобель»&quot;,&quot;type&quot;:&quot;Филиал Уральского региона&quot;,&quot;phone&quot;:&quot;+7 3452 76 54 32&quot;,&quot;email&quot;:&quot;tyumen.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[57.1499,65.5492]},{&quot;city&quot;:&quot;Ижевск&quot;,&quot;address&quot;:&quot;Улица Пушкинская, 268, БЦ «Эльгрин»&quot;,&quot;type&quot;:&quot;Приволжский филиал&quot;,&quot;phone&quot;:&quot;+7 3412 12 34 56&quot;,&quot;email&quot;:&quot;izhevsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[56.8488,53.2206]},{&quot;city&quot;:&quot;Барнаул&quot;,&quot;address&quot;:&quot;Улица Ленина, 39, БЦ «Крафт»&quot;,&quot;type&quot;:&quot;Алтайский офис&quot;,&quot;phone&quot;:&quot;+7 3852 98 76 54&quot;,&quot;email&quot;:&quot;barnaul.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[53.3484,83.7788]},{&quot;city&quot;:&quot;Иркутск&quot;,&quot;address&quot;:&quot;Улица Карла Маркса, 40, БЦ «Московские ряды»&quot;,&quot;type&quot;:&quot;Восточно-Сибирский филиал&quot;,&quot;phone&quot;:&quot;+7 3952 45 67 89&quot;,&quot;email&quot;:&quot;irkutsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[52.2858,104.2831]},{&quot;city&quot;:&quot;Хабаровск&quot;,&quot;address&quot;:&quot;Улица Муравьева-Амурского, 4, БЦ «Парус»&quot;,&quot;type&quot;:&quot;Дальневосточный офис&quot;,&quot;phone&quot;:&quot;+7 4212 32 10 98&quot;,&quot;email&quot;:&quot;khabarovsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[48.4831,135.0748]},{&quot;city&quot;:&quot;Ярославль&quot;,&quot;address&quot;:&quot;Улица Свободы, 2, БЦ «Галерея»&quot;,&quot;type&quot;:&quot;Центральный федеральный округ офис&quot;,&quot;phone&quot;:&quot;+7 4852 77 66 55&quot;,&quot;email&quot;:&quot;yaroslavl.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[57.6256,39.8856]},{&quot;city&quot;:&quot;Владивосток&quot;,&quot;address&quot;:&quot;Улица Светланская, 106, БЦ «Владивосток-Сити»&quot;,&quot;type&quot;:&quot;Тихоокеанский офис&quot;,&quot;phone&quot;:&quot;+7 4232 54 32 10&quot;,&quot;email&quot;:&quot;vladivostok.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[43.1189,131.8986]},{&quot;city&quot;:&quot;Махачкала&quot;,&quot;address&quot;:&quot;Проспект Имама Шамиля, 65, БЦ «Махачкала»&quot;,&quot;type&quot;:&quot;Северо-Кавказский офис&quot;,&quot;phone&quot;:&quot;+7 8722 43 21 09&quot;,&quot;email&quot;:&quot;makhachkala.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[42.9818,47.4975]},{&quot;city&quot;:&quot;Томск&quot;,&quot;address&quot;:&quot;Проспект Ленина, 82А, БЦ «Вертикаль»&quot;,&quot;type&quot;:&quot;Сибирский региональный офис&quot;,&quot;phone&quot;:&quot;+7 3822 65 43 21&quot;,&quot;email&quot;:&quot;tomsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[56.4862,84.9458]},{&quot;city&quot;:&quot;Оренбург&quot;,&quot;address&quot;:&quot;Улица Советская, 38, БЦ «Восход»&quot;,&quot;type&quot;:&quot;Южно-Уральский филиал&quot;,&quot;phone&quot;:&quot;+7 3532 99 88 77&quot;,&quot;email&quot;:&quot;orenburg.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[51.777,55.097]},{&quot;city&quot;:&quot;Кемерово&quot;,&quot;address&quot;:&quot;Проспект Советский, 58, БЦ «Кемерово-Сити»&quot;,&quot;type&quot;:&quot;Кузбасский офис&quot;,&quot;phone&quot;:&quot;+7 3842 44 55 66&quot;,&quot;email&quot;:&quot;kemerovo.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[55.3942,86.0772]},{&quot;city&quot;:&quot;Астрахань&quot;,&quot;address&quot;:&quot;Улица Кирова, 87, БЦ «Лотос»&quot;,&quot;type&quot;:&quot;Южный офис&quot;,&quot;phone&quot;:&quot;+7 8512 11 22 33&quot;,&quot;email&quot;:&quot;astrakhan.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[46.3477,48.0401]},{&quot;city&quot;:&quot;Липецк&quot;,&quot;address&quot;:&quot;Улица Зегеля, 21, БЦ «Авантаж»&quot;,&quot;type&quot;:&quot;Центрально-Черноземный офис&quot;,&quot;phone&quot;:&quot;+7 4742 55 44 33&quot;,&quot;email&quot;:&quot;lipetsk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[52.6101,39.5786]},{&quot;city&quot;:&quot;Киров&quot;,&quot;address&quot;:&quot;Улица Воровского, 44, БЦ «Кристалл»&quot;,&quot;type&quot;:&quot;Волго-Вятский офис&quot;,&quot;phone&quot;:&quot;+7 8332 66 77 88&quot;,&quot;email&quot;:&quot;kirov.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[58.5991,49.669]},{&quot;city&quot;:&quot;Севастополь&quot;,&quot;address&quot;:&quot;Улица Ленина, 30, БЦ «Адмирал»&quot;,&quot;type&quot;:&quot;Крымский офис&quot;,&quot;phone&quot;:&quot;+7 8692 90 12 34&quot;,&quot;email&quot;:&quot;sevastopol.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[44.6167,33.5255]},{&quot;city&quot;:&quot;Тула&quot;,&quot;address&quot;:&quot;Проспект Ленина, 85, БЦ «Парус»&quot;,&quot;type&quot;:&quot;Тульский офис&quot;,&quot;phone&quot;:&quot;+7 4872 78 90 12&quot;,&quot;email&quot;:&quot;tula.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[54.1952,37.6186]},{&quot;city&quot;:&quot;Курск&quot;,&quot;address&quot;:&quot;Улица Ленина, 12, БЦ «Central Park»&quot;,&quot;type&quot;:&quot;Курский филиал&quot;,&quot;phone&quot;:&quot;+7 4712 11 22 33&quot;,&quot;email&quot;:&quot;kursk.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[51.7345,36.1918]},{&quot;city&quot;:&quot;Рязань&quot;,&quot;address&quot;:&quot;Улица Почтовая, 61, БЦ «Рязань-Сити»&quot;,&quot;type&quot;:&quot;Рязанский офис&quot;,&quot;phone&quot;:&quot;+7 4912 33 44 55&quot;,&quot;email&quot;:&quot;ryazan.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[54.6291,39.7369]},{&quot;city&quot;:&quot;Белгород&quot;,&quot;address&quot;:&quot;Проспект Славы, 80, БЦ «Белгород»&quot;,&quot;type&quot;:&quot;Белгородский филиал&quot;,&quot;phone&quot;:&quot;+7 4722 66 77 88&quot;,&quot;email&quot;:&quot;belgorod.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[50.5976,36.5815]},{&quot;city&quot;:&quot;Владимир&quot;,&quot;address&quot;:&quot;Улица Большая Московская, 59, БЦ «Гермес»&quot;,&quot;type&quot;:&quot;Владимирский офис&quot;,&quot;phone&quot;:&quot;+7 4922 12 34 56&quot;,&quot;email&quot;:&quot;vladimir.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[56.1287,40.4075]},{&quot;city&quot;:&quot;Калининград&quot;,&quot;address&quot;:&quot;Проспект Мира, 80, БЦ «Морской»&quot;,&quot;type&quot;:&quot;Западный офис&quot;,&quot;phone&quot;:&quot;+7 4012 98 76 54&quot;,&quot;email&quot;:&quot;kaliningrad.main@aeroline.com&quot;,&quot;mapLink&quot;:&quot;#&quot;,&quot;coordinates&quot;:[54.7171,20.4851]}]'>
           <!-- Скрываем кнопку 'Открыть в Яндекс.Картах' -->
           <style>
             .ymaps-2-1-79-gotoymaps {
@@ -238,21 +183,8 @@
         </div>
         
         <!-- Информационная панель с данными офиса -->
-        <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto  z-10" data-coordinates="55.789461,37.551735">
-          <div class="flex justify-between items-center mb-2">
-            <div class="font-bold text-2xl text-brand-gray">Екатеринбург</div>
-            <button class="text-brand-gray hover:text-brand-blue transition-colors close-info-panel">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          <div class="text-brand-gray">8 Марта ул., 51, БЦ «Саммит»</div>
-          <div class="hidden lg:block text-brand-gray">Уральский офис</div>
-          <div class="hidden lg:block text-brand-gray">+7 343 987 65 43</div>
-          <div class="hidden lg:block text-brand-gray">ekb.main@aeroline.com</div>
-          <button class="bg-brand-blue mt-2 md:mt-5 text-white rounded-lg py-3 text-buttons text-regular btn">Подробнее</button>
+        <div class="map-info-panel min-w-[300px] absolute bottom-4 md:top-5 md:auto md:right-6 md:left-auto md:translate-x-0 md:translate-y-0 left-4  right-4 md:w-[30%] bg-white rounded-2xl shadow-xl md:shadow-lg p-4 md:p-10 flex flex-col gap-1 md:gap-2 overflow-y-auto hidden z-10">
+          <!-- Содержимое будет заполнено через JavaScript -->
         </div>
       </div>
       
@@ -265,8 +197,7 @@
   {
     "offices": [{"city":"Москва","address":"Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»","type":"Центральный офис","phone":"+7 495 123 45 67","email":"moscow.center@aeroline.com","mapLink":"#","coordinates":[55.789461,37.551735]},{"city":"Москва","address":"ул Лесная, д 7, БЦ «Белые Сады»","type":"Дополнительный офис","phone":"+7 495 123 45 68","email":"moscow.north@aeroline.com","mapLink":"#","coordinates":[55.77879,37.5877]},{"city":"Москва","address":"Пресненская набережная, 12, БЦ «Башня Федерация»","type":"Офис продаж","phone":"+7 495 123 45 70","email":"moscow.city@aeroline.com","mapLink":"#","coordinates":[55.749633,37.537434]},{"city":"Санкт-Петербург","address":"Московский просп., д. 212, БЦ «Московский»","type":"Северо-Западный офис","phone":"+7 812 765 43 21","email":"spb.main@aeroline.com","mapLink":"#","coordinates":[59.8521,30.3273]},{"city":"Санкт-Петербург","address":"Пискаревский просп., д. 2, корп. 2, БЦ «Бенуа»","type":"Офис развития","phone":"+7 812 765 43 23","email":"spb.piskarevsky@aeroline.com","mapLink":"#","coordinates":[59.958949,30.405969]},{"city":"Новосибирск","address":"ул. Ленина, 21/1 корпус 1, ТОЦ «Манхэттен»","type":"Сибирский офис","phone":"+7 383 543 21 00","email":"nsk.main@aeroline.com","mapLink":"#","coordinates":[55.028739,82.905823]},{"city":"Новосибирск","address":"Красный проспект, 82, ДЦ «СОВНАРХОЗ»","type":"Представительство","phone":"+7 383 543 21 03","email":"nsk.sales@aeroline.com","mapLink":"#","coordinates":[55.046966,82.91672]},{"city":"Екатеринбург","address":"8 Марта ул., 51, БЦ «Саммит»","type":"Уральский офис","phone":"+7 343 987 65 43","email":"ekb.main@aeroline.com","mapLink":"#","coordinates":[56.823592,60.605613]},{"city":"Екатеринбург","address":"Улица Малышева, 51, БЦ «Высоцкий»","type":"Офис обслуживания","phone":"+7 343 987 65 45","email":"ekb.service@aeroline.com","mapLink":"#","coordinates":[56.8361,60.6146]},{"city":"Казань","address":"Сибгата Хакима, 62, БЦ «UNO»","type":"Поволжский офис","phone":"+7 843 210 98 76","email":"kazan.main@aeroline.com","mapLink":"#","coordinates":[55.815079,49.143865]},{"city":"Казань","address":"Спартаковская ул., 6, БЦ «Suvar Plaza»","type":"Дополнительный офис","phone":"+7 843 210 98 77","email":"kazan.south@aeroline.com","mapLink":"#","coordinates":[55.778871,49.129573]},{"city":"Нижний Новгород","address":"Мотальный переулок, 8, БЦ «Бугров Бизнес Парк»","type":"Волжский офис","phone":"+7 831 654 32 10","email":"nn.main@aeroline.com","mapLink":"#","coordinates":[56.2945,43.9475]},{"city":"Челябинск","address":"Ленина проспект, 26а, БЦ «ВИДГОФ (Бовид)»","type":"Южно-Уральский офис","phone":"+7 351 111 22 33","email":"chel.main@aeroline.com","mapLink":"#","coordinates":[55.161749,61.431569]},{"city":"Самара","address":"Стара Загора, 27, ОЦ «Информатика»","type":"Поволжский филиал","phone":"+7 846 333 44 55","email":"samara.main@aeroline.com","mapLink":"#","coordinates":[53.224854,50.199879]},{"city":"Омск","address":"Проспект Карла Маркса, 24, ТЦ «Каскад»","type":"Западно-Сибирский офис","phone":"+7 3812 77 88 99","email":"omsk.main@aeroline.com","mapLink":"#","coordinates":[54.962902,73.38475]},{"city":"Ростов-на-Дону","address":"Улица Суворова, 91, БЦ «на Суворова»","type":"Южный федеральный округ офис","phone":"+7 863 222 11 00","email":"rostov.main@aeroline.com","mapLink":"#","coordinates":[47.2269,39.7327]},{"city":"Уфа","address":"Проспект Октября, 132/3, БЦ «Капитал»","type":"Региональное представительство","phone":"+7 347 212 34 56","email":"ufa.main@aeroline.com","mapLink":"#","coordinates":[54.7675,55.9983]},{"city":"Красноярск","address":"Улица Ленина, 118, БЦ «Спасский»","type":"Восточно-Сибирский офис","phone":"+7 391 234 56 78","email":"krasnoyarsk.main@aeroline.com","mapLink":"#","coordinates":[56.0125,92.8687]},{"city":"Пермь","address":"Комсомольский проспект, 100, БЦ «Белый дом»","type":"Представительство","phone":"+7 342 567 89 01","email":"perm.main@aeroline.com","mapLink":"#","coordinates":[58.0069,56.2483]},{"city":"Волгоград","address":"Проспект Ленина, 54, БЦ «Волгоград-Сити»","type":"Южный офис продаж","phone":"+7 8442 78 90 12","email":"volgograd.main@aeroline.com","mapLink":"#","coordinates":[48.7188,44.5204]},{"city":"Воронеж","address":"Плехановская улица, 53, БЦ «Галерея Чижова»","type":"Центр обслуживания","phone":"+7 473 345 67 89","email":"voronezh.main@aeroline.com","mapLink":"#","coordinates":[51.6669,39.1989]},{"city":"Саратов","address":"Улица Московская, 106, БЦ «Ковчег»","type":"Региональный склад","phone":"+7 8452 90 12 34","email":"saratov.main@aeroline.com","mapLink":"#","coordinates":[51.5309,46.0306]},{"city":"Краснодар","address":"Улица Красная, 176, БЦ «Кристалл»","type":"Кубанский офис","phone":"+7 861 234 56 78","email":"krasnodar.main@aeroline.com","mapLink":"#","coordinates":[45.0416,38.9744]},{"city":"Тюмень","address":"Улица Республики, 143, БЦ «Нобель»","type":"Филиал Уральского региона","phone":"+7 3452 76 54 32","email":"tyumen.main@aeroline.com","mapLink":"#","coordinates":[57.1499,65.5492]},{"city":"Ижевск","address":"Улица Пушкинская, 268, БЦ «Эльгрин»","type":"Приволжский филиал","phone":"+7 3412 12 34 56","email":"izhevsk.main@aeroline.com","mapLink":"#","coordinates":[56.8488,53.2206]},{"city":"Барнаул","address":"Улица Ленина, 39, БЦ «Крафт»","type":"Алтайский офис","phone":"+7 3852 98 76 54","email":"barnaul.main@aeroline.com","mapLink":"#","coordinates":[53.3484,83.7788]},{"city":"Иркутск","address":"Улица Карла Маркса, 40, БЦ «Московские ряды»","type":"Восточно-Сибирский филиал","phone":"+7 3952 45 67 89","email":"irkutsk.main@aeroline.com","mapLink":"#","coordinates":[52.2858,104.2831]},{"city":"Хабаровск","address":"Улица Муравьева-Амурского, 4, БЦ «Парус»","type":"Дальневосточный офис","phone":"+7 4212 32 10 98","email":"khabarovsk.main@aeroline.com","mapLink":"#","coordinates":[48.4831,135.0748]},{"city":"Ярославль","address":"Улица Свободы, 2, БЦ «Галерея»","type":"Центральный федеральный округ офис","phone":"+7 4852 77 66 55","email":"yaroslavl.main@aeroline.com","mapLink":"#","coordinates":[57.6256,39.8856]},{"city":"Владивосток","address":"Улица Светланская, 106, БЦ «Владивосток-Сити»","type":"Тихоокеанский офис","phone":"+7 4232 54 32 10","email":"vladivostok.main@aeroline.com","mapLink":"#","coordinates":[43.1189,131.8986]},{"city":"Махачкала","address":"Проспект Имама Шамиля, 65, БЦ «Махачкала»","type":"Северо-Кавказский офис","phone":"+7 8722 43 21 09","email":"makhachkala.main@aeroline.com","mapLink":"#","coordinates":[42.9818,47.4975]},{"city":"Томск","address":"Проспект Ленина, 82А, БЦ «Вертикаль»","type":"Сибирский региональный офис","phone":"+7 3822 65 43 21","email":"tomsk.main@aeroline.com","mapLink":"#","coordinates":[56.4862,84.9458]},{"city":"Оренбург","address":"Улица Советская, 38, БЦ «Восход»","type":"Южно-Уральский филиал","phone":"+7 3532 99 88 77","email":"orenburg.main@aeroline.com","mapLink":"#","coordinates":[51.777,55.097]},{"city":"Кемерово","address":"Проспект Советский, 58, БЦ «Кемерово-Сити»","type":"Кузбасский офис","phone":"+7 3842 44 55 66","email":"kemerovo.main@aeroline.com","mapLink":"#","coordinates":[55.3942,86.0772]},{"city":"Астрахань","address":"Улица Кирова, 87, БЦ «Лотос»","type":"Южный офис","phone":"+7 8512 11 22 33","email":"astrakhan.main@aeroline.com","mapLink":"#","coordinates":[46.3477,48.0401]},{"city":"Липецк","address":"Улица Зегеля, 21, БЦ «Авантаж»","type":"Центрально-Черноземный офис","phone":"+7 4742 55 44 33","email":"lipetsk.main@aeroline.com","mapLink":"#","coordinates":[52.6101,39.5786]},{"city":"Киров","address":"Улица Воровского, 44, БЦ «Кристалл»","type":"Волго-Вятский офис","phone":"+7 8332 66 77 88","email":"kirov.main@aeroline.com","mapLink":"#","coordinates":[58.5991,49.669]},{"city":"Севастополь","address":"Улица Ленина, 30, БЦ «Адмирал»","type":"Крымский офис","phone":"+7 8692 90 12 34","email":"sevastopol.main@aeroline.com","mapLink":"#","coordinates":[44.6167,33.5255]},{"city":"Тула","address":"Проспект Ленина, 85, БЦ «Парус»","type":"Тульский офис","phone":"+7 4872 78 90 12","email":"tula.main@aeroline.com","mapLink":"#","coordinates":[54.1952,37.6186]},{"city":"Курск","address":"Улица Ленина, 12, БЦ «Central Park»","type":"Курский филиал","phone":"+7 4712 11 22 33","email":"kursk.main@aeroline.com","mapLink":"#","coordinates":[51.7345,36.1918]},{"city":"Рязань","address":"Улица Почтовая, 61, БЦ «Рязань-Сити»","type":"Рязанский офис","phone":"+7 4912 33 44 55","email":"ryazan.main@aeroline.com","mapLink":"#","coordinates":[54.6291,39.7369]},{"city":"Белгород","address":"Проспект Славы, 80, БЦ «Белгород»","type":"Белгородский филиал","phone":"+7 4722 66 77 88","email":"belgorod.main@aeroline.com","mapLink":"#","coordinates":[50.5976,36.5815]},{"city":"Владимир","address":"Улица Большая Московская, 59, БЦ «Гермес»","type":"Владимирский офис","phone":"+7 4922 12 34 56","email":"vladimir.main@aeroline.com","mapLink":"#","coordinates":[56.1287,40.4075]},{"city":"Калининград","address":"Проспект Мира, 80, БЦ «Морской»","type":"Западный офис","phone":"+7 4012 98 76 54","email":"kaliningrad.main@aeroline.com","mapLink":"#","coordinates":[54.7171,20.4851]}],
     "cities": ["Москва","Санкт-Петербург","Новосибирск","Екатеринбург","Казань","Нижний Новгород","Челябинск","Самара","Омск","Ростов-на-Дону","Уфа","Красноярск","Пермь","Волгоград","Воронеж","Саратов","Краснодар","Тюмень","Ижевск","Барнаул","Иркутск","Хабаровск","Ярославль","Владивосток","Махачкала","Томск","Оренбург","Кемерово","Астрахань","Липецк","Киров","Севастополь","Тула","Курск","Рязань","Белгород","Владимир","Калининград"],
-    "pagination": {"currentPage":2,"totalPages":8},
-    "defaultOffice": {"city":"Москва","address":"Ленинградский пр-кт, д 35 стр 1, БЦ «Искра-Парк»","type":"Центральный офис","phone":"+7 495 123 45 67","email":"moscow.center@aeroline.com","mapLink":"#","coordinates":[55.789461,37.551735]}
+    "pagination": {"currentPage":1,"totalPages":8}
   }
   </script>
 
@@ -1046,13 +977,13 @@
       <nav class="inline-flex items-center space-x-1">
         <button
           class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors"
-          >&lt;</button>
+          disabled>&lt;</button>
 
         <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">1</button>
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-blue text-white font-bold">1</button>
 
         <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-blue text-white font-bold">2</button>
+          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">2</button>
 
         <button
           class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">3</button>
@@ -1115,19 +1046,19 @@
 
         <div class="flex flex-col items-stretch gap-y-2">
           <div class="flex items-center space-x-4 my-6">
-            <a href="https://t.me/aeroline" class="text-white">
+            <a href="https://t.me/aeroline" class="text-white" target="_blank">
               <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
             </a>
 
-            <a href="https://wa.me/83912050025" class="text-white">
+            <a href="https://wa.me/83912050025" class="text-white" target="_blank">
               <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
             </a>
           </div>
-          <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center mb-2">
+          <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center mb-2" target="_blank">
             <img src="./assets/img/messages3_white-CxOA5ieA.svg" alt="Email" class="h-6 w-6 mr-2">
             mail@aeroline.su
           </a>
-          <a href="tel:83912050025" class="body-secondary flex items-center mb-8">
+          <a href="tel:83912050025" class="body-secondary flex items-center mb-8" target="_blank">
             <img src="./assets/img/callcalling_white-BPRUXMnE.svg" alt="Phone" class="h-6 w-6 mr-2">
             8 391 205 00 25
           </a>
@@ -1151,19 +1082,19 @@
       </div>
 
       <div class="flex flex-col">
-        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3 hover:text-brand-blue transition-colors">
+        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3 hover:text-brand-blue transition-colors" target="_blank">
           <img src="./assets/img/messages3_white-CxOA5ieA.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="caption-regular flex items-center mb-4 hover:text-brand-blue transition-colors">
+        <a href="tel:83912050025" class="caption-regular flex items-center mb-4 hover:text-brand-blue transition-colors" target="_blank">
           <img src="./assets/img/callcalling_white-BPRUXMnE.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
         <div class="flex items-center space-x-3">
-          <a href="https://t.me/aeroline" class="text-white hover:opacity-80 transition-opacity">
+          <a href="https://t.me/aeroline" class="text-white hover:opacity-80 transition-opacity" target="_blank">
             <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
           </a>
-          <a href="https://wa.me/83912050025" class="text-white hover:opacity-80 transition-opacity">
+          <a href="https://wa.me/83912050025" class="text-white hover:opacity-80 transition-opacity" target="_blank">
             <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
           </a>
         </div>

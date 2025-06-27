@@ -11,17 +11,25 @@
       position: relative;
     }
   </style>
-  <script type="module" crossorigin src="./assets/js/chunks/modulepreload-polyfill-DaKOjhqt.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\utils-BNm1gLxD.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\modal-manager-BXwv0V3q.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\login-MQpmDG8h.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\map-CARIFrPc.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\slider-RQj1bYBM.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\modules\ui-IvxluLAz.js"></script>
-  <script type="module" crossorigin src="./assets/js/assets\js\main-BjpAztqv.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/css/main-CmssxDWk.css">
+  <script type="module" crossorigin src="./assets/js/orderList-DEXFbWUK.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/runtime-dom.esm-bundler-D-nyHKmb.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/globalModal-Bn39zecy.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/global-modal-B-x-mtux.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/slider-q_NEEFv1.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/modal-manager-BXwv0V3q.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/mainJs-B6nrBSwm.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/globalUiJs-bfub43N5.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/EasyDataTableWrapper-CbXOgrOE.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/DeleteConfirmModal-By-KeGne.js">
+  <link rel="stylesheet" crossorigin href="./assets/css/mainJs-Dpq_6fwN.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/globalUiJs-Bmjs9o48.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/EasyDataTableWrapper-Ev7WQvgQ.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/DeleteConfirmModal-Bsx9uojj.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/orderList-BwBC4xty.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
+<div class="vue-app-mount-point"></div>
 <header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
     <div class="flex justify-between items-center py-2 md:py-4">
@@ -34,10 +42,10 @@
       <!-- Социальные иконки на десктопе -->
       <div class="hidden lg:flex items-center space-x-6">
         <div class="flex items-center space-x-3">
-          <a href="https://t.me/aeroline" class="text-brand-blue">
+          <a href="https://t.me/aeroline" class="text-brand-blue" target="_blank">
           <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
         </a>
-        <a href="https://wa.me/83912050025" class="text-brand-blue">
+        <a href="https://wa.me/83912050025" class="text-brand-blue" target="_blank">
           <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
         </a>
         </div>
@@ -53,7 +61,7 @@
           <img src="./assets/img/q-8XezpOIm.svg" alt="Question" class="h-9 w-9">
         </a>
         </div>
-        <a href="profile.html" class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block">Войти</a>
+        <button class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block open-login-modal-btn">Войти</button>
       </div>
       
       <!-- Бургер-меню для мобильных устройств -->
@@ -67,11 +75,11 @@
     <!-- Навигация и контакты в десктопе -->
     <div class="hidden lg:flex justify-between border-t border-gray-200">
       <div class="text-body flex items-center space-x-4 py-3">
-        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue">
+        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue" target="_blank">
           <img src="./assets/img/messages3-BrscMbdi.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue">
+        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue" target="_blank">
           <img src="./assets/img/callcalling-_7VMGJtF.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
@@ -209,87 +217,58 @@
       <div class="w-full flex flex-col gap-5 mt-auto pt-10">
         <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
         <div class="flex items-center space-x-2" id="mobile-menu-social">
-          <a href="https://t.me/aeroline" class="text-white rounded-full">
+          <a href="https://t.me/aeroline" class="text-white rounded-full" target="_blank">
             <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-10 w-10">
           </a>
-          <a href="https://wa.me/83912050025" class="text-white rounded-full">
+          <a href="https://wa.me/83912050025" class="text-white rounded-full" target="_blank">
             <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-10 w-10">
           </a>
           
         </div>
-        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email">
+        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email" target="_blank">
           <img src="./assets/img/messages3-BrscMbdi.svg" alt="Email" class="h-6 w-6 mx-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone">
+        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone" target="_blank">
           <img src="./assets/img/callcalling-_7VMGJtF.svg" alt="Phone" class="h-6 w-6 mx-2">
           8 391 205 00 25
         </a>
         
       </div>
-      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end" id="mobile-menu-login">Войти</button>
+      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end open-login-modal-btn" id="mobile-menu-login">Войти</button>
    
       </div>
        </div>
   </div>
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
-</div>
 
-<!-- Модальное окно входа -->
-<div id="login-modal" class="modal">
-  <div class="modal-backdrop"></div>
-  <div class="modal-box max-w-md bg-brand-light">
-    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
-    </button>
-    
-    <div class="modal-content">
-      <h3 class="text-h4 font-bold text-brand-gray mb-4">Вход в систему</h3>
-      
-      <form id="login-form" class="space-y-4">
-        <div>
-          <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-          <input type="email" id="login-email" name="email" required 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                 placeholder="example@email.com"
-                 value="test@aeroline.su">
-        </div>
-        
-        <div>
-          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
-          <input type="password" id="login-password" name="password" required 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                 placeholder="••••••••"
-                 value="password123">
-        </div>
-        
-        <div class="flex justify-end gap-3">
-          <button type="button" class="modal-close px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
-            Отмена
-          </button>
-          <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-blue-600 transition-colors">
-            Войти
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-</body>
-</html> 
-<main class="container mx-auto px-4 py-12 max-w-[1100px] flex-grow flex flex-col justify-center">
-  <section class="mb-12">
-    <div class="title-wrapper mb-6">
-      <h1 class="animated-title text-center">Список заказов</h1>
-    </div>
-    <div class="subtitle-wrapper">
-      <p class="animated-subtitle body mb-4 text-center">
-        Здесь будет отображаться список ваших заказов.
-      </p>
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  
+  <!-- Список заказов -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div id="orders-table" class="bg-white rounded-lg">
+      <!-- Заголовок таблицы -->
+      <div class="border-b border-gray-200">
+        <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 mt-10">Список заказов</h1>
+      </div>
+
+      <!-- Таблица -->
+      <div id="orders-table-app"></div>
     </div>
   </section>
+ 
 </main>
+
+<script type="application/json" id="initial-data">
+{
+    "orders": [{"id":1,"number":"ГЗИВБЛ765448766","created":"09.04.2023","from":{"region":"Красноярский край","city":"Красноярск"},"to":{"region":"Новосибирская область","city":"Новосибирск"},"pickupDate":"10.01.2024","deliveryDate":"12.01.2024","status":"В ПУТИ"},{"id":2,"number":"ГЗИВБЛ765448767","created":"09.04.2023","from":{"region":"Красноярский край","city":"Красноярск"},"to":{"region":"Новосибирская область","city":"Новосибирск"},"pickupDate":"10.01.2024","deliveryDate":"12.01.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":3,"number":"ГЗИВБЛ765448768","created":"09.04.2023","from":{"region":"Красноярский край","city":"Красноярск"},"to":{"region":"Новосибирская область","city":"Новосибирск"},"pickupDate":"10.01.2024","deliveryDate":"12.01.2024","status":"НД"},{"id":4,"number":"ГЗИВБЛ765448769","created":"10.04.2023","from":{"region":"Томская область","city":"Томск"},"to":{"region":"Кемеровская область","city":"Кемерово"},"pickupDate":"15.01.2024","deliveryDate":"17.01.2024","status":"СОЗДАН"},{"id":5,"number":"ГЗИВБЛ765448770","created":"11.04.2023","from":{"region":"Алтайский край","city":"Барнаул"},"to":{"region":"Омская область","city":"Омск"},"pickupDate":"18.01.2024","deliveryDate":"20.01.2024","status":"В ПУТИ"},{"id":6,"number":"ГЗИВБЛ765448771","created":"12.04.2023","from":{"region":"Иркутская область","city":"Иркутск"},"to":{"region":"Республика Бурятия","city":"Улан-Удэ"},"pickupDate":"20.01.2024","deliveryDate":"23.01.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":7,"number":"ГЗИВБЛ765448772","created":"13.04.2023","from":{"region":"Республика Хакасия","city":"Абакан"},"to":{"region":"Красноярский край","city":"Красноярск"},"pickupDate":"22.01.2024","deliveryDate":"24.01.2024","status":"НД"},{"id":8,"number":"ГЗИВБЛ765448773","created":"14.04.2023","from":{"region":"Московская область","city":"Москва"},"to":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"pickupDate":"25.01.2024","deliveryDate":"27.01.2024","status":"СОЗДАН"},{"id":9,"number":"ГЗИВБЛ765448774","created":"15.04.2023","from":{"region":"Тюменская область","city":"Тюмень"},"to":{"region":"Свердловская область","city":"Екатеринбург"},"pickupDate":"28.01.2024","deliveryDate":"30.01.2024","status":"В ПУТИ"},{"id":10,"number":"ГЗИВБЛ765448775","created":"16.04.2023","from":{"region":"Челябинская область","city":"Челябинск"},"to":{"region":"Пермский край","city":"Пермь"},"pickupDate":"01.02.2024","deliveryDate":"03.02.2024","status":"НД"},{"id":11,"number":"ГЗИВБЛ765448776","created":"17.04.2023","from":{"region":"Нижегородская область","city":"Нижний Новгород"},"to":{"region":"Республика Татарстан","city":"Казань"},"pickupDate":"05.02.2024","deliveryDate":"07.02.2024","status":"В ПУТИ"},{"id":12,"number":"ГЗИВБЛ765448777","created":"18.04.2023","from":{"region":"Самарская область","city":"Самара"},"to":{"region":"Ростовская область","city":"Ростов-на-Дону"},"pickupDate":"08.02.2024","deliveryDate":"10.02.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":13,"number":"ГЗИВБЛ765448778","created":"19.04.2023","from":{"region":"Краснодарский край","city":"Краснодар"},"to":{"region":"Московская область","city":"Москва"},"pickupDate":"11.02.2024","deliveryDate":"14.02.2024","status":"НД"},{"id":14,"number":"ГЗИВБЛ765448779","created":"20.04.2023","from":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"to":{"region":"Тюменская область","city":"Тюмень"},"pickupDate":"15.02.2024","deliveryDate":"18.02.2024","status":"СОЗДАН"},{"id":15,"number":"ГЗИВБЛ765448780","created":"21.04.2023","from":{"region":"Свердловская область","city":"Екатеринбург"},"to":{"region":"Челябинская область","city":"Челябинск"},"pickupDate":"19.02.2024","deliveryDate":"21.02.2024","status":"В ПУТИ"},{"id":16,"number":"ГЗИВБЛ765448781","created":"22.04.2023","from":{"region":"Пермский край","city":"Пермь"},"to":{"region":"Нижегородская область","city":"Нижний Новгород"},"pickupDate":"22.02.2024","deliveryDate":"25.02.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":17,"number":"ГЗИВБЛ765448782","created":"23.04.2023","from":{"region":"Республика Татарстан","city":"Казань"},"to":{"region":"Самарская область","city":"Самара"},"pickupDate":"26.02.2024","deliveryDate":"28.02.2024","status":"НД"},{"id":18,"number":"ГЗИВБЛ765448783","created":"24.04.2023","from":{"region":"Ростовская область","city":"Ростов-на-Дону"},"to":{"region":"Краснодарский край","city":"Краснодар"},"pickupDate":"29.02.2024","deliveryDate":"02.03.2024","status":"СОЗДАН"},{"id":19,"number":"ГЗИВБЛ765448784","created":"25.04.2023","from":{"region":"Московская область","city":"Москва"},"to":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"pickupDate":"04.03.2024","deliveryDate":"06.03.2024","status":"В ПУТИ"},{"id":20,"number":"ГЗИВБЛ765448785","created":"26.04.2023","from":{"region":"Тюменская область","city":"Тюмень"},"to":{"region":"Свердловская область","city":"Екатеринбург"},"pickupDate":"07.03.2024","deliveryDate":"09.03.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":21,"number":"ГЗИВБЛ765448786","created":"27.04.2023","from":{"region":"Челябинская область","city":"Челябинск"},"to":{"region":"Пермский край","city":"Пермь"},"pickupDate":"10.03.2024","deliveryDate":"12.03.2024","status":"НД"},{"id":22,"number":"ГЗИВБЛ765448787","created":"28.04.2023","from":{"region":"Красноярский край","city":"Красноярск"},"to":{"region":"Томская область","city":"Томск"},"pickupDate":"13.03.2024","deliveryDate":"15.03.2024","status":"СОЗДАН"},{"id":23,"number":"ГЗИВБЛ765448788","created":"29.04.2023","from":{"region":"Новосибирская область","city":"Новосибирск"},"to":{"region":"Кемеровская область","city":"Кемерово"},"pickupDate":"16.03.2024","deliveryDate":"18.03.2024","status":"В ПУТИ"},{"id":24,"number":"ГЗИВБЛ765448789","created":"30.04.2023","from":{"region":"Алтайский край","city":"Барнаул"},"to":{"region":"Омская область","city":"Омск"},"pickupDate":"19.03.2024","deliveryDate":"21.03.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":25,"number":"ГЗИВБЛ765448790","created":"01.05.2023","from":{"region":"Иркутская область","city":"Иркутск"},"to":{"region":"Республика Бурятия","city":"Улан-Удэ"},"pickupDate":"22.03.2024","deliveryDate":"25.03.2024","status":"НД"},{"id":26,"number":"ГЗИВБЛ765448791","created":"02.05.2023","from":{"region":"Республика Хакасия","city":"Абакан"},"to":{"region":"Красноярский край","city":"Красноярск"},"pickupDate":"26.03.2024","deliveryDate":"28.03.2024","status":"СОЗДАН"},{"id":27,"number":"ГЗИВБЛ765448792","created":"03.05.2023","from":{"region":"Московская область","city":"Москва"},"to":{"region":"Нижегородская область","city":"Нижний Новгород"},"pickupDate":"29.03.2024","deliveryDate":"01.04.2024","status":"В ПУТИ"},{"id":28,"number":"ГЗИВБЛ765448793","created":"04.05.2023","from":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"to":{"region":"Республика Татарстан","city":"Казань"},"pickupDate":"02.04.2024","deliveryDate":"04.04.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":29,"number":"ГЗИВБЛ765448794","created":"05.05.2023","from":{"region":"Тюменская область","city":"Тюмень"},"to":{"region":"Самарская область","city":"Самара"},"pickupDate":"05.04.2024","deliveryDate":"07.04.2024","status":"НД"},{"id":30,"number":"ГЗИВБЛ765448795","created":"06.05.2023","from":{"region":"Свердловская область","city":"Екатеринбург"},"to":{"region":"Ростовская область","city":"Ростов-на-Дону"},"pickupDate":"08.04.2024","deliveryDate":"10.04.2024","status":"СОЗДАН"},{"id":31,"number":"ГЗИВБЛ765448796","created":"07.05.2023","from":{"region":"Челябинская область","city":"Челябинск"},"to":{"region":"Краснодарский край","city":"Краснодар"},"pickupDate":"11.04.2024","deliveryDate":"13.04.2024","status":"В ПУТИ"},{"id":32,"number":"ГЗИВБЛ765448797","created":"08.05.2023","from":{"region":"Пермский край","city":"Пермь"},"to":{"region":"Московская область","city":"Москва"},"pickupDate":"14.04.2024","deliveryDate":"17.04.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":33,"number":"ГЗИВБЛ765448798","created":"09.05.2023","from":{"region":"Нижегородская область","city":"Нижний Новгород"},"to":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"pickupDate":"18.04.2024","deliveryDate":"20.04.2024","status":"НД"},{"id":34,"number":"ГЗИВБЛ765448799","created":"10.05.2023","from":{"region":"Республика Татарстан","city":"Казань"},"to":{"region":"Тюменская область","city":"Тюмень"},"pickupDate":"21.04.2024","deliveryDate":"23.04.2024","status":"СОЗДАН"},{"id":35,"number":"ГЗИВБЛ765448800","created":"11.05.2023","from":{"region":"Самарская область","city":"Самара"},"to":{"region":"Свердловская область","city":"Екатеринбург"},"pickupDate":"24.04.2024","deliveryDate":"26.04.2024","status":"В ПУТИ"},{"id":36,"number":"ГЗИВБЛ765448801","created":"12.05.2023","from":{"region":"Ростовская область","city":"Ростов-на-Дону"},"to":{"region":"Челябинская область","city":"Челябинск"},"pickupDate":"27.04.2024","deliveryDate":"29.04.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":37,"number":"ГЗИВБЛ765448802","created":"13.05.2023","from":{"region":"Краснодарский край","city":"Краснодар"},"to":{"region":"Пермский край","city":"Пермь"},"pickupDate":"30.04.2024","deliveryDate":"03.05.2024","status":"НД"},{"id":38,"number":"ГЗИВБЛ765448803","created":"14.05.2023","from":{"region":"Красноярский край","city":"Красноярск"},"to":{"region":"Новосибирская область","city":"Новосибирск"},"pickupDate":"04.05.2024","deliveryDate":"06.05.2024","status":"СОЗДАН"},{"id":39,"number":"ГЗИВБЛ765448804","created":"15.05.2023","from":{"region":"Томская область","city":"Томск"},"to":{"region":"Кемеровская область","city":"Кемерово"},"pickupDate":"07.05.2024","deliveryDate":"09.05.2024","status":"В ПУТИ"},{"id":40,"number":"ГЗИВБЛ765448805","created":"16.05.2023","from":{"region":"Алтайский край","city":"Барнаул"},"to":{"region":"Омская область","city":"Омск"},"pickupDate":"10.05.2024","deliveryDate":"12.05.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":41,"number":"ГЗИВБЛ765448806","created":"17.05.2023","from":{"region":"Иркутская область","city":"Иркутск"},"to":{"region":"Республика Бурятия","city":"Улан-Удэ"},"pickupDate":"13.05.2024","deliveryDate":"16.05.2024","status":"НД"},{"id":42,"number":"ГЗИВБЛ765448807","created":"18.05.2023","from":{"region":"Республика Хакасия","city":"Абакан"},"to":{"region":"Красноярский край","city":"Красноярск"},"pickupDate":"17.05.2024","deliveryDate":"19.05.2024","status":"СОЗДАН"},{"id":43,"number":"ГЗИВБЛ765448808","created":"19.05.2023","from":{"region":"Московская область","city":"Москва"},"to":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"pickupDate":"20.05.2024","deliveryDate":"22.05.2024","status":"В ПУТИ"},{"id":44,"number":"ГЗИВБЛ765448809","created":"20.05.2023","from":{"region":"Тюменская область","city":"Тюмень"},"to":{"region":"Свердловская область","city":"Екатеринбург"},"pickupDate":"23.05.2024","deliveryDate":"25.05.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":45,"number":"ГЗИВБЛ765448810","created":"21.05.2023","from":{"region":"Челябинская область","city":"Челябинск"},"to":{"region":"Пермский край","city":"Пермь"},"pickupDate":"26.05.2024","deliveryDate":"28.05.2024","status":"НД"},{"id":46,"number":"ГЗИВБЛ765448811","created":"22.05.2023","from":{"region":"Нижегородская область","city":"Нижний Новгород"},"to":{"region":"Республика Татарстан","city":"Казань"},"pickupDate":"29.05.2024","deliveryDate":"31.05.2024","status":"В ПУТИ"},{"id":47,"number":"ГЗИВБЛ765448812","created":"23.05.2023","from":{"region":"Самарская область","city":"Самара"},"to":{"region":"Ростовская область","city":"Ростов-на-Дону"},"pickupDate":"01.06.2024","deliveryDate":"03.06.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":48,"number":"ГЗИВБЛ765448813","created":"24.05.2023","from":{"region":"Краснодарский край","city":"Краснодар"},"to":{"region":"Московская область","city":"Москва"},"pickupDate":"04.06.2024","deliveryDate":"07.06.2024","status":"НД"},{"id":49,"number":"ГЗИВБЛ765448814","created":"25.05.2023","from":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"to":{"region":"Тюменская область","city":"Тюмень"},"pickupDate":"08.06.2024","deliveryDate":"10.06.2024","status":"СОЗДАН"},{"id":50,"number":"ГЗИВБЛ765448815","created":"26.05.2023","from":{"region":"Свердловская область","city":"Екатеринбург"},"to":{"region":"Челябинская область","city":"Челябинск"},"pickupDate":"11.06.2024","deliveryDate":"13.06.2024","status":"В ПУТИ"},{"id":51,"number":"ГЗИВБЛ765448816","created":"27.05.2023","from":{"region":"Пермский край","city":"Пермь"},"to":{"region":"Нижегородская область","city":"Нижний Новгород"},"pickupDate":"14.06.2024","deliveryDate":"16.06.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":52,"number":"ГЗИВБЛ765448817","created":"28.05.2023","from":{"region":"Республика Татарстан","city":"Казань"},"to":{"region":"Самарская область","city":"Самара"},"pickupDate":"17.06.2024","deliveryDate":"19.06.2024","status":"НД"},{"id":53,"number":"ГЗИВБЛ765448818","created":"29.05.2023","from":{"region":"Ростовская область","city":"Ростов-на-Дону"},"to":{"region":"Краснодарский край","city":"Краснодар"},"pickupDate":"20.06.2024","deliveryDate":"22.06.2024","status":"СОЗДАН"},{"id":54,"number":"ГЗИВБЛ765448819","created":"30.05.2023","from":{"region":"Московская область","city":"Москва"},"to":{"region":"Нижегородская область","city":"Нижний Новгород"},"pickupDate":"23.06.2024","deliveryDate":"26.06.2024","status":"В ПУТИ"},{"id":55,"number":"ГЗИВБЛ765448820","created":"31.05.2023","from":{"region":"Санкт-Петербург","city":"Санкт-Петербург"},"to":{"region":"Республика Татарстан","city":"Казань"},"pickupDate":"27.06.2024","deliveryDate":"29.06.2024","status":"ГОТОВ К ВЫДАЧЕ"},{"id":56,"number":"ГЗИВБЛ765448821","created":"01.06.2023","from":{"region":"Тюменская область","city":"Тюмень"},"to":{"region":"Самарская область","city":"Самара"},"pickupDate":"30.06.2024","deliveryDate":"02.07.2024","status":"НД"},{"id":57,"number":"ГЗИВБЛ765448822","created":"02.06.2023","from":{"region":"Свердловская область","city":"Екатеринбург"},"to":{"region":"Ростовская область","city":"Ростов-на-Дону"},"pickupDate":"03.07.2024","deliveryDate":"05.07.2024","status":"СОЗДАН"},{"id":58,"number":"ГЗИВБЛ765448823","created":"03.06.2023","from":{"region":"Челябинская область","city":"Челябинск"},"to":{"region":"Пермский край","city":"Пермь"},"pickupDate":"06.07.2024","deliveryDate":"08.07.2024","status":"В ПУТИ"},{"id":59,"number":"ГЗИВБЛ765448824","created":"04.06.2023","from":{"region":"Красноярский край","city":"Красноярск"},"to":{"region":"Томская область","city":"Томск"},"pickupDate":"09.07.2024","deliveryDate":"11.07.2024","status":"ГОТОВ К ВЫДАЧЕ"}]
+}
+</script>
+
+<script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+</script>
 
 </div> <!-- Закрытие обертки основного контента -->
 <footer class="bg-brand-gray text-brand-white py-12 w-full">
@@ -328,19 +307,19 @@
 
         <div class="flex flex-col items-stretch gap-y-2">
           <div class="flex items-center space-x-4 my-6">
-            <a href="https://t.me/aeroline" class="text-white">
+            <a href="https://t.me/aeroline" class="text-white" target="_blank">
               <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
             </a>
 
-            <a href="https://wa.me/83912050025" class="text-white">
+            <a href="https://wa.me/83912050025" class="text-white" target="_blank">
               <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
             </a>
           </div>
-          <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center mb-2">
+          <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center mb-2" target="_blank">
             <img src="./assets/img/messages3_white-CxOA5ieA.svg" alt="Email" class="h-6 w-6 mr-2">
             mail@aeroline.su
           </a>
-          <a href="tel:83912050025" class="body-secondary flex items-center mb-8">
+          <a href="tel:83912050025" class="body-secondary flex items-center mb-8" target="_blank">
             <img src="./assets/img/callcalling_white-BPRUXMnE.svg" alt="Phone" class="h-6 w-6 mr-2">
             8 391 205 00 25
           </a>
@@ -364,19 +343,19 @@
       </div>
 
       <div class="flex flex-col">
-        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3 hover:text-brand-blue transition-colors">
+        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3 hover:text-brand-blue transition-colors" target="_blank">
           <img src="./assets/img/messages3_white-CxOA5ieA.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="caption-regular flex items-center mb-4 hover:text-brand-blue transition-colors">
+        <a href="tel:83912050025" class="caption-regular flex items-center mb-4 hover:text-brand-blue transition-colors" target="_blank">
           <img src="./assets/img/callcalling_white-BPRUXMnE.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
         <div class="flex items-center space-x-3">
-          <a href="https://t.me/aeroline" class="text-white hover:opacity-80 transition-opacity">
+          <a href="https://t.me/aeroline" class="text-white hover:opacity-80 transition-opacity" target="_blank">
             <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
           </a>
-          <a href="https://wa.me/83912050025" class="text-white hover:opacity-80 transition-opacity">
+          <a href="https://wa.me/83912050025" class="text-white hover:opacity-80 transition-opacity" target="_blank">
             <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
           </a>
         </div>

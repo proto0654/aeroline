@@ -1,4 +1,5 @@
 @import 'vanilla-calendar-pro/styles/index.css';
+@import './forms.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -1272,9 +1273,10 @@ footer a.text-white.hover\:opacity-80:hover img {
   .modal-box {
     border-radius: 1rem; /* 16px как в существующих модалках */
     padding: 1.5rem; /* p-6 */
-    max-width: 28rem; /* max-w-md */
+    
     background-color: white;
     max-height: calc(100vh - 2rem);
+    @apply w-full max-w-3xl;
   }
   .flatpickr-wrapper{
     width: 100%;
@@ -1628,4 +1630,18 @@ footer a.text-white.hover\:opacity-80:hover img {
 
 .vc-date-range-tooltip__value {
     color: var(--vc-accent-color);
+}
+
+.easy-data-table-wrapper .buttons-pagination .button{
+  margin: 0 0.2rem!important;
+  @apply !border-brand-gray;
+  border-top: var(--easy-table-buttons-pagination-border)!important;
+    border-bottom: var(--easy-table-buttons-pagination-border)!important;
+    border-right: var(--easy-table-buttons-pagination-border)!important;
+    border-left: var(--easy-table-buttons-pagination-border)!important;
+  border-radius: 0.25rem!important;
+ 
+}
+.vue3-easy-data-table__footer  {
+  @apply !pt-10;
 }

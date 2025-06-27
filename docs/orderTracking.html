@@ -1,0 +1,134 @@
+{{> header menuType="user"}}
+
+<main class="container mx-auto px-4 pb-12 max-w-[1200px] flex-grow flex flex-col justify-center gap-y-2">
+   <!-- Hero-блок -->
+   <section class="hero-section !pb-0">
+    <div class="flex-row justify-start">
+      <h1 class="hero-title !md:normal-case">Отслеживание заказов</h1>
+    </div>
+  </section>
+  <!-- Верхний блок: форма и картинка в одном ряду -->
+  <section class="relative z-10">
+    <div class="bg-brand-light rounded-2xl flex flex-col">
+      <div class="flex flex-col-reverse md:flex-row gap-6 items-stretch">
+        <!-- Левая колонка: форма (2/5) -->
+        <div class="md:basis-2/5 w-full flex flex-col justify-center p-4 md:p-8">
+          <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Отследить посылку</h2>
+          <form class="form form-dark flex flex-row w-full gap-2" onsubmit="event.preventDefault(); alert('Пожалуйста, введите номер заказа');">
+            <div class="flex items-center rounded-lg grow px-1">
+              <input type="text" placeholder="Номер заказа" class="border border-gray-200 px-4 py-3 w-full focus:outline-none text-body-secondary focus:border-gray!" value="876534456789876543A" />
+            </div>
+            <button class="btn-gray px-3 py-2 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[3em] text-buttons">
+              <img src="{{basePath}}assets/img/search.svg" alt="Поиск" class="w-6 h-6"> 
+            </button>
+          </form>
+          <div class="relative mt-2 w-full">
+            <span
+              class="text-sm text-base-content underline cursor-pointer tooltip tooltip-bottom block w-full md:w-auto md:max-w-[20rem] xl:inline-block"
+              id="order-hint-trigger"
+              data-tip="Обычно номер заказа можно найти в СМС, email, или в личном кабинете.&#10;Если у вас нет номера заказа — запросите его у продавца или отправителя."
+              tabindex="0"
+            >
+              Где найти номер заказа?
+            </span>
+          </div>
+        </div>
+        <!-- Правая колонка: картинка (3/5) -->
+        <div class="md:basis-3/5 w-full flex items-center justify-center">
+          <img src="assets/img/layout/order-tracking-img.png" alt="Грузовик и коробки" class="md:max-h-[250px] object-cover md:object-right rounded-2xl w-full md:max-w-full object-contain" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Второй ряд: статусы и детали заказа -->
+  <section class="flex flex-col md:flex-row gap-2 relative z-1 bg-brand-light rounded-2xl">
+    <!-- Статус-трекер -->
+    <div class="md:basis-2/5 w-full bg-brand-light rounded-xl p-6 md:p-8 flex flex-col gap-6 mx-auto md:mx-0">
+      <div class="flex flex-col gap-0.5 relative">
+        <!-- Пунктирная линия -->
+        <div class="absolute left-6 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-gray-400 z-0"></div>
+        <!-- Статус 1 -->
+        <div class="flex items-center gap-3 relative z-10">
+          <div class="w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow">
+            <img src="assets/img/icons/order-tracking/Component 1-1.svg" alt="Создан" class="w-18 h-18" />
+          </div>
+          <div>
+            <div class="font-bold text-gray-800 uppercase">СОЗДАН</div>
+            <div class="text-xs text-gray-600">22.02.25</div>
+          </div>
+        </div>
+        <!-- Статус 2 -->
+        <div class="flex items-center gap-3 mt-10 relative z-10">
+          <div class="w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow">
+            <img src="assets/img/icons/order-tracking/Component 1-2.svg" alt="Ожидаем груз" class="w-18 h-18" />
+          </div>
+          <div>
+            <div class="font-bold text-gray-800 uppercase">ОЖИДАЕМ ГРУЗ ОТ ОТПРАВИТЕЛЯ</div>
+            <div class="text-xs text-gray-600">22.02.25</div>
+          </div>
+        </div>
+        <!-- Статус 3 -->
+        <div class="flex items-center gap-3 mt-10 relative z-10">
+          <div class="w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow">
+            <img src="assets/img/icons/order-tracking/Component 1.svg" alt="Заказ отменён" class="w-18 h-18" />
+          </div>
+          <div>
+            <div class="font-bold text-gray-800 uppercase">ЗАКАЗ ОТМЕНЁН</div>
+            <div class="text-xs text-gray-600">22.02.25</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Детали заказа -->
+    <div class="md:basis-3/5 w-full p-2 md:p-6 flex flex-col gap-6 ">
+     <div class="bg-white rounded-xl p-4 ">
+       <!-- Верхний блок с пунктами -->
+       <div class="flex flex-col md:flex-row p-4 gap-4">
+        <div class="flex-1">
+          <div class="text-xs text-gray-400 mb-1">Пункт отправления</div>
+          <div class="font-semibold text-body-secondary leading-1.2">Верхненовокутлумбетьево</div>
+        </div>
+        <div class="flex-1">
+          <div class="text-xs text-gray-400 mb-1">Пункт назначения</div>
+          <div class="font-semibold text-brand-gray text-body-secondary leading-1.2">Малый Кызыкуль (Минусинский р-н, тер. южное побережье Озеро Малый Кызыкуль)</div>
+        </div>
+      </div>
+      <!-- Таблица данных -->
+      <div class="overflow-x-auto">
+        <table class="table w-full table-zebra">
+          <tbody>
+            <tr>
+              <td class="font-medium text-brand-gray">Номер заказа</td>
+              <td>876534456789876543A</td>
+              <td class="font-medium text-brand-gray">Номер ТН</td>
+              <td>098765768438389247</td>
+            </tr>
+            <tr>
+              <td class="font-medium text-brand-gray">Номер заказа клиента</td>
+              <td>98765-678945877</td>
+              <td class="font-medium text-brand-gray">Количество мест</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td class="font-medium text-brand-gray">Вес, кг</td>
+              <td>100</td>
+              <td class="font-medium text-brand-gray">Объем, куб.м.</td>
+              <td>2222</td>
+            </tr>
+            <tr>
+              <td class="font-medium text-brand-gray">Иные данные</td>
+              <td colspan="3">2222</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     </div>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="{{basePath}}assets/js/page-entrypoints/order-tracking.js"></script>
+
+{{> footer menuType="user"}} 

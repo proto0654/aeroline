@@ -7,11 +7,9 @@ import { TableManager } from './table-manager.js';
 import { modalManager } from './modal-manager.js';
 
 export class SendersReceiversPage {
-  constructor() {
+  constructor(data = []) {
     this.tableManager = null;
-    this.editModal = null;
-    this.deleteModal = null;
-    this.createModal = null;
+    this.data = data;
     this.currentType = 'all';
     this.init();
   }
@@ -27,8 +25,6 @@ export class SendersReceiversPage {
     }
 
     this.initTable();
-    this.initModals();
-    this.initCreateButton();
     this.initTypeTabs();
   }
 
@@ -103,137 +99,8 @@ export class SendersReceiversPage {
     // Обновляем счетчики после инициализации таблицы
     this.updateCounters();
   }
-
-  initModals() {
-    this.initEditModal();
-    this.initDeleteModal();
-    this.initCreateModal();
-  }
-
-  initEditModal() {
-    this.editModal = document.getElementById('edit-modal');
-    if (!this.editModal) return;
-
-    const editForm = document.getElementById('edit-form');
-   
-    // Открытие модального окна
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.edit-btn')) {
-        const btn = e.target.closest('.edit-btn');
-        const id = btn.dataset.id;
-        const row = btn.closest('tr');
-        
-        // Заполняем форму данными контакта
-        document.getElementById('edit-type').value = row.dataset.type;
-        document.getElementById('edit-name').value = row.querySelector('.name').textContent;
-        document.getElementById('edit-phone').value = row.querySelector('.phone').textContent;
-        document.getElementById('edit-location').value = row.querySelector('.location').textContent;
-        document.getElementById('edit-address').value = row.querySelector('.address').textContent;
-        document.getElementById('edit-id').value = id;
-        
-        modalManager.open(this.editModal);
-      }
-    });
-    
-    // Обработка формы редактирования
-    editForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const id = document.getElementById('edit-id').value;
-      const type = document.getElementById('edit-type').value;
-      const name = document.getElementById('edit-name').value;
-      const phone = document.getElementById('edit-phone').value;
-      const location = document.getElementById('edit-location').value;
-      const address = document.getElementById('edit-address').value;
-      
-      // Здесь будет отправка данных на сервер
-      console.log('Редактирование контакта', id, type, name, phone, location, address);
-      
-      // Показываем уведомление об успешном редактировании
-      alert('Контакт успешно отредактирован');
-      
-      modalManager.close(this.editModal);
-      editForm.reset();
-    });
-  }
-
-  initDeleteModal() {
-    this.deleteModal = document.getElementById('delete-modal');
-    if (!this.deleteModal) return;
-
-    const deleteForm = document.getElementById('delete-form');
-    const modalContactName = document.getElementById('modal-contact-name');
-    
-    // Открытие модального окна удаления
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.delete-btn')) {
-        const btn = e.target.closest('.delete-btn');
-        const id = btn.dataset.id;
-        const row = btn.closest('tr');
-        const name = row.querySelector('.name').textContent;
-        
-        document.getElementById('delete-id').value = id;
-        modalContactName.textContent = name;
-        
-        modalManager.open(this.deleteModal);
-      }
-    });
-    
-    // Обработка формы удаления
-    deleteForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const id = document.getElementById('delete-id').value;
-      
-      // Здесь будет отправка данных на сервер
-      console.log('Удаление контакта', id);
-      
-      // Показываем уведомление об успешном удалении
-      alert('Контакт успешно удален');
-      
-      modalManager.close(this.deleteModal);
-      deleteForm.reset();
-    });
-  }
-
-  initCreateModal() {
-    this.createModal = document.getElementById('create-modal');
-    if (!this.createModal) return;
-
-    const createForm = document.getElementById('create-form');
-    
-    // Обработка формы создания
-    createForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const type = document.getElementById('create-type').value;
-      const name = document.getElementById('create-name').value;
-      const phone = document.getElementById('create-phone').value;
-      const location = document.getElementById('create-location').value;
-      const address = document.getElementById('create-address').value;
-      const comment = document.getElementById('create-comment').value;
-      
-      // Здесь будет отправка данных на сервер
-      console.log('Создание нового контакта', type, name, phone, location, address, comment);
-      
-      // Показываем уведомление об успешном создании
-      alert('Контакт успешно создан');
-      
-      modalManager.close(this.createModal);
-      createForm.reset();
-    });
-  }
-
-  initCreateButton() {
-    const createBtn = document.getElementById('create-btn');
-    if (createBtn) {
-      createBtn.addEventListener('click', () => {
-        modalManager.open(this.createModal);
-      });
-    }
-  }
 }
 
-export function initSendersReceiversPage() {
-  new SendersReceiversPage();
+export function initSendersReceiversPage(data = []) {
+  return new SendersReceiversPage(data);
 } 

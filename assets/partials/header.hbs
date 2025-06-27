@@ -14,6 +14,9 @@
   </style>
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
+<div class="vue-app-mount-point"></div>
+<script type="module" src="{{basePath}}assets/vue/entrypoints/global-modal.js"></script>
+<script type="module" src="{{basePath}}assets/js/modules/global-ui.js"></script>
 <script type="module" src="{{basePath}}assets/js/main.js"></script>
 <header class="bg-white max-w-[1920px] mx-auto w-full">
   <div class="container mx-auto px-4 max-w-[1200px]">
@@ -27,10 +30,10 @@
       <!-- Социальные иконки на десктопе -->
       <div class="hidden lg:flex items-center space-x-6">
         <div class="flex items-center space-x-3">
-          <a href="https://t.me/aeroline" class="text-brand-blue">
+          <a href="https://t.me/aeroline" class="text-brand-blue" target="_blank">
           <img src="{{basePath}}assets/img/icons/logos_telegram.svg" alt="Telegram" class="h-8 w-8">
         </a>
-        <a href="https://wa.me/83912050025" class="text-brand-blue">
+        <a href="https://wa.me/83912050025" class="text-brand-blue" target="_blank">
           <img src="{{basePath}}assets/img/icons/logos_whatsapp-icon.svg" alt="WhatsApp" class="h-8 w-8">
         </a>
         </div>
@@ -46,7 +49,7 @@
           <img src="{{basePath}}assets/img/icons/q.svg" alt="Question" class="h-9 w-9">
         </a>
         </div>
-        <a href="{{basePath}}profile.html" class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block">Войти</a>
+        <button class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block open-login-modal-btn">Войти</button>
       </div>
       
       <!-- Бургер-меню для мобильных устройств -->
@@ -60,11 +63,11 @@
     <!-- Навигация и контакты в десктопе -->
     <div class="hidden lg:flex justify-between border-t border-gray-200">
       <div class="text-body flex items-center space-x-4 py-3">
-        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue">
+        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue" target="_blank">
           <img src="{{basePath}}assets/img/icons/messages3.svg" alt="Email" class="h-6 w-6 mr-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue">
+        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue" target="_blank">
           <img src="{{basePath}}assets/img/icons/callcalling.svg" alt="Phone" class="h-6 w-6 mr-2">
           8 391 205 00 25
         </a>
@@ -150,72 +153,28 @@
       <div class="w-full flex flex-col gap-5 mt-auto pt-10">
         <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
         <div class="flex items-center space-x-2" id="mobile-menu-social">
-          <a href="https://t.me/aeroline" class="text-white rounded-full">
+          <a href="https://t.me/aeroline" class="text-white rounded-full" target="_blank">
             <img src="{{basePath}}assets/img/icons/logos_telegram.svg" alt="Telegram" class="h-10 w-10">
           </a>
-          <a href="https://wa.me/83912050025" class="text-white rounded-full">
+          <a href="https://wa.me/83912050025" class="text-white rounded-full" target="_blank">
             <img src="{{basePath}}assets/img/icons/logos_whatsapp-icon.svg" alt="WhatsApp" class="h-10 w-10">
           </a>
           
         </div>
-        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email">
+        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email" target="_blank">
           <img src="{{basePath}}assets/img/icons/messages3.svg" alt="Email" class="h-6 w-6 mx-2">
           mail@aeroline.su
         </a>
-        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone">
+        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone" target="_blank">
           <img src="{{basePath}}assets/img/icons/callcalling.svg" alt="Phone" class="h-6 w-6 mx-2">
           8 391 205 00 25
         </a>
         
       </div>
-      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end" id="mobile-menu-login">Войти</button>
+      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end open-login-modal-btn" id="mobile-menu-login">Войти</button>
    
       </div>
        </div>
   </div>
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
-</div>
-
-<!-- Модальное окно входа -->
-<div id="login-modal" class="modal">
-  <div class="modal-backdrop"></div>
-  <div class="modal-box max-w-md bg-brand-light">
-    <button class="modal-close absolute right-4 top-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow" aria-label="Закрыть">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M6 14L14 6" stroke-linecap="round"/></svg>
-    </button>
-    
-    <div class="modal-content">
-      <h3 class="text-h4 font-bold text-brand-gray mb-4">Вход в систему</h3>
-      
-      <form id="login-form" class="space-y-4">
-        <div>
-          <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-          <input type="email" id="login-email" name="email" required 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                 placeholder="example@email.com"
-                 value="test@aeroline.su">
-        </div>
-        
-        <div>
-          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">Пароль</label>
-          <input type="password" id="login-password" name="password" required 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                 placeholder="••••••••"
-                 value="password123">
-        </div>
-        
-        <div class="flex justify-end gap-3">
-          <button type="button" class="modal-close px-4 py-2 border border-gray-300 text-brand-gray rounded-lg hover:bg-gray-50 transition-colors">
-            Отмена
-          </button>
-          <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-blue-600 transition-colors">
-            Войти
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-</body>
-</html> 

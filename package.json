@@ -52,12 +52,16 @@
     "not dead"
   ],
   "dependencies": {
+    "@vee-validate/rules": "^4.15.0",
     "axios": "^1.9.0",
     "daisyui": "^5.0.37",
     "list.js": "^2.3.1",
-    "pinia": "^3.0.2",
+    "pinia": "^3.0.3",
     "swiper": "^11.2.6",
     "vanilla-calendar-pro": "^3.0.4",
-    "vue-datepicker-next": "^1.0.3"
+    "vee-validate": "^4.15.0",
+    "vue-datepicker-next": "^1.0.3",
+    "vue3-easy-data-table": "^1.5.47",
+    "yup": "^1.6.1"
   }
 }

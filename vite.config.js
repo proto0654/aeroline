@@ -34,7 +34,6 @@ function getPageData() {
     'service-acts.html',
     'senders-receivers.html',
     'profile.html',
-    'modal-test.html',
     'reconciliation-act.html',
     'notifications.html',
     'cooperation.html',
@@ -96,16 +95,6 @@ function getContactsData() {
         currentPage: 1,
         totalPages: totalPages
       };
-      
-      // Выбираем случайный офис для отображения на карте
-      const randomIndex = Math.floor(Math.random() * Math.min(9, data.offices.length));
-      data.selectedOffice = data.offices[randomIndex];
-      data.selectedOfficeIndex = randomIndex;
-      
-      // Определяем на какой странице пагинации находится выбранный офис
-      // и устанавливаем эту страницу как текущую
-      const officePage = Math.floor(randomIndex / itemsPerPage) + 1;
-      data.pagination.currentPage = officePage;
     }
     
     return data;
@@ -125,20 +114,17 @@ function getNewsData() {
     const newsData = fs.readFileSync('./assets/data/news.json', 'utf-8');
     const data = JSON.parse(newsData);
     
-    // Если есть новости, определяем параметры пагинации
-    if (data.news && data.news.length > 0) {
-      const itemsPerPage = data.itemsPerPage || 5;
-      const totalPages = Math.ceil(data.news.length / itemsPerPage);
-      
-      // Обновляем общее количество страниц
-      data.pagination = {
-        currentPage: 1,
-        totalPages: totalPages
-      };
-      
-      // Ограничиваем количество новостей на странице
-      data.currentPageNews = data.news.slice(0, itemsPerPage);
-    }
+    // Vue компонент теперь управляет пагинацией и отображением новостей, 
+    // поэтому эти поля больше не нужны в Handlebars контексте.
+    // if (data.news && data.news.length > 0) {
+    //   const itemsPerPage = data.itemsPerPage || 5;
+    //   const totalPages = Math.ceil(data.news.length / itemsPerPage);
+    //   data.pagination = {
+    //     currentPage: 1,
+    //     totalPages: totalPages
+    //   };
+    //   data.currentPageNews = data.news.slice(0, itemsPerPage);
+    // }
     
     return data;
   } catch (error) {
@@ -146,7 +132,7 @@ function getNewsData() {
     return {
       pageDescription: "Актуальные новости и события компании Aeroline.",
       news: [],
-      pagination: { currentPage: 1, totalPages: 1 }
+      // pagination: { currentPage: 1, totalPages: 1 } // Больше не нужно
     };
   }
 }
@@ -166,19 +152,8 @@ function getSendersReceiversData() {
 
 // Загрузка данных офиса по умолчанию из JSON
 function getDefaultOfficeData() {
-  try {
-    const defaultOfficeData = fs.readFileSync('./assets/data/default-office.json', 'utf-8');
-    return JSON.parse(defaultOfficeData);
-  } catch (error) {
-    console.error('Error reading default office data:', error);
-    return {
-      city: "Красноярск",
-      address: "ул. Авиаторов, 50",
-      type: "Центральный офис",
-      phone: "+7 (391) 555-12-34",
-      email: "info@aeroline.ru"
-    };
-  }
+  console.log('getDefaultOfficeData вызвана, но офис по умолчанию не используется.');
+  return null;
 }
 
 // Загрузка данных о FAQ для страницы платежей
@@ -429,24 +404,15 @@ export default defineConfig(({ command, mode }) => {
             });
             specificData.cities = Array.from(cities);
           } else if (fileName === 'index.html') {
+            const contactsData = getContactsData(); // Получаем полные данные контактов, включая офисы
             specificData = { 
               sliders: getSlidersData(),
               newsData: getNewsData(),
-              defaultOffice: getDefaultOfficeData()
+              offices: contactsData.offices || [] // Передаем массив офисов для карты
             };
-            
-            // Добавляем все офисы, как на странице контактов
-            const contactsData = getContactsData();
-            if (contactsData.offices && contactsData.offices.length > 0) {
-              specificData.offices = contactsData.offices;
-              // Выбираем случайный офис для отображения на карте
-              const randomIndex = Math.floor(Math.random() * Math.min(9, contactsData.offices.length));
-              specificData.selectedOffice = contactsData.offices[randomIndex];
-              specificData.selectedOfficeIndex = randomIndex;
-            }
           } else if (fileName === 'contacts.html') {
             const contactsData = getContactsData();
-            specificData = { ...contactsData, defaultOffice: getDefaultOfficeData() };
+            specificData = { ...contactsData };
           
             // Группируем офисы по городам для фильтрации
             const cities = new Set();
@@ -464,6 +430,15 @@ export default defineConfig(({ command, mode }) => {
             specificData = { serviceActs: getServiceActsData() };
           } else if (fileName === 'senders-receivers.html') {
             specificData = { sendersReceivers: getSendersReceiversData() };
+          } else if (fileName === 'order-list.html') {
+            // Добавляем orders для order-list.html
+            try {
+              const ordersData = fs.readFileSync('./assets/data/orders.json', 'utf-8');
+              specificData = { orders: JSON.parse(ordersData) };
+            } catch (error) {
+              console.error('Error reading orders data:', error);
+              specificData = { orders: [] };
+            }
           }
           
           return {
@@ -623,7 +598,36 @@ export default defineConfig(({ command, mode }) => {
       manifest: true,
       assetsDir: 'assets',
       rollupOptions: {
-        input: getAllEntrypoints(),
+        input: {
+          main: resolve(__dirname, 'index.html'),
+          vacancies: resolve(__dirname, 'vacancies.html'),
+          contacts: resolve(__dirname, 'contacts.html'),
+          helper: resolve(__dirname, 'helper.html'),
+          payments: resolve(__dirname, 'payments.html'),
+          orderTracking: resolve(__dirname, 'order-tracking.html'),
+          news: resolve(__dirname, 'news.html'),
+          services: resolve(__dirname, 'services.html'),
+          serviceActs: resolve(__dirname, 'service-acts.html'),
+          sendersReceivers: resolve(__dirname, 'senders-receivers.html'),
+          profile: resolve(__dirname, 'profile.html'),
+          reconciliationAct: resolve(__dirname, 'reconciliation-act.html'),
+          notifications: resolve(__dirname, 'notifications.html'),
+          cooperation: resolve(__dirname, 'cooperation.html'),
+          calculator: resolve(__dirname, 'calculator.html'),
+          orderNew: resolve(__dirname, 'order-new.html'),
+          bulkOrder: resolve(__dirname, 'bulk-order.html'),
+          userCreate: resolve(__dirname, 'user-create.html'),
+          orderList: resolve(__dirname, 'order-list.html'),
+          // JS entry points
+          mainJs: resolve(__dirname, 'assets/js/main.js'),
+          globalUiJs: resolve(__dirname, 'assets/js/modules/global-ui.js'),
+          homePageJs: resolve(__dirname, 'assets/js/modules/home-page.js'),
+          serviceActsPageJs: resolve(__dirname, 'assets/js/modules/service-acts-page.js'),
+          sendersReceiversPageJs: resolve(__dirname, 'assets/js/modules/senders-receivers-page.js'),
+          profilePageJs: resolve(__dirname, 'assets/js/modules/profile-page.js'),
+          lkDatepickerJs: resolve(__dirname, 'assets/vue/entrypoints/lk-datepicker.js'),
+          newsPageVueJs: resolve(__dirname, 'assets/vue/entrypoints/news-page.js'), // Новый Vue entrypoint для новостей
+        },
         output: {
           entryFileNames: 'assets/js/[name]-[hash].js',
           chunkFileNames: 'assets/js/chunks/[name]-[hash].js',
@@ -684,6 +688,7 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       alias: {
         'assets/': resolve(__dirname, 'assets/'),
+        '@': resolve(__dirname, './assets/vue'),
       },
     },
     plugins: plugins
