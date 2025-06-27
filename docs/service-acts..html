@@ -1,0 +1,70 @@
+{{> header menuType="user"}}
+
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  
+
+  <!-- Таблица актов -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full md:px-4 xl:px-0">
+    <div id="acts-table" class="card bg-base-100">
+      <!-- Заголовок таблицы -->
+      <div class="">
+        <h1 class="card-title text-h3 md:text-h2 font-bold text-brand-gray mb-4 mt-10">Акты оказания услуг</h1>
+
+       
+
+        <!-- Таблица -->
+        <div id="service-acts-table-app"></div>
+
+        <!-- Старые элементы таблицы и пагинации будут удалены, так как они будут частью Vue компонента -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Запрос акт сверки -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div class="flex flex-col md:flex-row gap-8">
+      <!-- Левая часть - форма -->
+      <div class="w-full md:w-1/2 bg-base-200 p-4 md:p-8 rounded-lg">
+        <h2 class="text-h4 font-bold text-base-content mb-2">Запрос акта сверки</h2>
+        <div id="request-act-form-app" class="form-control w-full"></div>
+      </div>
+      <!-- Правая часть - информационный блок -->
+      <div class="w-full md:w-1/2 flex items-stretch">
+        <div class="bg-brand-light rounded-lg p-6 w-full">
+          <div class="flex flex-col justify-center gap-3 mb-2 h-full">
+            <svg class="w-15 h-15 text-brand-blue flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div>
+              <h3 class="font-bold text-base-content mb-1">Информация</h3>
+              <div class="text-base-content">
+                По всем вопросам взаиморасчетов вы можете обратиться к Вашему кредитному контролеру. Его ФИО, эл.почта и телефон указаны на странице
+                <a href="{{basePath}}cooperation.html" class="link link-primary">Данные о сотрудничестве</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+</main>
+
+<!-- Скрытые данные для JavaScript -->
+<script type="application/json" id="initial-data">
+{
+    "serviceActs": {{{json serviceActs}}}
+}
+</script>
+
+<script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+</script>
+
+<!-- Подключаем основной скрипт страницы -->
+<script type="module" src="{{basePath}}assets/vue/entrypoints/global-modal.js"></script>
+<script type="module" src="{{basePath}}assets/js/page-entrypoints/service-acts.js"></script>
+<script type="module" src="{{basePath}}assets/vue/entrypoints/service-acts-page-app.js"></script>
+
+{{> footer menuType="user"}}

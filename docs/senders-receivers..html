@@ -1,0 +1,38 @@
+{{> header menuType="user"}}
+
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  
+  <!-- Карточки отправителей и получателей -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div id="contacts-table" class="bg-white rounded-lg">
+      <!-- Заголовок таблицы -->
+      <div class="border-b border-gray-200">
+        <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 mt-10">Карточки отправителей и получателей</h1>
+        
+        <!-- Табы и кнопка создания в одной строке -->
+        <!-- Эти элементы теперь находятся внутри Vue-компонента SendersReceiversPage.vue -->
+        </div>
+
+      <!-- Таблица -->
+      <div id="senders-receivers-table-app"></div>
+
+      <!-- Старые элементы таблицы и пагинации будут удалены, так как они будут частью Vue компонента -->
+      </div>
+    </div>
+  </section>
+ 
+</main>
+
+<script type="application/json" id="initial-data">
+{
+    "sendersReceivers": {{{json sendersReceivers}}}
+}
+</script>
+
+<script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+</script>
+
+<script type="module" src="{{basePath}}assets/vue/entrypoints/senders-receivers-app.js"></script>
+<script type="module" src="{{basePath}}assets/vue/entrypoints/global-modal.js"></script>
+{{> footer menuType="user"}} 

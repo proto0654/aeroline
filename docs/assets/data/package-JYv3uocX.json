@@ -1,0 +1,67 @@
+{
+  "name": "aeroline",
+  "version": "1.0.0",
+  "description": "Статическая верстка сайта Aeroline с адаптивным дизайном и интерактивными элементами",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "node -e \"const now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }).replace(/[.,]/g, '-'); require('child_process').execSync('npm run build && git add . && git commit -m \\\"Обновление-' + now + '\\\" && git push origin', { stdio: 'inherit' });\""
+  },
+  "keywords": [
+    "static",
+    "website",
+    "tailwindcss",
+    "vite",
+    "handlebars",
+    "responsive",
+    "animation"
+  ],
+  "author": "Aeroline Development Team",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "autoprefixer": "^10.4.14",
+    "cpx": "^1.5.0",
+    "cssnano": "^7.0.7",
+    "front-matter": "^4.0.2",
+    "glob": "^11.0.2",
+    "postcss": "^8.4.24",
+    "postcss-import": "^16.1.0",
+    "rollup": "^4.12.1",
+    "tailwindcss": "^3.3.2",
+    "terser": "^5.39.2",
+    "vite": "^6.3.5",
+    "vite-plugin-handlebars": "^1.6.0",
+    "vue": "^3.5.16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aeroline/website"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "dependencies": {
+    "@vee-validate/rules": "^4.15.0",
+    "axios": "^1.9.0",
+    "daisyui": "^5.0.37",
+    "list.js": "^2.3.1",
+    "pinia": "^3.0.3",
+    "swiper": "^11.2.6",
+    "vanilla-calendar-pro": "^3.0.4",
+    "vee-validate": "^4.15.0",
+    "vue-datepicker-next": "^1.0.3",
+    "vue3-easy-data-table": "^1.5.47",
+    "yup": "^1.6.1"
+  }
+}

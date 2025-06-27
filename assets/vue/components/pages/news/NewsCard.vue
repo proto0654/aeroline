@@ -1,9 +1,9 @@
 <template>
-  <div class="news-card py-2 md:py-4 bg-brand-light border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-news-id="{{news.id}}">
+  <div class="news-card mb-4 py-2 md:py-4 bg-brand-light border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-news-id="{{news.id}}">
     <div class="flex flex-col md:flex-row gap-4">
       <div class="w-full md:w-2/5 rounded-2xl overflow-hidden px-2 md:px-4 ">
-        <img v-if="news.image" :src="news.image" :alt="news.title" class="w-full object-cover rounded-2xl aspect-video max-w-[100%]">
-        <img v-else :src="basePath + 'assets/img/layout/Logotype_aerline_light.png'" :alt="news.title" class="placeholder w-full object-contain min-h-[120px] h-full p-10">
+        <img v-if="news.image" :src="getImageUrl(news.image)" :alt="news.title" class="w-full object-cover rounded-2xl aspect-video max-w-[100%]">
+        <img v-else :src="getImageUrl('')" :alt="news.title" class="placeholder w-full object-contain min-h-[120px] h-full p-10">
       </div>
       <div class="w-full md:w-3/5 px-2 md:px-4 py-3 md:py-4">
         <div class="flex items-start justify-between mb-4">
@@ -44,6 +44,9 @@ import { defineProps, computed } from 'vue';
 import { useGlobalModalStore } from '../../../stores/globalModal';
 import NewsDetailModal from '../../modals/NewsDetailModal.vue';
 
+// Импортируем все картинки из папки news (Vite подставит правильные пути с хешем)
+const images = import.meta.glob('/assets/img/news/*', { eager: true, as: 'url' });
+
 const props = defineProps({
   news: {
     type: Object,
@@ -63,6 +66,14 @@ const truncatedContent = computed(() => {
 
 const openNewsDetail = (newsItem) => {
   globalModalStore.openModal(NewsDetailModal, { news: newsItem }, 'large');
+};
+
+// Функция для поиска картинки по имени файла
+const getImageUrl = (imgName) => {
+  if (!imgName) return new URL('/assets/img/layout/Logotype_aerline_light.png', import.meta.url).href;
+  const found = Object.entries(images).find(([path]) => path.endsWith('/' + imgName));
+  if (found) return found[1];
+  return new URL('/assets/img/layout/Logotype_aerline_light.png', import.meta.url).href;
 };
 
 const basePath = '/'; // Временно используем для статичного пути, Vite должен будет его заменить

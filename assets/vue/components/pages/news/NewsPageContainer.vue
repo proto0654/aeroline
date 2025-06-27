@@ -45,8 +45,9 @@ const defaultEndDate = ref(null);
 // Загрузка данных
 onMounted(async () => {
   try {
-    // В реальном приложении здесь будет API-запрос к Bitrix CMS
-    const response = await fetch('/assets/data/news.json');
+    // Формируем универсальный путь к JSON с учётом base
+    const jsonUrl = `${import.meta.env.BASE_URL}assets/data/news.json`;
+    const response = await fetch(jsonUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
