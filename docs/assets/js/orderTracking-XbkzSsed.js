@@ -303,7 +303,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("img", {
               src: _imports_0,
               alt: "Грузовик и коробки",
-              class: "md:max-h-[250px] object-cover md:object-right w-full md:max-w-full object-contain"
+              class: "md:max-h-[250px] object-cover md:object-right w-full md:max-w-full object-contain rounded-2xl"
             })
           ], -1))
         ])

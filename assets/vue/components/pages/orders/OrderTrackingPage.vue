@@ -19,7 +19,7 @@
                     </div>
                     <div class="md:basis-3/5 w-full flex items-center justify-center">
                         <img src="/assets/img/layout/order-tracking-img.png" alt="Грузовик и коробки"
-                            class="md:max-h-[250px] object-cover md:object-right w-full md:max-w-full object-contain" />
+                            class="md:max-h-[250px] object-cover md:object-right w-full md:max-w-full object-contain rounded-2xl" />
                     </div>
                 </div>
             </div>
