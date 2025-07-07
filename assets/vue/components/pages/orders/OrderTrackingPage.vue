@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-brand-light rounded-2xl overflow-hidden">
+    <div class="bg-brand-light rounded-2xl">
         <section class="relative z-10 ">
             <div class="flex flex-col">
                 <div class="flex flex-col-reverse md:flex-row gap-6 items-stretch">

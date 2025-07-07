@@ -279,7 +279,7 @@ const _sfc_main = {
     }
   }
 };
-const _hoisted_1 = { class: "bg-brand-light rounded-2xl overflow-hidden" };
+const _hoisted_1 = { class: "bg-brand-light rounded-2xl" };
 const _hoisted_2 = { class: "relative z-10" };
 const _hoisted_3 = { class: "flex flex-col" };
 const _hoisted_4 = { class: "flex flex-col-reverse md:flex-row gap-6 items-stretch" };
