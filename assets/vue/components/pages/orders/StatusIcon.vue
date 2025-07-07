@@ -3,6 +3,10 @@
 </template>
 
 <script>
+import iconCreated from '../../../../img/icons/order-tracking/component-1-1.svg';
+import iconReceived from '../../../../img/icons/order-tracking/component-1-2.svg';
+import iconDefault from '../../../../img/icons/order-tracking/component-1.svg';
+
 export default {
     props: {
         status: {
@@ -13,12 +17,11 @@ export default {
     computed: {
         iconSrc() {
             const iconMap = {
-                'ЗС': '/assets/img/icons/order-tracking/Component 1-1.svg', // Создан
-                'ГЗ': '/assets/img/icons/order-tracking/Component 1-2.svg', // Груз получен (Ожидаем)
-                'ЗП': '/assets/img/icons/order-tracking/Component 1.svg',   // В пути (используем пока эту)
-                // 'ОТМЕНЕН': '/assets/img/icons/order-tracking/Component 1.svg',
+                'ЗС': iconCreated, // Создан
+                'ГЗ': iconReceived, // Груз получен (Ожидаем)
+                'ЗП': iconDefault,   // В пути (используем пока эту)
             };
-            return iconMap[this.status] || '/assets/img/icons/order-tracking/Component 1.svg'; // Default icon
+            return iconMap[this.status] || iconDefault;
         },
     },
 };

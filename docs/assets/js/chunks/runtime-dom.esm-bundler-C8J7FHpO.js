@@ -7646,7 +7646,7 @@ function normalizeContainer(container) {
   return container;
 }
 export {
-  vModelRadio as $,
+  resolveComponent as $,
   createBlock as A,
   mergeProps as B,
   resolveDynamicComponent as C,
@@ -7671,9 +7671,9 @@ export {
   vModelText as V,
   toRef as W,
   vModelCheckbox as X,
-  resolveComponent as Y,
-  createStaticVNode as Z,
-  vModelSelect as _,
+  createStaticVNode as Y,
+  vModelSelect as Z,
+  vModelRadio as _,
   createVNode as a,
   toValue as a0,
   readonly as a1,

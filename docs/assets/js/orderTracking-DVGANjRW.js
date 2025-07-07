@@ -1,9 +1,9 @@
-import "./chunks/global-modal-CtLjFuPd.js";
-import "./mainJs-B6nrBSwm.js";
-import "./globalUiJs-CIMhq8JL.js";
-import { c as createElementBlock, o as openBlock, b as createBaseVNode, U as withDirectives, V as vModelText, f as withModifiers, Y as resolveComponent, e as createCommentVNode, K as Fragment, L as renderList, D as normalizeClass, a as createVNode, t as toDisplayString, E as createApp } from "./chunks/runtime-dom.esm-bundler-BbrWZI0-.js";
+import "./chunks/global-modal-BuE9KR4J.js";
+import "./mainJs-DueSC77d.js";
+import "./globalUiJs-CiezMbV9.js";
+import { c as createElementBlock, o as openBlock, b as createBaseVNode, U as withDirectives, V as vModelText, f as withModifiers, $ as resolveComponent, e as createCommentVNode, K as Fragment, L as renderList, D as normalizeClass, a as createVNode, t as toDisplayString, E as createApp } from "./chunks/runtime-dom.esm-bundler-C8J7FHpO.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
-import "./chunks/globalModal-BF5JWlWX.js";
+import "./chunks/globalModal--1m5qnLi.js";
 import "./chunks/slider-q_NEEFv1.js";
 import "./chunks/modal-manager-BXwv0V3q.js";
 const _imports_0$1 = "" + new URL("../img/search-CYPbi9xb.svg", import.meta.url).href;
@@ -58,6 +58,9 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
   ], 32);
 }
 const OrderTrackingForm = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$4]]);
+const iconCreated = "" + new URL("../img/component-1-1-CN7DWFsZ.svg", import.meta.url).href;
+const iconReceived = "" + new URL("../img/component-1-2-mR4BVpBn.svg", import.meta.url).href;
+const iconDefault = "" + new URL("../img/component-1-D8YgY9xC.svg", import.meta.url).href;
 const _sfc_main$3 = {
   props: {
     status: {
@@ -68,15 +71,14 @@ const _sfc_main$3 = {
   computed: {
     iconSrc() {
       const iconMap = {
-        "ЗС": "/assets/img/icons/order-tracking/Component 1-1.svg",
+        "ЗС": iconCreated,
         // Создан
-        "ГЗ": "/assets/img/icons/order-tracking/Component 1-2.svg",
+        "ГЗ": iconReceived,
         // Груз получен (Ожидаем)
-        "ЗП": "/assets/img/icons/order-tracking/Component 1.svg"
+        "ЗП": iconDefault
         // В пути (используем пока эту)
-        // 'ОТМЕНЕН': '/assets/img/icons/order-tracking/Component 1.svg',
       };
-      return iconMap[this.status] || "/assets/img/icons/order-tracking/Component 1.svg";
+      return iconMap[this.status] || iconDefault;
     }
   }
 };

@@ -1,48 +1,48 @@
 {
-  "_DateRangePickerVue-Cbt_w_eg.js": {
-    "file": "assets/js/chunks/DateRangePickerVue-Cbt_w_eg.js",
+  "_DateRangePickerVue-CZYC_RHW.js": {
+    "file": "assets/js/chunks/DateRangePickerVue-CZYC_RHW.js",
     "name": "DateRangePickerVue",
     "imports": [
       "assets/vue/entrypoints/lk-datepicker.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js"
+      "_runtime-dom.esm-bundler-C8J7FHpO.js"
     ]
   },
-  "_DeleteConfirmModal-Bsx9uojj.css": {
-    "file": "assets/css/DeleteConfirmModal-Bsx9uojj.css",
-    "src": "_DeleteConfirmModal-Bsx9uojj.css"
-  },
-  "_DeleteConfirmModal-pCpusVGU.js": {
-    "file": "assets/js/chunks/DeleteConfirmModal-pCpusVGU.js",
+  "_DeleteConfirmModal-B6hdeSlr.js": {
+    "file": "assets/js/chunks/DeleteConfirmModal-B6hdeSlr.js",
     "name": "DeleteConfirmModal",
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "css": [
       "assets/css/DeleteConfirmModal-Bsx9uojj.css"
     ]
   },
-  "_EasyDataTableWrapper-Ev7WQvgQ.css": {
-    "file": "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css",
-    "src": "_EasyDataTableWrapper-Ev7WQvgQ.css"
+  "_DeleteConfirmModal-Bsx9uojj.css": {
+    "file": "assets/css/DeleteConfirmModal-Bsx9uojj.css",
+    "src": "_DeleteConfirmModal-Bsx9uojj.css"
   },
-  "_EasyDataTableWrapper-zETKEiPm.js": {
-    "file": "assets/js/chunks/EasyDataTableWrapper-zETKEiPm.js",
+  "_EasyDataTableWrapper-ClDh7Byd.js": {
+    "file": "assets/js/chunks/EasyDataTableWrapper-ClDh7Byd.js",
     "name": "EasyDataTableWrapper",
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "css": [
       "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css"
     ]
   },
-  "_NewsDetailModal-BeObeNPo.js": {
-    "file": "assets/js/chunks/NewsDetailModal-BeObeNPo.js",
+  "_EasyDataTableWrapper-Ev7WQvgQ.css": {
+    "file": "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css",
+    "src": "_EasyDataTableWrapper-Ev7WQvgQ.css"
+  },
+  "_NewsDetailModal-CPeptI6F.js": {
+    "file": "assets/js/chunks/NewsDetailModal-CPeptI6F.js",
     "name": "NewsDetailModal",
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js"
+      "_runtime-dom.esm-bundler-C8J7FHpO.js"
     ],
     "assets": [
       "assets/img/563x304 (1)-KBSjg7Ja.jpg",
@@ -63,19 +63,19 @@
     "file": "assets/js/chunks/autocomplete-CjR2TxGO.js",
     "name": "autocomplete"
   },
-  "_global-modal-CtLjFuPd.js": {
-    "file": "assets/js/chunks/global-modal-CtLjFuPd.js",
+  "_global-modal-BuE9KR4J.js": {
+    "file": "assets/js/chunks/global-modal-BuE9KR4J.js",
     "name": "global-modal",
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js"
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js"
     ]
   },
-  "_globalModal-BF5JWlWX.js": {
-    "file": "assets/js/chunks/globalModal-BF5JWlWX.js",
+  "_globalModal--1m5qnLi.js": {
+    "file": "assets/js/chunks/globalModal--1m5qnLi.js",
     "name": "globalModal",
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js"
+      "_runtime-dom.esm-bundler-C8J7FHpO.js"
     ]
   },
   "_index-7GPoofoh.js": {
@@ -90,8 +90,8 @@
     "file": "assets/js/chunks/pagination-5ZDBlBwd.js",
     "name": "pagination"
   },
-  "_runtime-dom.esm-bundler-BbrWZI0-.js": {
-    "file": "assets/js/chunks/runtime-dom.esm-bundler-BbrWZI0-.js",
+  "_runtime-dom.esm-bundler-C8J7FHpO.js": {
+    "file": "assets/js/chunks/runtime-dom.esm-bundler-C8J7FHpO.js",
     "name": "runtime-dom.esm-bundler"
   },
   "_slider-q_NEEFv1.js": {
@@ -133,6 +133,18 @@
   "assets/img/icons/messages3_white.svg": {
     "file": "assets/img/messages3_white-CxOA5ieA.svg",
     "src": "assets/img/icons/messages3_white.svg"
+  },
+  "assets/img/icons/order-tracking/component-1-1.svg": {
+    "file": "assets/img/component-1-1-CN7DWFsZ.svg",
+    "src": "assets/img/icons/order-tracking/component-1-1.svg"
+  },
+  "assets/img/icons/order-tracking/component-1-2.svg": {
+    "file": "assets/img/component-1-2-mR4BVpBn.svg",
+    "src": "assets/img/icons/order-tracking/component-1-2.svg"
+  },
+  "assets/img/icons/order-tracking/component-1.svg": {
+    "file": "assets/img/component-1-D8YgY9xC.svg",
+    "src": "assets/img/icons/order-tracking/component-1.svg"
   },
   "assets/img/icons/q.svg": {
     "file": "assets/img/q-8XezpOIm.svg",
@@ -311,7 +323,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-B6nrBSwm.js",
+    "file": "assets/js/mainJs-DueSC77d.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -320,16 +332,16 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-Dpq_6fwN.css"
+      "assets/css/mainJs-CsQZdIHA.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
-    "file": "assets/js/globalUiJs-CIMhq8JL.js",
+    "file": "assets/js/globalUiJs-CiezMbV9.js",
     "name": "globalUiJs",
     "src": "assets/js/modules/global-ui.js",
     "isEntry": true,
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "css": [
@@ -337,7 +349,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-BP74xdMg.js",
+    "file": "assets/js/homePageJs-Dr5J2Nxl.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -345,9 +357,9 @@
       "_slider-q_NEEFv1.js",
       "_autocomplete-CjR2TxGO.js",
       "_modal-manager-BXwv0V3q.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
-      "_NewsDetailModal-BeObeNPo.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
+      "_NewsDetailModal-CPeptI6F.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "css": [
@@ -410,28 +422,28 @@
     ]
   },
   "assets/vue/entrypoints/lk-datepicker.js": {
-    "file": "assets/js/lkDatepickerJs-C8l-Z66K.js",
+    "file": "assets/js/lkDatepickerJs-DK1SsD8_.js",
     "name": "lkDatepickerJs",
     "src": "assets/vue/entrypoints/lk-datepicker.js",
     "isEntry": true,
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js"
+      "_runtime-dom.esm-bundler-C8J7FHpO.js"
     ],
     "css": [
       "assets/css/lkDatepickerJs-rzBy3Z-d.css"
     ]
   },
   "assets/vue/entrypoints/news-page.js": {
-    "file": "assets/js/newsPageVueJs-orHVeg-H.js",
+    "file": "assets/js/newsPageVueJs-DsJjhSq6.js",
     "name": "newsPageVueJs",
     "src": "assets/vue/entrypoints/news-page.js",
     "isEntry": true,
     "imports": [
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_NewsDetailModal-BeObeNPo.js",
-      "_globalModal-BF5JWlWX.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_NewsDetailModal-CPeptI6F.js",
+      "_globalModal--1m5qnLi.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_DateRangePickerVue-Cbt_w_eg.js",
+      "_DateRangePickerVue-CZYC_RHW.js",
       "assets/vue/entrypoints/lk-datepicker.js"
     ],
     "css": [
@@ -450,18 +462,18 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-Kvuh0W9N.js",
+    "file": "assets/js/contacts-D-cBczCk.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
       "_pagination-5ZDBlBwd.js",
       "_autocomplete-CjR2TxGO.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
@@ -494,22 +506,22 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-JKL1Tkad.js",
+    "file": "assets/js/main-FSgUTnSD.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
       "assets/js/modules/home-page.js",
-      "_globalModal-BF5JWlWX.js",
+      "_globalModal--1m5qnLi.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "_autocomplete-CjR2TxGO.js",
-      "_NewsDetailModal-BeObeNPo.js"
+      "_NewsDetailModal-CPeptI6F.js"
     ],
     "css": [
       "assets/css/main-CjCMr60R.css"
@@ -561,18 +573,18 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-CmbIHOY1.js",
+    "file": "assets/js/orderList-KtYLCemV.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
-      "_EasyDataTableWrapper-zETKEiPm.js",
-      "_DeleteConfirmModal-pCpusVGU.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
+      "_EasyDataTableWrapper-ClDh7Byd.js",
+      "_DeleteConfirmModal-B6hdeSlr.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js"
@@ -599,22 +611,25 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-DTJHkdVB.js",
+    "file": "assets/js/orderTracking-DVGANjRW.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_globalModal-BF5JWlWX.js",
+      "_globalModal--1m5qnLi.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js"
     ],
     "assets": [
       "assets/img/search-CYPbi9xb.svg",
+      "assets/img/component-1-1-CN7DWFsZ.svg",
+      "assets/img/component-1-2-mR4BVpBn.svg",
+      "assets/img/component-1-D8YgY9xC.svg",
       "assets/img/order-tracking-img-CkPtxPsa.png",
       "assets/img/aeroline_logo-BATjs7xh.svg",
       "assets/img/logos_telegram-DAaG1Vgd.svg",
@@ -638,16 +653,16 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-B1Y5IcgH.js",
+    "file": "assets/js/payments-C-8WUuAr.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
@@ -689,17 +704,17 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-CxvbI0KF.js",
+    "file": "assets/js/profile-BdyhoPAE.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
       "assets/js/modules/profile-page.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
@@ -728,18 +743,18 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-XLKOGJJ6.js",
+    "file": "assets/js/sendersReceivers-CrAx97JI.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
-      "_EasyDataTableWrapper-zETKEiPm.js",
-      "_DeleteConfirmModal-pCpusVGU.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
+      "_EasyDataTableWrapper-ClDh7Byd.js",
+      "_DeleteConfirmModal-B6hdeSlr.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js"
@@ -763,19 +778,19 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-BxLTHOfz.js",
+    "file": "assets/js/serviceActs-Z6zFy2NW.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_DateRangePickerVue-Cbt_w_eg.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_DateRangePickerVue-CZYC_RHW.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_globalModal-BF5JWlWX.js",
-      "_EasyDataTableWrapper-zETKEiPm.js",
+      "_globalModal--1m5qnLi.js",
+      "_EasyDataTableWrapper-ClDh7Byd.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "assets/vue/entrypoints/lk-datepicker.js"
@@ -798,16 +813,16 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-BZZb8043.js",
+    "file": "assets/js/services-BUUKrPi3.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
@@ -848,17 +863,17 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-MQ7OVLkm.js",
+    "file": "assets/js/vacancies-Dk9P0Q2U.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-CtLjFuPd.js",
+      "_global-modal-BuE9KR4J.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
       "_pagination-5ZDBlBwd.js",
-      "_runtime-dom.esm-bundler-BbrWZI0-.js",
-      "_globalModal-BF5JWlWX.js",
+      "_runtime-dom.esm-bundler-C8J7FHpO.js",
+      "_globalModal--1m5qnLi.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
