@@ -25,12 +25,10 @@
             </div>
         </section>
 
-        <div v-if="loading" class="text-center p-20">
-            <p class="text-h4">Загрузка...</p>
-        </div>
-
-        <div v-if="error" class="text-center p-8 text-red-500">
-            <p>{{ error }}</p>
+        <div v-if="loading || error" class="text-center p-20">
+            <p class="text-h4" :class="{ 'text-red-500': error && !isNotFound }">
+                {{ messageText }}
+            </p>
         </div>
 
         <section v-if="order" class="flex flex-col md:flex-row-reverse gap-2 relative z-1 bg-brand-light">
@@ -83,7 +81,16 @@ export default {
                     }
                     throw new Error('Произошла ошибка при загрузке данных.');
                 }
-                const data = await response.json();
+                const text = await response.text();
+                if (!text) {
+                    throw new Error('Заказ не найден. Проверьте правильность номера.');
+                }
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    throw new Error('Заказ не найден. Проверьте правильность номера.');
+                }
                 this.order = data;
             } catch (err) {
                 this.error = err.message;
@@ -91,6 +98,19 @@ export default {
                 this.loading = false;
             }
         },
+    },
+    computed: {
+        isNotFound() {
+            return this.error === 'Заказ не найден. Проверьте правильность номера.';
+        },
+        messageText() {
+            if (this.error) {
+                return this.isNotFound
+                    ? 'Заказ не найден. Проверьте правильность номера или попробуйте другой номер.'
+                    : this.error;
+            }
+            return 'Загрузка...';
+        }
     },
 };
 </script>

@@ -167,7 +167,7 @@ const _hoisted_4$1 = { class: "flex-1" };
 const _hoisted_5$1 = { class: "font-semibold text-body-secondary leading-1.2" };
 const _hoisted_6$1 = { class: "flex-1" };
 const _hoisted_7$1 = { class: "font-semibold text-brand-gray text-body-secondary leading-1.2" };
-const _hoisted_8$1 = { class: "overflow-x-auto" };
+const _hoisted_8 = { class: "overflow-x-auto" };
 const _hoisted_9 = { class: "table w-full table-zebra" };
 function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", _hoisted_1$1, [
@@ -182,7 +182,7 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
           createBaseVNode("div", _hoisted_7$1, toDisplayString($props.order.to), 1)
         ])
       ]),
-      createBaseVNode("div", _hoisted_8$1, [
+      createBaseVNode("div", _hoisted_8, [
         createBaseVNode("table", _hoisted_9, [
           createBaseVNode("tbody", null, [
             createBaseVNode("tr", null, [
@@ -249,13 +249,33 @@ const _sfc_main = {
           }
           throw new Error("Произошла ошибка при загрузке данных.");
         }
-        const data = await response.json();
+        const text = await response.text();
+        if (!text) {
+          throw new Error("Заказ не найден. Проверьте правильность номера.");
+        }
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          throw new Error("Заказ не найден. Проверьте правильность номера.");
+        }
         this.order = data;
       } catch (err) {
         this.error = err.message;
       } finally {
         this.loading = false;
       }
+    }
+  },
+  computed: {
+    isNotFound() {
+      return this.error === "Заказ не найден. Проверьте правильность номера.";
+    },
+    messageText() {
+      if (this.error) {
+        return this.isNotFound ? "Заказ не найден. Проверьте правильность номера или попробуйте другой номер." : this.error;
+      }
+      return "Загрузка...";
     }
   }
 };
@@ -270,10 +290,6 @@ const _hoisted_6 = {
 };
 const _hoisted_7 = {
   key: 1,
-  class: "text-center p-8 text-red-500"
-};
-const _hoisted_8 = {
-  key: 2,
   class: "flex flex-col md:flex-row-reverse gap-2 relative z-1 bg-brand-light"
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -309,13 +325,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         ])
       ])
     ]),
-    $data.loading ? (openBlock(), createElementBlock("div", _hoisted_6, _cache[3] || (_cache[3] = [
-      createBaseVNode("p", { class: "text-h4" }, "Загрузка...", -1)
-    ]))) : createCommentVNode("", true),
-    $data.error ? (openBlock(), createElementBlock("div", _hoisted_7, [
-      createBaseVNode("p", null, toDisplayString($data.error), 1)
+    $data.loading || $data.error ? (openBlock(), createElementBlock("div", _hoisted_6, [
+      createBaseVNode("p", {
+        class: normalizeClass(["text-h4", { "text-red-500": $data.error && !$options.isNotFound }])
+      }, toDisplayString($options.messageText), 3)
     ])) : createCommentVNode("", true),
-    $data.order ? (openBlock(), createElementBlock("section", _hoisted_8, [
+    $data.order ? (openBlock(), createElementBlock("section", _hoisted_7, [
       createVNode(_component_order_tracking_details, { order: $data.order }, null, 8, ["order"]),
       createVNode(_component_order_tracking_status, {
         tracking: $data.order.tracking
