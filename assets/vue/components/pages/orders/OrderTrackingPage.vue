@@ -26,7 +26,7 @@
         </section>
 
         <div v-if="loading || error" class="text-center p-20">
-            <p class="text-h4" :class="{ 'text-red-500': error && !isNotFound }">
+            <p class="text-h5" :class="{ 'text-red-500': error && !isNotFound }">
                 {{ messageText }}
             </p>
         </div>

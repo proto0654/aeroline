@@ -327,7 +327,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     ]),
     $data.loading || $data.error ? (openBlock(), createElementBlock("div", _hoisted_6, [
       createBaseVNode("p", {
-        class: normalizeClass(["text-h4", { "text-red-500": $data.error && !$options.isNotFound }])
+        class: normalizeClass(["text-h5", { "text-red-500": $data.error && !$options.isNotFound }])
       }, toDisplayString($options.messageText), 3)
     ])) : createCommentVNode("", true),
     $data.order ? (openBlock(), createElementBlock("section", _hoisted_7, [
