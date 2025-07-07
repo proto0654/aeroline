@@ -3070,6 +3070,9 @@ function onErrorCaptured(hook, target = currentInstance) {
   injectHook("ec", hook, target);
 }
 const COMPONENTS = "components";
+function resolveComponent(name, maybeSelfReference) {
+  return resolveAsset(COMPONENTS, name, true, maybeSelfReference) || name;
+}
 const NULL_DYNAMIC_COMPONENT = Symbol.for("v-ndc");
 function resolveDynamicComponent(component) {
   if (isString(component)) {
@@ -7643,7 +7646,7 @@ function normalizeContainer(container) {
   return container;
 }
 export {
-  toValue as $,
+  vModelRadio as $,
   createBlock as A,
   mergeProps as B,
   resolveDynamicComponent as C,
@@ -7668,19 +7671,20 @@ export {
   vModelText as V,
   toRef as W,
   vModelCheckbox as X,
-  createStaticVNode as Y,
-  vModelSelect as Z,
-  vModelRadio as _,
+  resolveComponent as Y,
+  createStaticVNode as Z,
+  vModelSelect as _,
   createVNode as a,
-  readonly as a0,
-  watchEffect as a1,
-  shallowRef as a2,
-  getCurrentInstance as a3,
-  vModelDynamic as a4,
-  isVNode as a5,
-  Transition as a6,
-  Teleport as a7,
-  h as a8,
+  toValue as a0,
+  readonly as a1,
+  watchEffect as a2,
+  shallowRef as a3,
+  getCurrentInstance as a4,
+  vModelDynamic as a5,
+  isVNode as a6,
+  Transition as a7,
+  Teleport as a8,
+  h as a9,
   createBaseVNode as b,
   createElementBlock as c,
   createTextVNode as d,
