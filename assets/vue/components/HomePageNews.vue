@@ -2,10 +2,10 @@
   <div class="news-grid grid grid-cols-1 md:grid-cols-3 gap-6">
     <div v-for="newsItem in latestNews" :key="newsItem.id"
       class="relative news-card bg-brand-light p-6 rounded-lg flex flex-col justify-between relative">
-      
+
       <div class="wrapper">
         <div class="w-full flex justify-between">
-          <h3 class="text-lg font-bold text-brand-gray mb-4 min-h-[6rem] leading-1.2">{{ newsItem.title }}</h3>
+          <h3 class="text-lg font-bold text-brand-gray mb-4  leading-1.2">{{ newsItem.title }}</h3>
           <div v-if="newsItem.isNew" class="new-indicator w-10 h-10 flex items-center justify-center">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g :filter="`url(#filter0_d_news_${newsItem.id})`">
@@ -24,7 +24,8 @@
                   <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0.823529 0 0 0 1 0">
                   </feColorMatrix>
                   <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_{{id}}"></feBlend>
-                  <feBlend mode="normal" in="SourceGraphic" :in2="`effect1_dropShadow_news_${newsItem.id}`" result="shape">
+                  <feBlend mode="normal" in="SourceGraphic" :in2="`effect1_dropShadow_news_${newsItem.id}`"
+                    result="shape">
                   </feBlend>
                 </filter>
               </defs>

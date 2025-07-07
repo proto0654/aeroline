@@ -79,7 +79,7 @@ const _sfc_main = {
 const _hoisted_1 = { class: "news-grid grid grid-cols-1 md:grid-cols-3 gap-6" };
 const _hoisted_2 = { class: "wrapper" };
 const _hoisted_3 = { class: "w-full flex justify-between" };
-const _hoisted_4 = { class: "text-lg font-bold text-brand-gray mb-4 min-h-[6rem] leading-1.2" };
+const _hoisted_4 = { class: "text-lg font-bold text-brand-gray mb-4 leading-1.2" };
 const _hoisted_5 = {
   key: 0,
   class: "new-indicator w-10 h-10 flex items-center justify-center"
@@ -136,7 +136,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
                     filterUnits: "userSpaceOnUse",
                     "color-interpolation-filters": "sRGB"
                   }, [
-                    _cache[1] || (_cache[1] = createStaticVNode('<feFlood flood-opacity="0" result="BackgroundImageFix" data-v-169a7a80></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" data-v-169a7a80></feColorMatrix><feOffset data-v-169a7a80></feOffset><feGaussianBlur stdDeviation="10" data-v-169a7a80></feGaussianBlur><feComposite in2="hardAlpha" operator="out" data-v-169a7a80></feComposite><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0.823529 0 0 0 1 0" data-v-169a7a80></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_{{id}}" data-v-169a7a80></feBlend>', 7)),
+                    _cache[1] || (_cache[1] = createStaticVNode('<feFlood flood-opacity="0" result="BackgroundImageFix" data-v-254d1b77></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" data-v-254d1b77></feColorMatrix><feOffset data-v-254d1b77></feOffset><feGaussianBlur stdDeviation="10" data-v-254d1b77></feGaussianBlur><feComposite in2="hardAlpha" operator="out" data-v-254d1b77></feComposite><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.552941 0 0 0 0.823529 0 0 0 1 0" data-v-254d1b77></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_news_{{id}}" data-v-254d1b77></feBlend>', 7)),
                     createBaseVNode("feBlend", {
                       mode: "normal",
                       in: "SourceGraphic",
@@ -161,7 +161,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }), 128))
   ]);
 }
-const HomePageNews = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-169a7a80"]]);
+const HomePageNews = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-254d1b77"]]);
 function initHomePage() {
   console.log("Инициализация главной страницы начата");
   if (document.querySelector(".swiper-container") || document.querySelector(".news-swiper-container")) {
