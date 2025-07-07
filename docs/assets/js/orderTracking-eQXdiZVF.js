@@ -1,5 +1,5 @@
 import "./chunks/global-modal-BuE9KR4J.js";
-import "./mainJs-Dz3psANh.js";
+import "./mainJs-kB2G7xGq.js";
 import "./globalUiJs-CiezMbV9.js";
 import { c as createElementBlock, o as openBlock, b as createBaseVNode, U as withDirectives, V as vModelText, f as withModifiers, $ as resolveComponent, e as createCommentVNode, K as Fragment, L as renderList, D as normalizeClass, a as createVNode, t as toDisplayString, E as createApp } from "./chunks/runtime-dom.esm-bundler-C8J7FHpO.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
@@ -167,7 +167,7 @@ const _hoisted_4$1 = { class: "flex-1" };
 const _hoisted_5$1 = { class: "font-semibold text-body-secondary leading-1.2" };
 const _hoisted_6$1 = { class: "flex-1" };
 const _hoisted_7$1 = { class: "font-semibold text-brand-gray text-body-secondary leading-1.2" };
-const _hoisted_8 = { class: "overflow-x-auto" };
+const _hoisted_8$1 = { class: "overflow-x-auto" };
 const _hoisted_9 = { class: "table w-full table-zebra" };
 function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", _hoisted_1$1, [
@@ -182,7 +182,7 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
           createBaseVNode("div", _hoisted_7$1, toDisplayString($props.order.to), 1)
         ])
       ]),
-      createBaseVNode("div", _hoisted_8, [
+      createBaseVNode("div", _hoisted_8$1, [
         createBaseVNode("table", _hoisted_9, [
           createBaseVNode("tbody", null, [
             createBaseVNode("tr", null, [
@@ -259,31 +259,32 @@ const _sfc_main = {
     }
   }
 };
-const _hoisted_1 = { class: "relative z-10" };
-const _hoisted_2 = { class: "bg-brand-light rounded-2xl flex flex-col" };
-const _hoisted_3 = { class: "flex flex-col-reverse md:flex-row gap-6 items-stretch" };
-const _hoisted_4 = { class: "md:basis-2/5 w-full flex flex-col justify-center p-4 md:p-8" };
-const _hoisted_5 = {
-  key: 0,
-  class: "text-center p-8"
-};
+const _hoisted_1 = { class: "bg-brand-light rounded-2xl overflow-hidden" };
+const _hoisted_2 = { class: "relative z-10" };
+const _hoisted_3 = { class: "flex flex-col" };
+const _hoisted_4 = { class: "flex flex-col-reverse md:flex-row gap-6 items-stretch" };
+const _hoisted_5 = { class: "md:basis-2/5 w-full flex flex-col justify-center p-4 md:p-8" };
 const _hoisted_6 = {
+  key: 0,
+  class: "text-center p-20"
+};
+const _hoisted_7 = {
   key: 1,
   class: "text-center p-8 text-red-500"
 };
-const _hoisted_7 = {
+const _hoisted_8 = {
   key: 2,
-  class: "flex flex-col md:flex-row gap-2 relative z-1 bg-brand-light rounded-2xl"
+  class: "flex flex-col md:flex-row-reverse gap-2 relative z-1 bg-brand-light"
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_order_tracking_form = resolveComponent("order-tracking-form");
-  const _component_order_tracking_status = resolveComponent("order-tracking-status");
   const _component_order_tracking_details = resolveComponent("order-tracking-details");
-  return openBlock(), createElementBlock("div", null, [
-    createBaseVNode("section", _hoisted_1, [
-      createBaseVNode("div", _hoisted_2, [
-        createBaseVNode("div", _hoisted_3, [
-          createBaseVNode("div", _hoisted_4, [
+  const _component_order_tracking_status = resolveComponent("order-tracking-status");
+  return openBlock(), createElementBlock("div", _hoisted_1, [
+    createBaseVNode("section", _hoisted_2, [
+      createBaseVNode("div", _hoisted_3, [
+        createBaseVNode("div", _hoisted_4, [
+          createBaseVNode("div", _hoisted_5, [
             _cache[0] || (_cache[0] = createBaseVNode("h2", { class: "text-h5 md:text-h4 font-bold text-brand-gray mb-4" }, "Отследить посылку", -1)),
             createVNode(_component_order_tracking_form, {
               onSearch: $options.handleSearch,
@@ -302,23 +303,23 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("img", {
               src: _imports_0,
               alt: "Грузовик и коробки",
-              class: "md:max-h-[250px] object-cover md:object-right rounded-2xl w-full md:max-w-full object-contain"
+              class: "md:max-h-[250px] object-cover md:object-right w-full md:max-w-full object-contain"
             })
           ], -1))
         ])
       ])
     ]),
-    $data.loading ? (openBlock(), createElementBlock("div", _hoisted_5, _cache[3] || (_cache[3] = [
-      createBaseVNode("p", null, "Загрузка...", -1)
+    $data.loading ? (openBlock(), createElementBlock("div", _hoisted_6, _cache[3] || (_cache[3] = [
+      createBaseVNode("p", { class: "text-h4" }, "Загрузка...", -1)
     ]))) : createCommentVNode("", true),
-    $data.error ? (openBlock(), createElementBlock("div", _hoisted_6, [
+    $data.error ? (openBlock(), createElementBlock("div", _hoisted_7, [
       createBaseVNode("p", null, toDisplayString($data.error), 1)
     ])) : createCommentVNode("", true),
-    $data.order ? (openBlock(), createElementBlock("section", _hoisted_7, [
+    $data.order ? (openBlock(), createElementBlock("section", _hoisted_8, [
+      createVNode(_component_order_tracking_details, { order: $data.order }, null, 8, ["order"]),
       createVNode(_component_order_tracking_status, {
         tracking: $data.order.tracking
-      }, null, 8, ["tracking"]),
-      createVNode(_component_order_tracking_details, { order: $data.order }, null, 8, ["order"])
+      }, null, 8, ["tracking"])
     ])) : createCommentVNode("", true)
   ]);
 }

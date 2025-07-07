@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <section class="relative z-10">
-            <div class="bg-brand-light rounded-2xl flex flex-col">
+    <div class="bg-brand-light rounded-2xl overflow-hidden">
+        <section class="relative z-10 ">
+            <div class="flex flex-col">
                 <div class="flex flex-col-reverse md:flex-row gap-6 items-stretch">
                     <div class="md:basis-2/5 w-full flex flex-col justify-center p-4 md:p-8">
                         <h2 class="text-h5 md:text-h4 font-bold text-brand-gray mb-4">Отследить посылку</h2>
@@ -19,23 +19,23 @@
                     </div>
                     <div class="md:basis-3/5 w-full flex items-center justify-center">
                         <img src="/assets/img/layout/order-tracking-img.png" alt="Грузовик и коробки"
-                            class="md:max-h-[250px] object-cover md:object-right rounded-2xl w-full md:max-w-full object-contain" />
+                            class="md:max-h-[250px] object-cover md:object-right w-full md:max-w-full object-contain" />
                     </div>
                 </div>
             </div>
         </section>
 
-        <div v-if="loading" class="text-center p-8">
-            <p>Загрузка...</p>
+        <div v-if="loading" class="text-center p-20">
+            <p class="text-h4">Загрузка...</p>
         </div>
 
         <div v-if="error" class="text-center p-8 text-red-500">
             <p>{{ error }}</p>
         </div>
 
-        <section v-if="order" class="flex flex-col md:flex-row gap-2 relative z-1 bg-brand-light rounded-2xl">
-            <order-tracking-status :tracking="order.tracking"></order-tracking-status>
+        <section v-if="order" class="flex flex-col md:flex-row-reverse gap-2 relative z-1 bg-brand-light">
             <order-tracking-details :order="order"></order-tracking-details>
+            <order-tracking-status :tracking="order.tracking"></order-tracking-status>
         </section>
     </div>
 </template>
