@@ -1,5 +1,5 @@
 import "./chunks/global-modal-BuE9KR4J.js";
-import "./mainJs-DueSC77d.js";
+import "./mainJs-Dz3psANh.js";
 import "./globalUiJs-CiezMbV9.js";
 import { P as Pagination } from "./chunks/pagination-5ZDBlBwd.js";
 import "./chunks/runtime-dom.esm-bundler-C8J7FHpO.js";
