@@ -1,14 +1,14 @@
-import "./chunks/global-modal-BuE9KR4J.js";
+import "./chunks/global-modal-BbiA6qLG.js";
 import "./mainJs-CNnx_5Px.js";
-import { c as create$3, a as create$6, f as create$4, u as useForm, d as useField, T as TextInput, B as BaseForm } from "./globalUiJs-CiezMbV9.js";
-import { r as ref, A as createBlock, o as openBlock, Q as withCtx, a as createVNode, b as createBaseVNode, c as createElementBlock, e as createCommentVNode, i as isRef, u as unref, t as toDisplayString, E as createApp, s as computed, W as toRef, w as watch, U as withDirectives, V as vModelText, B as mergeProps, F as defineComponent, y as onMounted, d as createTextVNode } from "./chunks/runtime-dom.esm-bundler-C8J7FHpO.js";
-import { D as DateRangePickerVue } from "./chunks/DateRangePickerVue-CZYC_RHW.js";
+import { c as create$3, a as create$6, f as create$4, u as useForm, d as useField, T as TextInput, B as BaseForm } from "./globalUiJs-C4ZabVgk.js";
+import { r as ref, y as createBlock, o as openBlock, Q as withCtx, E as createVNode, a as createBaseVNode, c as createElementBlock, d as createCommentVNode, A as unref, t as toDisplayString, D as createApp, p as computed, W as toRef, q as watch, U as withDirectives, V as vModelText, z as mergeProps, i as isRef, F as defineComponent, v as onMounted, b as createTextVNode } from "./chunks/runtime-dom.esm-bundler-0GtEW-KV.js";
+import { D as DateRangeFilter } from "./chunks/DateRangeFilter-Dzx7B9C5.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
-import { c as createPinia } from "./chunks/globalModal--1m5qnLi.js";
-import { E as EasyDataTableWrapper } from "./chunks/EasyDataTableWrapper-ClDh7Byd.js";
+import { c as createPinia } from "./chunks/globalModal-DXiYt58h.js";
+import { E as EasyDataTableWrapper } from "./chunks/EasyDataTableWrapper-D85uT70L.js";
 import "./chunks/slider-q_NEEFv1.js";
 import "./chunks/modal-manager-BXwv0V3q.js";
-import "./lkDatepickerJs-DK1SsD8_.js";
+import "./lkDatepickerJs-DgtZ8s6z.js";
 const _hoisted_1$3 = { class: "form-control w-full" };
 const _hoisted_2$2 = {
   key: 0,
@@ -24,6 +24,7 @@ const _sfc_main$4 = {
   },
   emits: ["close", "success"],
   setup(__props, { emit: __emit }) {
+    const props = __props;
     const emit = __emit;
     const schema = create$3({
       email: create$6().required("Email обязателен").email("Неверный формат email"),
@@ -40,14 +41,20 @@ const _sfc_main$4 = {
     });
     const initialValues = {
       email: "",
-      dateRange: { start: null, end: null }
+      dateRange: {
+        start: props.initialDateRange ? props.initialDateRange[0] : null,
+        end: props.initialDateRange ? props.initialDateRange[1] : null
+      }
     };
-    const { handleSubmit, errors, resetForm } = useForm({
+    const { handleSubmit, errors, resetForm, setFieldValue } = useForm({
       validationSchema: schema,
       initialValues
     });
     const { value: dateRangeValue, errorMessage: dateRangeErrorMessage } = useField("dateRange");
-    const datePickerRef = ref(null);
+    const handleDateChange = (payload) => {
+      setFieldValue("dateRange", payload);
+    };
+    ref(null);
     const onSubmit = handleSubmit(async (values) => {
       console.log("Форма запроса акта сверки отправлена:", values);
       emit("success", {
@@ -56,16 +63,12 @@ const _sfc_main$4 = {
         resetAfterSubmit: true
         // Instruct BaseForm to reset
       });
-      if (datePickerRef.value && datePickerRef.value.clearSelection) {
-        datePickerRef.value.clearSelection();
-      }
+      handleDateChange({ start: null, end: null });
     });
     const onCancel = () => {
       console.log("Форма запроса акта сверки отменена.");
       resetForm();
-      if (datePickerRef.value && datePickerRef.value.clearSelection) {
-        datePickerRef.value.clearSelection();
-      }
+      handleDateChange({ start: null, end: null });
     };
     const formatRange = (start, end) => {
       if (!start || !end) return "";
@@ -96,19 +99,16 @@ const _sfc_main$4 = {
             required: true
           }),
           createBaseVNode("div", _hoisted_1$3, [
-            _cache[1] || (_cache[1] = createBaseVNode("label", { class: "label" }, [
+            _cache[0] || (_cache[0] = createBaseVNode("label", { class: "label" }, [
               createBaseVNode("span", { class: "label-text text-brand-gray font-medium" }, "Период для акта сверки"),
               createBaseVNode("span", { class: "text-brand-red text-lg font-bold" }, "*")
             ], -1)),
-            createVNode(DateRangePickerVue, {
-              name: "dateRange",
-              "initial-range": __props.initialDateRange,
-              placeholder: "Выберите период для акта сверки",
-              range: unref(dateRangeValue),
-              "onUpdate:range": _cache[0] || (_cache[0] = ($event) => isRef(dateRangeValue) ? dateRangeValue.value = $event : null),
-              ref_key: "datePickerRef",
-              ref: datePickerRef
-            }, null, 8, ["initial-range", "range"]),
+            createVNode(DateRangeFilter, {
+              "initial-start-date": __props.initialDateRange ? __props.initialDateRange[0] : null,
+              "initial-end-date": __props.initialDateRange ? __props.initialDateRange[1] : null,
+              onDateRangeChanged: handleDateChange,
+              "close-on-select": true
+            }, null, 8, ["initial-start-date", "initial-end-date"]),
             unref(dateRangeErrorMessage) ? (openBlock(), createElementBlock("p", _hoisted_2$2, toDisplayString(unref(dateRangeErrorMessage)), 1)) : createCommentVNode("", true)
           ])
         ]),
@@ -117,7 +117,7 @@ const _sfc_main$4 = {
     };
   }
 };
-const RequestActForm = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-f0a4ad99"]]);
+const RequestActForm = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-e36349ff"]]);
 document.addEventListener("DOMContentLoaded", () => {
   const requestActApp = createApp(RequestActForm);
   requestActApp.mount("#request-act-form-app");

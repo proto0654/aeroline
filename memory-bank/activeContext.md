@@ -1,6 +1,7 @@
 # Active Context
 
 ## Current Focus
+
 - ✅ COMPLETED: Implemented a unified global modal system using Vue 3, Pinia, and DaisyUI.
 - ✅ COMPLETED: All major modals (login, email submission, sender/receiver creation/editing/deletion) migrated to the new unified Vue 3 system.
 - ✅ COMPLETED: All import errors and modal functionalities fixed, including "Modal was cancelled" console messages.
@@ -24,6 +25,7 @@
 - ➡️ Current Task: Continue working on other project features, prioritizing refactoring existing forms and dynamic elements into Vue 3 components.
 
 ## Recent Changes (Latest Session)
+
 - ✅ FIXED: Corrected import paths in `assets/js/modules/home-page.js`.
 - ✅ FIXED: Removed local Pinia initialization in `assets/js/modules/home-page.js` to use global instance.
 - ✅ FIXED: Fixed prop name passed to `NewsDetailModal.vue` from `newsItem` to `news` in `HomePageNews.vue`.
@@ -40,24 +42,26 @@
 - ✅ FIXED: Fixed build error "Could not resolve entry module" by removing reference to assets/js/modules/news-page.js from vite.config.js.
 
 ## Modal System Status
+
 - **Implementation**: Unified global modal system using Vue 3, Pinia, and DaisyUI.
 - **Host Component**: `GlobalModalHost.vue` centrally manages modal structure and behavior.
 - **State Management**: Pinia store (`globalModal.js`) manages modal state (open/close, component, props, size).
 - **Structure**: All modals use DaisyUI classes for consistent styling.
 - **Behavior**: Consistent closing on Escape, backdrop click, close buttons. Promise-based results (success/cancellation) instead of rejections for cancellation.
 - **Sizes**: Support for small, default (`max-w-md`), large (`w-auto max-w-[calc(100vw-8rem)]`), full sizes.
-- **Updated Pages**: 
+- **Updated Pages**:
   - ✅ index.html (client login modal)
   - ✅ profile.html (password/email change modals)
-  - ✅ news.html (news detail modal - *now uses unified system*)
+  - ✅ news.html (news detail modal - _now uses unified system_)
   - ✅ service-acts.html (email submission modal)
   - ✅ senders-receivers.html (create/edit/delete modals)
 
 ## JavaScript Modules Status
+
 - ✅ global-ui.js: New module for global UI interactions (e.g., login modal button), integrated into `header.hbs`.
 - ✅ modal-manager.js: Removed from direct use by Vue components; now primarily used by global UI modules for general modal behavior (should be removed after refactoring all native modals).
 - ✅ home-page.js: Updated to use the new modal system.
-- ✅ news-page.js: Updated to use the new modal system and Vue date picker (*now also uses the new global modal for news details*).
+- ✅ news-page.js: Updated to use the new modal system and Vue date picker (_now also uses the new global modal for news details_).
 - ✅ service-acts-page.js: Updated to use the new modal system and Vue date picker, click handler fixed.
 - ✅ senders-receivers-page.js: Fully refactored to use the new modal system.
 - ✅ senders-receivers-page.js: Refactored to use Vue 3 component `EasyDataTableWrapper.vue` for table handling.
@@ -67,6 +71,7 @@
 - ✅ UPDATED: `service-acts-page.js` and `news-page.js` updated to use Vue date picker component.
 
 ## Next Steps
+
 - Continue working on other project features, prioritizing refactoring existing forms and dynamic elements into Vue 3 components.
 - Identify and migrate remaining native JavaScript UI interactions to Vue 3 components where beneficial.
 - Ensure strict adherence to unified Vue 3 / Pinia / DaisyUI patterns for all new pages and features.
@@ -81,6 +86,7 @@
 - **BITRIX CMS INTEGRATION:** (Future) Plan and implement integration with Bitrix CMS for news data and other dynamic content.
 
 ## Active Decisions
+
 - All modals MUST use the unified global Vue 3 / Pinia modal system (`GlobalModalHost.vue`).
 - No more `dialog` elements - only `div`-based modals.
 - Consistent behavior for all modals (closing, opening, promise resolution).
@@ -104,6 +110,7 @@
 - **REFACTORING STRATEGY:** Gradual replacement of native JavaScript UI logic with Vue 3 components, prioritizing interactive elements and forms.
 
 ## Known Issues (Resolved)
+
 - ~~Consistent modal behavior across all pages~~ ✅ FIXED
 - ~~News modal does not use unified system~~ ✅ FIXED
 - ~~All modals became large due to incorrect size application~~ ✅ FIXED
@@ -111,6 +118,7 @@
 - ~~Build error "Could not resolve entry module assets/js/modules/news-page.js"~~ ✅ FIXED
 
 ## Remaining Minor Issues
+
 - ~~Consistent modal behavior across all pages~~ ✅ FIXED
 - ~~News modal does not use unified system~~ ✅ FIXED
 - ~~All modals became large due to incorrect size application~~ ✅ FIXED
@@ -118,6 +126,7 @@
 - ~~Build error "Could not resolve entry module assets/js/modules/news-page.js"~~ ✅ FIXED
 
 ## Current Considerations
+
 - The global modal system is now fully unified and consistent, with `console.error` messages for cancellation resolved.
 - All import errors resolved.
 - All major modal functionality tested and working.
@@ -130,22 +139,25 @@
 - **NEWS ON MAIN PAGE:** The news block on the main page is now a functional Vue component displaying the latest 3 news and using the global modal for details.
 
 ## UI/Frontend Structure
+
 - All pages use partials for header, footer, and a single global modal host (Handlebars).
 - Main sections (carousel, forms, cards, map, news, etc.) are rendered via template variables.
 - Profile page: two columns (user data, account details), pop-up modals for password/email change via Vue components.
 - Navigation: two-level, mobile menu with accordion logic.
 - Universal global modal container (`GlobalModalHost.vue`) included on every page via `header.hbs`.
-- All forms with phone input use PhoneValidator (mask +7/8, validates on blur, no input blocking) - *to be refactored into Vue/VeeValidate*.
-- Service acts page uses List.js for sorting and pagination with Tailwind utilities - *consider Vue integration*.
+- All forms with phone input use PhoneValidator (mask +7/8, validates on blur, no input blocking) - _to be refactored into Vue/VeeValidate_.
+- Service acts page uses List.js for sorting and pagination with Tailwind utilities - _consider Vue integration_.
 - Modal system uses DaisyUI components with custom Pinia store for consistent behavior.
 
 ## Current Work Focus:
+
 ✅ **COMPLETED:** Implemented correct asset handling strategy in `vite.config.js` to automatically place all processed assets (CSS, images, fonts, SVG, etc.) in the `docs/assets/` directory while preserving their original subfolder structure from the source `assets/` directory and adding hashes to filenames.
 ✅ **COMPLETED:** Refactored news page to Vue 3 components (MVP with test data).
 ✅ **COMPLETED:** Replaced news slider/carousel on the main page with a Vue component displaying the latest 3 news in a grid, with global modal integration for details.
 ➡️ **CURRENTLY:** Continuing work on other project features and refactoring.
 
 ## Recent Changes:
+
 - ✅ **IMPLEMENTED:** Created `assets/vue/components/HomePageNews.vue` and integrated into `index.html`.
 - ✅ **DELETED:** Old news carousel logic from `assets/js/modules/home-page.js`.
 - ✅ **FIXED:** Fixed import paths and Pinia initialization in `assets/js/modules/home-page.js`.
@@ -153,7 +165,9 @@
 - ✅ **IMPLEMENTED:** Added 'isNew' indicator (SVG) to news cards on the main page.
 
 ## Current State:
+
 Asset handling strategy has been successfully implemented with an explicit categorization approach. Instead of trying to deduce the output directory from the source path, we now categorize assets by their file extension:
+
 - Images go to `assets/img/`
 - CSS files go to `assets/css/`
 - Fonts go to `assets/fonts/`
@@ -166,6 +180,7 @@ This approach ensures a clean, organized output directory structure that is easy
 News block on the main page is now a functional Vue component, displaying the latest 3 news and using the global modal for details.
 
 ## Next Steps:
+
 1. Continue planned Vue 3 integration for MVP personal account features.
 2. Implement and integrate other Vue 3 components beyond the date range picker.
 3. Consider adding more advanced asset optimization strategies if needed (image compression, SVG optimization, etc.).
@@ -181,4 +196,4 @@ News block on the main page is now a functional Vue component, displaying the la
 - **Next steps:** Implement news pagination logic in Vue. Ensure correct integration with filtered news data. Continue refining UI/UX to match original design. Prepare for eventual Bitrix CMS API integration for news data.
 - **Active decisions/considerations:** Using `assets/data/news.json` for MVP data. File structure for news-related Vue components confirmed in `assets/vue/components/pages/news/`. Decided to use `DateRangeFilter.vue` as a wrapper for `DateRangePickerVue.vue` for cleaner integration.
 
-**Note:** All future entries and modifications to this memory bank should be written in English. 
+**Note:** All future entries and modifications to this memory bank should be written in English.

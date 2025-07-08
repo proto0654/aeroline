@@ -1,15 +1,7 @@
 <template>
   <div>
-    <date-picker
-      v-model:value="dateRange"
-      type="daterange"
-      range
-      placeholder="Выберите период"
-      format="DD.MM.YYYY"
-      :lang="locale"
-      @confirm="handleConfirm"
-      @close="handleClose"
-    ></date-picker>
+    <date-picker v-model:value="dateRange" v-model:open="isOpen" type="daterange" range placeholder="Выберите период"
+      format="DD.MM.YYYY" :lang="locale" @change="handleChange" @close="handleClose"></date-picker>
   </div>
 </template>
 
@@ -28,6 +20,10 @@ const props = defineProps({
   placeholder: { // Текст плейсхолдера
     type: String,
     default: 'Выберите период'
+  },
+  closeOnSelect: { // Закрывать ли попап после выбора диапазона
+    type: Boolean,
+    default: true
   }
   // Можно добавить другие пропсы для настройки DatePicker из библиотеки
   // minDate, maxDate, format, etc.
@@ -41,6 +37,8 @@ const dateRange = ref(props.initialRange);
 
 // Настройка локализации
 const locale = ref(langRu);
+
+const isOpen = ref(false); // состояние попапа
 
 // Синхронизация внутреннего состояния с начальным пропсом
 watch(() => props.initialRange, (newRange) => {
@@ -60,10 +58,13 @@ watch(dateRange, (newRange) => {
   }
 });
 
-// Обработчик подтверждения выбора диапазона
-const handleConfirm = () => {
-  // Логика подтверждения теперь в watch, но это событие может быть полезно для других целей
-  console.log('DateRangePickerVue: confirmed selection', dateRange.value);
+// Обработчик изменения диапазона дат
+const handleChange = (newRange) => {
+  dateRange.value = newRange;
+  // Если выбран полный диапазон (2 даты) и опция включена — закрываем попап
+  if (props.closeOnSelect && Array.isArray(newRange) && newRange.length === 2 && newRange[0] && newRange[1]) {
+    isOpen.value = false;
+  }
 };
 
 // Обработчик закрытия календаря (если нужно что-то делать при закрытии без подтверждения)
@@ -113,4 +114,4 @@ defineExpose({
 /* Здесь можно добавить глобальные стили для оверрайда библиотеки, если scoped стили не работают */
 /* Например, для стилизации выпадающего календаря */
 /* .mx-datepicker-popup { z-index: 1050 !important; } */
-</style> 
+</style>

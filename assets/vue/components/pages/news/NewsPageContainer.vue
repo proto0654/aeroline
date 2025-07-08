@@ -1,23 +1,15 @@
 <template>
   <div class="news-page-container container mx-auto px-4 py-8 flex flex-col items-center">
-   
 
-    <DateRangeFilter 
-      @date-range-changed="handleDateRangeChanged"
-      :initialStartDate="defaultStartDate"
-      :initialEndDate="defaultEndDate"
-      class="my-20" 
-    />
+
+    <DateRangeFilter @date-range-changed="handleDateRangeChanged" :initialStartDate="defaultStartDate"
+      :initialEndDate="defaultEndDate" class="my-20" />
 
     <div v-if="loading" class="text-center text-lg text-gray-600">Загрузка новостей...</div>
     <div v-else-if="error" class="text-center text-lg text-red-600">Ошибка при загрузке новостей: {{ error }}</div>
     <div v-else-if="paginatedNews.length > 0">
       <NewsGrid :newsItems="paginatedNews" />
-      <NewsPagination
-        :currentPage="currentPage"
-        :totalPages="totalPages"
-        @update:currentPage="updateCurrentPage"
-      />
+      <NewsPagination :currentPage="currentPage" :totalPages="totalPages" @update:currentPage="updateCurrentPage" />
     </div>
     <div v-else class="text-center text-lg text-gray-600">Нет новостей, соответствующих вашим критериям.</div>
   </div>
@@ -72,7 +64,7 @@ onMounted(async () => {
 
     defaultStartDate.value = oneMonthAgo;
     defaultEndDate.value = today;
-    
+
     // Применяем фильтр по умолчанию сразу
     startDateFilter.value = defaultStartDate.value;
     endDateFilter.value = defaultEndDate.value;
@@ -102,7 +94,7 @@ const filteredNews = computed(() => {
 
     const startFilterDate = startDateFilter.value ? new Date(startDateFilter.value.getFullYear(), startDateFilter.value.getMonth(), startDateFilter.value.getDate()) : null;
     const endFilterDate = endDateFilter.value ? new Date(endDateFilter.value.getFullYear(), endDateFilter.value.getMonth(), endDateFilter.value.getDate()) : null;
-    
+
     // Добавим +1 день к endFilterDate, чтобы включить весь последний день диапазона
     if (endFilterDate) {
       endFilterDate.setDate(endFilterDate.getDate() + 1);
@@ -151,4 +143,4 @@ const handleDateRangeChanged = (payload) => {
 
 <style scoped>
 /* Дополнительные стили, если нужны */
-</style> 
+</style>

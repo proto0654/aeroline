@@ -1,10 +1,10 @@
-import { s as computed, c as createElementBlock, o as openBlock, b as createBaseVNode, e as createCommentVNode, t as toDisplayString, Y as createStaticVNode, f as withModifiers, K as Fragment, L as renderList, A as createBlock, D as normalizeClass, a as createVNode, r as ref, y as onMounted, E as createApp } from "./chunks/runtime-dom.esm-bundler-C8J7FHpO.js";
-import { _ as _sfc_main$5, a as __vite_glob_0_6, b as __vite_glob_0_5, c as __vite_glob_0_4, d as __vite_glob_0_3, e as __vite_glob_0_2, f as __vite_glob_0_1, g as __vite_glob_0_0 } from "./chunks/NewsDetailModal-CPeptI6F.js";
-import { u as useGlobalModalStore } from "./chunks/globalModal--1m5qnLi.js";
+import { p as computed, c as createElementBlock, o as openBlock, a as createBaseVNode, d as createCommentVNode, t as toDisplayString, Y as createStaticVNode, w as withModifiers, K as Fragment, L as renderList, y as createBlock, C as normalizeClass, r as ref, v as onMounted, E as createVNode, D as createApp } from "./chunks/runtime-dom.esm-bundler-0GtEW-KV.js";
+import { _ as _sfc_main$4, a as __vite_glob_0_6, b as __vite_glob_0_5, c as __vite_glob_0_4, d as __vite_glob_0_3, e as __vite_glob_0_2, f as __vite_glob_0_1, g as __vite_glob_0_0 } from "./chunks/NewsDetailModal-DnU0VeGQ.js";
+import { u as useGlobalModalStore } from "./chunks/globalModal-DXiYt58h.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
-import { D as DateRangePickerVue } from "./chunks/DateRangePickerVue-CZYC_RHW.js";
-import "./lkDatepickerJs-DK1SsD8_.js";
-const _hoisted_1$4 = {
+import { D as DateRangeFilter } from "./chunks/DateRangeFilter-Dzx7B9C5.js";
+import "./lkDatepickerJs-DgtZ8s6z.js";
+const _hoisted_1$3 = {
   class: "news-card mb-4 py-2 md:py-4 bg-brand-light border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow",
   "data-news-id": "{{news.id}}"
 };
@@ -31,7 +31,7 @@ const _hoisted_12 = ["id"];
 const _hoisted_13 = { class: "news-content text-brand-gray mb-6" };
 const _hoisted_14 = { class: "flex justify-between items-center pr-2 md:pr-0" };
 const _hoisted_15 = { class: "news-date text-caption-form text-brand-gray" };
-const _sfc_main$4 = {
+const _sfc_main$3 = {
   __name: "NewsCard",
   props: {
     news: {
@@ -51,7 +51,7 @@ const _sfc_main$4 = {
       return props.news.content;
     });
     const openNewsDetail = (newsItem) => {
-      globalModalStore.openModal(_sfc_main$5, { news: newsItem }, "large");
+      globalModalStore.openModal(_sfc_main$4, { news: newsItem }, "large");
     };
     const getImageUrl = (imgName) => {
       if (!imgName) return new URL("" + new URL("../img/Logotype_aerline_light-BjokHjWg.png", import.meta.url).href, import.meta.url).href;
@@ -60,7 +60,7 @@ const _sfc_main$4 = {
       return new URL("" + new URL("../img/Logotype_aerline_light-BjokHjWg.png", import.meta.url).href, import.meta.url).href;
     };
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", _hoisted_1$4, [
+      return openBlock(), createElementBlock("div", _hoisted_1$3, [
         createBaseVNode("div", _hoisted_2$2, [
           createBaseVNode("div", _hoisted_3$2, [
             __props.news.image ? (openBlock(), createElementBlock("img", {
@@ -126,9 +126,9 @@ const _sfc_main$4 = {
     };
   }
 };
-const NewsCard = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-010fb64a"]]);
-const _hoisted_1$3 = { class: "news-grid space-y-6 md:space-y-8 w-full" };
-const _sfc_main$3 = {
+const NewsCard = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-010fb64a"]]);
+const _hoisted_1$2 = { class: "news-grid space-y-6 md:space-y-8 w-full" };
+const _sfc_main$2 = {
   __name: "NewsGrid",
   props: {
     newsItems: {
@@ -138,7 +138,7 @@ const _sfc_main$3 = {
   },
   setup(__props) {
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", _hoisted_1$3, [
+      return openBlock(), createElementBlock("div", _hoisted_1$2, [
         (openBlock(true), createElementBlock(Fragment, null, renderList(__props.newsItems, (newsItem) => {
           return openBlock(), createBlock(NewsCard, {
             key: newsItem.id,
@@ -149,8 +149,8 @@ const _sfc_main$3 = {
     };
   }
 };
-const NewsGrid = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-25620fd2"]]);
-const _hoisted_1$2 = {
+const NewsGrid = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-25620fd2"]]);
+const _hoisted_1$1 = {
   key: 0,
   class: "flex justify-center mt-8 space-x-2"
 };
@@ -159,7 +159,7 @@ const _hoisted_3$1 = ["disabled"];
 const _hoisted_4$1 = ["onClick"];
 const _hoisted_5$1 = ["disabled"];
 const _hoisted_6 = ["disabled"];
-const _sfc_main$2 = {
+const _sfc_main$1 = {
   __name: "NewsPagination",
   props: {
     currentPage: {
@@ -198,7 +198,7 @@ const _sfc_main$2 = {
       }
     };
     return (_ctx, _cache) => {
-      return __props.totalPages > 1 ? (openBlock(), createElementBlock("div", _hoisted_1$2, [
+      return __props.totalPages > 1 ? (openBlock(), createElementBlock("div", _hoisted_1$1, [
         createBaseVNode("button", {
           onClick: _cache[0] || (_cache[0] = ($event) => goToPage(1)),
           disabled: __props.currentPage === 1,
@@ -234,38 +234,7 @@ const _sfc_main$2 = {
     };
   }
 };
-const NewsPagination = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-bd9ca762"]]);
-const _hoisted_1$1 = { class: "date-range-filter mb-6" };
-const _sfc_main$1 = {
-  __name: "DateRangeFilter",
-  props: {
-    initialStartDate: {
-      type: [String, Date],
-      default: null
-    },
-    initialEndDate: {
-      type: [String, Date],
-      default: null
-    }
-  },
-  emits: ["date-range-changed"],
-  setup(__props, { emit: __emit }) {
-    const emit = __emit;
-    const handleDateRangeSelected = (payload) => {
-      emit("date-range-changed", payload);
-    };
-    return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", _hoisted_1$1, [
-        createVNode(DateRangePickerVue, {
-          initialRange: [__props.initialStartDate, __props.initialEndDate],
-          "onUpdate:range": handleDateRangeSelected,
-          class: "w-full"
-        }, null, 8, ["initialRange"])
-      ]);
-    };
-  }
-};
-const DateRangeFilter = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-f336f74c"]]);
+const NewsPagination = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-bd9ca762"]]);
 const _hoisted_1 = { class: "news-page-container container mx-auto px-4 py-8 flex flex-col items-center" };
 const _hoisted_2 = {
   key: 0,
@@ -387,7 +356,7 @@ const _sfc_main = {
     };
   }
 };
-const NewsPageContainer = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-54bb1d17"]]);
+const NewsPageContainer = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-54bf766e"]]);
 const newsPageApp = createApp(NewsPageContainer);
 const newsPageElement = document.getElementById("news-page-app");
 if (newsPageElement) {

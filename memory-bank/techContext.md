@@ -3,6 +3,7 @@
 ## Tech Context
 
 **Core Technologies:**
+
 - **Build Tool:** Vite
 - **Bundler:** Rollup (integrated into Vite)
 - **Templating:** Handlebars (`vite-plugin-handlebars`)
@@ -13,6 +14,7 @@
 - **Table Component:** `vue3-easy-data-table`
 
 **Dependencies (Dev):**
+
 - `vite`
 - `@vitejs/plugin-vue`
 - `vite-plugin-handlebars`
@@ -28,6 +30,7 @@
 - ... (other project-specific dev dependencies from `package.json`)
 
 **Dependencies (Prod):**
+
 - `vue`
 - `pinia`
 - `vee-validate`
@@ -38,6 +41,7 @@
 **Development Setup:** Standard Node.js environment. Development server provided by Vite (`npm run dev`). The codebase promotes gradual refactoring of native JavaScript into modern Vue 3 components.
 
 **Technical Constraints:**
+
 - Compatibility with GitHub Pages static hosting.
 - Need to handle a mix of regular JS modules and Vue components (with gradual migration of plain JS to Vue).
 - Desire to keep the output `docs` folder structure similar to the source `assets`.
@@ -45,6 +49,7 @@
 **Environment:** Windows 11, PowerShell terminal.
 
 ## Technologies Used
+
 - Vite (build tool)
 - Tailwind CSS (styling)
 - DaisyUI (UI components)
@@ -58,6 +63,7 @@
 - vue3-easy-data-table (table component)
 
 ## Technical Stack
+
 - Vite as a build tool
 - Tailwind CSS for styling
 - DaisyUI for UI components
@@ -73,6 +79,7 @@
 - **Date Range Selection**: Using `vue-datepicker-next` library for date range selection. The component `assets/vue/components/DateRangePickerVue.vue` wraps this library to provide a standardized interface. It accepts an `initialRange` prop (`[Date | null, Date | null]`) and emits an `update:range` event (`{ start: Date | null, end: Date | null }`) when selection changes or is cleared. A page-specific wrapper like `assets/vue/components/pages/news/DateRangeFilter.vue` can be used to pass individual start/end dates and rename the event if needed.
 
 ## Development Setup
+
 - `npm install` for dependencies
 - `npm run dev` for local development with Vite
 - `npm run build` for production build
@@ -80,7 +87,9 @@
 - **NOTE:** When refactoring old page-specific JavaScript entry points (e.g., in `assets/js/modules/`) to new Vue entry points (e.g., in `assets/vue/entrypoints/`), remember to update the `rollupOptions.input` section in `vite.config.js` to remove the old JS file and include the new Vue entry point.
 
 ## Dependencies
+
 Main dependencies:
+
 - Vite for builds
 - Tailwind CSS for styles
 - DaisyUI for UI components
@@ -97,6 +106,7 @@ Main dependencies:
 - Swiper for sliders
 
 ## Technical Constraints
+
 1. Modern browser support
 2. Performance optimization
 3. Accessibility (WCAG)
@@ -113,6 +123,7 @@ Main dependencies:
 14. **Table Component**: Implementation of a reusable Vue component (`EasyDataTableWrapper.vue`) based on `vue3-easy-data-table` for consistent table sorting, filtering, and pagination on relevant pages.
 
 ## Build Process
+
 1. Development with Vite
 2. CSS compilation with Tailwind
 3. Asset optimization
@@ -120,18 +131,21 @@ Main dependencies:
 5. DaisyUI theme compilation
 
 ## Development Workflow
+
 1. Local development
 2. Testing
 3. Build
 4. Deployment
 
 ## Environment Requirements
+
 - Node.js
 - npm/yarn
 - Git
 - Modern browser
 
 ## UI Components
+
 - Unified global modal system using Vue 3, Pinia, and `GlobalModalHost.vue`
 - DaisyUI form components (integrated with VeeValidate)
 - DaisyUI navigation components
@@ -139,6 +153,7 @@ Main dependencies:
 - Custom Vue components for interactive elements
 
 ## Asset Handling Strategy
+
 The project now employs a custom asset handling strategy within the Vite configuration to maintain a consistent output directory structure:
 
 - **Explicit Asset Organization:** Assets are explicitly categorized by file extension and placed into corresponding subdirectories.
@@ -149,7 +164,6 @@ The project now employs a custom asset handling strategy within the Vite configu
   - JSON data files → `assets/data/`
   - JavaScript entry points → `assets/js/`
   - JavaScript chunks → `assets/js/chunks/`
-  
 - **Explicit Configuration:** This approach uses a custom function in `assetFileNames` that analyzes each file's extension and explicitly assigns it to the correct output directory.
 - **Consistent Structure:** The explicit categorization ensures that all processed assets maintain a consistent structure in the output directory, regardless of their source location.
 - **File Naming Hashes:** All asset filenames include a content hash for cache busting.
@@ -163,21 +177,25 @@ A reusable Vue 3 component that wraps the `vue-datepicker-next` library to provi
 This component can be used directly or wrapped by a page-specific component (e.g., `DateRangeFilter.vue`) to adapt to specific page logic or override props.
 
 **Props**:
+
 - `initialRange` (Type: `Array`, Default: `[null, null]`, Format: `[Date | null, Date | null]`):
   The initial date range to display in the picker. It is recommended to pass `[null, null]` as the default if no initial selection is needed.
 - `placeholder` (Type: `String`, Default: `'Select period'`):
   The text displayed in the input field when no date range is selected.
 
 **Events**:
+
 - `update:range` (Payload: `{ start: Date | null, end: Date | null }`):
   Emitted when the selected date range changes or is cleared. The payload contains an object with `start` and `end` Date objects, or `null` if the selection is cleared.
   This event supports `v-model:range` for two-way binding.
 
 **Methods (exposed via `defineExpose`)**:
+
 - `clearSelection()`:
   Resets the picker's selected date range to `null`. This method can be called from the parent component using a `ref` on `DateRangePickerVue`.
 
 **Example Usage in a Parent Component (e.g., `RequestActForm.vue`)**:
+
 ```vue
 <template>
   <DateRangePickerVue
@@ -190,15 +208,15 @@ This component can be used directly or wrapped by a page-specific component (e.g
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import DateRangePickerVue from '../DateRangePickerVue.vue';
+import { ref } from "vue";
+import DateRangePickerVue from "../DateRangePickerVue.vue";
 
 // Define initial date range prop if the component expects it
 const props = defineProps({
   initialDateRange: {
     type: Array,
-    default: () => [null, null]
-  }
+    default: () => [null, null],
+  },
 });
 
 // For v-model:range integration with VeeValidate
@@ -217,9 +235,10 @@ const handleClearDates = () => {
 ```
 
 **Dependencies**:
+
 - `vue-datepicker-next` (library)
 - `vue-datepicker-next/index.css` (base styles)
-- `vue-datepicker-next/locale/ru.es` (Russian localization - *Note: this will remain as `ru.es` for now, assuming the localization file is not being translated*)
+- `vue-datepicker-next/locale/ru.es` (Russian localization - _Note: this will remain as `ru.es` for now, assuming the localization file is not being translated_)
 
 **Styling**:
 Base styles are provided by `vue-datepicker-next/index.css`. Further customization can be done via global CSS or scoped styles within parent components to match DaisyUI/Tailwind.
@@ -227,4 +246,4 @@ Base styles are provided by `vue-datepicker-next/index.css`. Further customizati
 **VeeValidate Integration**:
 When used in forms, the component's `v-model:range` can be bound to a VeeValidate field (`useField`) to enable date range validation. A custom Yup schema can be used to ensure both `start` and `end` dates are selected.
 
-**Note:** All future entries and modifications to this memory bank should be written in English. 
+**Note:** All future entries and modifications to this memory bank should be written in English.
