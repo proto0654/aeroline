@@ -242,7 +242,7 @@ const _sfc_main = {
       this.error = null;
       this.order = null;
       try {
-        const response = await fetch(`https://185.225.35.11/getclientpurchase/?orderNumber=${orderNumber}`);
+        const response = await fetch(`https://devserveraero.website/getclientpurchase/?orderNumber=${orderNumber}`);
         if (!response.ok) {
           if (response.status === 404) {
             throw new Error("Заказ не найден. Проверьте правильность номера.");
