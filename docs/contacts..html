@@ -6,102 +6,49 @@
     <div class="flex-row justify-start">
       <h1 class="hero-title">Контакты</h1>
     </div>
-    <p class="body-secondary caption-regular mb-4 md:mb-8">{{pageDescription}}</p>
+    <p class="body-secondary caption-regular mb-4 md:mb-8">
+      {{pageDescription}}
+    </p>
     {{> map-section defaultOffice=defaultOffice}}
   </section>
 
   <!-- Скрытые данные для JavaScript -->
   <script type="application/json" id="initial-data">
-  {
-    "offices": {{{json offices}}},
-    "cities": {{{json cities}}},
-    "pagination": {{{json pagination}}}
-  }
+    {
+      "offices": {{{json offices}}},
+      "cities": {{{json cities}}},
+      "pagination": {{{json pagination}}}
+    }
   </script>
 
   <script>
-    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+    window.initialData = JSON.parse(
+      document.getElementById("initial-data").textContent
+    );
   </script>
-  
+
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">
-    <h2 class="text-h3 lg:text-center md:text-h2 font-bold text-brand-gray mb-6 md:mb-8">Контактная информация</h2>
-    
+    <h2
+      class="text-h3 lg:text-center md:text-h2 font-bold text-brand-gray mb-6 md:mb-8"
+    >
+      Контактная информация
+    </h2>
+
     <!-- Фильтр по городу -->
     <div class="flex justify-center mb-6 md:mb-10 w-full">
-      <div class="form flex items-center gap-2">
-        <div class="relative w-full md:max-w-xs">
-          <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 w-full focus:outline-none text-body-secondary">
-            <option value="all">Все города</option>
-            {{#each cities}}
-            <option value="{{this}}">{{this}}</option>
-            {{/each}}
-          </select>
-          <img src="{{basePath}}assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-        </div>
-        <button
-          type="button"
-          id="city-filter-reset"
-          class="px-4 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md bg-brand-gray hover:bg-brand-gray-dark btn-gray py-3 h-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue"
-          title="Сбросить фильтр"
-        >Сброс</button>
-      </div>
-    </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 offices-grid">
-      {{#each offices}}
-      <div class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
-        data-index="{{@index}}"
-        data-city="{{city}}"
-        data-coordinates="{{coordinates.[0]}},{{coordinates.[1]}}">
-        <div>
-          <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M35.2402 13.9C33.1402 4.66 25.0802 0.5 18.0002 0.5C18.0002 0.5 18.0002 0.5 17.9802 0.5C10.9202 0.5 2.84019 4.64 0.740191 13.88C-1.59981 24.2 4.72019 32.94 10.4402 38.44C12.5602 40.48 15.2802 41.5 18.0002 41.5C20.7202 41.5 23.4402 40.48 25.5402 38.44C31.2602 32.94 37.5802 24.22 35.2402 13.9ZM18.0002 23.92C14.5202 23.92 11.7002 21.1 11.7002 17.62C11.7002 14.14 14.5202 11.32 18.0002 11.32C21.4802 11.32 24.3002 14.14 24.3002 17.62C24.3002 21.1 21.4802 23.92 18.0002 23.92Z" fill="#008DD2" />
-          </svg>
-          <h3 class="font-bold text-brand-gray body-secondary leading-1.2 my-2 text-h5">{{city}}</h3>
-          <div class="text-brand-gray mb-2">{{address}}</div>
-          <div class="text-brand-gray">{{type}}</div>
-          <div class="text-brand-gray">{{phone}}</div>
-          <div class="text-brand-gray">{{email}}</div>
-        </div>
-        <a href="#map" class="text-brand-blue text-xl  font-medium hover:underline mt-2">Посмотреть на карте</a>
-      </div>
-      {{/each}}
+      <div id="city-filter-app"></div>
     </div>
 
-    <!-- Пагинация -->
-    {{#if pagination}}
-    <div class="flex justify-start mt-8 pagination-container">
-      <nav class="inline-flex items-center space-x-1">
-        <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors"
-          {{#if (eq pagination.currentPage 1)}}disabled{{/if}}>&lt;</button>
-
-        {{#each (pageNumbers pagination.currentPage pagination.totalPages)}}
-        {{#if (eq this ../pagination.currentPage)}}
-        <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-blue text-white font-bold">{{this}}</button>
-        {{else}}
-        <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors">{{this}}</button>
-        {{/if}}
-
-        {{#if (eq @index 2)}}
-        {{#unless (eq this ../pagination.totalPages)}}
-        <span class="w-8 h-8 flex items-center justify-center">...</span>
-        {{/unless}}
-        {{/if}}
-        {{/each}}
-
-        <button
-          class="w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors"
-          {{#if (eq pagination.currentPage pagination.totalPages)}}disabled{{/if}}>&gt;</button>
-      </nav>
+    <div id="contacts-grid-app">
+      <!-- Сюда будет монтироваться Vue-компонент ContactsGrid.vue -->
     </div>
-    {{/if}}
   </section>
 </main>
 
-<script type="module" src="{{basePath}}assets/js/page-entrypoints/contacts.js"></script>
+<script
+  type="module"
+  src="{{basePath}}assets/vue/entrypoints/contacts-page.js"
+></script>
 
 {{> footer menuType="main"}}

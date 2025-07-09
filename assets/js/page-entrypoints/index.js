@@ -1,20 +1,26 @@
-import { createApp } from 'vue';
-import { initHomePage } from '../modules/home-page.js';
-import { useGlobalModalStore/*, ModalCancelledError*/ } from '../../vue/stores/globalModal.js'; // ModalCancelledError больше не нужен
-import LoginForm from '../../vue/components/forms/LoginForm.vue';
-import ContactForm from '../../vue/components/forms/ContactForm.vue'; // Импорт нового компонента контактной формы
+import { createApp } from "vue";
+import { initHomePage } from "../modules/home-page.js";
+import {
+  useGlobalModalStore /*, ModalCancelledError*/,
+} from "../../vue/stores/globalModal.js"; // ModalCancelledError больше не нужен
+import LoginForm from "../../vue/components/forms/LoginForm.vue";
+import ContactForm from "../../vue/components/forms/ContactForm.vue"; // Импорт нового компонента контактной формы
+import { initDirectionForm } from "../../vue/entrypoints/home-direction-form.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // Инициализируем главную страницу
   initHomePage();
-  
+
   const globalModal = useGlobalModalStore();
 
   // Монтируем компонент контактной формы
-  const contactFormElement = document.getElementById('contact-form-app');
+  const contactFormElement = document.getElementById("contact-form-app");
   if (contactFormElement) {
     createApp(ContactForm).mount(contactFormElement);
   }
+
+  // Инициализируем форму направления доставки
+  await initDirectionForm();
 
   // Обработчик нажатия на кнопку "Стать клиентом"
   // const becomeClientButtons = document.querySelectorAll('.become-client-btn');
@@ -42,10 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // } else {
   //   console.warn('Кнопки с классом .become-client-btn не найдены на странице.');
   // }
-  
+
   // Обработчик нажатия на кнопку "Войти" (логин)
   // Логика перенесена в global-ui.js для использования на всех страницах
-  
+
   // Обработчик формы "Стать клиентом" (старый вариант, на случай если Vue не работает)
   // (Удалено, так как форма теперь только во Vue)
-}); 
+});

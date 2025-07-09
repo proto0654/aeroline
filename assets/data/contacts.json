@@ -31,7 +31,8 @@
       "phone": "+7 495 123 45 67",
       "email": "moscow.center@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.789461, 37.551735]
+      "coordinates": [55.789461, 37.551735],
+      "id": 1
     },
     {
       "city": "Москва",
@@ -40,7 +41,8 @@
       "phone": "+7 495 123 45 68",
       "email": "moscow.north@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.77879, 37.5877]
+      "coordinates": [55.77879, 37.5877],
+      "id": 2
     },
     {
       "city": "Москва",
@@ -49,7 +51,8 @@
       "phone": "+7 495 123 45 70",
       "email": "moscow.city@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.749633, 37.537434]
+      "coordinates": [55.749633, 37.537434],
+      "id": 3
     },
     {
       "city": "Санкт-Петербург",
@@ -58,7 +61,8 @@
       "phone": "+7 812 765 43 21",
       "email": "spb.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [59.8521, 30.3273]
+      "coordinates": [59.8521, 30.3273],
+      "id": 4
     },
     {
       "city": "Санкт-Петербург",
@@ -67,7 +71,8 @@
       "phone": "+7 812 765 43 23",
       "email": "spb.piskarevsky@aeroline.com",
       "mapLink": "#",
-      "coordinates": [59.958949, 30.405969]
+      "coordinates": [59.958949, 30.405969],
+      "id": 5
     },
     {
       "city": "Новосибирск",
@@ -76,7 +81,8 @@
       "phone": "+7 383 543 21 00",
       "email": "nsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.028739, 82.905823]
+      "coordinates": [55.028739, 82.905823],
+      "id": 6
     },
     {
       "city": "Новосибирск",
@@ -85,7 +91,8 @@
       "phone": "+7 383 543 21 03",
       "email": "nsk.sales@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.046966, 82.916720]
+      "coordinates": [55.046966, 82.91672],
+      "id": 7
     },
     {
       "city": "Екатеринбург",
@@ -94,7 +101,8 @@
       "phone": "+7 343 987 65 43",
       "email": "ekb.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.823592, 60.605613]
+      "coordinates": [56.823592, 60.605613],
+      "id": 8
     },
     {
       "city": "Екатеринбург",
@@ -103,7 +111,8 @@
       "phone": "+7 343 987 65 45",
       "email": "ekb.service@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.8361, 60.6146]
+      "coordinates": [56.8361, 60.6146],
+      "id": 9
     },
     {
       "city": "Казань",
@@ -112,7 +121,8 @@
       "phone": "+7 843 210 98 76",
       "email": "kazan.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.815079, 49.143865]
+      "coordinates": [55.815079, 49.143865],
+      "id": 10
     },
     {
       "city": "Казань",
@@ -121,7 +131,8 @@
       "phone": "+7 843 210 98 77",
       "email": "kazan.south@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.778871, 49.129573]
+      "coordinates": [55.778871, 49.129573],
+      "id": 11
     },
     {
       "city": "Нижний Новгород",
@@ -130,7 +141,8 @@
       "phone": "+7 831 654 32 10",
       "email": "nn.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.2945, 43.9475]
+      "coordinates": [56.2945, 43.9475],
+      "id": 12
     },
     {
       "city": "Челябинск",
@@ -139,7 +151,8 @@
       "phone": "+7 351 111 22 33",
       "email": "chel.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.161749, 61.431569]
+      "coordinates": [55.161749, 61.431569],
+      "id": 13
     },
     {
       "city": "Самара",
@@ -148,7 +161,8 @@
       "phone": "+7 846 333 44 55",
       "email": "samara.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [53.224854, 50.199879]
+      "coordinates": [53.224854, 50.199879],
+      "id": 14
     },
     {
       "city": "Омск",
@@ -157,7 +171,8 @@
       "phone": "+7 3812 77 88 99",
       "email": "omsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.962902, 73.38475]
+      "coordinates": [54.962902, 73.38475],
+      "id": 15
     },
     {
       "city": "Ростов-на-Дону",
@@ -166,7 +181,8 @@
       "phone": "+7 863 222 11 00",
       "email": "rostov.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [47.2269, 39.7327]
+      "coordinates": [47.2269, 39.7327],
+      "id": 16
     },
     {
       "city": "Уфа",
@@ -175,7 +191,8 @@
       "phone": "+7 347 212 34 56",
       "email": "ufa.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.7675, 55.9983]
+      "coordinates": [54.7675, 55.9983],
+      "id": 17
     },
     {
       "city": "Красноярск",
@@ -184,7 +201,8 @@
       "phone": "+7 391 234 56 78",
       "email": "krasnoyarsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.0125, 92.8687]
+      "coordinates": [56.0125, 92.8687],
+      "id": 18
     },
     {
       "city": "Пермь",
@@ -193,7 +211,8 @@
       "phone": "+7 342 567 89 01",
       "email": "perm.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [58.0069, 56.2483]
+      "coordinates": [58.0069, 56.2483],
+      "id": 19
     },
     {
       "city": "Волгоград",
@@ -202,7 +221,8 @@
       "phone": "+7 8442 78 90 12",
       "email": "volgograd.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [48.7188, 44.5204]
+      "coordinates": [48.7188, 44.5204],
+      "id": 20
     },
     {
       "city": "Воронеж",
@@ -211,7 +231,8 @@
       "phone": "+7 473 345 67 89",
       "email": "voronezh.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [51.6669, 39.1989]
+      "coordinates": [51.6669, 39.1989],
+      "id": 21
     },
     {
       "city": "Саратов",
@@ -220,7 +241,8 @@
       "phone": "+7 8452 90 12 34",
       "email": "saratov.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [51.5309, 46.0306]
+      "coordinates": [51.5309, 46.0306],
+      "id": 22
     },
     {
       "city": "Краснодар",
@@ -229,7 +251,8 @@
       "phone": "+7 861 234 56 78",
       "email": "krasnodar.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [45.0416, 38.9744]
+      "coordinates": [45.0416, 38.9744],
+      "id": 23
     },
     {
       "city": "Тюмень",
@@ -238,7 +261,8 @@
       "phone": "+7 3452 76 54 32",
       "email": "tyumen.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [57.1499, 65.5492]
+      "coordinates": [57.1499, 65.5492],
+      "id": 24
     },
     {
       "city": "Ижевск",
@@ -247,7 +271,8 @@
       "phone": "+7 3412 12 34 56",
       "email": "izhevsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.8488, 53.2206]
+      "coordinates": [56.8488, 53.2206],
+      "id": 25
     },
     {
       "city": "Барнаул",
@@ -256,7 +281,8 @@
       "phone": "+7 3852 98 76 54",
       "email": "barnaul.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [53.3484, 83.7788]
+      "coordinates": [53.3484, 83.7788],
+      "id": 26
     },
     {
       "city": "Иркутск",
@@ -265,7 +291,8 @@
       "phone": "+7 3952 45 67 89",
       "email": "irkutsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [52.2858, 104.2831]
+      "coordinates": [52.2858, 104.2831],
+      "id": 27
     },
     {
       "city": "Хабаровск",
@@ -274,7 +301,8 @@
       "phone": "+7 4212 32 10 98",
       "email": "khabarovsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [48.4831, 135.0748]
+      "coordinates": [48.4831, 135.0748],
+      "id": 28
     },
     {
       "city": "Ярославль",
@@ -283,7 +311,8 @@
       "phone": "+7 4852 77 66 55",
       "email": "yaroslavl.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [57.6256, 39.8856]
+      "coordinates": [57.6256, 39.8856],
+      "id": 29
     },
     {
       "city": "Владивосток",
@@ -292,7 +321,8 @@
       "phone": "+7 4232 54 32 10",
       "email": "vladivostok.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [43.1189, 131.8986]
+      "coordinates": [43.1189, 131.8986],
+      "id": 30
     },
     {
       "city": "Махачкала",
@@ -301,7 +331,8 @@
       "phone": "+7 8722 43 21 09",
       "email": "makhachkala.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [42.9818, 47.4975]
+      "coordinates": [42.9818, 47.4975],
+      "id": 31
     },
     {
       "city": "Томск",
@@ -310,7 +341,8 @@
       "phone": "+7 3822 65 43 21",
       "email": "tomsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.4862, 84.9458]
+      "coordinates": [56.4862, 84.9458],
+      "id": 32
     },
     {
       "city": "Оренбург",
@@ -319,7 +351,8 @@
       "phone": "+7 3532 99 88 77",
       "email": "orenburg.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [51.777, 55.097]
+      "coordinates": [51.777, 55.097],
+      "id": 33
     },
     {
       "city": "Кемерово",
@@ -328,7 +361,8 @@
       "phone": "+7 3842 44 55 66",
       "email": "kemerovo.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [55.3942, 86.0772]
+      "coordinates": [55.3942, 86.0772],
+      "id": 34
     },
     {
       "city": "Астрахань",
@@ -337,7 +371,8 @@
       "phone": "+7 8512 11 22 33",
       "email": "astrakhan.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [46.3477, 48.0401]
+      "coordinates": [46.3477, 48.0401],
+      "id": 35
     },
     {
       "city": "Липецк",
@@ -346,7 +381,8 @@
       "phone": "+7 4742 55 44 33",
       "email": "lipetsk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [52.6101, 39.5786]
+      "coordinates": [52.6101, 39.5786],
+      "id": 36
     },
     {
       "city": "Киров",
@@ -355,7 +391,8 @@
       "phone": "+7 8332 66 77 88",
       "email": "kirov.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [58.5991, 49.669]
+      "coordinates": [58.5991, 49.669],
+      "id": 37
     },
     {
       "city": "Севастополь",
@@ -364,7 +401,8 @@
       "phone": "+7 8692 90 12 34",
       "email": "sevastopol.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [44.6167, 33.5255]
+      "coordinates": [44.6167, 33.5255],
+      "id": 38
     },
     {
       "city": "Тула",
@@ -373,7 +411,8 @@
       "phone": "+7 4872 78 90 12",
       "email": "tula.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.1952, 37.6186]
+      "coordinates": [54.1952, 37.6186],
+      "id": 39
     },
     {
       "city": "Курск",
@@ -382,7 +421,8 @@
       "phone": "+7 4712 11 22 33",
       "email": "kursk.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [51.7345, 36.1918]
+      "coordinates": [51.7345, 36.1918],
+      "id": 40
     },
     {
       "city": "Рязань",
@@ -391,7 +431,8 @@
       "phone": "+7 4912 33 44 55",
       "email": "ryazan.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.6291, 39.7369]
+      "coordinates": [54.6291, 39.7369],
+      "id": 41
     },
     {
       "city": "Белгород",
@@ -400,7 +441,8 @@
       "phone": "+7 4722 66 77 88",
       "email": "belgorod.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [50.5976, 36.5815]
+      "coordinates": [50.5976, 36.5815],
+      "id": 42
     },
     {
       "city": "Владимир",
@@ -409,7 +451,8 @@
       "phone": "+7 4922 12 34 56",
       "email": "vladimir.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [56.1287, 40.4075]
+      "coordinates": [56.1287, 40.4075],
+      "id": 43
     },
     {
       "city": "Калининград",
@@ -418,7 +461,8 @@
       "phone": "+7 4012 98 76 54",
       "email": "kaliningrad.main@aeroline.com",
       "mapLink": "#",
-      "coordinates": [54.7171, 20.4851]
+      "coordinates": [54.7171, 20.4851],
+      "id": 44
     }
   ],
   "pagination": {

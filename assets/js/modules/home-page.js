@@ -3,37 +3,44 @@
  * Модуль для функциональности главной страницы
  */
 
-import { loadSwiper, initSwiperSlider } from './slider.js';
-import { createAutocompleteInput } from './autocomplete.js';
-import { modalManager } from './modal-manager.js';
+import { loadSwiper, initSwiperSlider } from "./slider.js";
+import { createAutocompleteInput } from "./autocomplete.js";
+import { modalManager } from "./modal-manager.js";
 
 // Import Vue and the new component
-import { createApp } from 'vue';
-import HomePageNews from '../../vue/components/HomePageNews.vue';
+import { createApp } from "vue";
+import HomePageNews from "../../vue/components/HomePageNews.vue";
 
 /**
  * Функция для инициализации главной страницы
  */
 export function initHomePage() {
-  console.log('Инициализация главной страницы начата');
-  
+  console.log("Инициализация главной страницы начата");
+
   // Загрузка Swiper, если на странице есть слайдер
-  if (document.querySelector('.swiper-container') || document.querySelector('.news-swiper-container')) {
-    console.log('Обнаружен контейнер Swiper, начинаю загрузку...');
-    loadSwiper().catch(error => {
-      console.error('Не удалось загрузить Swiper:', error);
+  if (
+    document.querySelector(".swiper-container") ||
+    document.querySelector(".news-swiper-container")
+  ) {
+    console.log("Обнаружен контейнер Swiper, начинаю загрузку...");
+    loadSwiper().catch((error) => {
+      console.error("Не удалось загрузить Swiper:", error);
     });
   } else {
-    console.log('Контейнеры Swiper не обнаружены на странице');
+    console.log("Контейнеры Swiper не обнаружены на странице");
   }
 
   // Новости уже были загружены через шаблонизатор в HTML
-  console.log('Используем новости, уже загруженные через шаблонизатор');
-  
+  console.log("Используем новости, уже загруженные через шаблонизатор");
+
   // Инициализация карусели на главной странице
-  const carouselSlides = document.querySelectorAll('.carousel-slide');
-  const prevButton = document.querySelector('.carousel-container .absolute.left-4');
-  const nextButton = document.querySelector('.carousel-container .absolute.right-4');
+  const carouselSlides = document.querySelectorAll(".carousel-slide");
+  const prevButton = document.querySelector(
+    ".carousel-container .absolute.left-4"
+  );
+  const nextButton = document.querySelector(
+    ".carousel-container .absolute.right-4"
+  );
 
   if (carouselSlides.length > 0 && prevButton && nextButton) {
     let currentSlide = 0;
@@ -41,23 +48,24 @@ export function initHomePage() {
     // Функция для переключения слайдов
     const showSlide = (index) => {
       // Скрываем все слайды
-      carouselSlides.forEach(slide => {
-        slide.classList.remove('active');
-        slide.style.display = 'none';
+      carouselSlides.forEach((slide) => {
+        slide.classList.remove("active");
+        slide.style.display = "none";
       });
 
       // Показываем текущий слайд
-      carouselSlides[index].classList.add('active');
-      carouselSlides[index].style.display = 'block';
+      carouselSlides[index].classList.add("active");
+      carouselSlides[index].style.display = "block";
     };
 
     // Обработчики для кнопок
-    prevButton.addEventListener('click', () => {
-      currentSlide = (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
+    prevButton.addEventListener("click", () => {
+      currentSlide =
+        (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
       showSlide(currentSlide);
     });
 
-    nextButton.addEventListener('click', () => {
+    nextButton.addEventListener("click", () => {
       currentSlide = (currentSlide + 1) % carouselSlides.length;
       showSlide(currentSlide);
     });
@@ -73,75 +81,85 @@ export function initHomePage() {
   }
 
   // Инициализация формы отслеживания
-  const trackForm = document.querySelector('.track-form');
+  const trackForm = document.querySelector(".track-form");
   if (trackForm) {
-    trackForm.addEventListener('submit', function (e) {
+    trackForm.addEventListener("submit", function (e) {
       e.preventDefault();
       const trackInput = this.querySelector('input[type="text"]').value;
-      if (trackInput.trim() !== '') {
-        console.log('Отслеживание заказа:', trackInput);
+      if (trackInput.trim() !== "") {
+        console.log("Отслеживание заказа:", trackInput);
         alert(`Отслеживание заказа: ${trackInput}`);
       } else {
-        console.warn('Пустой ввод в форме отслеживания заказа');
-        alert('Пожалуйста, введите номер заказа');
+        console.warn("Пустой ввод в форме отслеживания заказа");
+        alert("Пожалуйста, введите номер заказа");
       }
     });
   } else {
     // Обработчик для формы отслеживания - ищем специфичный блок для отслеживания
-    const trackingFormContainer = document.querySelector('.tracking-form-container, .p-4.rounded-lg.w-full.md\\:w-2\\/5');
-    
+    const trackingFormContainer = document.querySelector(
+      ".tracking-form-container, .p-4.rounded-lg.w-full.md\\:w-2\\/5"
+    );
+
     if (trackingFormContainer) {
-      console.log('Найден контейнер формы отслеживания');
-      
+      console.log("Найден контейнер формы отслеживания");
+
       // Диагностика для кнопок в контейнере отслеживания
-      const allButtonsInTrackingContainer = trackingFormContainer.querySelectorAll('button');
-      console.log(`В контейнере формы отслеживания найдено ${allButtonsInTrackingContainer.length} кнопок:`);
+      const allButtonsInTrackingContainer =
+        trackingFormContainer.querySelectorAll("button");
+      console.log(
+        `В контейнере формы отслеживания найдено ${allButtonsInTrackingContainer.length} кнопок:`
+      );
       allButtonsInTrackingContainer.forEach((btn, index) => {
         console.log(`Кнопка #${index + 1}:`, {
           classes: btn.className,
-          text: btn.textContent.trim()
+          text: btn.textContent.trim(),
         });
       });
-      
+
       // Ищем кнопку поиска в контейнере отслеживания
       // Сначала пробуем найти по классу
-      let searchButton = trackingFormContainer.querySelector('button.bg-brand-gray');
-      
+      let searchButton = trackingFormContainer.querySelector(
+        "button.bg-brand-gray"
+      );
+
       // Если не нашли по классу, ищем по тексту (более надежно)
       if (!searchButton) {
         console.log('Не найдена кнопка по классу, ищем по тексту "Поиск"');
-        const buttons = Array.from(trackingFormContainer.querySelectorAll('button'));
-        searchButton = buttons.find(btn => 
-          btn.textContent.trim().toLowerCase().includes('поиск')
+        const buttons = Array.from(
+          trackingFormContainer.querySelectorAll("button")
+        );
+        searchButton = buttons.find((btn) =>
+          btn.textContent.trim().toLowerCase().includes("поиск")
         );
       }
-      
+
       if (searchButton) {
         console.log('Найдена кнопка "Поиск" для отслеживания:', {
           text: searchButton.textContent.trim(),
-          classes: searchButton.className
+          classes: searchButton.className,
         });
-        
-        searchButton.addEventListener('click', function(e) {
+
+        searchButton.addEventListener("click", function (e) {
           e.preventDefault();
           console.log('Клик по кнопке "Поиск" для отслеживания');
-          
-          const trackingInput = trackingFormContainer.querySelector('input[type="text"]');
-          
+
+          const trackingInput =
+            trackingFormContainer.querySelector('input[type="text"]');
+
           // Проверяем, что поле существует
           if (!trackingInput) {
-            console.error('Не найдено поле ввода для формы отслеживания');
+            console.error("Не найдено поле ввода для формы отслеживания");
             return;
           }
-          
+
           // Добавляем атрибут required программно, если его нет
-          if (!trackingInput.hasAttribute('required')) {
-            trackingInput.setAttribute('required', '');
+          if (!trackingInput.hasAttribute("required")) {
+            trackingInput.setAttribute("required", "");
           }
-          
+
           // Проверяем валидность поля
           if (trackingInput.validity.valid) {
-            console.log('Отслеживание номера:', trackingInput.value);
+            console.log("Отслеживание номера:", trackingInput.value);
             alert(`Отслеживание номера: ${trackingInput.value}`);
           } else {
             // Активируем встроенную валидацию браузера
@@ -149,131 +167,42 @@ export function initHomePage() {
           }
         });
       } else {
-        console.warn('Не найдена кнопка "Поиск" в контейнере формы отслеживания');
-      }
-    } else {
-      console.warn('Не найден контейнер формы отслеживания');
-    }
-  }
-
-  // Инициализация автокомплита для формы расчета
-  initAutocomplete();
-
-  // Инициализация формы расчета
-  const priceForm = document.querySelector('.price-form');
-  let priceFormFound = false;
-  
-  if (priceForm) {
-    priceFormFound = true;
-    priceForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      
-      // Используем встроенную валидацию HTML5
-      if (this.checkValidity()) {
-        const fromInput = document.querySelector('#from-city-input');
-        const toInput = document.querySelector('#to-city-input');
-        
-        console.log('Расчет стоимости доставки:', {
-          from: fromInput.value,
-          to: toInput.value
-        });
-        alert(`Расчет стоимости доставки: ${fromInput.value} -> ${toInput.value}`);
-      } else {
-        // Встроенная валидация браузера покажет сообщения об ошибках
-        this.reportValidity();
-      }
-    });
-  } 
-  
-  // Если не нашли форму по классу, ищем по контейнеру
-  if (!priceFormFound) {
-    const priceFormContainer = document.querySelector('.bg-brand-light.p-4.rounded-lg.w-full.md\\:w-3\\/5');
-    if (priceFormContainer) {
-      console.log('Найден контейнер формы расчета, будем использовать клик по кнопке');
-      
-      // Диагностика для поиска кнопки "Рассчитать"
-      const allButtonsInContainer = priceFormContainer.querySelectorAll('button');
-      console.log(`В контейнере формы расчета найдено ${allButtonsInContainer.length} кнопок:`);
-      allButtonsInContainer.forEach((btn, index) => {
-        console.log(`Кнопка #${index + 1}:`, {
-          classes: btn.className,
-          text: btn.textContent.trim()
-        });
-      });
-      
-      // Более специфичный селектор для кнопки Рассчитать (в блоке расчета стоимости)
-      // Сначала пробуем найти по класу и тексту
-      let calculateButton = priceFormContainer.querySelector('button.bg-brand-gray');
-      
-      // Если не нашли по классу, ищем по тексту (более надежно)
-      if (!calculateButton) {
-        console.log('Не найдена кнопка по классу, ищем по тексту "Рассчитать"');
-        const buttons = Array.from(priceFormContainer.querySelectorAll('button'));
-        calculateButton = buttons.find(btn => 
-          btn.textContent.trim().toLowerCase().includes('рассчитать')
+        console.warn(
+          'Не найдена кнопка "Поиск" в контейнере формы отслеживания'
         );
       }
-      
-      if (calculateButton) {
-        console.log('Найдена кнопка "Рассчитать" для расчета стоимости:', {
-          text: calculateButton.textContent.trim(),
-          classes: calculateButton.className
-        });
-        
-        calculateButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          console.log('Клик по кнопке "Рассчитать"');
-          
-          const fromInput = document.querySelector('#from-city-input');
-          const toInput = document.querySelector('#to-city-input');
-          
-          // Проверяем, что поля существуют
-          if (!fromInput || !toInput) {
-            console.error('Не найдены поля ввода для формы расчета');
-            return;
-          }
-          
-          // Проверяем валидность полей (благодаря атрибуту required)
-          const isFormValid = fromInput.validity.valid && toInput.validity.valid;
-          
-          if (isFormValid) {
-            console.log('Расчет стоимости доставки:', {
-              from: fromInput.value,
-              to: toInput.value
-            });
-            alert(`Расчет стоимости доставки: ${fromInput.value} -> ${toInput.value}`);
-          } else {
-            // Активируем встроенную валидацию браузера
-            if (!fromInput.validity.valid) fromInput.reportValidity();
-            else if (!toInput.validity.valid) toInput.reportValidity();
-          }
-        });
-      } else {
-        console.warn('Не найдена кнопка "Рассчитать" в контейнере формы расчета');
-      }
+    } else {
+      console.warn("Не найден контейнер формы отслеживания");
     }
   }
 
+  // Инициализация автокомплита
+  initAutocomplete();
+
   // Инициализация формы обратной связи
-  const contactForm = document.querySelector('form.space-y-4');
+  const contactForm = document.querySelector("form.space-y-4");
   if (contactForm) {
     // Убедимся, что все поля имеют атрибут required
-    const requiredFields = contactForm.querySelectorAll('input[type="text"], input[type="tel"], input[type="checkbox"]');
-    requiredFields.forEach(field => {
-      if (!field.hasAttribute('required')) {
-        field.setAttribute('required', '');
+    const requiredFields = contactForm.querySelectorAll(
+      'input[type="text"], input[type="tel"], input[type="checkbox"]'
+    );
+    requiredFields.forEach((field) => {
+      if (!field.hasAttribute("required")) {
+        field.setAttribute("required", "");
       }
     });
-    
-    contactForm.addEventListener('submit', function (e) {
+
+    contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      
+
       // Используем встроенную валидацию HTML5
       if (this.checkValidity()) {
         const name = this.querySelector('input[type="text"]').value;
         const phone = this.querySelector('input[type="tel"]').value;
-        
-        alert(`Спасибо за заявку, ${name}! Мы свяжемся с вами по номеру ${phone}`);
+
+        alert(
+          `Спасибо за заявку, ${name}! Мы свяжемся с вами по номеру ${phone}`
+        );
         this.reset();
       } else {
         // Встроенная валидация браузера покажет сообщения об ошибках
@@ -283,9 +212,9 @@ export function initHomePage() {
   }
 
   // Mount the new Vue news component
-  const homePageNewsAppElement = document.getElementById('home-page-news-app');
+  const homePageNewsAppElement = document.getElementById("home-page-news-app");
   if (homePageNewsAppElement) {
-    console.log('Found #home-page-news-app, mounting Vue component');
+    console.log("Found #home-page-news-app, mounting Vue component");
     const app = createApp(HomePageNews);
 
     // Use the existing Pinia store instance if available, otherwise create a new one
@@ -297,18 +226,24 @@ export function initHomePage() {
     // app.provide('globalModalStore', useGlobalModalStore()); // This is one way, but importing directly in component is also fine
 
     app.mount(homePageNewsAppElement);
-    console.log('HomePageNews component mounted.');
+    console.log("HomePageNews component mounted.");
   } else {
-    console.warn('Could not find #home-page-news-app element to mount Vue component.');
+    console.warn(
+      "Could not find #home-page-news-app element to mount Vue component."
+    );
   }
 
-  console.log('Инициализация главной страницы завершена');
-} 
+  console.log("Инициализация главной страницы завершена");
+}
 
 /**
  * Инициализация автокомплита для полей выбора объектов
+ * ОТКЛЮЧЕНО: теперь используются Vue-компоненты
  */
 function initAutocomplete() {
+  console.log("Автокомплит отключен - используются Vue-компоненты");
+  // Комментируем весь код автокомплита, так как используем Vue-компоненты
+  /*
   console.log('Инициализация автокомплита для полей выбора объектов');
 
   // Получаем данные офисов (ПВЗ/склады)
@@ -332,12 +267,17 @@ function initAutocomplete() {
 
   setupAutocompleteInputs(offices);
   setupCityLinks(offices);
+  */
 }
 
 /**
  * Настройка полей ввода с автокомплитом для офисов
+ * ОТКЛЮЧЕНО: теперь используются Vue-компоненты
  */
 function setupAutocompleteInputs(offices) {
+  console.log("setupAutocompleteInputs отключен - используются Vue-компоненты");
+  // Комментируем код, так как используем Vue-компоненты
+  /*
   console.log('Настройка полей ввода с автокомплитом для офисов');
   const fromSelectContainer = document.querySelector('select.from').closest('.relative.w-full');
   const toSelectContainer = document.querySelector('select.to').closest('.relative.w-full');
@@ -347,12 +287,17 @@ function setupAutocompleteInputs(offices) {
   }
   createAutocompleteInput(fromSelectContainer, offices, 'from-city', 'Откуда');
   createAutocompleteInput(toSelectContainer, offices, 'to-city', 'Куда');
+  */
 }
 
 /**
  * Настройка обработчиков клика для ссылок городов
+ * ОТКЛЮЧЕНО: теперь используются Vue-компоненты
  */
 function setupCityLinks(offices) {
+  console.log("setupCityLinks отключен - используются Vue-компоненты");
+  // Комментируем код, так как используем Vue-компоненты
+  /*
   // Находим все контейнеры с городами
   const cityContainers = document.querySelectorAll('.flex.md\\:flex-row.flex-col .flex.flex-row.flex-wrap.gap-2');
   
@@ -381,4 +326,5 @@ function setupCityLinks(offices) {
       });
     });
   });
-} 
+  */
+}

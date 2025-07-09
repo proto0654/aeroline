@@ -197,3 +197,55 @@ News block on the main page is now a functional Vue component, displaying the la
 - **Active decisions/considerations:** Using `assets/data/news.json` for MVP data. File structure for news-related Vue components confirmed in `assets/vue/components/pages/news/`. Decided to use `DateRangeFilter.vue` as a wrapper for `DateRangePickerVue.vue` for cleaner integration.
 
 **Note:** All future entries and modifications to this memory bank should be written in English.
+
+# Active UI/UX Context
+
+- All new and refactored components must use DaisyUI + Tailwind for styling.
+- Component structure: forms in `components/forms/`, pages in `components/pages/`, subcomponents as needed.
+- See memory-bank/tasks.md for detailed migration and refactoring notes.
+
+## Last Completed Task: Delivery Form Integration Across Pages
+
+Successfully completed the integration of Vue-based delivery forms across multiple pages, replacing old HTML implementations with modern Vue components.
+
+### Key Achievements:
+
+1. **Homepage Integration**
+
+   - Replaced old HTML form with `DirectionForm.vue` component
+   - Added calculate button functionality that redirects to calculator with selected office IDs
+   - Hidden title for better homepage integration
+
+2. **Contacts Page Integration**
+
+   - Created `CityAutocompleteForm.vue` for city filtering
+   - Integrated with existing contacts page functionality
+   - Added reset button for better UX
+
+3. **Enhanced AutocompleteInput.vue**
+
+   - Added `emitFullItem` prop for flexible data emission
+   - Implemented `showResetButton` functionality
+   - Added specific office selection tracking with visual feedback
+   - Dynamic UI: hides dropdown arrow and repositions reset button when specific office is selected
+
+4. **Calculator Page Enhancement**
+
+   - Added GET parameter support for pre-filling form via URL
+   - Example: `calculator.html?from=1&to=7` automatically selects offices with IDs 1 and 7
+
+5. **Technical Improvements**
+   - Updated entry point files for proper Vue component mounting
+   - Enhanced data flow between components
+   - Improved user experience with visual feedback
+
+### Current State:
+
+- All delivery forms now use consistent Vue components
+- AutocompleteInput provides rich functionality for different use cases
+- Calculator page supports URL-based pre-filling
+- Forms maintain backward compatibility while providing enhanced features
+
+### Next Session Focus:
+
+Ready for new tasks. The delivery form system is now complete and can serve as a foundation for other form integrations in the project.

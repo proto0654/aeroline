@@ -1,9 +1,11 @@
 # Product Context
 
 ## Purpose
+
 The project requires a streamlined and reliable build process suitable for static hosting platforms like GitHub Pages. The output in the `docs` folder should be easy to navigate, debug, and visually compare to the source code. Simultaneously, the project aims to establish a modern, consistent, and maintainable UI/UX by leveraging Vue 3, Pinia for state management, and DaisyUI for components. This includes a unified global modal system.
 
 ## Problems Solved
+
 1. Simplifies the process of placing and tracking deliveries
 2. Centralized access to delivery information
 3. Easy order status tracking
@@ -15,6 +17,7 @@ The project requires a streamlined and reliable build process suitable for stati
 9. Implementation of a unified and maintainable table solution with sorting, filtering, and pagination using a reusable Vue component based on `vue3-easy-data-table`, replacing the old List.js implementation.
 
 ## User Experience Goals
+
 - Intuitive interface
 - Fast access to key features
 - Responsive design for all devices
@@ -26,6 +29,7 @@ The project requires a streamlined and reliable build process suitable for stati
 - Consistent and modern appearance and behavior for all data tables.
 
 ## Key Features
+
 1. Delivery order system
 2. Order tracking
 3. Information portal
@@ -40,7 +44,9 @@ The project requires a streamlined and reliable build process suitable for stati
 12. Unified Data Table Component with Sorting, Filtering, and Pagination using `vue3-easy-data-table`.
 
 ## How it Should Work
+
 The new Vite build should take source files (HTML, Handlebars, JS, Vue, CSS, Assets) and produce a production-ready output in `docs` where:
+
 - HTML files are in the root.
 - JS files (entry points and modules) are in `docs/assets/js/` with structure and hashes.
 - Vue entry points are handled similarly.
@@ -51,6 +57,26 @@ The new Vite build should take source files (HTML, Handlebars, JS, Vue, CSS, Ass
 - Data tables on relevant pages (e.g., senders-receivers.html, service-acts.html) are implemented using a reusable Vue 3 component (`EasyDataTableWrapper.vue`) which handles sorting, filtering, and pagination using `vue3-easy-data-table`, ensuring consistent styling and behavior including pagination color and spacing.
 
 ## User Experience Goals
+
 Developers working with the project should have a simple `npm run build` command that produces a predictable, debuggable, and correctly linked output ready for deployment, without manual copying steps for assets. The codebase should promote the use of Vue 3 components and Pinia for all new dynamic UI features, and guide the refactoring of existing JavaScript to these patterns.
 
-**Note:** All future entries and modifications to this memory bank should be written in English. 
+**Note:** All future entries and modifications to this memory bank should be written in English.
+
+# UI/UX Guidelines
+
+## Component Structure
+
+- All reusable form elements (input, select, autocomplete, etc.) must be placed in `assets/vue/components/forms/`.
+- Pages and large forms go in `assets/vue/components/pages/` (e.g., `pages/calculator/`).
+- For complex forms, split into logical subcomponents (e.g., `DirectionForm`, `CargoParamsForm`, `DeliveryPointForm`).
+- All components should be as atomic and reusable as possible.
+
+## Styling Standard
+
+- **All new and refactored components must use DaisyUI + Tailwind for layout and styling.**
+- Custom elements (inputs, dropdowns, etc.) should be styled for full compatibility with DaisyUI and Tailwind.
+- This ensures a unified look and rapid development.
+
+## Example
+
+- See `AutocompleteInput.vue` and `DirectionForm.vue` for reference implementations.

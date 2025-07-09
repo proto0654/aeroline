@@ -11,16 +11,26 @@
       position: relative;
     }
   </style>
-  <script type="module" crossorigin src="./assets/js/chunks/runtime-dom.esm-bundler-0GtEW-KV.js"></script>
-  <script type="module" crossorigin src="./assets/js/chunks/globalModal-DXiYt58h.js"></script>
-  <script type="module" crossorigin src="./assets/js/chunks/global-modal-BbiA6qLG.js"></script>
+  <script type="module" crossorigin src="./assets/js/chunks/runtime-dom.esm-bundler-BEj-0d2c.js"></script>
+  <script type="module" crossorigin src="./assets/js/chunks/globalModal-CaWj-_MF.js"></script>
+  <script type="module" crossorigin src="./assets/js/chunks/global-modal-Bee897hd.js"></script>
   <script type="module" crossorigin src="./assets/js/chunks/slider-q_NEEFv1.js"></script>
   <script type="module" crossorigin src="./assets/js/chunks/modal-manager-BXwv0V3q.js"></script>
-  <script type="module" crossorigin src="./assets/js/mainJs-CNnx_5Px.js"></script>
+  <script type="module" crossorigin src="./assets/js/mainJs-DFTeJRJt.js"></script>
   <script type="module" crossorigin src="./assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js"></script>
-  <script type="module" crossorigin src="./assets/js/globalUiJs-C4ZabVgk.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/css/mainJs-D2U1LIhV.css">
-  <link rel="stylesheet" crossorigin href="./assets/css/globalUiJs-Bmjs9o48.css">
+  <script type="module" crossorigin src="./assets/js/chunks/TextInput-BzNOv0NB.js"></script>
+  <script type="module" crossorigin src="./assets/js/globalUiJs-CCzSi3B2.js"></script>
+  <script type="module" crossorigin src="./assets/js/chunks/select-arrow-He2ejS2L.js"></script>
+  <script type="module" crossorigin src="./assets/js/chunks/AutocompleteInput-DDLeqRtM.js"></script>
+  <script type="module" crossorigin src="./assets/js/chunks/CheckboxInput-B1hFOZbU.js"></script>
+  <script type="module" crossorigin src="./assets/js/chunks/SelectInput-Do9zj2pb.js"></script>
+  <script type="module" crossorigin src="./assets/js/calculatorPageJs-BhBiGpib.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/css/mainJs-DTnK1Cpl.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/TextInput-9as9CCia.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/globalUiJs-BaQL4gkF.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/AutocompleteInput-BydNBRlY.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/CheckboxInput-CcYP6EGO.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/SelectInput-C7pdF20g.css">
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <div class="vue-app-mount-point"></div>
@@ -237,18 +247,12 @@
 </header>
 <div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
 
-<main class="container mx-auto px-4 py-12 max-w-[1100px] flex-grow flex flex-col justify-center">
-  <section class="mb-12">
-    <div class="title-wrapper mb-6">
-      <h1 class="animated-title text-center">Калькулятор</h1>
-    </div>
-    <div class="subtitle-wrapper">
-      <p class="animated-subtitle body mb-4 text-center">
-        Здесь будет размещён калькулятор стоимости услуг.
-      </p>
-    </div>
-  </section>
+<main class="container mx-auto px-4 py-12 max-w-[1100px] flex-grow">
+  <div id="calculator-app">
+    <!-- Сюда будет смонтировано Vue-приложение калькулятора -->
+  </div>
 </main>
+
 
 </div> <!-- Закрытие обертки основного контента -->
 <footer class="bg-brand-gray text-brand-white py-12 w-full">

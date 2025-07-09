@@ -1,15 +1,52 @@
 {
+  "_AutocompleteInput-BydNBRlY.css": {
+    "file": "assets/css/AutocompleteInput-BydNBRlY.css",
+    "src": "_AutocompleteInput-BydNBRlY.css"
+  },
+  "_AutocompleteInput-DDLeqRtM.js": {
+    "file": "assets/js/chunks/AutocompleteInput-DDLeqRtM.js",
+    "name": "AutocompleteInput",
+    "imports": [
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_select-arrow-He2ejS2L.js",
+      "_TextInput-BzNOv0NB.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/AutocompleteInput-BydNBRlY.css"
+    ]
+  },
+  "_CheckboxInput-B1hFOZbU.js": {
+    "file": "assets/js/chunks/CheckboxInput-B1hFOZbU.js",
+    "name": "CheckboxInput",
+    "imports": [
+      "_AutocompleteInput-DDLeqRtM.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_TextInput-BzNOv0NB.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/CheckboxInput-CcYP6EGO.css"
+    ],
+    "assets": [
+      "assets/img/double-arrow-DkQhunId.svg"
+    ]
+  },
+  "_CheckboxInput-CcYP6EGO.css": {
+    "file": "assets/css/CheckboxInput-CcYP6EGO.css",
+    "src": "_CheckboxInput-CcYP6EGO.css"
+  },
   "_DateRangeFilter-9e3F7h-a.css": {
     "file": "assets/css/DateRangeFilter-9e3F7h-a.css",
     "src": "_DateRangeFilter-9e3F7h-a.css"
   },
-  "_DateRangeFilter-Dzx7B9C5.js": {
-    "file": "assets/js/chunks/DateRangeFilter-Dzx7B9C5.js",
+  "_DateRangeFilter-Cm62yq7d.js": {
+    "file": "assets/js/chunks/DateRangeFilter-Cm62yq7d.js",
     "name": "DateRangeFilter",
     "imports": [
       "assets/vue/entrypoints/lk-datepicker.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js"
+      "_runtime-dom.esm-bundler-BEj-0d2c.js"
     ],
     "css": [
       "assets/css/DateRangeFilter-9e3F7h-a.css"
@@ -19,22 +56,22 @@
     "file": "assets/css/DeleteConfirmModal-Bsx9uojj.css",
     "src": "_DeleteConfirmModal-Bsx9uojj.css"
   },
-  "_DeleteConfirmModal-qjBLdLaX.js": {
-    "file": "assets/js/chunks/DeleteConfirmModal-qjBLdLaX.js",
+  "_DeleteConfirmModal-DV1JpTES.js": {
+    "file": "assets/js/chunks/DeleteConfirmModal-DV1JpTES.js",
     "name": "DeleteConfirmModal",
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "css": [
       "assets/css/DeleteConfirmModal-Bsx9uojj.css"
     ]
   },
-  "_EasyDataTableWrapper-D85uT70L.js": {
-    "file": "assets/js/chunks/EasyDataTableWrapper-D85uT70L.js",
+  "_EasyDataTableWrapper-D0MUhp1Y.js": {
+    "file": "assets/js/chunks/EasyDataTableWrapper-D0MUhp1Y.js",
     "name": "EasyDataTableWrapper",
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "css": [
@@ -45,11 +82,11 @@
     "file": "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css",
     "src": "_EasyDataTableWrapper-Ev7WQvgQ.css"
   },
-  "_NewsDetailModal-DnU0VeGQ.js": {
-    "file": "assets/js/chunks/NewsDetailModal-DnU0VeGQ.js",
+  "_NewsDetailModal-CYqljg7N.js": {
+    "file": "assets/js/chunks/NewsDetailModal-CYqljg7N.js",
     "name": "NewsDetailModal",
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js"
+      "_runtime-dom.esm-bundler-BEj-0d2c.js"
     ],
     "assets": [
       "assets/img/563x304 (1)-KBSjg7Ja.jpg",
@@ -62,27 +99,55 @@
       "assets/img/Logotype_aerline_light-BjokHjWg.png"
     ]
   },
+  "_SelectInput-C7pdF20g.css": {
+    "file": "assets/css/SelectInput-C7pdF20g.css",
+    "src": "_SelectInput-C7pdF20g.css"
+  },
+  "_SelectInput-Do9zj2pb.js": {
+    "file": "assets/js/chunks/SelectInput-Do9zj2pb.js",
+    "name": "SelectInput",
+    "imports": [
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_select-arrow-He2ejS2L.js",
+      "_TextInput-BzNOv0NB.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/SelectInput-C7pdF20g.css"
+    ]
+  },
+  "_TextInput-9as9CCia.css": {
+    "file": "assets/css/TextInput-9as9CCia.css",
+    "src": "_TextInput-9as9CCia.css"
+  },
+  "_TextInput-BzNOv0NB.js": {
+    "file": "assets/js/chunks/TextInput-BzNOv0NB.js",
+    "name": "TextInput",
+    "imports": [
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/TextInput-9as9CCia.css"
+    ]
+  },
   "__plugin-vue_export-helper-1tPrXgE0.js": {
     "file": "assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js",
     "name": "_plugin-vue_export-helper"
   },
-  "_autocomplete-CjR2TxGO.js": {
-    "file": "assets/js/chunks/autocomplete-CjR2TxGO.js",
-    "name": "autocomplete"
-  },
-  "_global-modal-BbiA6qLG.js": {
-    "file": "assets/js/chunks/global-modal-BbiA6qLG.js",
+  "_global-modal-Bee897hd.js": {
+    "file": "assets/js/chunks/global-modal-Bee897hd.js",
     "name": "global-modal",
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js"
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_globalModal-CaWj-_MF.js"
     ]
   },
-  "_globalModal-DXiYt58h.js": {
-    "file": "assets/js/chunks/globalModal-DXiYt58h.js",
+  "_globalModal-CaWj-_MF.js": {
+    "file": "assets/js/chunks/globalModal-CaWj-_MF.js",
     "name": "globalModal",
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js"
+      "_runtime-dom.esm-bundler-BEj-0d2c.js"
     ]
   },
   "_index-7GPoofoh.js": {
@@ -93,13 +158,16 @@
     "file": "assets/js/chunks/modal-manager-BXwv0V3q.js",
     "name": "modal-manager"
   },
-  "_pagination-5ZDBlBwd.js": {
-    "file": "assets/js/chunks/pagination-5ZDBlBwd.js",
-    "name": "pagination"
-  },
-  "_runtime-dom.esm-bundler-0GtEW-KV.js": {
-    "file": "assets/js/chunks/runtime-dom.esm-bundler-0GtEW-KV.js",
+  "_runtime-dom.esm-bundler-BEj-0d2c.js": {
+    "file": "assets/js/chunks/runtime-dom.esm-bundler-BEj-0d2c.js",
     "name": "runtime-dom.esm-bundler"
+  },
+  "_select-arrow-He2ejS2L.js": {
+    "file": "assets/js/chunks/select-arrow-He2ejS2L.js",
+    "name": "select-arrow",
+    "assets": [
+      "assets/img/select-arrow-BP51TTpS.svg"
+    ]
   },
   "_slider-q_NEEFv1.js": {
     "file": "assets/js/chunks/slider-q_NEEFv1.js",
@@ -330,7 +398,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-CNnx_5Px.js",
+    "file": "assets/js/mainJs-DFTeJRJt.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -339,34 +407,34 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-D2U1LIhV.css"
+      "assets/css/mainJs-DTnK1Cpl.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
-    "file": "assets/js/globalUiJs-C4ZabVgk.js",
+    "file": "assets/js/globalUiJs-CCzSi3B2.js",
     "name": "globalUiJs",
     "src": "assets/js/modules/global-ui.js",
     "isEntry": true,
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "__plugin-vue_export-helper-1tPrXgE0.js"
+      "_TextInput-BzNOv0NB.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js"
     ],
     "css": [
-      "assets/css/globalUiJs-Bmjs9o48.css"
+      "assets/css/globalUiJs-BaQL4gkF.css"
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-BJeb8fWS.js",
+    "file": "assets/js/homePageJs-DTDmXf20.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
     "imports": [
       "_slider-q_NEEFv1.js",
-      "_autocomplete-CjR2TxGO.js",
       "_modal-manager-BXwv0V3q.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
-      "_NewsDetailModal-DnU0VeGQ.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_globalModal-CaWj-_MF.js",
+      "_NewsDetailModal-CYqljg7N.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "css": [
@@ -399,7 +467,7 @@
       "assets/tailwind.config-oiuvnReP.js",
       "user-create..html",
       "vacancies..html",
-      "assets/vite.config-Dcw7E-0q.js",
+      "assets/vite.config-3Zua0byU.js",
       "assets/img/Logotype_aerline_light-BjokHjWg.png"
     ]
   },
@@ -428,29 +496,44 @@
       "_index-7GPoofoh.js"
     ]
   },
+  "assets/vue/entrypoints/calculator-page.js": {
+    "file": "assets/js/calculatorPageJs-BhBiGpib.js",
+    "name": "calculatorPageJs",
+    "src": "assets/vue/entrypoints/calculator-page.js",
+    "isEntry": true,
+    "imports": [
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_TextInput-BzNOv0NB.js",
+      "_CheckboxInput-B1hFOZbU.js",
+      "_SelectInput-Do9zj2pb.js",
+      "_AutocompleteInput-DDLeqRtM.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_select-arrow-He2ejS2L.js"
+    ]
+  },
   "assets/vue/entrypoints/lk-datepicker.js": {
-    "file": "assets/js/lkDatepickerJs-DgtZ8s6z.js",
+    "file": "assets/js/lkDatepickerJs-Md4duJYf.js",
     "name": "lkDatepickerJs",
     "src": "assets/vue/entrypoints/lk-datepicker.js",
     "isEntry": true,
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js"
+      "_runtime-dom.esm-bundler-BEj-0d2c.js"
     ],
     "css": [
       "assets/css/lkDatepickerJs-rzBy3Z-d.css"
     ]
   },
   "assets/vue/entrypoints/news-page.js": {
-    "file": "assets/js/newsPageVueJs-DBiKHOme.js",
+    "file": "assets/js/newsPageVueJs-CZc38rdH.js",
     "name": "newsPageVueJs",
     "src": "assets/vue/entrypoints/news-page.js",
     "isEntry": true,
     "imports": [
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_NewsDetailModal-DnU0VeGQ.js",
-      "_globalModal-DXiYt58h.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_NewsDetailModal-CYqljg7N.js",
+      "_globalModal-CaWj-_MF.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_DateRangeFilter-Dzx7B9C5.js",
+      "_DateRangeFilter-Cm62yq7d.js",
       "assets/vue/entrypoints/lk-datepicker.js"
     ],
     "css": [
@@ -469,21 +552,22 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-BK0h6jY8.js",
+    "file": "assets/js/contacts-DZJpYlnh.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_pagination-5ZDBlBwd.js",
-      "_autocomplete-CjR2TxGO.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_AutocompleteInput-DDLeqRtM.js",
+      "_globalModal-CaWj-_MF.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
-      "__plugin-vue_export-helper-1tPrXgE0.js"
+      "_TextInput-BzNOv0NB.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_select-arrow-He2ejS2L.js"
     ],
     "assets": [
       "assets/img/aeroline_logo-BATjs7xh.svg",
@@ -494,7 +578,6 @@
       "assets/img/q-8XezpOIm.svg",
       "assets/img/messages3-BrscMbdi.svg",
       "assets/img/callcalling-_7VMGJtF.svg",
-      "assets/img/select-arrow-BP51TTpS.svg",
       "assets/img/Logotype_aerline_white-BS2VaNgo.png",
       "assets/img/messages3_white-CxOA5ieA.svg",
       "assets/img/callcalling_white-BPRUXMnE.svg"
@@ -513,25 +596,28 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-BSmh0RjZ.js",
+    "file": "assets/js/main-BTfN-TJ7.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_CheckboxInput-B1hFOZbU.js",
       "assets/js/modules/home-page.js",
-      "_globalModal-DXiYt58h.js",
+      "_globalModal-CaWj-_MF.js",
+      "_TextInput-BzNOv0NB.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
-      "_autocomplete-CjR2TxGO.js",
-      "_NewsDetailModal-DnU0VeGQ.js"
+      "_AutocompleteInput-DDLeqRtM.js",
+      "_select-arrow-He2ejS2L.js",
+      "_NewsDetailModal-CYqljg7N.js"
     ],
     "css": [
-      "assets/css/main-CjCMr60R.css"
+      "assets/css/main-BGHvOoJE.css"
     ],
     "assets": [
       "assets/img/aeroline_logo-BATjs7xh.svg",
@@ -546,8 +632,6 @@
       "assets/img/slide-three-ClaKcOil.png",
       "assets/img/slide-fourth-BzvwDFsr.png",
       "assets/img/search-CYPbi9xb.svg",
-      "assets/img/select-arrow-BP51TTpS.svg",
-      "assets/img/double-arrow-DkQhunId.svg",
       "assets/img/request-for-calculation-D_Epmwlg.png",
       "assets/img/sections-button-arrow-DwtEv55Z.svg",
       "assets/img/shipping-JM3RDj5L.png",
@@ -580,21 +664,22 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-Dzm4M9J4.js",
+    "file": "assets/js/orderList-DkWMK_MS.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
-      "_EasyDataTableWrapper-D85uT70L.js",
-      "_DeleteConfirmModal-qjBLdLaX.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_globalModal-CaWj-_MF.js",
+      "_EasyDataTableWrapper-D0MUhp1Y.js",
+      "_DeleteConfirmModal-DV1JpTES.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_slider-q_NEEFv1.js",
-      "_modal-manager-BXwv0V3q.js"
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-BzNOv0NB.js"
     ],
     "css": [
       "assets/css/orderList-BwBC4xty.css"
@@ -618,19 +703,20 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-4VgoUTyf.js",
+    "file": "assets/js/orderTracking-BuTGEZKD.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_globalModal-DXiYt58h.js",
+      "_globalModal-CaWj-_MF.js",
       "_slider-q_NEEFv1.js",
-      "_modal-manager-BXwv0V3q.js"
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-BzNOv0NB.js"
     ],
     "assets": [
       "assets/img/search-CYPbi9xb.svg",
@@ -660,18 +746,19 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-B0WIK3jd.js",
+    "file": "assets/js/payments-ClzaE0Ju.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_globalModal-CaWj-_MF.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
+      "_TextInput-BzNOv0NB.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "assets": [
@@ -711,17 +798,18 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-Maf_o3jj.js",
+    "file": "assets/js/profile-Bom69jtG.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
       "assets/js/modules/profile-page.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_TextInput-BzNOv0NB.js",
+      "_globalModal-CaWj-_MF.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
@@ -750,27 +838,29 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-Bz44bSKS.js",
+    "file": "assets/js/sendersReceivers-BAbbYkwc.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
-      "_EasyDataTableWrapper-D85uT70L.js",
-      "_DeleteConfirmModal-qjBLdLaX.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_globalModal-CaWj-_MF.js",
+      "_EasyDataTableWrapper-D0MUhp1Y.js",
+      "_DeleteConfirmModal-DV1JpTES.js",
+      "_TextInput-BzNOv0NB.js",
+      "_SelectInput-Do9zj2pb.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_slider-q_NEEFv1.js",
-      "_modal-manager-BXwv0V3q.js"
+      "_modal-manager-BXwv0V3q.js",
+      "_select-arrow-He2ejS2L.js"
     ],
     "css": [
-      "assets/css/sendersReceivers-CKAOCJWs.css"
+      "assets/css/sendersReceivers-T3cnuEde.css"
     ],
     "assets": [
-      "assets/img/select-arrow-BP51TTpS.svg",
       "assets/img/aeroline_logo-BATjs7xh.svg",
       "assets/img/logos_telegram-DAaG1Vgd.svg",
       "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
@@ -785,19 +875,20 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-Cvx04zxt.js",
+    "file": "assets/js/serviceActs-pN_1uI4Z.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_DateRangeFilter-Dzx7B9C5.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_TextInput-BzNOv0NB.js",
+      "_DateRangeFilter-Cm62yq7d.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
-      "_globalModal-DXiYt58h.js",
-      "_EasyDataTableWrapper-D85uT70L.js",
+      "_globalModal-CaWj-_MF.js",
+      "_EasyDataTableWrapper-D0MUhp1Y.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
       "assets/vue/entrypoints/lk-datepicker.js"
@@ -820,18 +911,19 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-iDPxbPp-.js",
+    "file": "assets/js/services-DIEj5_X2.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_globalModal-CaWj-_MF.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
+      "_TextInput-BzNOv0NB.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "assets": [
@@ -870,19 +962,19 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-BKpdUld3.js",
+    "file": "assets/js/vacancies-DEgpfDqE.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,
     "imports": [
-      "_global-modal-BbiA6qLG.js",
+      "_global-modal-Bee897hd.js",
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
-      "_pagination-5ZDBlBwd.js",
-      "_runtime-dom.esm-bundler-0GtEW-KV.js",
-      "_globalModal-DXiYt58h.js",
+      "_runtime-dom.esm-bundler-BEj-0d2c.js",
+      "_globalModal-CaWj-_MF.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
+      "_TextInput-BzNOv0NB.js",
       "__plugin-vue_export-helper-1tPrXgE0.js"
     ],
     "assets": [
@@ -902,7 +994,7 @@
     ]
   },
   "vite.config.js": {
-    "file": "assets/vite.config-Dcw7E-0q.js",
+    "file": "assets/vite.config-3Zua0byU.js",
     "src": "vite.config.js"
   }
 }

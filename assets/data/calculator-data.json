@@ -1,0 +1,79 @@
+{
+  "tariffs": [
+    {
+      "id": "cargo-region",
+      "name": "Cargo-Регион",
+      "baseRatePerKg": 15.5,
+      "baseRatePerM3": 3500.0,
+      "minCost": 500.0,
+      "description": "Доставка по региону"
+    },
+    {
+      "id": "cargo-express",
+      "name": "Cargo-Экспресс",
+      "baseRatePerKg": 25.0,
+      "baseRatePerM3": 6000.0,
+      "minCost": 1000.0,
+      "description": "Ускоренная доставка"
+    }
+  ],
+  "services": {
+    "logisticProcessing": {
+      "name": "Логистическая обработка груза",
+      "cost": 980.0
+    },
+    "documentReturn": {
+      "name": "Возврат документов",
+      "cost": 300.0
+    },
+    "statusInfo": {
+      "name": "Услуга по информированию о статусе груза",
+      "cost": 50.0
+    },
+    "insurance": {
+      "name": "Страховой сбор",
+      "rate": 0.01,
+      "min": 100.0
+    },
+    "cityDelivery": {
+      "name": "Доставка по городу",
+      "cost": 0.0
+    },
+    "eveningDelivery": {
+      "name": "Доставка в вечернее время",
+      "cost": 0.0
+    },
+    "timedDelivery": {
+      "name": "Доставка ко времени",
+      "cost": 0.0
+    },
+    "flight": {
+      "name": "Перелёт",
+      "cost": 48300.0
+    }
+  },
+  "coefficients": {
+    "dangerousGoodsMultiplier": {
+      "name": "Наценка за опасный груз",
+      "value": 1.5
+    },
+    "temperatureControlMultiplier": {
+      "name": "Наценка за температурный режим",
+      "value": 1.3
+    },
+    "fromAddressMultiplier": {
+      "name": "Забор от адреса",
+      "value": 1.2
+    },
+    "toAddressMultiplier": {
+      "name": "Доставка до адреса",
+      "value": 1.2
+    }
+  },
+  "packaging": [
+    { "id": "box-s", "name": "Коробка S (до 5кг, 30x20x10см)", "cost": 50 },
+    { "id": "box-m", "name": "Коробка M (до 15кг, 50x30x20см)", "cost": 100 },
+    { "id": "box-l", "name": "Коробка L (до 30кг, 70x40x30см)", "cost": 200 },
+    { "id": "pallet", "name": "Паллет (до 500кг, 120x80x100см)", "cost": 500 }
+  ]
+}
