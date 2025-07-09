@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 offices-grid">
-            <div v-for="office in paginatedOffices" :key="office.id"
+            <div v-for="(office, index) in paginatedOffices" :key="office.id"
                 class="bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card"
                 :data-city="office.city" :data-coordinates="`${office.coordinates[0]},${office.coordinates[1]}`"
-                @click="onCardClick(office, $event)">
+                @click="onCardClick(office, index, $event)">
                 <div>
                     <svg width="36" height="42" viewBox="0 0 36 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -94,7 +94,135 @@ function setFilter(city) {
     currentPage.value = 1; // Сбрасываем на первую страницу при фильтрации
 }
 
-function onCardClick(office, event) {
+function onCardClick(office, index, event) {
+    // Если клик был по ссылке "Посмотреть на карте", обрабатываем его отдельно
+    if (event.target.tagName === 'A' && event.target.getAttribute('href') === '#map') {
+        console.log('Клик по ссылке "Посмотреть на карте", индекс:', index);
+
+        // Получаем координаты
+        const coordinates = office.coordinates;
+
+        if (coordinates && coordinates.length === 2) {
+            // Ждем инициализации карты
+            if (typeof ymaps !== 'undefined') {
+                ymaps.ready(() => {
+                    let mapInstance = document.querySelector('#map')?.__yamap;
+
+                    if (!mapInstance && window.mapInstance) {
+                        mapInstance = window.mapInstance;
+                    }
+
+                    if (!mapInstance && window.currentMap) {
+                        mapInstance = window.currentMap;
+                    }
+
+                    if (mapInstance && window.officeMarkers && window.officeMarkers[index]) {
+                        // Используем функцию выбора офиса с центрированием карты и приближением
+                        // Импортируем функции из map.js
+                        if (typeof window.selectOfficeCard === 'function') {
+                            window.selectOfficeCard(
+                                event.target.closest('.office-card'),
+                                office,
+                                window.officeMarkers[index],
+                                mapInstance,
+                                coordinates
+                            );
+                        }
+
+                        // Устанавливаем маркер как активный
+                        const marker = window.officeMarkers[index];
+                        if (marker && marker.events && typeof window.setActiveMarker === 'function') {
+                            window.setActiveMarker(marker);
+                        }
+                    } else if (window.officeMarkers && window.officeMarkers[index]) {
+                        const marker = window.officeMarkers[index];
+                        if (marker && marker.events) {
+                            marker.events.fire('click');
+                        }
+                        if (typeof window.selectOfficeCardNoFocus === 'function') {
+                            window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+                        }
+                    } else {
+                        if (typeof window.selectOfficeCardNoFocus === 'function') {
+                            window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+                        }
+                    }
+                });
+            } else {
+                if (typeof window.selectOfficeCardNoFocus === 'function') {
+                    window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+                }
+            }
+        } else {
+            if (typeof window.selectOfficeCardNoFocus === 'function') {
+                window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+            }
+        }
+    } else {
+        // Обычный клик по карточке
+        console.log('Клик по карточке офиса:', office.city);
+
+        // Получаем координаты
+        const coordinates = office.coordinates;
+
+        if (coordinates && coordinates.length === 2) {
+            // Ждем инициализации карты
+            if (typeof ymaps !== 'undefined') {
+                ymaps.ready(() => {
+                    let mapInstance = document.querySelector('#map')?.__yamap;
+
+                    if (!mapInstance && window.mapInstance) {
+                        mapInstance = window.mapInstance;
+                    }
+
+                    if (!mapInstance && window.currentMap) {
+                        mapInstance = window.currentMap;
+                    }
+
+                    if (mapInstance && window.officeMarkers && window.officeMarkers[index]) {
+                        // Используем функцию выбора офиса с центрированием карты и приближением
+                        if (typeof window.selectOfficeCard === 'function') {
+                            window.selectOfficeCard(
+                                event.target.closest('.office-card'),
+                                office,
+                                window.officeMarkers[index],
+                                mapInstance,
+                                coordinates
+                            );
+                        }
+
+                        // Устанавливаем маркер как активный
+                        const marker = window.officeMarkers[index];
+                        if (marker && marker.events && typeof window.setActiveMarker === 'function') {
+                            window.setActiveMarker(marker);
+                        }
+                    } else if (window.officeMarkers && window.officeMarkers[index]) {
+                        const marker = window.officeMarkers[index];
+                        if (marker && marker.events) {
+                            marker.events.fire('click');
+                        }
+                        if (typeof window.selectOfficeCardNoFocus === 'function') {
+                            window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+                        }
+                    } else {
+                        if (typeof window.selectOfficeCardNoFocus === 'function') {
+                            window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+                        }
+                    }
+                });
+            } else {
+                if (typeof window.selectOfficeCardNoFocus === 'function') {
+                    window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+                }
+            }
+        } else {
+            if (typeof window.selectOfficeCardNoFocus === 'function') {
+                window.selectOfficeCardNoFocus(event.target.closest('.office-card'), office);
+            }
+        }
+    }
+
+    // Эмитим событие для родительского компонента
     emit('card-click', { office, event });
 }
 
@@ -102,5 +230,4 @@ function onCardClick(office, event) {
 defineExpose({
     setFilter,
 });
-
 </script>

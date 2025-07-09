@@ -117,8 +117,12 @@ function getMarkerSizeForZoom(currentZoom) {
   const width = Math.round(minSize[0] + (maxSize[0] - minSize[0]) * zoomRatio);
   const height = Math.round(minSize[1] + (maxSize[1] - minSize[1]) * zoomRatio);
   const heightRatio = height / maxSize[1];
-  const offsetX = Math.round(minOffset[0] + (maxOffset[0] - minOffset[0]) * heightRatio);
-  const offsetY = Math.round(minOffset[1] + (maxOffset[1] - minOffset[1]) * heightRatio);
+  const offsetX = Math.round(
+    minOffset[0] + (maxOffset[0] - minOffset[0]) * heightRatio
+  );
+  const offsetY = Math.round(
+    minOffset[1] + (maxOffset[1] - minOffset[1]) * heightRatio
+  );
   return {
     size: [width, height],
     offset: [offsetX, offsetY]
@@ -184,6 +188,7 @@ function selectOfficeCardNoFocus(selectedCard, officeData = null, marker = null,
     }
   }
 }
+window.selectOfficeCardNoFocus = selectOfficeCardNoFocus;
 function selectOfficeCard(selectedCard, officeData = null, marker = null, map = null, coordinates = null) {
   document.querySelectorAll(".office-card").forEach((card) => {
     card.classList.remove("ring", "ring-brand-blue");
@@ -217,6 +222,7 @@ function selectOfficeCard(selectedCard, officeData = null, marker = null, map = 
     }
   }
 }
+window.selectOfficeCard = selectOfficeCard;
 function initMap(basePath) {
   try {
     ymaps.ready(function() {
@@ -230,12 +236,20 @@ function initMap(basePath) {
       if (officesDataAttr) {
         try {
           offices = JSON.parse(officesDataAttr);
-          console.log("Данные офисов загружены из data-атрибута:", offices.length);
+          console.log(
+            "Данные офисов загружены из data-атрибута:",
+            offices.length
+          );
         } catch (error) {
-          console.error("Ошибка при парсинге данных офисов из data-атрибута:", error);
+          console.error(
+            "Ошибка при парсинге данных офисов из data-атрибута:",
+            error
+          );
         }
       } else {
-        console.log("Атрибут data-offices не найден или пуст. Инициализация карты без маркеров.");
+        console.log(
+          "Атрибут data-offices не найден или пуст. Инициализация карты без маркеров."
+        );
       }
       if (!offices || offices.length === 0) {
         console.log("Нет данных офисов для отображения на карте.");
@@ -302,14 +316,18 @@ function initMap(basePath) {
       offices.forEach((office, index) => {
         if (!office.coordinates || office.coordinates.length !== 2) return;
         const defaultMarkerUrl = createColoredMarkerIcon(DEFAULT_MARKER_COLOR);
-        const marker = new ymaps.Placemark(office.coordinates, {
-          hintContent: office.city
-        }, {
-          iconLayout: "default#image",
-          iconImageHref: defaultMarkerUrl,
-          iconImageSize: initialMarkerProps.size,
-          iconImageOffset: initialMarkerProps.offset
-        });
+        const marker = new ymaps.Placemark(
+          office.coordinates,
+          {
+            hintContent: office.city
+          },
+          {
+            iconLayout: "default#image",
+            iconImageHref: defaultMarkerUrl,
+            iconImageSize: initialMarkerProps.size,
+            iconImageOffset: initialMarkerProps.offset
+          }
+        );
         officeMarkers[index] = marker;
         markers.add(marker);
         marker.events.add("click", () => {

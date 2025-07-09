@@ -398,7 +398,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-DFTeJRJt.js",
+    "file": "assets/js/mainJs-pfYrN56Z.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -552,7 +552,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-DZJpYlnh.js",
+    "file": "assets/js/contacts-DvX_drHy.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -596,7 +596,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-BTfN-TJ7.js",
+    "file": "assets/js/main-DyYowOiS.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -664,7 +664,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-DkWMK_MS.js",
+    "file": "assets/js/orderList-Ce5ghVMp.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -703,7 +703,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-BuTGEZKD.js",
+    "file": "assets/js/orderTracking-Kd3LRJEN.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -746,7 +746,7 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-ClzaE0Ju.js",
+    "file": "assets/js/payments-CJi-QAj6.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -798,7 +798,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-Bom69jtG.js",
+    "file": "assets/js/profile-BENJfDZC.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -838,7 +838,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-BAbbYkwc.js",
+    "file": "assets/js/sendersReceivers-rubU-tSB.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -875,7 +875,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-pN_1uI4Z.js",
+    "file": "assets/js/serviceActs-Cn8_RvPJ.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -911,7 +911,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-DIEj5_X2.js",
+    "file": "assets/js/services-D_hyJxpK.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -962,7 +962,7 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-DEgpfDqE.js",
+    "file": "assets/js/vacancies-CfcTvldp.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,

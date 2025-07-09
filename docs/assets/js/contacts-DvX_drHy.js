@@ -1,5 +1,5 @@
 import "./chunks/global-modal-Bee897hd.js";
-import "./mainJs-DFTeJRJt.js";
+import "./mainJs-pfYrN56Z.js";
 import "./globalUiJs-CCzSi3B2.js";
 import { r as ref, p as computed, c as createElementBlock, o as openBlock, a as createBaseVNode, d as createCommentVNode, F as Fragment, C as renderList, t as toDisplayString, B as normalizeClass, q as watch, K as createVNode, J as createApp, Z as h } from "./chunks/runtime-dom.esm-bundler-BEj-0d2c.js";
 import { A as AutocompleteInput } from "./chunks/AutocompleteInput-DDLeqRtM.js";
@@ -73,7 +73,112 @@ const _sfc_main$1 = {
       selectedCity2.value = city;
       currentPage.value = 1;
     }
-    function onCardClick(office, event) {
+    function onCardClick(office, index, event) {
+      if (event.target.tagName === "A" && event.target.getAttribute("href") === "#map") {
+        console.log('Клик по ссылке "Посмотреть на карте", индекс:', index);
+        const coordinates = office.coordinates;
+        if (coordinates && coordinates.length === 2) {
+          if (typeof ymaps !== "undefined") {
+            ymaps.ready(() => {
+              var _a;
+              let mapInstance = (_a = document.querySelector("#map")) == null ? void 0 : _a.__yamap;
+              if (!mapInstance && window.mapInstance) {
+                mapInstance = window.mapInstance;
+              }
+              if (!mapInstance && window.currentMap) {
+                mapInstance = window.currentMap;
+              }
+              if (mapInstance && window.officeMarkers && window.officeMarkers[index]) {
+                if (typeof window.selectOfficeCard === "function") {
+                  window.selectOfficeCard(
+                    event.target.closest(".office-card"),
+                    office,
+                    window.officeMarkers[index],
+                    mapInstance,
+                    coordinates
+                  );
+                }
+                const marker = window.officeMarkers[index];
+                if (marker && marker.events && typeof window.setActiveMarker === "function") {
+                  window.setActiveMarker(marker);
+                }
+              } else if (window.officeMarkers && window.officeMarkers[index]) {
+                const marker = window.officeMarkers[index];
+                if (marker && marker.events) {
+                  marker.events.fire("click");
+                }
+                if (typeof window.selectOfficeCardNoFocus === "function") {
+                  window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+                }
+              } else {
+                if (typeof window.selectOfficeCardNoFocus === "function") {
+                  window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+                }
+              }
+            });
+          } else {
+            if (typeof window.selectOfficeCardNoFocus === "function") {
+              window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+            }
+          }
+        } else {
+          if (typeof window.selectOfficeCardNoFocus === "function") {
+            window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+          }
+        }
+      } else {
+        console.log("Клик по карточке офиса:", office.city);
+        const coordinates = office.coordinates;
+        if (coordinates && coordinates.length === 2) {
+          if (typeof ymaps !== "undefined") {
+            ymaps.ready(() => {
+              var _a;
+              let mapInstance = (_a = document.querySelector("#map")) == null ? void 0 : _a.__yamap;
+              if (!mapInstance && window.mapInstance) {
+                mapInstance = window.mapInstance;
+              }
+              if (!mapInstance && window.currentMap) {
+                mapInstance = window.currentMap;
+              }
+              if (mapInstance && window.officeMarkers && window.officeMarkers[index]) {
+                if (typeof window.selectOfficeCard === "function") {
+                  window.selectOfficeCard(
+                    event.target.closest(".office-card"),
+                    office,
+                    window.officeMarkers[index],
+                    mapInstance,
+                    coordinates
+                  );
+                }
+                const marker = window.officeMarkers[index];
+                if (marker && marker.events && typeof window.setActiveMarker === "function") {
+                  window.setActiveMarker(marker);
+                }
+              } else if (window.officeMarkers && window.officeMarkers[index]) {
+                const marker = window.officeMarkers[index];
+                if (marker && marker.events) {
+                  marker.events.fire("click");
+                }
+                if (typeof window.selectOfficeCardNoFocus === "function") {
+                  window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+                }
+              } else {
+                if (typeof window.selectOfficeCardNoFocus === "function") {
+                  window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+                }
+              }
+            });
+          } else {
+            if (typeof window.selectOfficeCardNoFocus === "function") {
+              window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+            }
+          }
+        } else {
+          if (typeof window.selectOfficeCardNoFocus === "function") {
+            window.selectOfficeCardNoFocus(event.target.closest(".office-card"), office);
+          }
+        }
+      }
       emit("card-click", { office, event });
     }
     __expose({
@@ -82,13 +187,13 @@ const _sfc_main$1 = {
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", null, [
         createBaseVNode("div", _hoisted_1$1, [
-          (openBlock(true), createElementBlock(Fragment, null, renderList(paginatedOffices.value, (office) => {
+          (openBlock(true), createElementBlock(Fragment, null, renderList(paginatedOffices.value, (office, index) => {
             return openBlock(), createElementBlock("div", {
               key: office.id,
               class: "bg-brand-light h-96 rounded-xl p-8 md:p-12 flex flex-col gap-2 justify-between shadow office-card",
               "data-city": office.city,
               "data-coordinates": `${office.coordinates[0]},${office.coordinates[1]}`,
-              onClick: ($event) => onCardClick(office, $event)
+              onClick: ($event) => onCardClick(office, index, $event)
             }, [
               createBaseVNode("div", null, [
                 _cache[2] || (_cache[2] = createBaseVNode("svg", {
