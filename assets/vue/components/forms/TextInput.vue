@@ -1,35 +1,20 @@
 <template>
   <div>
-    <label 
-      v-if="label" 
-      :for="inputId" 
-      class=""
-    >
+    <label v-if="label" :for="inputId" class="">
       {{ label }}
     </label>
-    
-    <div class="relative">
-      <input
-        class="vue-form-field"
-        :id="inputId"
-        v-model="inputValue"
-        :type="type"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :required="required"
-        v-bind="$attrs"
-        @blur="handleBlur"
-        :class="[
+
+    <div class="relative text-input-vue">
+      <input class="vue-form-field w-full bg-white focus-visible:outline-gray-200 focus-visible:outline-[1px]"
+        :id="inputId" v-model="inputValue" :type="type" :placeholder="placeholder" :disabled="disabled"
+        :required="required" v-bind="$attrs" @blur="handleBlur" :class="[
           errorMessage ? 'border-red-500' : '',
           disabled ? 'bg-gray-100 cursor-not-allowed' : ''
-        ]"
-      />
-      <span 
-        v-if="required" 
-        class="text-brand-red absolute right-3 top-1/2 -translate-y-1/2 text-lg font-bold pointer-events-none"
-      >*</span>
+        ]" />
+      <span v-if="required"
+        class="text-brand-red absolute right-3 top-1/2 -translate-y-1/2 text-lg font-bold pointer-events-none">*</span>
     </div>
-    
+
     <p v-if="errorMessage" class="base-form-error">{{ errorMessage }}</p>
     <p v-else-if="hint" class="mt-1 text-sm text-gray-500">{{ hint }}</p>
   </div>
@@ -111,6 +96,7 @@ watch(inputValue, (newValue) => {
 
 <style scoped>
 .vue-form-field {
-  padding-right: 2.5rem;
+  /* padding-right: 2.5rem; */
+
 }
-</style> 
+</style>

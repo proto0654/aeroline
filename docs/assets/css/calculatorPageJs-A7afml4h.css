@@ -1,0 +1,43 @@
+
+.vue-form-field[data-v-f5165da5] {
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+}
+.vue-form-field[data-v-f5165da5]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.vue-form-field[data-v-66ae05e2] {
+    padding: 1rem;
+    padding-right: 4.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+}
+.vue-form-field[data-v-66ae05e2]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Стили для чекбокса уже в классах Tailwind */
+
+/* Специфичные стили для компонента */
+
+/* Глобальные стили для оверрайда библиотеки */
+
+.animate-fade-in[data-v-f7e287a7] {
+    animation: fadeIn-f7e287a7 0.2s ease-in-out;
+}
+@keyframes fadeIn-f7e287a7 {
+from {
+        opacity: 0;
+        transform: translateY(-5px);
+}
+to {
+        opacity: 1;
+        transform: translateY(0);
+}
+}

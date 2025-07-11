@@ -4,26 +4,20 @@
       {{ label }}
     </label>
     <div class="relative">
-      <select
-        class="vue-form-field appearance-none"
-        :id="inputId"
-        v-model="inputValue"
-        :disabled="disabled"
-        :required="required"
-        v-bind="$attrs"
-        @blur="handleBlur"
-        :class="[
+      <select class="vue-form-field appearance-none" :id="inputId" v-model="inputValue" :disabled="disabled"
+        :required="required" v-bind="$attrs" @blur="handleBlur" :class="[
           errorMessage ? 'border-red-500' : '',
           disabled ? 'bg-gray-100 cursor-not-allowed' : ''
-        ]"
-      >
+        ]">
         <option v-if="placeholder" value="" disabled>{{ placeholder }}</option>
         <option v-for="option in options" :key="option.value" :value="option.value">
           {{ option.label }}
         </option>
       </select>
-      <span v-if="required" class="text-brand-red absolute right-8 top-1/2 -translate-y-1/2 text-lg font-bold pointer-events-none">*</span>
-      <img src="/assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+      <span v-if="required"
+        class="text-brand-red absolute right-8 top-1/2 -translate-y-1/2 text-lg font-bold pointer-events-none">*</span>
+      <img src="/assets/img/select-arrow.svg" alt=""
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
     </div>
     <p v-if="errorMessage" class="base-form-error">{{ errorMessage }}</p>
     <p v-else-if="hint" class="mt-1 text-sm text-gray-500">{{ hint }}</p>
@@ -106,4 +100,4 @@ watch(inputValue, (newValue) => {
 .vue-form-field.appearance-none {
   padding-right: 4.5rem;
 }
-</style> 
+</style>

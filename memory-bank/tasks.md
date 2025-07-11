@@ -1,140 +1,95 @@
 # Current Tasks
 
-## Global Refactoring Strategy
+## ✅ COMPLETED: Integration of Vue Date Picker Library in Calculator
 
-The overall project development strategy is a gradual transition from native JavaScript to Vue 3 components for all dynamic UI elements. Progress is being made in several key areas:
+**Task:** Integrate Vue date picker library into calculator components where dates are needed.
 
-### ✅ Completed
+**Completed Work:**
 
-1. **Global Modal System**
+1. **Created Single Date Picker Component** (`assets/vue/components/DatePickerVue.vue`):
 
-   - Unified `GlobalModalHost.vue` component with Pinia management
-   - Migration of all key modals to the new system
-   - Consistent behavior and styling (DaisyUI based)
+   - Based on `vue-datepicker-next` library (same as existing `DateRangePickerVue.vue`)
+   - Supports single date selection with Russian localization
+   - Props: `initialDate`, `placeholder`, `closeOnSelect`, `minDate`, `maxDate`
+   - Events: `update:date`, `date-select`, `clear-selection`
+   - Methods: `clearSelection()` exposed via `defineExpose`
 
-2. **Data Table Component**
+2. **Updated DeliveryPointForm.vue**:
+   - Replaced standard HTML `<input type="date">` with new `DatePickerVue` component
+   - Added proper form control wrapper with label styling
+   - Integrated with existing form validation and data flow
+   - Maintains compatibility with existing calculator logic
 
-   - Implementation of `EasyDataTableWrapper.vue` based on `vue3-easy-data-table`
-   - Refactoring of tables on senders/receivers and service acts pages
-   - Consistent sorting, filtering, and pagination
+**Technical Details:**
 
-3. **Date Range Picker Component**
+- Uses same `vue-datepicker-next` library as existing `DateRangePickerVue.vue`
+- Consistent styling with DaisyUI/Tailwind classes
+- Proper integration with VeeValidate form system
+- Maintains reactive data flow in calculator components
 
-   - Implementation of `DateRangePickerVue.vue` based on `vue-datepicker-next`
-   - Integration on service acts and news pages
-   - Configuration for correct interaction with other code
+**Files Modified:**
 
-4. **Homepage News**
+- `assets/vue/components/DatePickerVue.vue` (new)
+- `assets/vue/components/pages/calculator/DeliveryPointForm.vue` (updated)
 
-   - Replacement of carousel with `HomePageNews.vue` component
-   - Integration with global modal system
-   - Addition of "new news" indicator
+## ✅ COMPLETED: Advanced Tariff System with Delivery Time and Date Integration
 
-5. **Delivery Form Integration Across Pages**
-   - Replaced old HTML forms on homepage and contacts page with Vue components
-   - Created `DirectionForm.vue` for homepage with calculate button functionality
-   - Created `CityAutocompleteForm.vue` for contacts page city filtering
-   - Enhanced `AutocompleteInput.vue` with:
-     - Flexible item emission (full object vs city only via `emitFullItem` prop)
-     - Reset button functionality (`showResetButton` prop)
-     - Specific office selection tracking with visual feedback
-     - Dynamic UI: hides dropdown arrow and repositions reset button when specific office is selected
-   - Added GET parameter support in calculator page for pre-filling form via URL (e.g., `?from=1&to=7`)
-   - Updated entry point files to properly mount Vue components on respective pages
+**Task:** Enhance tariff system to include delivery time calculations, date constraints, and temporal availability checking.
 
-### 🔄 In Progress
+**Completed Work:**
 
-1. **News Page Refactoring**
+1. **Enhanced Tariff Configuration** (`assets/data/calculator-data.json`):
 
-   - Creation of Vue components for news grid, pagination, and filtering
-   - Working with test data from JSON
-   - Integration with global modal system
-   - Refining news pagination
+   - Added `deliveryTime` object to each tariff with delivery time calculation formulas
+   - Added `minAdvanceBookingDays` and `maxAdvanceBookingDays` to availability constraints
+   - Created new **Cargo-Срочный** (Urgent) tariff for same-day/next-day delivery
+   - Added delivery time calculation rules to global configuration
 
-2. **Asset Management System Update**
-   - Configuring `vite.config.js` for optimal asset processing and output
-   - Categorization of assets by type (images, CSS, JS, fonts)
-   - Support for file naming hashing while preserving structure
+2. **Updated Calculator Logic** (`assets/vue/components/pages/calculator/CalculatorPage.vue`):
 
-### 📋 Planned
+   - Added `calculateDeliveryTime()` function for time-based calculations
+   - Added `calculateMinDeliveryDate()` function for minimum delivery date calculation
+   - Enhanced `checkTariffAvailability()` to include date-based constraints
+   - Updated `calculateTariffCost()` to include delivery time information in results
+   - Modified `calculationResult` to work with new tariff structure
 
-1. **Unified Forms System**
+3. **Enhanced Results Display** (`assets/vue/components/pages/calculator/CalculationResult.vue`):
 
-   - Creation of base input field components (text, select, checkbox, etc.)
-   - Integration with VeeValidate for validation
-   - Form wrapper component with unified style and behavior
+   - Added delivery time information display for each tariff
+   - Shows minimum delivery date calculation
+   - Includes distance information in tariff details
+   - Added `formatDate()` utility function for date formatting
 
-2. **Refactoring Remaining Pages**
+4. **Updated Documentation** (`memory-bank/tariff-documentation.md`):
+   - Documented new delivery time system and formulas
+   - Added test scenarios for date-based constraints
+   - Explained advance booking limitations
+   - Added technical documentation for new fields and functions
 
-   - Identification of priority pages for refactoring
-   - Creation of Vue components for interactive elements
-   - Ensuring compatibility with existing code
+**Key Features Added:**
 
-3. **Bitrix CMS Integration**
+- **Delivery Time Calculation**: Each tariff has formula `baseDays + (distance × daysPerKm)` limited by `maxDays`
+- **Date Constraints**: Tariffs can require minimum/maximum advance booking periods
+- **Minimum Delivery Date**: Automatically calculated based on departure date and delivery time
+- **Urgent Tariff**: New express tariff for same-day delivery with geographical and weight restrictions
+- **Enhanced Display**: Shows delivery time estimates and minimum delivery dates in UI
 
-   - Preparing architecture for API interaction
-   - Replacing test data with real data
-   - Implementation of authorization and other necessary mechanisms
+**Technical Implementation:**
 
-4. **Senders and Receivers Page Further Development**
-   - Implement additional features as required (e.g., API integration, more complex UI elements, specific business logic).
-   - This task covers any work on the /senders-receivers.html page beyond the initial data table and modal implementation.
+- Time calculations based on real distance between cities
+- Date validation prevents impossible delivery scenarios
+- Tariff availability automatically filters based on temporal constraints
+- Results include comprehensive delivery time information
 
-## Current Priorities
+**Files Modified:**
 
-1. Complete news page refactoring, especially the pagination component
-2. Continue refactoring forms into Vue components using VeeValidate
-3. Maintain and expand existing documentation as the project evolves
-4. Ensure compatibility with the latest dependency versions, including Vite
+- `assets/data/calculator-data.json` (enhanced with delivery time data)
+- `assets/vue/components/pages/calculator/CalculatorPage.vue` (added time calculations)
+- `assets/vue/components/pages/calculator/CalculationResult.vue` (enhanced display)
+- `memory-bank/tariff-documentation.md` (comprehensive update)
 
-**Note:** All future entries and modifications to this memory bank should be written in English.
+**Next Steps:**
 
-# Задача: Перенос и улучшение автокомплита калькулятора в Vue
-
-## Краткое описание
-
-Перенос кастомного автокомплита из старой реализации (vanilla JS) в современный Vue-компонент с сохранением всей логики, приоритезации поиска и кастомного отображения офисов. Обеспечена максимальная идентичность поведения и внешнего вида, а также интеграция с формами калькулятора.
-
-## Основные шаги и решения
-
-1. **Анализ оригинального автокомплита**
-
-   - Изучена функция `createAutocompleteInput` из `assets/js/modules/autocomplete.js`.
-   - Выявлены ключевые особенности: поиск по всем полям (город, адрес, тип, телефон) с приоритетом, кастомный HTML-рендеринг, отсутствие использования `<select>`, поддержка клавиатурной навигации, отображение всех офисов, а не только городов.
-
-2. **Перенос логики в Vue**
-
-   - Создан компонент `AutocompleteInput.vue` с:
-     - Полной кастомной версткой (input, кнопка, стрелка, выпадающий список)
-     - Поиском по всем полям с приоритетом: сначала `city.startsWith`, затем `city.includes`, затем остальные поля (адрес, тип, телефон)
-     - Кастомным HTML для каждого офиса (город, адрес, тип, телефон)
-     - Поддержкой клавиатурной навигации (стрелки, Enter, Escape)
-     - Событием выбора города (`citySelected`), чтобы интеграция с формой была удобной
-     - Корректной работой как для поиска по городам (режим onlyCities), так и для поиска по всем офисам (основной режим калькулятора)
-
-3. **Интеграция с формами калькулятора**
-
-   - Компонент `DirectionForm.vue` теперь использует новый автокомплит и передает в форму только название города, а в поле ввода отображает полную строку (город, адрес, телефон).
-   - Исправлены все места, где ранее использовался старый проп `options` (заменено на `items`).
-   - Исправлены обработчики событий, чтобы в форму попадал только город, а не весь объект офиса.
-
-4. **Стилизация и соответствие UI**
-
-   - Использованы те же классы Tailwind, что и в оригинале.
-   - Важно: для всех новых и рефакторимых компонентов рекомендуется использовать [DaisyUI](https://daisyui.com/) для унификации внешнего вида и ускорения верстки.
-   - Кастомные элементы (input, dropdown) стилизованы с учетом совместимости с DaisyUI и Tailwind.
-
-5. **Рекомендации по структуре компонентов**
-   - Все переиспользуемые элементы формы (input, select, autocomplete и т.д.) должны располагаться в `assets/vue/components/forms/`.
-   - Страницы и крупные формы — в `assets/vue/components/pages/` (например, калькулятор: `pages/calculator/`).
-   - Для сложных форм рекомендуется разбивать на логические подкомпоненты (например, `DirectionForm`, `CargoParamsForm`, `DeliveryPointForm`).
-   - Все компоненты должны быть максимально атомарными и переиспользуемыми.
-   - Вся верстка новых компонентов — через DaisyUI + Tailwind.
-
-## Итог
-
-- Автокомплит полностью повторяет оригинальную логику и внешний вид.
-- Поиск работает по всем полям с приоритетом.
-- Кастомный HTML для каждого офиса.
-- Интеграция с формами калькулятора через v-model и события.
-- Структура компонентов и рекомендации по DaisyUI зафиксированы для будущей разработки.
+- Test the enhanced system with various date scenarios
+- Consider adding delivery time warnings/notifications
+- Potentially add delivery time guarantees or penalties

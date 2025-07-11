@@ -35,8 +35,8 @@
                 style="max-height: 200px; overflow-y: auto; overscroll-behavior: contain;">
                 <li v-for="(item, index) in filteredItems" :key="getItemKey(item, index)"
                     class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                    :class="{ 'bg-blue-100': currentIndex === index }" @click="selectItem(item)"
-                    v-html="formatItemHTML(item)"></li>
+                    :class="{ 'bg-blue-100': currentIndex === index }" :data-office-id="item.id"
+                    @click="selectItem(item)" v-html="formatItemHTML(item)"></li>
             </ul>
 
             <span v-if="required"
@@ -127,7 +127,8 @@ const {
 
 // Computed для проверки, выбран ли конкретный ПВЗ (офис с ID)
 const isSpecificOfficeSelected = computed(() => {
-    return selectedItem.value && selectedItem.value.id && selectedItem.value.address;
+    // Достаточно наличия selectedItem с id в любом режиме
+    return selectedItem.value && selectedItem.value.id;
 });
 
 // Watchers
@@ -139,6 +140,29 @@ watch(() => props.modelValue, (newValue) => {
 
 watch(inputValue, (newValue) => {
     emit('update:modelValue', newValue);
+
+    // Ищем соответствующий офис в items для установки selectedItem
+    if (newValue && newValue.trim()) {
+        const foundItem = props.items.find(item => {
+            if (props.onlyCities) {
+                // В режиме onlyCities ищем по точному совпадению города
+                return item.city === newValue.trim();
+            } else {
+                // В обычном режиме ищем по полной строке или по городу + адресу
+                const fullString = formatItemToString(item);
+                const cityAddressString = item.city + (item.address ? ', ' + item.address : '');
+                return fullString === newValue.trim() || cityAddressString === newValue.trim();
+            }
+        });
+
+        if (foundItem) {
+            selectedItem.value = foundItem;
+        } else {
+            selectedItem.value = null;
+        }
+    } else {
+        selectedItem.value = null;
+    }
 });
 
 // Computed
@@ -282,6 +306,9 @@ const onToggleClick = (e) => {
 
     if (props.disabled) return;
 
+    // Если элемент уже выбран, не показываем выпадающий список
+    if (isSpecificOfficeSelected.value) return;
+
     if (isDropdownVisible.value) {
         isDropdownVisible.value = false;
     } else {
@@ -308,6 +335,21 @@ const selectItem = (item) => {
         }
     });
 };
+
+// Добавляем метод для выбора элемента по ID (для GET-параметров)
+const selectItemById = (id) => {
+    const item = props.items.find(office => office.id === parseInt(id));
+    if (item) {
+        selectItem(item);
+        return true;
+    }
+    return false;
+};
+
+// Expose метод для использования из родительского компонента
+defineExpose({
+    selectItemById
+});
 
 const onKeydown = (e) => {
     const items = listRef.value?.querySelectorAll('li') || [];

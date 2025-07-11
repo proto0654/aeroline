@@ -19,14 +19,22 @@
             <div v-if="deliveryMode === 'terminal'">
                 <AutocompleteInput :name="`${namePrefix}_terminal_address`" label="Адрес терминала"
                     :items="terminalOptions" :disabled="!city"
-                    :placeholder="city ? 'Выберите терминал' : 'Сначала выберите город'" v-model="location" />
+                    :placeholder="city ? 'Выберите терминал' : 'Сначала выберите город'" v-model="location"
+                    :emitFullItem="true" @itemSelected="onTerminalSelected" :showResetButton="true"
+                    @reset="onTerminalReset" />
             </div>
             <div v-if="deliveryMode === 'address'">
                 <TextInput :name="`${namePrefix}_pickup_address`" label="Адрес" placeholder="Укажите адрес"
                     :disabled="!city" v-model="location" />
             </div>
 
-            <TextInput :name="`${namePrefix}_date`" label="Дата" type="date" :disabled="!city" v-model="date" />
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text text-brand-gray font-medium">Дата</span>
+                </label>
+                <DatePickerVue :name="`${namePrefix}_date`" :initial-date="date" :disabled="!city"
+                    placeholder="Выберите дату" @update:date="onDateChange" />
+            </div>
         </div>
 
     </section>
@@ -36,6 +44,7 @@
 import { ref, computed, watch } from 'vue';
 import TextInput from '../../forms/TextInput.vue';
 import AutocompleteInput from '../../forms/AutocompleteInput.vue';
+import DatePickerVue from '../../DatePickerVue.vue';
 
 const props = defineProps({
     title: { type: String, required: true },
@@ -49,10 +58,33 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-// Local state based on v-model
+// Флаг для предотвращения циклических обновлений
+let isUpdatingFromParent = false;
+
+// Local state for non-location fields
 const deliveryMode = ref(props.modelValue.deliveryMode || 'terminal');
-const location = ref(props.modelValue.location || '');
 const date = ref(props.modelValue.date || '');
+
+// Computed property to handle the location field for AutocompleteInput
+const location = computed({
+    get() {
+        const loc = props.modelValue.location;
+        if (typeof loc === 'object' && loc !== null && loc.city) {
+            // Format object to string for display
+            return `${loc.city}${loc.address ? ', ' + loc.address : ''}`;
+        }
+        return loc || ''; // Return string as is
+    },
+    set(newValue) {
+        if (isUpdatingFromParent) return;
+        // This is called when user types in the input.
+        // We emit the string value up. The selection of an object is handled by onTerminalSelected.
+        emit('update:modelValue', {
+            ...props.modelValue,
+            location: newValue,
+        });
+    }
+});
 
 // Filter terminals based on the selected city
 const terminalOptions = computed(() => {
@@ -60,25 +92,65 @@ const terminalOptions = computed(() => {
     return props.offices.filter(office => office.city === props.city);
 });
 
+// Handler for when a user selects an office from Autocomplete
+function onTerminalSelected(office) {
+    if (isUpdatingFromParent) return;
+    // When a specific item is selected, we emit the full object.
+    emit('update:modelValue', {
+        ...props.modelValue,
+        location: office, // emit the object
+    });
+}
+
+// Handler for reset button in AutocompleteInput
+function onTerminalReset() {
+    if (isUpdatingFromParent) return;
+    emit('update:modelValue', {
+        ...props.modelValue,
+        location: '',
+    });
+}
+
+// Handler for date change from DatePickerVue
+function onDateChange(newDate) {
+    if (isUpdatingFromParent) return;
+    emit('update:modelValue', {
+        ...props.modelValue,
+        date: newDate,
+    });
+}
+
 // When city changes, reset location
 watch(() => props.city, () => {
-    location.value = '';
+    if (isUpdatingFromParent) return;
+    emit('update:modelValue', {
+        ...props.modelValue,
+        location: '', // Reset location when city changes
+    });
 });
 
-// Watch for local changes and emit update to parent
-watch([deliveryMode, location, date], () => {
+// Watch for local changes (mode and date) and emit update to parent
+watch([deliveryMode, date], () => {
+    if (isUpdatingFromParent) return;
     emit('update:modelValue', {
+        ...props.modelValue,
         deliveryMode: deliveryMode.value,
-        location: location.value,
         date: date.value,
     });
 });
 
 // Watch for parent changes and update local state
 watch(() => props.modelValue, (newValue) => {
-    deliveryMode.value = newValue.deliveryMode;
-    location.value = newValue.location;
-    date.value = newValue.date;
-}, { deep: true });
+    if (isUpdatingFromParent) return;
 
+    isUpdatingFromParent = true;
+
+    deliveryMode.value = newValue.deliveryMode || 'terminal';
+    date.value = newValue.date || '';
+
+    // Используем setTimeout, чтобы убедиться, что все обновления завершены
+    setTimeout(() => {
+        isUpdatingFromParent = false;
+    }, 0);
+}, { deep: true });
 </script>

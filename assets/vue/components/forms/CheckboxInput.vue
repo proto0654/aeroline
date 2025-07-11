@@ -1,15 +1,8 @@
 <template>
   <div class="flex items-start relative">
     <div class="flex items-center h-6 mt-1">
-      <input
-        :id="inputId"
-        type="checkbox"
-        v-model="inputValue"
-        :disabled="disabled"
-        :required="required"
-        v-bind="$attrs"
-        @blur="handleBlur"
-      />
+      <input :id="inputId" type="checkbox" v-model="inputValue" :disabled="disabled" :required="required"
+        v-bind="$attrs" @blur="handleBlur" />
     </div>
     <label :for="inputId" class="ml-2 select-none">
       <slot>{{ label }}</slot>
@@ -78,4 +71,4 @@ const id = inputId;
 
 <style scoped>
 /* Можно добавить стили для кастомного чекбокса */
-</style> 
+</style>

@@ -1,9 +1,11 @@
 # Project Brief: Aeroline
 
 ## Project Overview
+
 Aeroline is a modern delivery service website, built with up-to-date web technologies and a unified UI system. The project uses Vite 4 and is actively integrating Vue 3 for dynamic sections and UI components, including a new global modal system. Future integration with Bitrix CMS is kept in mind. The project is progressively refactoring existing native JavaScript functionalities to Vue components.
 
 ## Core Requirements
+
 - Modern, responsive design using DaisyUI components
 - Optimized performance
 - Accessibility for all users
@@ -14,6 +16,7 @@ Aeroline is a modern delivery service website, built with up-to-date web technol
 - Consistent UI components using DaisyUI
 
 ## Technical Stack
+
 - Vite as a build tool
 - Tailwind CSS for styling
 - DaisyUI for UI components
@@ -25,6 +28,7 @@ Aeroline is a modern delivery service website, built with up-to-date web technol
 - vue3-easy-data-table for table functionality (integrated with Vue 3 components)
 
 ## Project Goals
+
 1. Provide a user-friendly interface for delivery service clients
 2. Ensure fast loading and responsiveness
 3. Implement all essential delivery service features
@@ -36,6 +40,7 @@ Aeroline is a modern delivery service website, built with up-to-date web technol
 9. Implement unified and consistent table UI/UX using a reusable Vue component.
 
 ## Scope
+
 - Main page
 - News page
 - Services page
@@ -55,10 +60,23 @@ Aeroline is a modern delivery service website, built with up-to-date web technol
 
 **Goal:** To refactor the frontend build process using Vite to achieve a "transparent" output in the `docs` folder for deployment on GitHub Pages. The primary objective is to preserve the original `assets` folder structure and file naming (with added hashes for cache busting) as much as possible, minimizing code changes in the application itself. Concurrently, the project aims to modernize the UI and dynamic functionalities by transitioning to Vue 3, Pinia, and DaisyUI, implementing a unified global modal system, and progressively refactoring legacy JavaScript code.
 
-**Current Focus:** Configuring Vite's asset handling (`rollupOptions.output.assetFileNames`) to automatically replicate the source `assets` folder structure in the output `docs/assets` for all asset types (images, fonts, SVG, CSS processed by Vite, etc.) and ensure filenames include hashes. Major focus is on migrating existing modal windows and forms to the new unified Vue 3/Pinia/DaisyUI modal system and refactoring related native JS. 
+**Current Focus:** Configuring Vite's asset handling (`rollupOptions.output.assetFileNames`) to automatically replicate the source `assets` folder structure in the output `docs/assets` for all asset types (images, fonts, SVG, CSS processed by Vite, etc.) and ensure filenames include hashes. Major focus is on migrating existing modal windows and forms to the new unified Vue 3/Pinia/DaisyUI modal system and refactoring related native JS.
 
-**Status:** In Progress. We have configured Vite entry points, disabled minification/sourcemaps (as per user request for transparency), and removed the old JS build script. The unified global modal system is largely implemented and integrated across main, profile, and senders/receivers pages. Remaining work involves further refactoring of other modals, forms, and dynamic elements to the new Vue/DaisyUI pattern, as well as refining the asset naming strategy in `vite.config.js`. 
+**Status:** In Progress. We have configured Vite entry points, disabled minification/sourcemaps (as per user request for transparency), and removed the old JS build script. The unified global modal system is largely implemented and integrated across main, profile, and senders/receivers pages. Remaining work involves further refactoring of other modals, forms, and dynamic elements to the new Vue/DaisyUI pattern, as well as refining the asset naming strategy in `vite.config.js`.
 
 The project has successfully refactored tables on Senders/Receivers and Service Acts pages to use a universal Vue 3 component (`EasyDataTableWrapper.vue`) based on `vue3-easy-data-table`, replacing the old List.js implementation. The styling of the active pagination button color and spacing have been successfully implemented using the `theme-color` prop and CSS variables.
 
-**Note:** All future entries and modifications to this memory bank should be written in English. 
+**Current Focus (дополнение):**
+
+- The calculator page now uses a fully Vue 3-based paradigm for all forms, with city and terminal selection implemented via reusable AutocompleteInput components.
+- All selection logic is ID-based: GET parameters, internal state, and UI sync are performed using unique office IDs, not string matching.
+- The DeliveryPointForm and DirectionForm components are decoupled: city selection only filters terminals, and terminal selection is always explicit and resettable.
+- The AutocompleteInput component supports both city-only and full office selection modes, with a reset button and robust state sync.
+
+**Status (дополнение):**
+
+- The calculator's direction and terminal selection logic is now fully reactive, robust to GET parameter changes, and supports both direct and programmatic selection by office ID.
+- All forms use a strict pattern: parent passes objects, AutocompleteInput works with strings for display, and emits objects on selection.
+- The reset button in AutocompleteInput is always available, and clearing a terminal does not reset the city filter.
+
+**Note:** All future entries and modifications to this memory bank should be written in English.

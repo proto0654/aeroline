@@ -1,79 +1,390 @@
 {
+  "calculationRules": {
+    "distanceCoefficient": 10,
+    "description": "Коэффициент стоимости за километр расстояния",
+    "deliveryTimeCalculation": {
+      "baseDeliveryDays": 1,
+      "distancePerDay": 500,
+      "description": "Базовое время доставки: 1 день + 1 день на каждые 500км"
+    }
+  },
+  "defaultValues": {
+    "description": "Значения по умолчанию для калькулятора когда пользователь не заполнил все поля",
+    "cargo": {
+      "package": {
+        "length": "30",
+        "width": "20",
+        "height": "10",
+        "weight": "5",
+        "description": "Посылка",
+        "declaredValue": 5000,
+        "packaging": "box-s",
+        "selfMarking": false,
+        "dangerousGoods": false,
+        "tempControl": false,
+        "quantity": 1
+      }
+    },
+    "delivery": {
+      "mode": "terminal",
+      "advanceBookingDays": 0
+    }
+  },
   "tariffs": [
+    {
+      "id": "cargo-basic",
+      "name": "Cargo-Базовый",
+      "description": "Стандартная доставка без ограничений",
+      "baseRatePerKg": 18.0,
+      "baseRatePerM3": 4000.0,
+      "minCost": 600.0,
+      "priority": 1,
+      "deliveryTime": {
+        "baseDays": 3,
+        "additionalDaysPerKm": 0.004,
+        "maxDays": 10,
+        "description": "3-10 дней в зависимости от расстояния"
+      },
+      "availability": {
+        "minVolume": 0,
+        "maxVolume": null,
+        "minWeight": 0,
+        "maxWeight": null,
+        "minDeclaredValue": 0,
+        "maxDeclaredValue": null,
+        "allowedRegions": [],
+        "excludedRegions": [],
+        "requiredServices": [],
+        "maxDistance": null,
+        "minDistance": 0,
+        "minAdvanceBookingDays": 0,
+        "maxAdvanceBookingDays": 30
+      },
+      "coefficients": {
+        "dangerousGoodsMultiplier": 1.4,
+        "temperatureControlMultiplier": 1.25,
+        "fromAddressMultiplier": 1.15,
+        "toAddressMultiplier": 1.15,
+        "multiplePackagesDiscount": {
+          "value": 0.98,
+          "threshold": 3
+        }
+      },
+      "services": {
+        "logisticProcessing": { "enabled": true, "cost": 800.0 },
+        "documentReturn": { "enabled": true, "cost": 250.0 },
+        "statusInfo": { "enabled": true, "cost": 30.0 },
+        "insurance": { "enabled": true, "rate": 0.009, "min": 90.0 },
+        "selfMarking": { "enabled": true, "cost": -40.0 }
+      }
+    },
     {
       "id": "cargo-region",
       "name": "Cargo-Регион",
+      "description": "Доставка по региону",
       "baseRatePerKg": 15.5,
       "baseRatePerM3": 3500.0,
       "minCost": 500.0,
-      "description": "Доставка по региону"
+      "priority": 2,
+      "deliveryTime": {
+        "baseDays": 2,
+        "additionalDaysPerKm": 0.003,
+        "maxDays": 8,
+        "description": "2-8 дней в зависимости от расстояния"
+      },
+      "availability": {
+        "minVolume": 0,
+        "maxVolume": null,
+        "minWeight": 0,
+        "maxWeight": null,
+        "minDeclaredValue": 0,
+        "maxDeclaredValue": null,
+        "allowedRegions": [],
+        "excludedRegions": [],
+        "requiredServices": [],
+        "maxDistance": 1500,
+        "minDistance": 0,
+        "minAdvanceBookingDays": 0,
+        "maxAdvanceBookingDays": 21
+      },
+      "coefficients": {
+        "dangerousGoodsMultiplier": 1.5,
+        "temperatureControlMultiplier": 1.3,
+        "fromAddressMultiplier": 1.2,
+        "toAddressMultiplier": 1.2,
+        "multiplePackagesDiscount": {
+          "value": 0.95,
+          "threshold": 5
+        }
+      },
+      "services": {
+        "logisticProcessing": { "enabled": true, "cost": 980.0 },
+        "documentReturn": { "enabled": true, "cost": 300.0 },
+        "statusInfo": { "enabled": true, "cost": 50.0 },
+        "insurance": { "enabled": true, "rate": 0.01, "min": 100.0 },
+        "selfMarking": { "enabled": true, "cost": -50.0 }
+      }
     },
     {
       "id": "cargo-express",
       "name": "Cargo-Экспресс",
+      "description": "Ускоренная доставка за 1-2 дня",
       "baseRatePerKg": 25.0,
       "baseRatePerM3": 6000.0,
       "minCost": 1000.0,
-      "description": "Ускоренная доставка"
+      "priority": 3,
+      "deliveryTime": {
+        "baseDays": 1,
+        "additionalDaysPerKm": 0.001,
+        "maxDays": 2,
+        "description": "1-2 дня гарантированно"
+      },
+      "availability": {
+        "minVolume": 0,
+        "maxVolume": 2.0,
+        "minWeight": 0,
+        "maxWeight": 50,
+        "minDeclaredValue": 1000,
+        "maxDeclaredValue": null,
+        "allowedRegions": ["Москва", "Санкт-Петербург", "Екатеринбург"],
+        "excludedRegions": [],
+        "requiredServices": ["insurance"],
+        "maxDistance": 3000,
+        "minDistance": 0,
+        "minAdvanceBookingDays": 0,
+        "maxAdvanceBookingDays": 7
+      },
+      "coefficients": {
+        "dangerousGoodsMultiplier": 2.0,
+        "temperatureControlMultiplier": 1.5,
+        "fromAddressMultiplier": 1.1,
+        "toAddressMultiplier": 1.1,
+        "multiplePackagesDiscount": {
+          "value": 0.97,
+          "threshold": 3
+        }
+      },
+      "services": {
+        "logisticProcessing": { "enabled": true, "cost": 1200.0 },
+        "documentReturn": { "enabled": true, "cost": 200.0 },
+        "statusInfo": { "enabled": true, "cost": 0.0 },
+        "insurance": { "enabled": true, "rate": 0.015, "min": 150.0 },
+        "selfMarking": { "enabled": false, "cost": 0.0 }
+      }
+    },
+    {
+      "id": "cargo-economy",
+      "name": "Cargo-Эконом",
+      "description": "Экономичная доставка большими партиями",
+      "baseRatePerKg": 12.0,
+      "baseRatePerM3": 2800.0,
+      "minCost": 300.0,
+      "priority": 4,
+      "deliveryTime": {
+        "baseDays": 5,
+        "additionalDaysPerKm": 0.006,
+        "maxDays": 15,
+        "description": "5-15 дней, медленная доставка"
+      },
+      "availability": {
+        "minVolume": 0.5,
+        "maxVolume": null,
+        "minWeight": 5,
+        "maxWeight": null,
+        "minDeclaredValue": 0,
+        "maxDeclaredValue": 50000,
+        "allowedRegions": [],
+        "excludedRegions": [],
+        "requiredServices": [],
+        "maxDistance": null,
+        "minDistance": 100,
+        "minAdvanceBookingDays": 1,
+        "maxAdvanceBookingDays": 45
+      },
+      "coefficients": {
+        "dangerousGoodsMultiplier": 1.3,
+        "temperatureControlMultiplier": 1.2,
+        "fromAddressMultiplier": 1.3,
+        "toAddressMultiplier": 1.3,
+        "multiplePackagesDiscount": {
+          "value": 0.9,
+          "threshold": 10
+        }
+      },
+      "services": {
+        "logisticProcessing": { "enabled": true, "cost": 500.0 },
+        "documentReturn": { "enabled": true, "cost": 400.0 },
+        "statusInfo": { "enabled": false, "cost": 0.0 },
+        "insurance": { "enabled": true, "rate": 0.008, "min": 80.0 },
+        "selfMarking": { "enabled": true, "cost": -80.0 }
+      }
+    },
+    {
+      "id": "cargo-premium",
+      "name": "Cargo-Премиум",
+      "description": "Премиальная доставка с повышенным сервисом",
+      "baseRatePerKg": 35.0,
+      "baseRatePerM3": 8000.0,
+      "minCost": 2000.0,
+      "priority": 5,
+      "deliveryTime": {
+        "baseDays": 2,
+        "additionalDaysPerKm": 0.002,
+        "maxDays": 5,
+        "description": "2-5 дней с премиум сервисом"
+      },
+      "availability": {
+        "minVolume": 0,
+        "maxVolume": 1.0,
+        "minWeight": 0,
+        "maxWeight": 30,
+        "minDeclaredValue": 5000,
+        "maxDeclaredValue": null,
+        "allowedRegions": [],
+        "excludedRegions": [],
+        "requiredServices": ["insurance", "statusInfo"],
+        "maxDistance": 500,
+        "minDistance": 0,
+        "minAdvanceBookingDays": 0,
+        "maxAdvanceBookingDays": 14
+      },
+      "coefficients": {
+        "dangerousGoodsMultiplier": 1.8,
+        "temperatureControlMultiplier": 1.4,
+        "fromAddressMultiplier": 1.0,
+        "toAddressMultiplier": 1.0,
+        "multiplePackagesDiscount": {
+          "value": 1.0,
+          "threshold": 999
+        }
+      },
+      "services": {
+        "logisticProcessing": { "enabled": true, "cost": 1500.0 },
+        "documentReturn": { "enabled": true, "cost": 0.0 },
+        "statusInfo": { "enabled": true, "cost": 0.0 },
+        "insurance": { "enabled": true, "rate": 0.02, "min": 200.0 },
+        "selfMarking": { "enabled": false, "cost": 0.0 }
+      }
+    },
+    {
+      "id": "cargo-urgent",
+      "name": "Cargo-Срочный",
+      "description": "Срочная доставка в день заказа или на следующий день",
+      "baseRatePerKg": 50.0,
+      "baseRatePerM3": 12000.0,
+      "minCost": 3000.0,
+      "priority": 6,
+      "deliveryTime": {
+        "baseDays": 0,
+        "additionalDaysPerKm": 0.0005,
+        "maxDays": 1,
+        "description": "В день заказа или на следующий день"
+      },
+      "availability": {
+        "minVolume": 0,
+        "maxVolume": 0.5,
+        "minWeight": 0,
+        "maxWeight": 20,
+        "minDeclaredValue": 1000,
+        "maxDeclaredValue": 100000,
+        "allowedRegions": [
+          "Москва",
+          "Санкт-Петербург",
+          "Екатеринбург",
+          "Новосибирск",
+          "Казань"
+        ],
+        "excludedRegions": [],
+        "requiredServices": ["insurance", "statusInfo"],
+        "maxDistance": 300,
+        "minDistance": 0,
+        "minAdvanceBookingDays": 0,
+        "maxAdvanceBookingDays": 1
+      },
+      "coefficients": {
+        "dangerousGoodsMultiplier": 3.0,
+        "temperatureControlMultiplier": 2.0,
+        "fromAddressMultiplier": 1.0,
+        "toAddressMultiplier": 1.0,
+        "multiplePackagesDiscount": {
+          "value": 1.0,
+          "threshold": 999
+        },
+        "urgentMultiplier": 2.5
+      },
+      "services": {
+        "logisticProcessing": { "enabled": true, "cost": 2000.0 },
+        "documentReturn": { "enabled": true, "cost": 0.0 },
+        "statusInfo": { "enabled": true, "cost": 0.0 },
+        "insurance": { "enabled": true, "rate": 0.025, "min": 300.0 },
+        "selfMarking": { "enabled": false, "cost": 0.0 },
+        "urgentHandling": { "enabled": true, "cost": 1500.0 }
+      }
     }
   ],
-  "services": {
+  "defaultServices": {
     "logisticProcessing": {
       "name": "Логистическая обработка груза",
-      "cost": 980.0
+      "cost": 980.0,
+      "enabled": true,
+      "description": "Обязательная услуга обработки груза на терминале"
     },
     "documentReturn": {
       "name": "Возврат документов",
-      "cost": 300.0
+      "cost": 300.0,
+      "enabled": true,
+      "description": "Возврат документов отправителю"
     },
     "statusInfo": {
       "name": "Услуга по информированию о статусе груза",
-      "cost": 50.0
+      "cost": 50.0,
+      "enabled": true,
+      "description": "SMS/Email уведомления о статусе"
     },
     "insurance": {
       "name": "Страховой сбор",
       "rate": 0.01,
-      "min": 100.0
+      "min": 100.0,
+      "enabled": true,
+      "description": "Страхование груза от повреждений"
     },
-    "cityDelivery": {
-      "name": "Доставка по городу",
-      "cost": 0.0
-    },
-    "eveningDelivery": {
-      "name": "Доставка в вечернее время",
-      "cost": 0.0
-    },
-    "timedDelivery": {
-      "name": "Доставка ко времени",
-      "cost": 0.0
-    },
-    "flight": {
-      "name": "Перелёт",
-      "cost": 48300.0
-    }
-  },
-  "coefficients": {
-    "dangerousGoodsMultiplier": {
-      "name": "Наценка за опасный груз",
-      "value": 1.5
-    },
-    "temperatureControlMultiplier": {
-      "name": "Наценка за температурный режим",
-      "value": 1.3
-    },
-    "fromAddressMultiplier": {
-      "name": "Забор от адреса",
-      "value": 1.2
-    },
-    "toAddressMultiplier": {
-      "name": "Доставка до адреса",
-      "value": 1.2
+    "selfMarking": {
+      "name": "Самостоятельная маркировка груза",
+      "cost": -50.0,
+      "enabled": true,
+      "description": "Скидка за самостоятельную маркировку"
     }
   },
   "packaging": [
-    { "id": "box-s", "name": "Коробка S (до 5кг, 30x20x10см)", "cost": 50 },
-    { "id": "box-m", "name": "Коробка M (до 15кг, 50x30x20см)", "cost": 100 },
-    { "id": "box-l", "name": "Коробка L (до 30кг, 70x40x30см)", "cost": 200 },
-    { "id": "pallet", "name": "Паллет (до 500кг, 120x80x100см)", "cost": 500 }
-  ]
+    {
+      "id": "box-s",
+      "name": "Коробка S (до 5кг, 30×20×10см)",
+      "cost": 50,
+      "maxWeight": 5
+    },
+    {
+      "id": "box-m",
+      "name": "Коробка M (до 15кг, 50×30×20см)",
+      "cost": 100,
+      "maxWeight": 15
+    },
+    {
+      "id": "box-l",
+      "name": "Коробка L (до 30кг, 70×40×30см)",
+      "cost": 200,
+      "maxWeight": 30
+    },
+    {
+      "id": "pallet",
+      "name": "Паллет (до 500кг, 120×80×100см)",
+      "cost": 500,
+      "maxWeight": 500
+    },
+    { "id": "none", "name": "Без упаковки", "cost": 0, "maxWeight": 999999 }
+  ],
+  "formulas": {
+    "baseCostCalculation": "max(weight * ratePerKg, volume * ratePerM3, minCost)",
+    "totalCostCalculation": "baseCost * coefficients + additionalServices + distanceCost",
+    "description": "Формулы расчета можно изменять для настройки логики"
+  }
 }

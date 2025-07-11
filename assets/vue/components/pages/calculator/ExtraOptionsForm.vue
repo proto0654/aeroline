@@ -20,18 +20,34 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
+// Флаг для предотвращения циклических обновлений
+let isUpdatingFromParent = false;
+
 const requiresAccompanyingDocs = ref(props.modelValue.requiresAccompanyingDocs || false);
 const returnDocsToSender = ref(props.modelValue.returnDocsToSender || false);
 
+// Watch for local changes and emit update to parent
 watch([requiresAccompanyingDocs, returnDocsToSender], () => {
+    if (isUpdatingFromParent) return;
+    
     emit('update:modelValue', {
         requiresAccompanyingDocs: requiresAccompanyingDocs.value,
         returnDocsToSender: returnDocsToSender.value,
     });
 });
 
+// Watch for parent changes and update local state
 watch(() => props.modelValue, (newValue) => {
-    requiresAccompanyingDocs.value = newValue.requiresAccompanyingDocs;
-    returnDocsToSender.value = newValue.returnDocsToSender;
+    if (isUpdatingFromParent) return;
+    
+    isUpdatingFromParent = true;
+    
+    requiresAccompanyingDocs.value = newValue.requiresAccompanyingDocs || false;
+    returnDocsToSender.value = newValue.returnDocsToSender || false;
+    
+    // Используем setTimeout, чтобы убедиться, что все обновления завершены
+    setTimeout(() => {
+        isUpdatingFromParent = false;
+    }, 0);
 }, { deep: true });
 </script>

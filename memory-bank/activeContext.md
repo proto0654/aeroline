@@ -5,6 +5,9 @@
 - ✅ COMPLETED: Implemented a unified global modal system using Vue 3, Pinia, and DaisyUI.
 - ✅ COMPLETED: All major modals (login, email submission, sender/receiver creation/editing/deletion) migrated to the new unified Vue 3 system.
 - ✅ COMPLETED: All import errors and modal functionalities fixed, including "Modal was cancelled" console messages.
+- ✅ COMPLETED: **Calculator Page Reactive Implementation** - Removed manual calculation button and implemented real-time reactive cost calculations with proper handling of circular update dependencies.
+- ✅ COMPLETED: **Advanced Tariff System Implementation** - Implemented sophisticated tariff system with 5 different tariffs, automatic sorting by cost-effectiveness, and savings calculation with recommendation badges.
+- ✅ COMPLETED: **Vue Date Picker Integration in Calculator** - Created `DatePickerVue.vue` component for single date selection and integrated it into `DeliveryPointForm.vue` in calculator, replacing standard HTML date inputs with Vue components.
 - All main and sub-menu items created and linked.
 - Mobile menu fully compliant with design: two levels, toggles, animated arrow.
 - Stub pages implemented for all menu items.
@@ -26,6 +29,35 @@
 
 ## Recent Changes (Latest Session)
 
+- ✅ COMPLETED: **Vue Date Picker Integration in Calculator**
+  - Created new `DatePickerVue.vue` component for single date selection using `vue-datepicker-next` library
+  - Integrated the component into `DeliveryPointForm.vue` in calculator, replacing standard HTML date inputs
+  - Added proper form control wrapper with DaisyUI/Tailwind styling
+  - Maintained compatibility with existing calculator reactive data flow and form validation
+  - Component supports props: `initialDate`, `placeholder`, `closeOnSelect`, `minDate`, `maxDate`
+  - Component emits events: `update:date`, `date-select`, `clear-selection`
+  - Component exposes `clearSelection()` method for external control
+- ✅ COMPLETED: **Advanced Tariff System Implementation**
+  - Added comprehensive tariff system with 5 different tariffs (Базовый, Регион, Эконом, Экспресс, Премиум)
+  - Implemented automatic tariff availability checking based on weight, volume, distance, declared value, and regional restrictions
+  - Added cost calculation for all available tariffs with automatic sorting by cost-effectiveness
+  - Implemented savings calculation showing economy compared to the most expensive available tariff
+  - Added recommendation badges and visual indicators for the most cost-effective tariff
+  - Created detailed tariff documentation in `memory-bank/tariff-documentation.md` with testing scenarios
+  - Updated `CalculatorPage.vue` with `calculateTariffCost()` helper function and enhanced tariff selection logic
+  - Updated `CalculationResult.vue` to display tariffs with savings information and recommendation badges
+  - Updated `calculator-data.json` to include new basic tariff and reordered priorities
+- ✅ COMPLETED: **Calculator Page Reactive Updates Implementation**
+  - Removed VeeValidate Form wrapper and manual "Calculate" button from calculator page
+  - Implemented reactive calculations using computed properties that automatically update when form data changes
+  - Fixed recursive update errors in all calculator form components:
+    - `CargoParamsForm.vue` - Added update prevention flags to avoid circular watchers
+    - `DeliveryPointForm.vue` - Added update prevention flags to avoid circular watchers
+    - `ExtraOptionsForm.vue` - Added update prevention flags to avoid circular watchers
+    - `CargoPlacesTabs.vue` - Added update prevention flags to avoid circular watchers
+    - `CargoPlaceForm.vue` - Added update prevention flags to avoid circular watchers
+  - Updated `CalculationResult.vue` to better handle empty/invalid states with helpful user guidance
+  - Calculator now provides real-time cost calculations as users input data without manual submission
 - ✅ FIXED: Corrected import paths in `assets/js/modules/home-page.js`.
 - ✅ FIXED: Removed local Pinia initialization in `assets/js/modules/home-page.js` to use global instance.
 - ✅ FIXED: Fixed prop name passed to `NewsDetailModal.vue` from `newsItem` to `news` in `HomePageNews.vue`.

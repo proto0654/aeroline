@@ -18,6 +18,7 @@
 - `vite`
 - `@vitejs/plugin-vue`
 - `vite-plugin-handlebars`
+- `vite-plugin-vue-devtools`
 - `tailwindcss`
 - `autoprefixer`
 - `postcss`
@@ -77,6 +78,7 @@
 - VeeValidate for form validation in Vue components.
 - **Test Data**: Currently using local JSON files from `assets/data/` directory for MVP features (e.g., `news.json`, `service-acts.json`).
 - **Date Range Selection**: Using `vue-datepicker-next` library for date range selection. The component `assets/vue/components/DateRangePickerVue.vue` wraps this library to provide a standardized interface. It accepts an `initialRange` prop (`[Date | null, Date | null]`) and emits an `update:range` event (`{ start: Date | null, end: Date | null }`) when selection changes or is cleared. A page-specific wrapper like `assets/vue/components/pages/news/DateRangeFilter.vue` can be used to pass individual start/end dates and rename the event if needed.
+- **Single Date Selection**: Using `vue-datepicker-next` library for single date selection. The component `assets/vue/components/DatePickerVue.vue` wraps this library to provide a standardized interface for single date selection. It accepts an `initialDate` prop (`Date | String | null`) and emits an `update:date` event (`Date | null`) when selection changes or is cleared.
 
 ## Development Setup
 
@@ -245,5 +247,82 @@ Base styles are provided by `vue-datepicker-next/index.css`. Further customizati
 
 **VeeValidate Integration**:
 When used in forms, the component's `v-model:range` can be bound to a VeeValidate field (`useField`) to enable date range validation. A custom Yup schema can be used to ensure both `start` and `end` dates are selected.
+
+### DatePickerVue Component (`assets/vue/components/DatePickerVue.vue`)
+
+**Description**:
+A reusable Vue 3 component that wraps the `vue-datepicker-next` library to provide a standardized single date selection interface. It is designed to ensure consistency across the application and is integrated with VeeValidate for form validation.
+
+**Usage**:
+This component can be used directly in forms or other components that require single date selection.
+
+**Props**:
+
+- `initialDate` (Type: `Date | String | null`, Default: `null`):
+  The initial date to display in the picker. Can be a Date object, date string, or null.
+- `placeholder` (Type: `String`, Default: `'Выберите дату'`):
+  The text displayed in the input field when no date is selected.
+- `closeOnSelect` (Type: `Boolean`, Default: `true`):
+  Whether to close the picker popup after selecting a date.
+- `minDate` (Type: `Date | String | null`, Default: `null`):
+  The minimum selectable date.
+- `maxDate` (Type: `Date | String | null`, Default: `null`):
+  The maximum selectable date.
+
+**Events**:
+
+- `update:date` (Payload: `Date | null`):
+  Emitted when the selected date changes or is cleared. The payload contains a Date object or null if the selection is cleared.
+  This event supports `v-model:date` for two-way binding.
+- `date-select` (Payload: `Date`):
+  Emitted when a date is selected.
+- `clear-selection`:
+  Emitted when the date selection is cleared.
+
+**Methods (exposed via `defineExpose`)**:
+
+- `clearSelection()`:
+  Resets the picker's selected date to null. This method can be called from the parent component using a `ref` on `DatePickerVue`.
+
+**Example Usage in a Parent Component (e.g., `DeliveryPointForm.vue`)**:
+
+```vue
+<template>
+  <div class="form-control w-full">
+    <label class="label">
+      <span class="label-text text-brand-gray font-medium">Дата</span>
+    </label>
+    <DatePickerVue
+      :name="`${namePrefix}_date`"
+      :initial-date="date"
+      :disabled="!city"
+      placeholder="Выберите дату"
+      @update:date="onDateChange"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import DatePickerVue from "../../DatePickerVue.vue";
+
+const date = ref("");
+const onDateChange = (newDate) => {
+  date.value = newDate;
+};
+</script>
+```
+
+**Dependencies**:
+
+- `vue-datepicker-next` (library)
+- `vue-datepicker-next/index.css` (base styles)
+- `vue-datepicker-next/locale/ru.es` (Russian localization)
+
+**Styling**:
+Base styles are provided by `vue-datepicker-next/index.css`. Further customization can be done via global CSS or scoped styles within parent components to match DaisyUI/Tailwind.
+
+**VeeValidate Integration**:
+When used in forms, the component's `v-model:date` can be bound to a VeeValidate field (`useField`) to enable date validation. A custom Yup schema can be used to ensure the date is selected and valid.
 
 **Note:** All future entries and modifications to this memory bank should be written in English.
