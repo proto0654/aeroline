@@ -1661,7 +1661,7 @@ const _sfc_main$1 = {
     };
   }
 };
-const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-f7e287a7"]]);
+const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-9b1af45a"]]);
 const _hoisted_1 = { class: "flex flex-col flex-1 lg:flex-row gap-8 min-w-0" };
 const _hoisted_2 = { class: "flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0" };
 const _hoisted_3 = { class: "bg-brand-light p-5 rounded-lg" };
@@ -2337,8 +2337,8 @@ const _sfc_main = {
     async function fetchData() {
       try {
         const [officesRes, configRes] = await Promise.all([
-          fetch("/assets/data/contacts.json"),
-          fetch("/assets/data/calculator-data.json")
+          fetch("./assets/data/contacts.json"),
+          fetch("./assets/data/calculator-data.json")
         ]);
         const officesData = await officesRes.json();
         offices.value = officesData.offices || [];

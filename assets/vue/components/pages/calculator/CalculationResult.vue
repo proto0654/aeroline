@@ -131,7 +131,7 @@
                                 <li v-if="tariff.availability.minVolume">Мин. объем: {{ tariff.availability.minVolume }}
                                     м³</li>
                                 <li v-if="tariff.availability.maxVolume">Макс. объем: {{ tariff.availability.maxVolume
-                                }} м³</li>
+                                    }} м³</li>
                                 <li v-if="tariff.availability.minDeclaredValue">Мин. оценочная стоимость: {{
                                     tariff.availability.minDeclaredValue }} ₽</li>
                                 <li v-if="tariff.availability.maxDeclaredValue">Макс. оценочная стоимость: {{

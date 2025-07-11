@@ -28,10 +28,10 @@
 
 /* Глобальные стили для оверрайда библиотеки */
 
-.animate-fade-in[data-v-f7e287a7] {
-    animation: fadeIn-f7e287a7 0.2s ease-in-out;
+.animate-fade-in[data-v-9b1af45a] {
+    animation: fadeIn-9b1af45a 0.2s ease-in-out;
 }
-@keyframes fadeIn-f7e287a7 {
+@keyframes fadeIn-9b1af45a {
 from {
         opacity: 0;
         transform: translateY(-5px);
