@@ -84,7 +84,7 @@ const _sfc_main$1 = {
     };
     const handleCalculate = () => {
       if (fromOffice.value && toOffice.value) {
-        window.location.href = `/calculator.html?from=${encodeURIComponent(fromOffice.value.id)}&to=${encodeURIComponent(toOffice.value.id)}`;
+        window.location.href = `./calculator.html?from=${encodeURIComponent(fromOffice.value.id)}&to=${encodeURIComponent(toOffice.value.id)}`;
       } else {
         alert("Пожалуйста, выберите корректные пункты отправки и назначения");
         emit("calculate", { from: from.value, to: to.value });
