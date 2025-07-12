@@ -1096,7 +1096,7 @@ const _hoisted_17 = {
 const _hoisted_18 = { class: "text-lg font-bold text-gray-900" };
 const _hoisted_19 = {
   key: 0,
-  class: "mt-4"
+  class: "my-4"
 };
 const _hoisted_20 = {
   key: 0,
@@ -1126,12 +1126,12 @@ const _hoisted_30 = {
   class: "space-y-4 mb-6"
 };
 const _hoisted_31 = ["onClick"];
-const _hoisted_32 = { class: "flex justify-between items-start mb-2" };
+const _hoisted_32 = { class: "flex justify-between items-start mb-2 relative" };
 const _hoisted_33 = { class: "flex-1" };
 const _hoisted_34 = { class: "font-semibold text-gray-800 flex items-center gap-2" };
 const _hoisted_35 = {
   key: 0,
-  class: "bg-green-500 text-white text-xs px-2 py-1 rounded-full"
+  class: "absolute top-0 right-0 left-auto -translate-y-7 translate-x-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
 };
 const _hoisted_36 = { class: "text-sm text-gray-600 mb-1" };
 const _hoisted_37 = { class: "text-xs text-gray-500 mb-1" };
@@ -1166,49 +1166,45 @@ const _hoisted_52 = {
   class: "text-xl font-bold text-gray-400"
 };
 const _hoisted_53 = {
-  key: 2,
-  class: "text-sm text-green-600"
-};
-const _hoisted_54 = {
   key: 0,
   class: "mt-3 pt-3 border-t border-gray-200"
 };
-const _hoisted_55 = ["onClick"];
-const _hoisted_56 = {
+const _hoisted_54 = ["onClick"];
+const _hoisted_55 = {
   key: 0,
   class: "mt-3 space-y-1 text-sm animate-fade-in"
 };
-const _hoisted_57 = { key: 0 };
-const _hoisted_58 = {
+const _hoisted_56 = { key: 0 };
+const _hoisted_57 = {
   key: 0,
   class: "border-t pt-2 mt-2"
 };
-const _hoisted_59 = { class: "flex justify-between" };
-const _hoisted_60 = { class: "font-medium" };
-const _hoisted_61 = {
+const _hoisted_58 = { class: "flex justify-between" };
+const _hoisted_59 = { class: "font-medium" };
+const _hoisted_60 = {
   key: 0,
   class: "flex justify-between"
 };
-const _hoisted_62 = { class: "font-medium" };
-const _hoisted_63 = {
+const _hoisted_61 = { class: "font-medium" };
+const _hoisted_62 = {
   key: 3,
   class: "border-t pt-4"
 };
-const _hoisted_64 = {
+const _hoisted_63 = {
   key: 0,
   class: "text-sm space-y-1 mb-3"
 };
-const _hoisted_65 = { class: "flex justify-between text-gray-600" };
-const _hoisted_66 = {
+const _hoisted_64 = { class: "flex justify-between text-gray-600" };
+const _hoisted_65 = {
   key: 0,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_67 = {
+const _hoisted_66 = {
   key: 1,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_68 = { class: "flex justify-between items-center font-bold text-lg border-t pt-3" };
-const _hoisted_69 = { class: "text-xl" };
+const _hoisted_67 = { class: "flex justify-between items-center font-bold text-lg border-t pt-3" };
+const _hoisted_68 = { class: "text-xl" };
 const _sfc_main$1 = {
   __name: "CalculationResult",
   props: {
@@ -1491,11 +1487,11 @@ const _sfc_main$1 = {
           displayMessages.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_19, [
             createBaseVNode("button", {
               onClick: toggleMessagesSpoiler,
-              class: "w-full flex items-center justify-between text-left p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              class: "w-full flex items-starts justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             }, [
               _cache[8] || (_cache[8] = createBaseVNode("span", { class: "font-bold text-blue-800 text-sm" }, "Не все поля заполнены, использованы значения по умолчанию", -1)),
               (openBlock(), createElementBlock("svg", {
-                class: normalizeClass(["w-4 h-4 text-blue-600 transition-transform", isMessagesSpoilerExpanded.value ? "rotate-180" : ""]),
+                class: normalizeClass(["w-7 h-7 text-blue-600 transition-transform", isMessagesSpoilerExpanded.value ? "rotate-180" : ""]),
                 fill: "none",
                 stroke: "currentColor",
                 viewBox: "0 0 24 24"
@@ -1549,7 +1545,7 @@ const _sfc_main$1 = {
                   createBaseVNode("div", _hoisted_33, [
                     createBaseVNode("h4", _hoisted_34, [
                       createTextVNode(toDisplayString(tariff.name) + " ", 1),
-                      tariff.isAvailable && tariff.recommended ? (openBlock(), createElementBlock("span", _hoisted_35, " Рекомендуем ")) : createCommentVNode("", true)
+                      tariff.isAvailable && tariff.isRecommended ? (openBlock(), createElementBlock("span", _hoisted_35, " Экономия " + toDisplayString(Math.round(tariff.savings)) + " ₽. Рекомендуем! ", 1)) : createCommentVNode("", true)
                     ]),
                     createBaseVNode("p", _hoisted_36, toDisplayString(tariff.description), 1),
                     createBaseVNode("ul", _hoisted_37, [
@@ -1574,11 +1570,10 @@ const _sfc_main$1 = {
                     ])) : createCommentVNode("", true)
                   ]),
                   createBaseVNode("div", _hoisted_50, [
-                    tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_51, toDisplayString(Math.round(tariff.totalCost)) + " ₽", 1)) : (openBlock(), createElementBlock("div", _hoisted_52, "—")),
-                    tariff.savings > 0 && tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_53, " Экономия " + toDisplayString(Math.round(tariff.savings)) + " ₽ ", 1)) : createCommentVNode("", true)
+                    tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_51, toDisplayString(Math.round(tariff.totalCost)) + " ₽", 1)) : (openBlock(), createElementBlock("div", _hoisted_52, "—"))
                   ])
                 ]),
-                tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_54, [
+                tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_53, [
                   createBaseVNode("button", {
                     onClick: withModifiers(($event) => toggleTariffDetails(tariff.id), ["stop"]),
                     class: "text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
@@ -1597,8 +1592,8 @@ const _sfc_main$1 = {
                         d: "M19 9l-7 7-7-7"
                       }, null, -1)
                     ]), 2))
-                  ], 8, _hoisted_55),
-                  expandedTariffs.value.includes(tariff.id) && tariff.details ? (openBlock(), createElementBlock("div", _hoisted_56, [
+                  ], 8, _hoisted_54),
+                  expandedTariffs.value.includes(tariff.id) && tariff.details ? (openBlock(), createElementBlock("div", _hoisted_55, [
                     _cache[16] || (_cache[16] = createBaseVNode("h5", { class: "font-medium text-gray-700 mb-2" }, "Детализация расчета:", -1)),
                     (openBlock(true), createElementBlock(Fragment, null, renderList(tariff.details, (detail) => {
                       return openBlock(), createElementBlock("div", {
@@ -1613,17 +1608,17 @@ const _sfc_main$1 = {
                         ])
                       }, [
                         createBaseVNode("span", null, toDisplayString(detail.name), 1),
-                        !detail.isHeader && !detail.isSubHeader && !detail.isDetail ? (openBlock(), createElementBlock("span", _hoisted_57, toDisplayString(detail.cost < 0 ? "" : "+") + toDisplayString(formatCurrency(detail.cost)), 1)) : createCommentVNode("", true)
+                        !detail.isHeader && !detail.isSubHeader && !detail.isDetail ? (openBlock(), createElementBlock("span", _hoisted_56, toDisplayString(detail.cost < 0 ? "" : "+") + toDisplayString(formatCurrency(detail.cost)), 1)) : createCommentVNode("", true)
                       ], 2);
                     }), 128)),
-                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_58, [
-                      createBaseVNode("div", _hoisted_59, [
+                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_57, [
+                      createBaseVNode("div", _hoisted_58, [
                         _cache[14] || (_cache[14] = createBaseVNode("span", { class: "text-gray-600" }, "Время доставки:", -1)),
-                        createBaseVNode("span", _hoisted_60, toDisplayString(tariff.deliveryInfo.days) + " дн.", 1)
+                        createBaseVNode("span", _hoisted_59, toDisplayString(tariff.deliveryInfo.days) + " дн.", 1)
                       ]),
-                      __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_61, [
+                      __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_60, [
                         _cache[15] || (_cache[15] = createBaseVNode("span", { class: "text-gray-600" }, "Расстояние:", -1)),
-                        createBaseVNode("span", _hoisted_62, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
+                        createBaseVNode("span", _hoisted_61, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
                       ])) : createCommentVNode("", true)
                     ])) : createCommentVNode("", true)
                   ])) : createCommentVNode("", true)
@@ -1631,24 +1626,24 @@ const _sfc_main$1 = {
               ], 10, _hoisted_31);
             }), 128))
           ])) : createCommentVNode("", true),
-          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_63, [
-            __props.result.selectedTariff.summary ? (openBlock(), createElementBlock("div", _hoisted_64, [
-              createBaseVNode("div", _hoisted_65, [
+          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_62, [
+            __props.result.selectedTariff.summary ? (openBlock(), createElementBlock("div", _hoisted_63, [
+              createBaseVNode("div", _hoisted_64, [
                 _cache[18] || (_cache[18] = createBaseVNode("span", null, "Тарифная стоимость:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.baseCost)), 1)
               ]),
-              __props.result.selectedTariff.summary.additionalServices !== 0 ? (openBlock(), createElementBlock("div", _hoisted_66, [
+              __props.result.selectedTariff.summary.additionalServices !== 0 ? (openBlock(), createElementBlock("div", _hoisted_65, [
                 _cache[19] || (_cache[19] = createBaseVNode("span", null, "Дополнительные услуги:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.additionalServices)), 1)
               ])) : createCommentVNode("", true),
-              __props.result.selectedTariff.summary.distance > 0 ? (openBlock(), createElementBlock("div", _hoisted_67, [
+              __props.result.selectedTariff.summary.distance > 0 ? (openBlock(), createElementBlock("div", _hoisted_66, [
                 _cache[20] || (_cache[20] = createBaseVNode("span", null, "Стоимость расстояния:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.distance)), 1)
               ])) : createCommentVNode("", true)
             ])) : createCommentVNode("", true),
-            createBaseVNode("div", _hoisted_68, [
+            createBaseVNode("div", _hoisted_67, [
               _cache[21] || (_cache[21] = createBaseVNode("span", null, "Общая стоимость", -1)),
-              createBaseVNode("span", _hoisted_69, toDisplayString(formatCurrency(__props.result.selectedTariff.totalCost)), 1)
+              createBaseVNode("span", _hoisted_68, toDisplayString(formatCurrency(__props.result.selectedTariff.totalCost)), 1)
             ]),
             _cache[22] || (_cache[22] = createBaseVNode("div", { class: "text-xs text-gray-400 mt-1" }, " С учетом НДС ", -1))
           ])) : createCommentVNode("", true),
@@ -1661,7 +1656,7 @@ const _sfc_main$1 = {
     };
   }
 };
-const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-9b1af45a"]]);
+const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-1e4f415b"]]);
 const _hoisted_1 = { class: "flex flex-col flex-1 lg:flex-row gap-8 min-w-0" };
 const _hoisted_2 = { class: "flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0" };
 const _hoisted_3 = { class: "bg-brand-light p-5 rounded-lg" };
@@ -2418,18 +2413,33 @@ const _sfc_main = {
       });
       const available = tariffCalculations.filter((t) => t.isAvailable).sort((a, b) => a.totalCost - b.totalCost);
       const unavailable = tariffCalculations.filter((t) => !t.isAvailable).sort((a, b) => a.priority - b.priority);
-      const allSorted = [...available, ...unavailable];
+      const basicTariff = available.find((t) => t.id === "cargo-basic");
+      const basicCost = basicTariff ? basicTariff.totalCost : null;
+      const availableWithSavings = available.map((tariff, index2) => {
+        let savingsAmount = 0;
+        let isRecommended = false;
+        if (basicCost && tariff.totalCost < basicCost) {
+          savingsAmount = basicCost - tariff.totalCost;
+          isRecommended = index2 === 0 && available.length > 1 && savingsAmount > 0;
+        }
+        return {
+          ...tariff,
+          savings: savingsAmount,
+          isRecommended
+        };
+      });
+      const allSorted = [...availableWithSavings, ...unavailable];
       let selectedTariff = null;
       if (formData.selectedTariff) {
-        selectedTariff = available.find((t) => t.id === formData.selectedTariff);
+        selectedTariff = availableWithSavings.find((t) => t.id === formData.selectedTariff);
       }
-      if (!selectedTariff && available.length > 0) {
-        selectedTariff = available[0];
+      if (!selectedTariff && availableWithSavings.length > 0) {
+        selectedTariff = availableWithSavings[0];
         formData.selectedTariff = selectedTariff.id;
       }
       return {
-        isValid: available.length > 0,
-        message: available.length === 0 ? "Нет доступных тарифов для указанных параметров" : "",
+        isValid: availableWithSavings.length > 0,
+        message: availableWithSavings.length === 0 ? "Нет доступных тарифов для указанных параметров" : "",
         allTariffs: allSorted,
         selectedTariff,
         calculation: selectedTariff,

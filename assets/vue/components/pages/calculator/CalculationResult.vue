@@ -61,12 +61,12 @@
             </div>
 
             <!-- Сообщения о параметрах по умолчанию -->
-            <div v-if="displayMessages.length > 0" class="mt-4">
+            <div v-if="displayMessages.length > 0" class="my-4">
                 <button @click="toggleMessagesSpoiler"
-                    class="w-full flex items-center justify-between text-left p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+                    class="w-full flex items-starts justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
                     <span class="font-bold text-blue-800 text-sm">Не все поля заполнены, использованы значения по
                         умолчанию</span>
-                    <svg :class="['w-4 h-4 text-blue-600 transition-transform', isMessagesSpoilerExpanded ? 'rotate-180' : '']"
+                    <svg :class="['w-7 h-7 text-blue-600 transition-transform', isMessagesSpoilerExpanded ? 'rotate-180' : '']"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
@@ -111,13 +111,13 @@
                     tariff.id === result.selectedTariff?.id && tariff.isAvailable ? 'border-brand-blue bg-blue-50' : 'border-gray-200'
                 ]" @click="tariff.isAvailable && $emit('selectTariff', tariff.id)">
 
-                    <div class="flex justify-between items-start mb-2">
+                    <div class="flex justify-between items-start mb-2 relative">
                         <div class="flex-1">
                             <h4 class="font-semibold text-gray-800 flex items-center gap-2">
                                 {{ tariff.name }}
-                                <span v-if="tariff.isAvailable && tariff.recommended"
-                                    class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-                                    Рекомендуем
+                                <span v-if="tariff.isAvailable && tariff.isRecommended"
+                                    class="absolute top-0 right-0 left-auto -translate-y-7 translate-x-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                                    Экономия {{ Math.round(tariff.savings) }} ₽. Рекомендуем!
                                 </span>
                             </h4>
                             <p class="text-sm text-gray-600 mb-1">{{ tariff.description }}</p>
@@ -162,9 +162,6 @@
                             <div v-if="tariff.isAvailable" class="text-xl font-bold text-gray-800">{{
                                 Math.round(tariff.totalCost) }} ₽</div>
                             <div v-else class="text-xl font-bold text-gray-400">—</div>
-                            <div v-if="tariff.savings > 0 && tariff.isAvailable" class="text-sm text-green-600">
-                                Экономия {{ Math.round(tariff.savings) }} ₽
-                            </div>
                         </div>
                     </div>
 

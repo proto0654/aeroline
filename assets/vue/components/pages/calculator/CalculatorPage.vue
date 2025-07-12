@@ -1107,22 +1107,48 @@ const calculationResult = computed(() => {
             };
         }
     });
-    // Сортируем: сначала доступные по цене, потом недоступные по приоритету
+    
+    // Находим доступные тарифы и сортируем по цене
     const available = tariffCalculations.filter(t => t.isAvailable).sort((a, b) => a.totalCost - b.totalCost);
     const unavailable = tariffCalculations.filter(t => !t.isAvailable).sort((a, b) => a.priority - b.priority);
-    const allSorted = [...available, ...unavailable];
+    
+    // Рассчитываем экономию относительно базового тарифа (cargo-basic)
+    const basicTariff = available.find(t => t.id === 'cargo-basic');
+    const basicCost = basicTariff ? basicTariff.totalCost : null;
+    
+    // Добавляем информацию об экономии и рекомендации
+    const availableWithSavings = available.map((tariff, index) => {
+        let savingsAmount = 0;
+        let isRecommended = false;
+        
+        if (basicCost && tariff.totalCost < basicCost) {
+            savingsAmount = basicCost - tariff.totalCost;
+            // Рекомендуем самый выгодный тариф при наличии экономии и нескольких доступных тарифов
+            isRecommended = index === 0 && available.length > 1 && savingsAmount > 0;
+        }
+        
+        return {
+            ...tariff,
+            savings: savingsAmount,
+            isRecommended
+        };
+    });
+    
+    const allSorted = [...availableWithSavings, ...unavailable];
+    
     // Выбранный тариф — пользовательский или первый доступный
     let selectedTariff = null;
     if (formData.selectedTariff) {
-        selectedTariff = available.find(t => t.id === formData.selectedTariff);
+        selectedTariff = availableWithSavings.find(t => t.id === formData.selectedTariff);
     }
-    if (!selectedTariff && available.length > 0) {
-        selectedTariff = available[0];
+    if (!selectedTariff && availableWithSavings.length > 0) {
+        selectedTariff = availableWithSavings[0];
         formData.selectedTariff = selectedTariff.id;
     }
+    
     return {
-        isValid: available.length > 0,
-        message: available.length === 0 ? 'Нет доступных тарифов для указанных параметров' : '',
+        isValid: availableWithSavings.length > 0,
+        message: availableWithSavings.length === 0 ? 'Нет доступных тарифов для указанных параметров' : '',
         allTariffs: allSorted,
         selectedTariff,
         calculation: selectedTariff,
