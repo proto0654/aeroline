@@ -2118,7 +2118,7 @@ const _sfc_main = {
       const volumeCost = totalVolume * tariff.baseRatePerM3;
       let baseCost = Math.max(weightCost, volumeCost, tariff.minCost);
       if (packageDetails.length > 0) {
-        details.push({ name: "=== ДЕТАЛИЗАЦИЯ ПО МЕСТАМ ===", cost: 0, isHeader: true });
+        details.push({ name: "ДЕТАЛИЗАЦИЯ ПО МЕСТАМ", cost: 0, isHeader: true });
         packageDetails.forEach((pkgDetail) => {
           const placeTitle = pkgDetail.quantity > 1 ? `${pkgDetail.description} (×${pkgDetail.quantity})` : pkgDetail.description;
           details.push({ name: placeTitle, cost: 0, isSubHeader: true });
@@ -2215,7 +2215,7 @@ const _sfc_main = {
             });
           }
         });
-        details.push({ name: "=== ИТОГО ПО МЕСТАМ ===", cost: 0, isHeader: true });
+        details.push({ name: "ИТОГО ПО МЕСТАМ", cost: 0, isHeader: true });
         details.push({
           name: `Общее количество мест: ${totalPackagesCount}`,
           cost: 0,
@@ -2231,7 +2231,7 @@ const _sfc_main = {
           cost: 0,
           isDetail: true
         });
-        details.push({ name: "=== РАСЧЕТ ТАРИФА ===", cost: 0, isHeader: true });
+        details.push({ name: "РАСЧЕТ ТАРИФА", cost: 0, isHeader: true });
       }
       details.push({
         name: `По весу: ${totalWeight.toFixed(1)} кг × ${tariff.baseRatePerKg} ₽/кг`,

@@ -680,7 +680,7 @@ function calculateTariffCost(tariff) {
 
     // Добавляем детализацию по местам
     if (packageDetails.length > 0) {
-        details.push({ name: '=== ДЕТАЛИЗАЦИЯ ПО МЕСТАМ ===', cost: 0, isHeader: true });
+        details.push({ name: 'ДЕТАЛИЗАЦИЯ ПО МЕСТАМ', cost: 0, isHeader: true });
 
         packageDetails.forEach(pkgDetail => {
             // Заголовок места
@@ -793,7 +793,7 @@ function calculateTariffCost(tariff) {
             }
         });
 
-        details.push({ name: '=== ИТОГО ПО МЕСТАМ ===', cost: 0, isHeader: true });
+        details.push({ name: 'ИТОГО ПО МЕСТАМ', cost: 0, isHeader: true });
         details.push({
             name: `Общее количество мест: ${totalPackagesCount}`,
             cost: 0,
@@ -809,7 +809,7 @@ function calculateTariffCost(tariff) {
             cost: 0,
             isDetail: true
         });
-        details.push({ name: '=== РАСЧЕТ ТАРИФА ===', cost: 0, isHeader: true });
+        details.push({ name: 'РАСЧЕТ ТАРИФА', cost: 0, isHeader: true });
     }
 
     details.push({
@@ -1107,35 +1107,35 @@ const calculationResult = computed(() => {
             };
         }
     });
-    
+
     // Находим доступные тарифы и сортируем по цене
     const available = tariffCalculations.filter(t => t.isAvailable).sort((a, b) => a.totalCost - b.totalCost);
     const unavailable = tariffCalculations.filter(t => !t.isAvailable).sort((a, b) => a.priority - b.priority);
-    
+
     // Рассчитываем экономию относительно базового тарифа (cargo-basic)
     const basicTariff = available.find(t => t.id === 'cargo-basic');
     const basicCost = basicTariff ? basicTariff.totalCost : null;
-    
+
     // Добавляем информацию об экономии и рекомендации
     const availableWithSavings = available.map((tariff, index) => {
         let savingsAmount = 0;
         let isRecommended = false;
-        
+
         if (basicCost && tariff.totalCost < basicCost) {
             savingsAmount = basicCost - tariff.totalCost;
             // Рекомендуем самый выгодный тариф при наличии экономии и нескольких доступных тарифов
             isRecommended = index === 0 && available.length > 1 && savingsAmount > 0;
         }
-        
+
         return {
             ...tariff,
             savings: savingsAmount,
             isRecommended
         };
     });
-    
+
     const allSorted = [...availableWithSavings, ...unavailable];
-    
+
     // Выбранный тариф — пользовательский или первый доступный
     let selectedTariff = null;
     if (formData.selectedTariff) {
@@ -1145,7 +1145,7 @@ const calculationResult = computed(() => {
         selectedTariff = availableWithSavings[0];
         formData.selectedTariff = selectedTariff.id;
     }
-    
+
     return {
         isValid: availableWithSavings.length > 0,
         message: availableWithSavings.length === 0 ? 'Нет доступных тарифов для указанных параметров' : '',
