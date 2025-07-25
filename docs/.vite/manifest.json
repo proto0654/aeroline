@@ -412,7 +412,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-C_mRkBSU.js",
+    "file": "assets/js/mainJs-Bk4a4kE-.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -421,7 +421,7 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-DK3-FUYH.css"
+      "assets/css/mainJs-nndRAfts.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
@@ -571,7 +571,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-AjCJrwoJ.js",
+    "file": "assets/js/contacts-DiiZuGDW.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -615,7 +615,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-b_KBNUXW.js",
+    "file": "assets/js/main-BkdDn_o4.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -683,7 +683,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-Cnls5KQx.js",
+    "file": "assets/js/orderList-ClEkRm9w.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -722,7 +722,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-D3Y6AtMI.js",
+    "file": "assets/js/orderTracking-BsQrNZbo.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -769,7 +769,7 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-BQDoxVxa.js",
+    "file": "assets/js/payments-BOQ5mLJ1.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -821,7 +821,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-Dpz4EEW1.js",
+    "file": "assets/js/profile-BJuyOUCO.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -861,7 +861,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-BIz8Gtim.js",
+    "file": "assets/js/sendersReceivers-6nra_W7l.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -897,7 +897,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-BOadFilU.js",
+    "file": "assets/js/serviceActs-myBIb7r1.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -934,7 +934,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-CV5VENcX.js",
+    "file": "assets/js/services-thQo1taL.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -985,7 +985,7 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-DF0qG-iJ.js",
+    "file": "assets/js/vacancies-CZub6m1j.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,

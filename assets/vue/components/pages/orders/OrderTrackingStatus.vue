@@ -41,15 +41,15 @@
                         </div>
                     </div>
                     <div v-if="openGroups[index]">
-                        <div class="font-bold text-brand-blue mb-1 ml-6 mt-2 pl-10 relative">{{ item.city }} <span
+                        <div class="font-bold text-brand-blue mb-1 ml-6 mt-2 pl-9 relative">{{ item.city }} <span
                                 class="dot-timeline absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-blue z-10"></span>
                         </div>
                         <div class="border-l-2 border-dashed border-gray-300 ml-6 flex flex-col gap-3">
-                            <div class="pl-10 relative flex items-center gap-3">
+                            <div class="pl-9 relative flex items-center gap-3">
 
                                 <div>
                                     <div class="font-medium text-gray-900">{{ getStatusText(item.event.stateCurrent)
-                                    }}</div>
+                                        }}</div>
                                     <div class="text-xs text-gray-500">{{ item.event.date }}</div>
                                     <div v-if="item.event.additionalInfo" class="text-xs text-gray-500">
                                         {{ formatAdditionalInfo(item.event.stateCurrent, item.event.additionalInfo) }}
@@ -84,14 +84,14 @@
                     </div>
                     <div v-if="openGroups[index]">
                         <template v-for="(group, gidx) in item.groups" :key="gidx">
-                            <div class="font-bold text-brand-blue mb-1 ml-6 mt-2 pl-10 relative">{{ group.city }}
+                            <div class="font-bold text-brand-blue mb-1 ml-6 mt-2 pl-9 relative">{{ group.city }}
 
                                 <span
                                     class="dot-timeline absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-blue z-10"></span>
                             </div>
                             <div class="border-l-2 border-dashed border-gray-300 ml-6 flex flex-col gap-3">
                                 <div v-for="(event, eventIdx) in group.events" :key="eventIdx"
-                                    class="pl-10 relative flex items-center gap-3">
+                                    class="pl-9 relative flex items-center gap-3">
 
                                     <div>
                                         <div class="font-medium text-gray-900">{{ getStatusText(event.stateCurrent) }}
