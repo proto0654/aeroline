@@ -207,17 +207,33 @@
     "file": "assets/img/messages3_white-CxOA5ieA.svg",
     "src": "assets/img/icons/messages3_white.svg"
   },
-  "assets/img/icons/order-tracking/component-1-1.svg": {
-    "file": "assets/img/component-1-1-CN7DWFsZ.svg",
-    "src": "assets/img/icons/order-tracking/component-1-1.svg"
+  "assets/img/icons/order-tracking/checked.svg": {
+    "file": "assets/img/checked-KxLizkFk.svg",
+    "src": "assets/img/icons/order-tracking/checked.svg"
   },
-  "assets/img/icons/order-tracking/component-1-2.svg": {
-    "file": "assets/img/component-1-2-mR4BVpBn.svg",
-    "src": "assets/img/icons/order-tracking/component-1-2.svg"
+  "assets/img/icons/order-tracking/denied.svg": {
+    "file": "assets/img/denied-mR4BVpBn.svg",
+    "src": "assets/img/icons/order-tracking/denied.svg"
   },
-  "assets/img/icons/order-tracking/component-1.svg": {
-    "file": "assets/img/component-1-D8YgY9xC.svg",
-    "src": "assets/img/icons/order-tracking/component-1.svg"
+  "assets/img/icons/order-tracking/folder-plus.svg": {
+    "file": "assets/img/folder-plus-CMAG_r68.svg",
+    "src": "assets/img/icons/order-tracking/folder-plus.svg"
+  },
+  "assets/img/icons/order-tracking/message-dots.svg": {
+    "file": "assets/img/message-dots-CN7DWFsZ.svg",
+    "src": "assets/img/icons/order-tracking/message-dots.svg"
+  },
+  "assets/img/icons/order-tracking/pvz.svg": {
+    "file": "assets/img/pvz-Dl8vKBnA.svg",
+    "src": "assets/img/icons/order-tracking/pvz.svg"
+  },
+  "assets/img/icons/order-tracking/trouble.svg": {
+    "file": "assets/img/trouble-Cvl3i24o.svg",
+    "src": "assets/img/icons/order-tracking/trouble.svg"
+  },
+  "assets/img/icons/order-tracking/truck-fast.svg": {
+    "file": "assets/img/truck-fast-HdQ00Q51.svg",
+    "src": "assets/img/icons/order-tracking/truck-fast.svg"
   },
   "assets/img/icons/q.svg": {
     "file": "assets/img/q-8XezpOIm.svg",
@@ -396,7 +412,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-Yl3KLrdS.js",
+    "file": "assets/js/mainJs-C_mRkBSU.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -405,7 +421,7 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-DKvm5LwO.css"
+      "assets/css/mainJs-DK3-FUYH.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
@@ -555,7 +571,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-CHaEXVCG.js",
+    "file": "assets/js/contacts-AjCJrwoJ.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -599,7 +615,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-OUiMO2gG.js",
+    "file": "assets/js/main-b_KBNUXW.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -667,7 +683,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-Db0E4k-J.js",
+    "file": "assets/js/orderList-Cnls5KQx.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -706,7 +722,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-DTGulC43.js",
+    "file": "assets/js/orderTracking-D3Y6AtMI.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -723,9 +739,13 @@
     ],
     "assets": [
       "assets/img/search-CYPbi9xb.svg",
-      "assets/img/component-1-1-CN7DWFsZ.svg",
-      "assets/img/component-1-2-mR4BVpBn.svg",
-      "assets/img/component-1-D8YgY9xC.svg",
+      "assets/img/folder-plus-CMAG_r68.svg",
+      "assets/img/message-dots-CN7DWFsZ.svg",
+      "assets/img/denied-mR4BVpBn.svg",
+      "assets/img/trouble-Cvl3i24o.svg",
+      "assets/img/truck-fast-HdQ00Q51.svg",
+      "assets/img/pvz-Dl8vKBnA.svg",
+      "assets/img/checked-KxLizkFk.svg",
       "assets/img/order-tracking-img-CkPtxPsa.png",
       "assets/img/aeroline_logo-BATjs7xh.svg",
       "assets/img/logos_telegram-DAaG1Vgd.svg",
@@ -749,7 +769,7 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-CuTuBnp4.js",
+    "file": "assets/js/payments-BQDoxVxa.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -801,7 +821,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-CAUEKSKm.js",
+    "file": "assets/js/profile-Dpz4EEW1.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -841,7 +861,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-8QmfLnpH.js",
+    "file": "assets/js/sendersReceivers-BIz8Gtim.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -877,7 +897,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-CwIMN3LG.js",
+    "file": "assets/js/serviceActs-BOadFilU.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -914,7 +934,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-BlBoF44v.js",
+    "file": "assets/js/services-CV5VENcX.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -965,7 +985,7 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-B0WDBmmj.js",
+    "file": "assets/js/vacancies-DF0qG-iJ.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,
