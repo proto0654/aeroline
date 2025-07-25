@@ -298,22 +298,24 @@ const _hoisted_21 = {
   class: "flex flex-col gap-1 relative z-10 mt-10"
 };
 const _hoisted_22 = { class: "flex items-start gap-3" };
-const _hoisted_23 = {
+const _hoisted_23 = { class: "w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow" };
+const _hoisted_24 = {
   key: 0,
   class: "text-xs text-gray-600"
 };
-const _hoisted_24 = ["onClick"];
-const _hoisted_25 = { key: 0 };
-const _hoisted_26 = { class: "font-bold text-brand-blue mb-1 ml-6 mt-2 pl-9 relative" };
-const _hoisted_27 = { class: "border-l-2 border-dashed border-gray-300 ml-6 flex flex-col gap-3" };
-const _hoisted_28 = { class: "font-medium text-gray-900" };
-const _hoisted_29 = { class: "text-xs text-gray-500" };
-const _hoisted_30 = {
+const _hoisted_25 = ["onClick"];
+const _hoisted_26 = { key: 0 };
+const _hoisted_27 = { class: "font-bold text-brand-blue mb-1 ml-6 mt-2 pl-9 relative" };
+const _hoisted_28 = { class: "border-l-2 border-dashed border-gray-300 ml-6 flex flex-col gap-3" };
+const _hoisted_29 = { class: "font-medium text-gray-900" };
+const _hoisted_30 = { class: "text-xs text-gray-500" };
+const _hoisted_31 = {
   key: 0,
   class: "text-xs text-gray-500"
 };
 function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_status_icon = resolveComponent("status-icon");
+  const _component_StatusIcon = resolveComponent("StatusIcon");
   return openBlock(), createElementBlock("div", _hoisted_1$2, [
     createBaseVNode("div", _hoisted_2$2, [
       $props.tracking && $props.tracking.length > 1 ? (openBlock(), createElementBlock("div", _hoisted_3$2)) : createCommentVNode("", true),
@@ -381,13 +383,12 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
             ])) : createCommentVNode("", true)
           ])) : item.type === "in-transit" ? (openBlock(), createElementBlock("div", _hoisted_21, [
             createBaseVNode("div", _hoisted_22, [
-              _cache[4] || (_cache[4] = createBaseVNode("div", {
-                class: "w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow",
-                innerHTML: `<svg xmlns='http://www.w3.org/2000/svg' class='w-7 h-7 text-brand-blue' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0a2 2 0 11-4 0 2 2 0 014 0zm10 0a2 2 0 11-4 0 2 2 0 014 0zm-6 0h6m-6 0H5a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2z' /></svg>`
-              }, null, -1)),
+              createBaseVNode("div", _hoisted_23, [
+                createVNode(_component_StatusIcon, { status: "ПП" })
+              ]),
               createBaseVNode("div", null, [
                 _cache[3] || (_cache[3] = createBaseVNode("div", { class: "font-bold text-gray-800 uppercase" }, "В пути", -1)),
-                $options.getLastInTransitEvent(item.groups) ? (openBlock(), createElementBlock("div", _hoisted_23, toDisplayString($options.getLastInTransitEvent(item.groups).date), 1)) : createCommentVNode("", true),
+                $options.getLastInTransitEvent(item.groups) ? (openBlock(), createElementBlock("div", _hoisted_24, toDisplayString($options.getLastInTransitEvent(item.groups).date), 1)) : createCommentVNode("", true),
                 createBaseVNode("button", {
                   class: "flex items-center gap-1 text-brand-blue underline text-xs font-medium mt-1 ml-0 focus:outline-none",
                   onClick: withModifiers(($event) => $options.toggleGroup(index), ["stop"])
@@ -406,26 +407,26 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
                       d: "M19 9l-7 7-7-7"
                     }, null, -1)
                   ]), 2))
-                ], 8, _hoisted_24)
+                ], 8, _hoisted_25)
               ])
             ]),
-            $data.openGroups[index] ? (openBlock(), createElementBlock("div", _hoisted_25, [
+            $data.openGroups[index] ? (openBlock(), createElementBlock("div", _hoisted_26, [
               (openBlock(true), createElementBlock(Fragment, null, renderList(item.groups, (group, gidx) => {
                 return openBlock(), createElementBlock(Fragment, { key: gidx }, [
-                  createBaseVNode("div", _hoisted_26, [
-                    createTextVNode(toDisplayString(group.city) + " ", 1),
-                    _cache[5] || (_cache[5] = createBaseVNode("span", { class: "dot-timeline absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-blue z-10" }, null, -1))
-                  ]),
                   createBaseVNode("div", _hoisted_27, [
+                    createTextVNode(toDisplayString(group.city) + " ", 1),
+                    _cache[4] || (_cache[4] = createBaseVNode("span", { class: "dot-timeline absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-blue z-10" }, null, -1))
+                  ]),
+                  createBaseVNode("div", _hoisted_28, [
                     (openBlock(true), createElementBlock(Fragment, null, renderList(group.events, (event, eventIdx) => {
                       return openBlock(), createElementBlock("div", {
                         key: eventIdx,
                         class: "pl-9 relative flex items-center gap-3"
                       }, [
                         createBaseVNode("div", null, [
-                          createBaseVNode("div", _hoisted_28, toDisplayString($options.getStatusText(event.stateCurrent)), 1),
-                          createBaseVNode("div", _hoisted_29, toDisplayString(event.date), 1),
-                          event.additionalInfo ? (openBlock(), createElementBlock("div", _hoisted_30, toDisplayString($options.formatAdditionalInfo(event.stateCurrent, event.additionalInfo)), 1)) : createCommentVNode("", true)
+                          createBaseVNode("div", _hoisted_29, toDisplayString($options.getStatusText(event.stateCurrent)), 1),
+                          createBaseVNode("div", _hoisted_30, toDisplayString(event.date), 1),
+                          event.additionalInfo ? (openBlock(), createElementBlock("div", _hoisted_31, toDisplayString($options.formatAdditionalInfo(event.stateCurrent, event.additionalInfo)), 1)) : createCommentVNode("", true)
                         ])
                       ]);
                     }), 128))

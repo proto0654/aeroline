@@ -62,8 +62,8 @@
                 <!-- Блок "В пути" с вложенными городами и событиями -->
                 <div v-else-if="item.type === 'in-transit'" class="flex flex-col gap-1 relative z-10 mt-10">
                     <div class="flex items-start gap-3">
-                        <div class="w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow"
-                            v-html="`<svg xmlns='http://www.w3.org/2000/svg' class='w-7 h-7 text-brand-blue' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0a2 2 0 11-4 0 2 2 0 014 0zm10 0a2 2 0 11-4 0 2 2 0 014 0zm-6 0h6m-6 0H5a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2z' /></svg>`">
+                        <div class="w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow">
+                            <StatusIcon status="ПП" />
                         </div>
                         <div>
                             <div class="font-bold text-gray-800 uppercase">В пути</div>
