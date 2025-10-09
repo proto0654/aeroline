@@ -37,7 +37,7 @@
                 </div>
             </div>
             <button v-if="showCalculateButton"
-                class="max-w-[7em] leading-[2.1em] w-full btn-gray px-3 py-2 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons"
+                class="w-full lg:max-w-[7em] leading-[2.1em] w-full btn-gray px-3 py-2 rounded-lg text-white flex flex-rows items-center justify-center gap-1 min-w-[6em] text-buttons"
                 @click="handleCalculate">
                 Рассчитать
             </button>

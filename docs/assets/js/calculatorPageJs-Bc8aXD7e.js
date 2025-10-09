@@ -1,5 +1,5 @@
 import { r as ref, p as computed, c as createElementBlock, o as openBlock, d as createCommentVNode, a as createBaseVNode, t as toDisplayString, E as mergeProps, n as nextTick, F as Fragment, C as renderList, V as renderSlot, b as createTextVNode, q as watch, I as createVNode, B as normalizeClass, D as createBlock, w as withModifiers, v as onMounted, A as unref, f as reactive, H as createApp } from "./chunks/runtime-dom.esm-bundler-DZCqFWTW.js";
-import { C as CheckboxInput, _ as _sfc_main$b } from "./chunks/CheckboxInput-DIFQR0HT.js";
+import { C as CheckboxInput, _ as _sfc_main$b } from "./chunks/CheckboxInput-heuJIJ44.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
 import { _ as _imports_0 } from "./chunks/select-arrow-He2ejS2L.js";
 import { T as TextInput, F as Form, b as Field, E as ErrorMessage } from "./chunks/TextInput-DRKSnHb_.js";

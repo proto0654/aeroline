@@ -1,5 +1,5 @@
 import "./chunks/global-modal-dZf6PbYv.js";
-import "./mainJs-BzcWqHOU.js";
+import "./mainJs-D2BvGwE7.js";
 import "./globalUiJs-Bq6ceTVX.js";
 import "./chunks/runtime-dom.esm-bundler-DZCqFWTW.js";
 import "./chunks/globalModal-WavfrdGt.js";

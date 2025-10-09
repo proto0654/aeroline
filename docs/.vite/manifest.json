@@ -20,8 +20,8 @@
     "file": "assets/css/CheckboxInput-CUU35C6q.css",
     "src": "_CheckboxInput-CUU35C6q.css"
   },
-  "_CheckboxInput-DIFQR0HT.js": {
-    "file": "assets/js/chunks/CheckboxInput-DIFQR0HT.js",
+  "_CheckboxInput-heuJIJ44.js": {
+    "file": "assets/js/chunks/CheckboxInput-heuJIJ44.js",
     "name": "CheckboxInput",
     "imports": [
       "_AutocompleteInput-C1PGjSeS.js",
@@ -416,7 +416,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-BzcWqHOU.js",
+    "file": "assets/js/mainJs-D2BvGwE7.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -425,7 +425,7 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-CQLYRuDx.css"
+      "assets/css/mainJs-DXqNWU6S.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
@@ -516,13 +516,13 @@
     ]
   },
   "assets/vue/entrypoints/calculator-page.js": {
-    "file": "assets/js/calculatorPageJs-CaosRx8X.js",
+    "file": "assets/js/calculatorPageJs-Bc8aXD7e.js",
     "name": "calculatorPageJs",
     "src": "assets/vue/entrypoints/calculator-page.js",
     "isEntry": true,
     "imports": [
       "_runtime-dom.esm-bundler-DZCqFWTW.js",
-      "_CheckboxInput-DIFQR0HT.js",
+      "_CheckboxInput-heuJIJ44.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_select-arrow-He2ejS2L.js",
       "_TextInput-DRKSnHb_.js",
@@ -576,7 +576,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-BbcZee5F.js",
+    "file": "assets/js/contacts-B8NjlXQ8.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -625,7 +625,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-CmdPqftC.js",
+    "file": "assets/js/main-DKJQYUoV.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -634,7 +634,7 @@
       "assets/js/main.js",
       "assets/js/modules/global-ui.js",
       "_runtime-dom.esm-bundler-DZCqFWTW.js",
-      "_CheckboxInput-DIFQR0HT.js",
+      "_CheckboxInput-heuJIJ44.js",
       "assets/js/modules/home-page.js",
       "_globalModal-WavfrdGt.js",
       "_TextInput-DRKSnHb_.js",
@@ -693,7 +693,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList--HgplaFs.js",
+    "file": "assets/js/orderList-D0EIxPfT.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -733,7 +733,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-DvIjRjq9.js",
+    "file": "assets/js/orderTracking-tU87Qsi6.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -780,7 +780,7 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-B_xpC7Aw.js",
+    "file": "assets/js/payments-Cmz2gD5i.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -832,7 +832,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-DPmoJNXr.js",
+    "file": "assets/js/profile-CgNMAtdz.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -872,7 +872,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-WAmoPUre.js",
+    "file": "assets/js/sendersReceivers-DVDyePHG.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -908,7 +908,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-CaFmp3eZ.js",
+    "file": "assets/js/serviceActs-CXT9_5Q2.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -945,7 +945,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-CM2qXqx1.js",
+    "file": "assets/js/services-ZwMe-MZs.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -996,7 +996,7 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-CDXMBIsR.js",
+    "file": "assets/js/vacancies-BRfzdnQH.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,
