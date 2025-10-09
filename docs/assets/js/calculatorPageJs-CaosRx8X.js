@@ -2332,7 +2332,7 @@ const _sfc_main = {
     async function fetchData() {
       try {
         const [officesRes, configRes] = await Promise.all([
-          fetch("/assets/data/contacts.json"),
+          fetch("./assets/data/contacts.json"),
           fetch("./assets/data/calculator-data.json")
         ]);
         const officesData = await officesRes.json();

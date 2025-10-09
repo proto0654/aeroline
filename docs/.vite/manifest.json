@@ -512,7 +512,7 @@
     ]
   },
   "assets/vue/entrypoints/calculator-page.js": {
-    "file": "assets/js/calculatorPageJs-KJI0YfCz.js",
+    "file": "assets/js/calculatorPageJs-CaosRx8X.js",
     "name": "calculatorPageJs",
     "src": "assets/vue/entrypoints/calculator-page.js",
     "isEntry": true,
@@ -620,7 +620,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-CSzx85yL.js",
+    "file": "assets/js/main-_6rYxZQz.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
