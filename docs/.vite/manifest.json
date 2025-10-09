@@ -439,7 +439,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-t9E44BMJ.js",
+    "file": "assets/js/homePageJs-BpNUC_h1.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -470,7 +470,7 @@
       "order-new..html",
       "order-tracking..html",
       "assets/data/package-lock-BkC8jPWj.json",
-      "assets/data/package-BU77udTe.json",
+      "assets/data/package-j_7If2og.json",
       "payments..html",
       "assets/postcss.config-By4aJUYq.js",
       "profile..html",
@@ -620,7 +620,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-DkLUmdAB.js",
+    "file": "assets/js/main-CSzx85yL.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -770,7 +770,7 @@
     "src": "package-lock.json"
   },
   "package.json": {
-    "file": "assets/data/package-BU77udTe.json",
+    "file": "assets/data/package-j_7If2og.json",
     "src": "package.json"
   },
   "payments.html": {

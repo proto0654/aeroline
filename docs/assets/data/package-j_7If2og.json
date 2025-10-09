@@ -8,7 +8,7 @@
     "build": "vite build",
     "build:tailwind": "tailwindcss -i ../www/local/assets/css/tailwind.css -o ../www/local/assets/css/tailwind.min.css --minify",
     "preview": "vite preview",
-    "deploy": "node -e \"const now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }).replace(/[.,]/g, '-'); require('child_process').execSync('npm run build && git add . && git commit -m \\\"Обновление-' + now + '\\\" && git push origin', { stdio: 'inherit' });\""
+    "deploy": "node -e \"const now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }).replace(/[.,]/g, '-'); require('child_process').execSync('npm run build && git add . && git commit -m \\\"Обновление-' + now + '\\\" && git push origin main', { stdio: 'inherit' });\""
   },
   "keywords": [
     "static",
