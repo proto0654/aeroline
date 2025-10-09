@@ -7,7 +7,7 @@ async function initDirectionForm() {
 
   try {
     // Загружаем данные офисов для автокомплита
-    const officesResponse = await fetch("/local/assets/data/contacts.json");
+    const officesResponse = await fetch("/assets/data/contacts.json");
     const officesData = await officesResponse.json();
 
     const directionApp = createApp({
