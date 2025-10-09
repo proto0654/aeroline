@@ -1,0 +1,1666 @@
+@import "vanilla-calendar-pro/styles/index.css";
+@import "./forms.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Базовые стили для светлой темы */
+:root {
+  color-scheme: light;
+  --color-primary: #008dd2;
+}
+.cally ::part(day) {
+  font-size: 1.2rem;
+  padding: 0.3rem;
+  block-size: 3rem;
+  inline-size: 3rem;
+}
+
+:root[data-theme="aeroline"] {
+  --color-primary: #008dd2;
+  --color-primary-content: #ffffff;
+  --color-secondary: #4d4d4d;
+  --color-secondary-content: #ffffff;
+  --color-accent: #f4f6f9;
+  --color-accent-content: #4d4d4d;
+  --color-neutral: #4d4d4d;
+  --color-neutral-content: #ffffff;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f4f6f9;
+  --color-base-300: #e5e7eb;
+  --color-base-content: #4d4d4d;
+
+  --color-info: #008dd2;
+  --color-info-content: #ffffff;
+  --color-success: #10b981;
+  --color-success-content: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-content: #ffffff;
+  --color-error: #ef4444;
+  --color-error-content: #ffffff;
+  --input-border: #d1d5db;
+  --input-focus-border: #008dd2;
+  --input-focus-ring: 0 0 0 2px;
+  --input-focus-ring-color: #008dd2;
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #e2e8f0;
+  --scrollbar-thumb-hover: #cbd5e1;
+}
+
+/* Стили для скроллбаров */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Настройка шрифтов */
+@layer base {
+  /* Основные стили для текста */
+  body {
+    @apply font-calibri font-regular text-brand-gray overflow-x-hidden max-w-screen-3xl bg-white;
+  }
+
+  /* Заголовок h1 */
+  h1 {
+    @apply text-h1 font-bold leading-1;
+  }
+
+  /* Заголовок h2 */
+  h2 {
+    @apply text-h2 font-bold leading-auto;
+  }
+
+  /* Заголовок h3 */
+  h3 {
+    @apply text-h3 font-bold leading-auto;
+  }
+
+  /* Заголовок h4 */
+  h4 {
+    @apply text-h4 font-bold leading-auto;
+  }
+
+  /* Заголовок h5 */
+  h5 {
+    @apply text-h5 font-bold leading-auto;
+  }
+
+  /* Заголовок h6 */
+  h6 {
+    @apply text-h6 font-bold leading-auto;
+  }
+
+  /* Заголовок h4 с капителью */
+  .h4-caps {
+    @apply text-h4 font-bold leading-auto uppercase;
+  }
+
+  /* Заголовок h4 обычный */
+  h4 {
+    @apply text-h4 font-bold leading-auto;
+  }
+
+  /* Основной текст */
+  .body {
+    @apply text-body font-light leading-auto;
+  }
+
+  /* Вторичный текст */
+  .body-secondary {
+    @apply text-body-secondary font-regular leading-auto;
+  }
+
+  /* Выделенный текст (caps bold) */
+  .caps-bold {
+    @apply text-caps-bold font-bold leading-auto uppercase;
+  }
+
+  /* Текст для кнопок и заголовков */
+  .buttons-extraheadings {
+    @apply text-buttons leading-auto;
+  }
+
+  /* Текст с капителью для меню */
+  .caps-regular {
+    @apply text-caps-regular font-regular leading-auto uppercase;
+  }
+
+  /* Подписи (caption regular) */
+  .caption-regular {
+    @apply text-caption-regular font-regular leading-auto;
+  }
+
+  /* Подписи (caption light) */
+  .caption-light {
+    @apply text-caption-light font-light leading-auto;
+  }
+
+  /* Текст в формах */
+  .caption-form {
+    @apply text-caption-form font-regular leading-1;
+  }
+}
+
+/* Унифицированный hero-блок */
+.hero-section {
+  @apply lg:py-20 relative overflow-hidden max-w-[1920px] w-full mx-auto;
+}
+
+.hero-section .hero-content {
+  @apply flex flex-col items-start p-4 md:items-center text-center relative z-10 min-h-[300px] md:mx-auto justify-start p-8;
+}
+
+.hero-section .hero-title {
+  @apply text-h3 md:text-h2 text-brand-gray mb-4 uppercase;
+}
+
+.hero-section .hero-background {
+  @apply absolute inset-0 z-0;
+}
+
+.hero-section .hero-background img {
+  @apply w-full h-full 3xl:rounded-3xl;
+}
+
+/* Медиа-запросы для мобильных версий */
+@layer utilities {
+  @media (max-width: 767px) {
+    h1 {
+      @apply text-h2;
+    }
+    h2 {
+      @apply text-h3;
+    }
+    h3 {
+      @apply text-h4;
+    }
+    h4,
+    .h4-caps {
+      @apply text-body;
+    }
+    .body {
+      @apply text-body-secondary;
+    }
+    .body-secondary {
+      @apply text-caption-regular;
+    }
+    .caps-bold,
+    .buttons-extraheadings {
+      @apply text-caption-regular;
+    }
+    .caps-regular {
+      @apply text-caption-light;
+    }
+    .caption-regular,
+    .caption-light {
+      @apply text-caption-form;
+    }
+  }
+}
+
+/* Стили для анимации бургер-меню */
+@layer components {
+  /* Анимация для бургер-иконки */
+  .burger-line {
+    transform-origin: center;
+  }
+
+  /* Состояние при открытом меню */
+  .burger-line.rotate-45 {
+    transform: rotate(45deg) translateY(0.5rem);
+  }
+
+  .burger-line.-rotate-45 {
+    transform: rotate(-45deg) translateY(-0.5rem);
+  }
+
+  /* Плавная анимация для мобильного меню */
+  #mobile-menu {
+    transition: transform 0.3s ease-in-out;
+  }
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  /* Запрет скролла при открытом меню */
+  body.overflow-hidden {
+    overflow: hidden;
+  }
+
+  /* Анимация появления элементов меню */
+  #mobile-menu.translate-x-0 #mobile-menu-list li {
+    animation: fadeInRight 0.3s ease-in-out forwards;
+    opacity: 0;
+  }
+
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(4) {
+    animation-delay: 0.25s;
+  }
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(5) {
+    animation-delay: 0.3s;
+  }
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(6) {
+    animation-delay: 0.35s;
+  }
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(7) {
+    animation-delay: 0.4s;
+  }
+  #mobile-menu.translate-x-0 #mobile-menu-list li:nth-child(8) {
+    animation-delay: 0.45s;
+  }
+
+  /* Анимация для кнопки закрытия в шапке мобильного меню */
+  #mobile-menu.translate-x-0 #mobile-close-btn {
+    animation: fadeInDown 0.3s ease-in-out forwards;
+    animation-delay: 0.05s;
+    opacity: 0;
+  }
+
+  /* Анимация для блока социальных иконок */
+  #mobile-menu.translate-x-0 #mobile-menu-contacts {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+
+  /* Анимация для социальных иконок */
+  #mobile-menu.translate-x-0 #mobile-menu-social {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.55s;
+    opacity: 0;
+  }
+
+  /* Анимация для контактных данных */
+  #mobile-menu.translate-x-0 #mobile-menu-email {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.6s;
+    opacity: 0;
+  }
+
+  #mobile-menu.translate-x-0 #mobile-menu-phone {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.65s;
+    opacity: 0;
+  }
+
+  /* Анимация для кнопки "Войти" */
+  #mobile-menu.translate-x-0 #mobile-menu-login {
+    animation: fadeInUp 0.3s ease-in-out forwards;
+    animation-delay: 0.7s;
+    opacity: 0;
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Стили для главной страницы */
+  .carousel-slide {
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .carousel-slide.active {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Стили для карточек разделов */
+  .group:hover .group-hover\:translate-x-1 {
+    transform: translateX(4px);
+  }
+
+  /* Стиль для чекбокса */
+  input[type="checkbox"] {
+    @apply accent-brand-blue;
+  }
+
+  /* Стили для выпадающих списков */
+  .appearance-none {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  /* Анимация переходов */
+  .transition-colors,
+  .transition-transform {
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+  }
+
+  .form input,
+  .form select,
+  .form textarea {
+    @apply bg-white md:bg-brand-light rounded-lg px-4 py-3 font-calibri text-body w-full transition-colors duration-200;
+    outline: none;
+  }
+  .form input:focus,
+  .form select:focus,
+  .form textarea:focus {
+    @apply border-brand-blue;
+  }
+  .form.form-dark input,
+  .form.form-dark select,
+  .form.form-dark textarea {
+    @apply bg-white;
+  }
+  .form.form-dark input:focus,
+  .form.form-dark select:focus,
+  .form.form-dark textarea:focus {
+    @apply border-brand-gray;
+  }
+  .form .btn {
+    @apply py-3;
+  }
+  .form-dark .btn:hover,
+  .form-dark .btn:focus {
+    @apply bg-brand-gray border-brand-gray;
+  }
+  .form label {
+    @apply text-brand-gray font-medium mb-2;
+  }
+}
+.btn {
+  @apply bg-brand-blue text-white font-calibri font-regular text-buttons rounded-lg transition-colors duration-200;
+}
+.btn:hover,
+.btn:focus {
+  @apply bg-brand-blue border-brand-blue;
+}
+
+/* Серые кнопки */
+.btn-gray {
+  @apply bg-brand-gray text-white font-calibri font-regular text-buttons rounded-lg transition-colors duration-200 border-brand-gray;
+}
+/* Более специфичный селектор для ховера */
+.btn-gray:hover,
+.btn-gray:focus {
+  @apply bg-brand-gray-dark border-brand-gray-dark;
+}
+
+/* Стили для анимации заголовков на страницах-заглушках */
+.title-wrapper,
+.subtitle-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.animated-title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animated-subtitle {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: 0.3s;
+}
+
+.animated-title.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animated-subtitle.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Стили для карусели Swiper */
+#swiper-section {
+  position: relative;
+  /* background-image: url('../img/slider/snowflakes.png'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#swiper-section::before {
+  top: 0;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 1920px;
+  background: linear-gradient(to bottom, #ebebeb, #ffffff);
+  pointer-events: none;
+}
+#swiper-section::after {
+  top: 0;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 1920px;
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #ffffff,
+    #ffffffd0,
+    #ffffff00,
+    #ffffff00,
+    #ffffff00,
+    #ffffff00,
+    #ffffff00,
+    #ffffff80,
+    #ffffffea,
+    #ffffff
+  );
+  z-index: +100;
+  pointer-events: none;
+}
+.swiper-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.swiper-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition-property: transform;
+}
+
+.swiper-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next,
+.swiper-slide-active {
+  z-index: 10;
+}
+
+.swiper-slide > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Анимация появления слева для изображений */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-80%, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, -50%, 0);
+  }
+}
+/* Анимация появления слева для изображений */
+@keyframes fadeInLeftShort {
+  from {
+    opacity: 0;
+    transform: translate3d(-20%, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.swiper-nav-arrow.swiper-button-prev,
+.swiper-nav-arrow.swiper-button-next {
+  position: relative;
+  z-index: 10;
+  left: auto;
+  right: auto;
+  transform: translateY(-0.6rem);
+  height: 40px;
+  width: 40px;
+}
+.swiper-nav-arrow.swiper-button-prev:hover,
+.swiper-nav-arrow.swiper-button-next:hover {
+  transform: translateY(-0.6rem);
+}
+.swiper-nav-container .swiper-pagination-bullets.swiper-pagination-horizontal {
+  position: relative;
+}
+/* Базовое состояние контейнеров с изображениями */
+.swiper-slide .left-image-container img,
+.swiper-slide .right-image-container img {
+  opacity: 0;
+  transform: translate3d(-30px, -50%, 0);
+  will-change: opacity, transform;
+}
+
+/* Анимация для появления изображений в активном слайде */
+
+.swiper-container .swiper-slide-active .right-image-container img {
+  animation: fadeInLeft 0.6s ease-out forwards;
+}
+.swiper-container .swiper-slide-active .left-image-container img {
+  animation: fadeInLeftShort 0.5s ease-out forwards;
+  animation-delay: 0.4s;
+}
+/* Анимация для дубликатов в карусели */
+.swiper-container .swiper-slide-duplicate-active .left-image-container img,
+.swiper-container .swiper-slide-duplicate-active .right-image-container img {
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+/* Простое исчезновение через прозрачность для неактивных слайдов */
+.swiper-container .swiper-slide-prev .left-image-container img,
+.swiper-container .swiper-slide-prev .right-image-container img,
+.swiper-container .swiper-slide-next .left-image-container img,
+.swiper-container .swiper-slide-next .right-image-container img {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  transform: translate3d(0, -50%, 0);
+}
+
+/* Мобильные изображения с анимацией */
+.swiper-slide .block.md\:hidden img {
+  opacity: 0;
+}
+
+.swiper-container .swiper-slide-active .block.md\:hidden img {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.swiper-container .swiper-slide-prev .block.md\:hidden img,
+.swiper-container .swiper-slide-next .block.md\:hidden img {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Стили для пагинации */
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 0 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #008dd2;
+  transform: scale(1.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Кнопки навигации */
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  color: #008dd2 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: none; /* убираем тени */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background-color: #fff;
+  box-shadow: none; /* убираем тени при ховере */
+  transform: translateY(-50%) scale(1.05);
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 0.7em !important;
+  font-weight: regular;
+}
+
+/* Настройка для эффекта fade */
+.swiper-fade .swiper-slide {
+  pointer-events: none;
+  transition-property: opacity;
+}
+
+.swiper-fade .swiper-slide-active,
+.swiper-fade .swiper-slide-duplicate-active {
+  pointer-events: auto;
+}
+
+/* Улучшенная динамичная анимация появления с эффектом пружины */
+@keyframes dynamicZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* НОВАЯ УЛУЧШЕННАЯ ЦЕПОЧКА АНИМАЦИЙ ДЛЯ КОНТЕНТА */
+
+/* Базовые стили для всего контента - начальное состояние */
+.swiper-container .swiper-slide h1,
+.swiper-container .swiper-slide p,
+.swiper-container .swiper-slide button {
+  opacity: 0;
+  transform: scale(1.25) rotate(-2deg);
+  will-change: opacity, transform;
+  transform-origin: center;
+}
+
+/* Анимация для активного слайда с цепочкой задержек */
+.swiper-container .swiper-slide-active .w-full h1 {
+  animation: dynamicZoomIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.1s;
+}
+
+.swiper-container .swiper-slide-active .w-full button {
+  animation: dynamicZoomIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.25s;
+}
+
+.swiper-container .swiper-slide-active .w-full p {
+  animation: dynamicZoomIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.4s;
+}
+
+/* Анимация для дубликатов активного слайда */
+.swiper-container .swiper-slide-duplicate-active .w-full h1 {
+  animation: dynamicZoomIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.1s;
+}
+
+.swiper-container .swiper-slide-duplicate-active .w-full button {
+  animation: dynamicZoomIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.25s;
+}
+
+.swiper-container .swiper-slide-duplicate-active .w-full p {
+  animation: dynamicZoomIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.4s;
+}
+
+/* Плавное исчезновение для неактивных слайдов */
+.swiper-container .swiper-slide-prev .w-full h1,
+.swiper-container .swiper-slide-prev .w-full button,
+.swiper-container .swiper-slide-prev .w-full p,
+.swiper-container .swiper-slide-next .w-full h1,
+.swiper-container .swiper-slide-next .w-full button,
+.swiper-container .swiper-slide-next .w-full p {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  transition-delay: 0s;
+}
+
+/* Адаптивные стили для разных размеров экрана */
+@media (max-width: 768px) {
+  .swiper-slide .md-absolute {
+    position: relative;
+    right: auto;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next,
+  .swiper-nav-arrow.swiper-button-prev,
+  .swiper-nav-arrow.swiper-button-next {
+    width: 30px;
+    height: 30px;
+  }
+
+  .swiper-button-prev:after,
+  .swiper-button-next:after,
+  .swiper-nav-arrow.swiper-button-prev:after,
+  .swiper-nav-arrow.swiper-button-next:after {
+    font-size: 14px;
+  }
+
+  /* Ускоряем переходы на мобильных устройствах */
+  .swiper-container .swiper-slide img,
+  .swiper-container .swiper-slide .block.md\:hidden img {
+    transition-duration: 0.3s;
+  }
+
+  /* Ускоренная анимация и задержки для мобильных устройств */
+  .swiper-container .swiper-slide-active .w-full h1 {
+    animation-duration: 0.5s;
+    animation-delay: 0.05s;
+  }
+
+  .swiper-container .swiper-slide-active .w-full button {
+    animation-duration: 0.5s;
+    animation-delay: 0.15s;
+  }
+
+  .swiper-container .swiper-slide-active .w-full p {
+    animation-duration: 0.5s;
+    animation-delay: 0.25s;
+  }
+
+  /* То же для дубликатов */
+  .swiper-container .swiper-slide-duplicate-active .w-full h1 {
+    animation-duration: 0.5s;
+    animation-delay: 0.05s;
+  }
+
+  .swiper-container .swiper-slide-duplicate-active .w-full button {
+    animation-duration: 0.5s;
+    animation-delay: 0.15s;
+  }
+
+  .swiper-container .swiper-slide-duplicate-active .w-full p {
+    animation-duration: 0.5s;
+    animation-delay: 0.25s;
+  }
+}
+
+#services-cards {
+  position: relative;
+}
+#services-cards::before {
+}
+#services-cards .service-card-item {
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Удаляю это правило, так как оно перезаписывает локальные стили */
+/* #services-cards .arrow-wrapper{
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  
+} */
+@media (max-width: 768px) {
+  #services-cards .arrow-wrapper {
+    display: none;
+  }
+}
+#services-cards .service-card-item span {
+  max-width: 8em;
+  text-transform: uppercase;
+  @apply text-caps-bold;
+}
+#services-cards .arrow-wrapper img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--brand-blue);
+  @apply border-brand-blue border-2 border-solid;
+  padding: 10px;
+  min-width: 1px;
+}
+
+@media (min-width: 768px) {
+  #services-cards .half-cards .service-card-item .arrow-wrapper {
+    bottom: 10px;
+    right: 30px;
+    top: auto;
+    left: auto;
+    height: 40px;
+    width: 40px;
+  }
+  #services-cards {
+  }
+  #services-cards .service-card-item {
+    min-height: 200px;
+  }
+  #services-cards .service-card-item span {
+  }
+}
+
+/* Анимация снежинок в слайдере */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"] {
+  opacity: 0;
+  /* Убираем transition для неактивных слайдов */
+  transition: none;
+  will-change: transform, opacity, filter;
+}
+
+/* Индивидуальные трансформации для каждой снежинки в неактивных слайдах */
+
+/* Снежинка 1: левый верхний угол (top-[25%], left-[5%]), с лёгким размытием (blur-[2px]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(1) {
+  transform: translateX(-40px) rotate(-45deg);
+  filter: blur(2px);
+}
+
+/* Снежинка 2: верхняя часть слева (top-[22%], left-[25%]), уменьшенная (scale-[0.5]), полупрозрачная (opacity-60) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(2) {
+  transform: translateX(-50px) rotate(60deg) scale(0.5);
+  opacity: 0;
+}
+
+/* Снежинка 3: левый нижний угол (bottom-[-2%], left-[27%]), увеличенная (scale-[1.5]), с сильным размытием (blur-[6px]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(3) {
+  transform: translateX(-300px) rotate(-190deg) scale(1.5);
+  filter: blur(6px);
+}
+
+/* Снежинка 4: правый нижний угол (bottom-[25%], right-[5%]), с умеренным размытием (blur-[3px]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(4) {
+  transform: translateX(-70px) rotate(-75deg);
+  filter: blur(3px);
+}
+
+/* Снежинка 5: правый край вверху (top-[35%], right-[-5%]), уменьшенная (scale-[0.5]) */
+.swiper-slide:not(.swiper-slide-active) img[alt="snowflake"]:nth-of-type(5) {
+  transform: translateX(-70px) rotate(180deg) scale(0.5);
+}
+
+/* Стили для снежинок в активном слайде */
+.swiper-slide-active img[alt="snowflake"],
+.swiper-slide-duplicate-active img[alt="snowflake"] {
+  opacity: 1;
+  /* Меняем функцию перехода на плавную, без колебаний в конце */
+  transition: transform 0.4s ease-out, opacity 0.4s ease, filter 0.4s ease;
+  will-change: transform, opacity, filter;
+}
+
+/* Сохраняем исходные трансформации для снежинок в активном слайде */
+
+/* Снежинка 1: левый верхний угол (top-[25%], left-[5%]), с лёгким размытием (blur-[2px]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(1),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(1) {
+  transform: rotate(-10deg);
+  filter: blur(2px);
+  transition-delay: 0.8s; /* Начинаем после начала анимации грузовика */
+}
+
+/* Снежинка 2: верхняя часть слева (top-[22%], left-[25%]), уменьшенная (scale-[0.5]), полупрозрачная (opacity-60) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(2),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(2) {
+  transform: rotate(-16deg) scale(0.5);
+  opacity: 0.6;
+  transition-delay: 0.7s;
+}
+
+/* Снежинка 3: левый нижний угол (bottom-[-2%], left-[27%]), увеличенная (scale-[1.5]), с сильным размытием (blur-[6px]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(3),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(3) {
+  transition: all 0.7s ease-out;
+  transform: rotate(-16deg) scale(1.5);
+  filter: blur(6px);
+  transition-delay: 0.4s;
+}
+
+/* Снежинка 4: правый нижний угол (bottom-[25%], right-[5%]), с умеренным размытием (blur-[3px]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(4),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(4) {
+  transform: rotate(35deg);
+  filter: blur(3px);
+  transition-delay: 0.4s;
+}
+
+/* Снежинка 5: правый край вверху (top-[35%], right-[-5%]), уменьшенная (scale-[0.5]) */
+.swiper-slide-active img[alt="snowflake"]:nth-of-type(5),
+.swiper-slide-duplicate-active img[alt="snowflake"]:nth-of-type(5) {
+  transform: rotate(76deg) scale(0.5);
+  transition-delay: 0.3s;
+}
+
+/* Стили для пагинации */
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 0 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #008dd2;
+  transform: scale(1.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Стили для интерактивной карты */
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 550px;
+}
+
+.map-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map-marker svg {
+  width: 36px;
+  height: 42px;
+}
+
+.map-marker.text-brand-gray svg path {
+  fill: #4d4d4d;
+}
+
+.map-marker.text-brand-blue svg path {
+  fill: #008dd2;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 400px;
+  }
+
+  .leaflet-control-attribution {
+    display: none;
+  }
+}
+
+/* Стили для новостного слайдера */
+.news-swiper-container .news-swiper-button-prev,
+.news-swiper-container .news-swiper-button-next {
+  position: relative;
+  z-index: 10;
+  left: auto;
+  right: auto;
+  transform: translateY(-0.6rem);
+  height: 40px;
+  width: 40px;
+}
+
+.news-swiper-container .news-swiper-button-prev:hover,
+.news-swiper-container .news-swiper-button-next:hover {
+  transform: translateY(-0.6rem);
+}
+
+.news-swiper-container .news-swiper-pagination {
+  position: relative;
+}
+
+.news-swiper-container
+  .news-swiper-pagination-bullets.swiper-pagination-horizontal {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .news-swiper-container .news-swiper-button-prev,
+  .news-swiper-container .news-swiper-button-next {
+    width: 30px;
+    height: 30px;
+  }
+
+  .news-swiper-container .news-swiper-button-prev:after,
+  .news-swiper-container .news-swiper-button-next:after {
+    font-size: 14px;
+  }
+}
+
+/* Стили для ховеров в футере */
+footer a.caps-regular {
+  @apply transition-colors duration-300;
+}
+
+footer a.caps-regular:hover {
+  @apply text-brand-blue;
+}
+
+footer a.text-white\/50:hover {
+  @apply text-white;
+}
+
+footer a.text-white.hover\:opacity-80:hover img {
+  @apply opacity-80;
+}
+
+@media (min-width: 768px) {
+  footer a.caption-regular:hover {
+    @apply text-brand-blue;
+  }
+}
+
+/* Кастомизация Daisy UI компонентов под дизайн проекта */
+@layer components {
+  /* Кнопки - соответствие существующему стилю */
+  .btn {
+    @apply bg-brand-blue text-white font-calibri font-regular text-buttons rounded-lg transition-colors duration-200;
+
+    min-height: auto;
+    height: auto;
+  }
+
+  .btn:hover,
+  .btn:focus {
+    background-color: #0070a8 !important;
+    border-color: #0070a8 !important;
+    color: #fff !important;
+  }
+
+  .btn-secondary {
+    @apply bg-brand-gray border-brand-gray text-white;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-brand-gray/90 border-brand-gray/90;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent border-transparent text-brand-gray;
+  }
+
+  .btn-ghost:hover {
+    @apply bg-brand-light text-brand-blue;
+  }
+
+  .btn-outline {
+    @apply bg-transparent border-gray-300 text-brand-gray;
+  }
+
+  .btn-outline:hover {
+    @apply bg-gray-50 border-gray-400;
+  }
+
+  /* Формы - точное соответствие существующему стилю */
+  .form-control {
+    @apply w-full;
+  }
+
+  .label {
+    @apply mb-2;
+  }
+
+  .label-text {
+    @apply text-brand-gray font-medium text-body-secondary;
+  }
+
+  .input {
+    @apply font-calibri text-body-secondary bg-white;
+    border-radius: var(--rounded-box);
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--input-border);
+    min-height: auto;
+    height: auto;
+  }
+
+  .input:focus {
+    @apply outline-none;
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 var(--input-focus-ring) var(--input-focus-ring-color);
+  }
+
+  .input-bordered {
+    border: 1px solid var(--input-border);
+  }
+
+  select {
+    @apply font-calibri text-body-secondary bg-white;
+    border-radius: var(--rounded-box);
+    padding: 0.75rem 1rem;
+
+    min-height: auto;
+    height: auto;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234D4D4D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1rem;
+    padding-right: 1.5rem;
+  }
+
+  .select:focus {
+    @apply outline-none;
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 var(--input-focus-ring) var(--input-focus-ring-color);
+  }
+
+  .textarea {
+    @apply font-calibri text-body-secondary bg-white;
+    border-radius: var(--rounded-box);
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--input-border);
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  .textarea:focus {
+    @apply outline-none;
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 var(--input-focus-ring) var(--input-focus-ring-color);
+  }
+
+  /* Таблицы - соответствие существующему стилю */
+  .table {
+    @apply w-full font-calibri;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .table th {
+    @apply px-4 py-3 text-left text-brand-gray font-medium bg-gray-50;
+    font-size: inherit;
+    font-weight: 500;
+  }
+
+  .table td {
+    @apply px-4 py-3 text-brand-gray;
+  }
+
+  .table tr.hover:hover {
+    @apply bg-gray-50;
+  }
+
+  .table-zebra tbody tr:nth-child(even) {
+    @apply bg-gray-50/50;
+  }
+
+  /* Карточки - соответствие существующему стилю */
+  .card {
+    border-radius: 0.5rem; /* 8px */
+    box-shadow: none; /* убираем тени */
+  }
+
+  .card-body {
+    @apply p-4 md:p-8; /* соответствует существующему стилю */
+  }
+
+  .card-title {
+    @apply font-calibri font-bold text-brand-gray;
+    margin-bottom: 1rem;
+  }
+
+  /* Модальные окна - соответствие существующему стилю */
+  .modal-box {
+    border-radius: 1rem; /* 16px как в существующих модалках */
+    padding: 1.5rem; /* p-6 */
+
+    background-color: white;
+    max-height: calc(100vh - 2rem);
+    @apply w-full max-w-3xl;
+  }
+  .flatpickr-wrapper {
+    width: 100%;
+  }
+  .flatpickr-footer {
+  }
+  /* Алерты - соответствие существующему стилю */
+  .alert {
+    border-radius: 0.75rem; /* 12px */
+    padding: 1rem;
+    @apply font-calibri;
+  }
+
+  .alert-info {
+    @apply bg-brand-light border border-brand-blue/20;
+  }
+
+  .alert-info .alert-title {
+    @apply text-brand-gray font-bold;
+  }
+
+  /* Табы - соответствие существующему стилю payments.html */
+  .tabs {
+    @apply flex gap-2 p-2 bg-brand-light rounded-lg;
+  }
+
+  .tab {
+    @apply px-4 py-3 text-center rounded-lg border border-transparent flex justify-center items-center flex-1 text-brand-gray-dark;
+    background-color: var(
+      --fallback-b2,
+      oklch(var(--b2) / var(--tw-bg-opacity))
+    );
+  }
+
+  /* Стили для табов в карточках отправителей и получателей */
+  .type-tab {
+    @apply focus:outline-none focus:ring-0 focus:border-0;
+    box-shadow: none !important;
+  }
+
+  .type-tab:focus {
+    @apply bg-white text-gray-800;
+  }
+
+  /* Пагинация - соответствие существующему стилю */
+  .join .join-item {
+    border-radius: 0.25rem; /* 4px */
+  }
+
+  .join-item.btn {
+    @apply w-8 h-8 min-h-0 p-0 flex items-center justify-center;
+  }
+
+  .pagination .join-item.btn {
+    @apply bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white;
+  }
+
+  .pagination .join-item.btn.active {
+    @apply bg-brand-blue text-white;
+  }
+
+  /* Улучшенные стили для пагинации List.js */
+  .pagination.join {
+    @apply gap-2;
+  }
+
+  /* Базовые стили для всех кнопок пагинации */
+  .pagination .page {
+    @apply w-8 h-8 min-h-0 p-0 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors border-0;
+    text-decoration: none;
+  }
+
+  /* Стили для стрелок пагинации List.js */
+  .pagination .page.pagination-arrow {
+    @apply w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors;
+  }
+
+  .pagination .page.pagination-prev,
+  .pagination .page.pagination-next {
+    @apply w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors;
+  }
+
+  /* Стили для дополнительных стрелок навигации */
+  .pagination .page.pagination-first,
+  .pagination .page.pagination-last {
+    @apply w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors;
+  }
+
+  /* Стили для активной кнопки пагинации */
+  .pagination .active .page {
+    @apply bg-white !text-brand-blue border-brand-blue border;
+  }
+
+  .pagination .active .page:hover {
+    @apply bg-white text-brand-blue border-brand-blue;
+  }
+
+  /* Стили для обычных кнопок страниц */
+  .pagination
+    .page:not(.pagination-arrow):not(.pagination-prev):not(
+      .pagination-next
+    ):not(.pagination-first):not(.pagination-last) {
+    @apply w-8 h-8 flex items-center justify-center rounded bg-brand-light text-brand-gray hover:bg-brand-blue hover:text-white transition-colors;
+  }
+
+  /* Отключенное состояние для всех стрелок */
+  .pagination .page.pagination-arrow:disabled,
+  .pagination .page.pagination-prev:disabled,
+  .pagination .page.pagination-next:disabled,
+  .pagination .page.pagination-first:disabled,
+  .pagination .page.pagination-last:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Чекбоксы - соответствие существующему стилю */
+  .checkbox {
+    @apply w-4 h-4 border-gray-300 rounded;
+  }
+
+  .checkbox:checked {
+    @apply bg-brand-blue border-brand-blue;
+  }
+
+  /* Фикс для List.js - убираем конфликт с Tailwind CSS */
+  .listjs-container {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.vc {
+  --vc-accent-color: var(--color-primary);
+  --vc-background-color: var(--color-base-100);
+  --vc-border-color: var(--color-base-300);
+  --vc-border-radius: theme(
+    "borderRadius.lg"
+  ); /* 8px по умолчанию в Tailwind */
+  --vc-font-family: theme(
+    "fontFamily.sans"
+  ); /* Используем системный sans-serif или ваш основной шрифт */
+  --vc-text-color: var(--color-base-content);
+  --vc-hover-color: var(--color-base-200);
+  --vc-disabled-color: var(--color-base-300);
+  --vc-weekend-color: theme(
+    "colors.red.500"
+  ); /* Стандартный красный для выходных */
+  --vc-today-color: var(--color-primary);
+  /* Для --vc-range-color используем основной цвет с прозрачностью */
+  --vc-range-color-rgb: 0, 141, 210; /* RGB для #008DD2 */
+  --vc-range-color: rgba(var(--vc-range-color-rgb), 0.1);
+  --vc-selected-color: var(--color-primary);
+  --vc-selected-text-color: var(--color-primary-content);
+}
+
+.vc-container {
+  @apply border rounded-lg shadow-md;
+  border-color: var(--vc-border-color);
+  font-family: var(--vc-font-family);
+  background-color: var(--vc-background-color);
+  color: var(--vc-text-color);
+}
+
+.vc-header {
+  @apply p-2.5 border-b;
+  background-color: var(--vc-background-color);
+  border-color: var(--vc-border-color);
+}
+.vc-month,
+.vc-year {
+  @apply px-2;
+}
+.vc-months__month,
+.vc-years__year {
+  @apply text-brand-gray uppercase font-medium text-sm;
+}
+[data-calendar-day-today="true"] {
+  @apply text-brand-blue;
+}
+[data-vc-date][data-vc-date-today] [data-vc-date-btn] {
+  @apply !text-brand-blue text-caption-form border-brand-blue border border-solid rounded-full !font-medium;
+}
+[data-vc-date-month="next"]:before,
+[data-vc-date-month="prev"]:before {
+  @apply !hidden;
+}
+[data-vc="month"],
+.vc-week__day {
+  @apply uppercase;
+}
+[data-vc="controls"] {
+  @apply top-2 uppercase;
+}
+
+[data-vc="grid"] {
+  @apply md:flex-nowrap;
+}
+[data-vc-arrow]:before {
+  @apply border-t border-r border-brand-gray;
+}
+[data-vc-arrow="next"]:before {
+  @apply rotate-45 scale-[.7];
+}
+[data-vc-arrow="prev"]:before {
+  @apply -rotate-[135deg] scale-[.7];
+}
+.vc-date {
+  @apply relative text-center cursor-pointer transition-colors duration-200 ease-in-out p-0;
+  /* Убираем внутренний padding из .vc-date, чтобы кнопка занимала всё место */
+}
+
+.vc-date:hover {
+  background-color: var(--vc-hover-color);
+}
+
+.vc-date__btn {
+  @apply w-full h-full border-none bg-transparent cursor-pointer p-2 rounded-none transition-colors duration-200 ease-in-out;
+  /* p-2 для содержимого кнопки, rounded-none чтобы не конфликтовать с .vc-date */
+}
+
+.vc-date:hover .vc-date__btn {
+  background-color: transparent; /* Фон ховера будет на .vc-date */
+}
+.vc-date[data-vc-date-selected] {
+  @apply relative z-10 text-white;
+}
+
+/* Стили для ВСЕХ выбранных дат (начало, середина, конец) */
+.vc-date[data-vc-date-selected="first"],
+.vc-date[data-vc-date-selected="middle"],
+.vc-date[data-vc-date-selected="last"] {
+  color: var(--vc-selected-text-color);
+}
+
+.vc-date[data-vc-date-selected="first"] .vc-date__btn,
+.vc-date[data-vc-date-selected="middle"] .vc-date__btn,
+.vc-date[data-vc-date-selected="last"] .vc-date__btn {
+  color: var(--vc-selected-text-color);
+  font-weight: theme("fontWeight.bold");
+}
+
+/* Начальная дата диапазона */
+.vc-date[data-vc-date-selected="first"] {
+  background-color: var(--vc-range-color);
+  @apply rounded-l-full;
+  z-index: +1;
+}
+.vc-date[data-vc-date-selected]::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--vc-selected-color);
+
+  border-radius: 50%;
+  z-index: -1;
+}
+.vc-date[data-vc-date-selected="first"]::before {
+  content: "";
+  position: absolute;
+
+  background-color: var(--vc-selected-color);
+}
+.vc-date[data-vc-date-selected="last"]::before {
+  content: "";
+
+  background-color: var(--vc-selected-color);
+}
+.vc-date[data-vc-date-selected="middle"]::before {
+  content: none;
+}
+/* Конечная дата диапазона */
+.vc-date[data-vc-date-selected="last"] {
+  background-color: var(--vc-range-color);
+  @apply rounded-r-full;
+  z-index: +1;
+}
+
+/* Промежуточные даты диапазона */
+.vc-date[data-vc-date-selected="middle"] {
+  background-color: var(--vc-range-color);
+  color: var(
+    --vc-text-color
+  ); /* Текст для промежуточных дат может быть обычным */
+  border-radius: 0;
+}
+.vc-date[data-vc-date-selected="middle"] .vc-date__btn {
+  color: var(--vc-text-color);
+  font-weight: theme("fontWeight.normal");
+}
+
+/* Если выбрана только одна дата (является и началом и концом) */
+.vc-date[data-vc-date-selected="first"][data-vc-date-selected="last"] {
+  background-color: var(--vc-selected-color);
+  @apply rounded-full;
+}
+
+/* Стили для сегодняшней даты */
+.vc-date[data-vc-date-today="true"] .vc-date__btn {
+  @apply ring-1 ring-inset;
+  ring-color: var(--vc-today-color);
+}
+
+/* Отключенные даты */
+.vc-date[data-vc-date-disabled="true"] {
+  background-color: transparent; /* Убираем фон для отключенных */
+  color: var(--vc-disabled-color);
+  @apply cursor-not-allowed opacity-50;
+}
+.vc-date[data-vc-date-disabled="true"] .vc-date__btn {
+  color: var(--vc-disabled-color);
+  @apply cursor-not-allowed;
+}
+
+/* Выходные дни */
+.vc-date[data-vc-date-weekend="true"] .vc-date__btn {
+  color: var(--vc-weekend-color);
+}
+
+/* Удаляем старые классы .day-* , если они больше не используются из JS */
+.day-first,
+.is-range-start,
+.day-last,
+.is-range-end,
+.day-selected,
+.is-selected,
+.day-in-range,
+.is-in-range,
+.day-first.day-last,
+.is-range-start.is-range-end {
+  /* Удаляем, так как теперь используются data-vc-date-selected атрибуты */
+}
+
+/* Стили для тултипа диапазона дат - можно оставить как есть или стилизовать Tailwind */
+.vc-date-range-tooltip {
+  @apply absolute bg-white text-gray-700 border border-gray-300 rounded-md p-2 text-xs shadow-lg z-10 pointer-events-none;
+  /* Используем переменные проекта для большей кастомизации, если нужно */
+  background-color: var(--vc-background-color);
+  color: var(--vc-text-color);
+  border-color: var(--vc-border-color);
+  border-radius: var(--vc-border-radius);
+  padding: theme("spacing.1") theme("spacing.2");
+  font-size: theme("fontSize.xs");
+}
+
+.vc-date-range-tooltip__row {
+  @apply flex justify-between py-0.5;
+}
+
+.vc-date-range-tooltip__label {
+  @apply font-bold mr-1;
+}
+
+.vc-date-range-tooltip__value {
+  color: var(--vc-accent-color);
+}
+
+.easy-data-table-wrapper .buttons-pagination .button {
+  margin: 0 0.2rem !important;
+  @apply !border-brand-gray;
+  border-top: var(--easy-table-buttons-pagination-border) !important;
+  border-bottom: var(--easy-table-buttons-pagination-border) !important;
+  border-right: var(--easy-table-buttons-pagination-border) !important;
+  border-left: var(--easy-table-buttons-pagination-border) !important;
+  border-radius: 0.25rem !important;
+}
+.vue3-easy-data-table__footer {
+  @apply !pt-10;
+}

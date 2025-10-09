@@ -1,0 +1,37 @@
+{{> header menuType="main"}}
+
+<main class="news-page container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  <!-- Заголовок страницы -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">НОВОСТИ</h1>
+    </div>
+    <div class="hero-background">
+      <img src="{{basePath}}assets/img/layout/news-bg.jpg" alt="" class="w-full h-full object-left object-cover md:object-center">
+    </div>
+  </section>
+
+  <!-- Скрытые данные для JavaScript -->
+  <script type="application/json" id="initial-data">
+  {
+    "newsData": {{{json newsData}}}
+  }
+  </script>
+
+  <script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+  </script>
+
+  <!-- Блок с новостями и пагинацией, управляемый Vue -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full max-w-[100vw] px-4 xl:px-0">
+    <div id="news-page-app"></div>
+  </section>
+
+  <div class="bg-brand-light max-w-[1920px] mx-auto w-full 3xl:rounded-tl-3xl 3xl:rounded-tr-3xl">
+    {{> services-cards}}
+  </div>
+</main>
+
+{{> footer menuType="main"}}
+
+<script type="module" src="{{basePath}}assets/vue/entrypoints/news-page.js"></script> 
