@@ -941,7 +941,7 @@ function calculateTariffCost(tariff) {
 async function fetchData() {
     try {
         const [officesRes, configRes] = await Promise.all([
-            fetch('/local/assets/data/contacts.json'),
+            fetch('/assets/data/contacts.json'),
             fetch('./assets/data/calculator-data.json')
         ]);
         const officesData = await officesRes.json();
