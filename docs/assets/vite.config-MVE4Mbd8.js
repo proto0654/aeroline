@@ -83,7 +83,7 @@ function getSlidersData() {
   }
 }
 
-// Загрузка данных о контактах из JSON
+// Загрузка данных о контактах из JSON (для карты на главной странице)
 function getContactsData() {
   try {
     const contactsData = fs.readFileSync(
@@ -430,24 +430,21 @@ export default defineConfig(({ command, mode }) => {
           });
           specificData.cities = Array.from(cities);
         } else if (fileName === "index.html") {
-          const contactsData = getContactsData(); // Получаем полные данные контактов, включая офисы
+          // Для главной страницы загружаем офисы из JSON для карты
+          const contactsData = getContactsData();
           specificData = {
             sliders: getSlidersData(),
             newsData: getNewsData(),
-            offices: contactsData.offices || [], // Передаем массив офисов для карты
+            offices: contactsData.offices || [], // Офисы для карты на главной странице
           };
         } else if (fileName === "contacts.html") {
-          const contactsData = getContactsData();
-          specificData = { ...contactsData };
-
-          // Группируем офисы по городам для фильтрации
-          const cities = new Set();
-          if (contactsData.offices && contactsData.offices.length > 0) {
-            contactsData.offices.forEach((office) => {
-              cities.add(office.city);
-            });
-          }
-          specificData.cities = Array.from(cities);
+          // Данные контактов теперь загружаются через API
+          specificData = { 
+            pageDescription: "Наша компания имеет более 40 представительств по всей России. Выберите одну из отмеченных точек на карте или воспользуйтесь списком ниже.",
+            offices: [],
+            cities: [],
+            pagination: { currentPage: 1, totalPages: 1 }
+          };
         } else if (fileName === "news.html") {
           specificData = { newsData: getNewsData() };
         } else if (fileName === "payments.html") {

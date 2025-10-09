@@ -12,20 +12,7 @@
     {{> map-section defaultOffice=defaultOffice}}
   </section>
 
-  <!-- Скрытые данные для JavaScript -->
-  <script type="application/json" id="initial-data">
-    {
-      "offices": {{{json offices}}},
-      "cities": {{{json cities}}},
-      "pagination": {{{json pagination}}}
-    }
-  </script>
-
-  <script>
-    window.initialData = JSON.parse(
-      document.getElementById("initial-data").textContent
-    );
-  </script>
+  <!-- Данные теперь загружаются через API -->
 
   <!-- Сетка карточек офисов -->
   <section class="mb-8 md:mb-12">

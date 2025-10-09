@@ -275,6 +275,129 @@ class ApiService {
         };
         return cityRegionMap[city] || 'Неизвестный регион';
     }
+
+    // ========== МЕТОДЫ ДЛЯ РАБОТЫ С КОНТАКТАМИ ==========
+
+    // Получение всех офисов
+    async getOffices() {
+        try {
+            const response = await fetch(`${this.baseUrl}/pvzs`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении офисов:', error);
+            throw error;
+        }
+    }
+
+    // Получение офиса по ID
+    async getOfficeById(id) {
+        try {
+            const response = await fetch(`${this.baseUrl}/pvzs/${id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении офиса:', error);
+            throw error;
+        }
+    }
+
+    // Получение офисов по городу
+    async getOfficesByCity(city) {
+        try {
+            const response = await fetch(`${this.baseUrl}/pvzs?city=${encodeURIComponent(city)}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении офисов по городу:', error);
+            throw error;
+        }
+    }
+
+    // Создание нового офиса
+    async createOffice(officeData) {
+        try {
+            const response = await fetch(`${this.baseUrl}/pvzs`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(officeData)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при создании офиса:', error);
+            throw error;
+        }
+    }
+
+    // Обновление офиса
+    async updateOffice(id, updateData) {
+        try {
+            const response = await fetch(`${this.baseUrl}/pvzs/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при обновлении офиса:', error);
+            throw error;
+        }
+    }
+
+    // Удаление офиса
+    async deleteOffice(id) {
+        try {
+            const response = await fetch(`${this.baseUrl}/pvzs/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('Ошибка при удалении офиса:', error);
+            throw error;
+        }
+    }
+
+    // Получение списка городов (извлекаем из офисов)
+    async getCities() {
+        try {
+            const offices = await this.getOffices();
+            const uniqueCities = [...new Set(offices.map(office => office.city))];
+            return uniqueCities;
+        } catch (error) {
+            console.error('Ошибка при получении городов:', error);
+            throw error;
+        }
+    }
 }
 
 // Создаем экземпляр сервиса

@@ -119,6 +119,10 @@
     "file": "assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js",
     "name": "_plugin-vue_export-helper"
   },
+  "_apiService-qKUK09Cb.js": {
+    "file": "assets/js/chunks/apiService-qKUK09Cb.js",
+    "name": "apiService"
+  },
   "_global-modal-dZf6PbYv.js": {
     "file": "assets/js/chunks/global-modal-dZf6PbYv.js",
     "name": "global-modal",
@@ -412,7 +416,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-BOV5nbSg.js",
+    "file": "assets/js/mainJs-BzcWqHOU.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -421,7 +425,7 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-BNQiL91r.css"
+      "assets/css/mainJs-CQLYRuDx.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
@@ -439,7 +443,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-BpNUC_h1.js",
+    "file": "assets/js/homePageJs-FM7AdGZS.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -482,7 +486,7 @@
       "assets/tailwind.config-oiuvnReP.js",
       "user-create..html",
       "vacancies..html",
-      "assets/vite.config-C6FIYgGP.js",
+      "assets/vite.config-MVE4Mbd8.js",
       "assets/img/Logotype_aerline_light-BjokHjWg.png"
     ]
   },
@@ -572,7 +576,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-BzgcaS52.js",
+    "file": "assets/js/contacts-BbcZee5F.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -582,6 +586,7 @@
       "assets/js/modules/global-ui.js",
       "_runtime-dom.esm-bundler-DZCqFWTW.js",
       "_AutocompleteInput-C1PGjSeS.js",
+      "_apiService-qKUK09Cb.js",
       "_globalModal-WavfrdGt.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
@@ -620,7 +625,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-_6rYxZQz.js",
+    "file": "assets/js/main-CmdPqftC.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -688,7 +693,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-CYoxE8Nq.js",
+    "file": "assets/js/orderList--HgplaFs.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -700,6 +705,7 @@
       "_globalModal-WavfrdGt.js",
       "_EasyDataTableWrapper-CfG6tW4E.js",
       "_DeleteConfirmModal-BDNkBwI0.js",
+      "_apiService-qKUK09Cb.js",
       "__plugin-vue_export-helper-1tPrXgE0.js",
       "_slider-q_NEEFv1.js",
       "_modal-manager-BXwv0V3q.js",
@@ -727,7 +733,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-7SD5AdvI.js",
+    "file": "assets/js/orderTracking-DvIjRjq9.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -774,7 +780,7 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-Cr0JuxpZ.js",
+    "file": "assets/js/payments-B_xpC7Aw.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -826,7 +832,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-DgLK0nYJ.js",
+    "file": "assets/js/profile-DPmoJNXr.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -866,7 +872,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-B2SD4H1M.js",
+    "file": "assets/js/sendersReceivers-WAmoPUre.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -902,7 +908,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-xvebzdDp.js",
+    "file": "assets/js/serviceActs-CaFmp3eZ.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -939,7 +945,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-DpNFboKL.js",
+    "file": "assets/js/services-CM2qXqx1.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -990,7 +996,7 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-JDSVtsl4.js",
+    "file": "assets/js/vacancies-CDXMBIsR.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,
@@ -1022,7 +1028,7 @@
     ]
   },
   "vite.config.js": {
-    "file": "assets/vite.config-C6FIYgGP.js",
+    "file": "assets/vite.config-MVE4Mbd8.js",
     "src": "vite.config.js"
   }
 }
