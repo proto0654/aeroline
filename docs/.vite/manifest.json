@@ -439,7 +439,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-RcR1OqL1.js",
+    "file": "assets/js/homePageJs-t9E44BMJ.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -460,6 +460,7 @@
       "contacts..html",
       "cooperation..html",
       "assets/copy-assets-CDK2vOol.js",
+      "assets/deploy-OIoQImof.cjs",
       "helper..html",
       "index..html",
       "assets/main.js-Dxcng8Lk.bak",
@@ -610,12 +611,16 @@
     "file": "assets/copy-assets-CDK2vOol.js",
     "src": "copy-assets.js"
   },
+  "deploy.cjs": {
+    "file": "assets/deploy-OIoQImof.cjs",
+    "src": "deploy.cjs"
+  },
   "helper.html": {
     "file": "helper..html",
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-CNI-sSUy.js",
+    "file": "assets/js/main-CqZ4M5yc.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
