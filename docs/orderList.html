@@ -1,0 +1,32 @@
+{{> header menuType="user"}}
+
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  
+  <!-- Список заказов -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div id="orders-table" class="bg-white rounded-lg">
+      <!-- Заголовок таблицы -->
+      <div class="border-b border-gray-200">
+        <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4 mt-10">Список заказов</h1>
+      </div>
+
+      <!-- Таблица -->
+      <div id="orders-table-app"></div>
+    </div>
+  </section>
+ 
+</main>
+
+<script type="application/json" id="initial-data">
+{
+    "orders": {{{json orders}}}
+}
+</script>
+
+<script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+</script>
+
+<script type="module" src="{{basePath}}assets/vue/entrypoints/orders-app.js"></script>
+<script type="module" src="{{basePath}}assets/vue/entrypoints/global-modal.js"></script>
+{{> footer menuType="user"}} 

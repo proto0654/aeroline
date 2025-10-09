@@ -1,0 +1,21 @@
+{{> header menuType="user"}}
+
+<main
+  class="container mx-auto px-4 pb-12 max-w-[1200px] flex-grow flex flex-col justify-center gap-y-2"
+>
+  <!-- Hero-блок -->
+  <section class="hero-section !pb-0">
+    <div class="flex-row justify-start">
+      <h1 class="hero-title !md:normal-case">Отслеживание заказов</h1>
+    </div>
+  </section>
+
+  <div id="order-tracking-app"></div>
+</main>
+
+<script
+  type="module"
+  src="{{basePath}}assets/js/page-entrypoints/order-tracking.js"
+></script>
+
+{{> footer menuType="user"}}

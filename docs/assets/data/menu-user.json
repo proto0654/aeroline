@@ -1,0 +1,43 @@
+{
+  "header": [
+    { "title": "Список заказов", "url": "order-list.html", "key": "order-list" },
+    { "title": "Создать заказ", "submenu": [
+      { "title": "Новый заказ", "url": "order-new.html", "key": "order-new" },
+      { "title": "Массовый заказ", "url": "bulk-order.html", "key": "bulk-order" }
+    ], "key": "create-order" },
+    { "title": "Сервис", "submenu": [
+      { "title": "Калькулятор", "url": "calculator.html", "key": "calculator" },
+      { "title": "Отследить заказ", "url": "order-tracking.html", "key": "order-tracking" }
+    ], "key": "service" },
+    { "title": "Отчёты", "submenu": [
+      { "title": "Акты оказания услуг", "url": "service-acts.html", "key": "service-acts" },
+      { "title": "Запросить акт сверки", "url": "reconciliation-act.html", "key": "reconciliation-act" },
+      { "title": "Отчёты", "url": "reports.html", "key": "reports-page" }
+    ], "key": "reports" },
+   
+    { "title": "Аккаунт", "submenu": [
+      { "title": "Профиль", "url": "profile.html", "key": "profile" },
+      { "title": "Данные о сотрудничестве", "url": "cooperation.html", "key": "cooperation" },
+      { "title": "Создание пользователя", "url": "user-create.html", "key": "user-create" },
+      { "title": "Информация об уведомлениях", "url": "notifications.html", "key": "notifications" },
+      { "title": "Карточки отправителей и получателей", "url": "senders-receivers.html", "key": "senders-receivers" }
+    ], "key": "account" },
+    { "title": "Страница «Помощник»", "url": "helper.html", "key": "helper" }
+  ],
+  "footer": [
+    { "title": "Список заказов", "url": "order-list.html", "key": "order-list" },
+    { "title": "Новый заказ", "url": "order-new.html", "key": "order-new" },
+    { "title": "Массовый заказ", "url": "bulk-order.html", "key": "bulk-order" },
+    { "title": "Акты оказания услуг", "url": "service-acts.html", "key": "service-acts" },
+    { "title": "Запросить акт сверки", "url": "reconciliation-act.html", "key": "reconciliation-act" },
+    { "title": "Отчёты", "url": "reports.html", "key": "reports-page" },
+    { "title": "Отслеживание заказа", "url": "order-tracking.html", "key": "order-tracking" },
+    { "title": "Страница «Помощник»", "url": "helper.html", "key": "helper" },
+    { "title": "Калькулятор", "url": "calculator.html", "key": "calculator" },
+    { "title": "Профиль", "url": "profile.html", "key": "profile" },
+    { "title": "Данные о сотрудничестве", "url": "cooperation.html", "key": "cooperation" },
+    { "title": "Создание пользователя", "url": "user-create.html", "key": "user-create" },
+    { "title": "Информация об уведомлениях", "url": "notifications.html", "key": "notifications" },
+    { "title": "Карточки отправителей и получателей", "url": "senders-receivers.html", "key": "senders-receivers" }
+  ]
+} 

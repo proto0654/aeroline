@@ -1,0 +1,54 @@
+{{> header menuType="main"}}
+
+<main class="container mx-auto px-4 max-w-[1200px] py-4 md:py-8 flex-grow">
+  <!-- Hero-блок -->
+  <section class="hero-section">
+    <div class="flex-row justify-start">
+      <h1 class="hero-title">Контакты</h1>
+    </div>
+    <p class="body-secondary caption-regular mb-4 md:mb-8">
+      {{pageDescription}}
+    </p>
+    {{> map-section defaultOffice=defaultOffice}}
+  </section>
+
+  <!-- Скрытые данные для JavaScript -->
+  <script type="application/json" id="initial-data">
+    {
+      "offices": {{{json offices}}},
+      "cities": {{{json cities}}},
+      "pagination": {{{json pagination}}}
+    }
+  </script>
+
+  <script>
+    window.initialData = JSON.parse(
+      document.getElementById("initial-data").textContent
+    );
+  </script>
+
+  <!-- Сетка карточек офисов -->
+  <section class="mb-8 md:mb-12">
+    <h2
+      class="text-h3 lg:text-center md:text-h2 font-bold text-brand-gray mb-6 md:mb-8"
+    >
+      Контактная информация
+    </h2>
+
+    <!-- Фильтр по городу -->
+    <div class="flex justify-center mb-6 md:mb-10 w-full">
+      <div id="city-filter-app"></div>
+    </div>
+
+    <div id="contacts-grid-app">
+      <!-- Сюда будет монтироваться Vue-компонент ContactsGrid.vue -->
+    </div>
+  </section>
+</main>
+
+<script
+  type="module"
+  src="{{basePath}}assets/vue/entrypoints/contacts-page.js"
+></script>
+
+{{> footer menuType="main"}}

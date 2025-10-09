@@ -1,0 +1,1023 @@
+{
+  "_AutocompleteInput-BwSv5X-Z.css": {
+    "file": "assets/css/AutocompleteInput-BwSv5X-Z.css",
+    "src": "_AutocompleteInput-BwSv5X-Z.css"
+  },
+  "_AutocompleteInput-C1PGjSeS.js": {
+    "file": "assets/js/chunks/AutocompleteInput-C1PGjSeS.js",
+    "name": "AutocompleteInput",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_select-arrow-He2ejS2L.js",
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/AutocompleteInput-BwSv5X-Z.css"
+    ]
+  },
+  "_CheckboxInput-CUU35C6q.css": {
+    "file": "assets/css/CheckboxInput-CUU35C6q.css",
+    "src": "_CheckboxInput-CUU35C6q.css"
+  },
+  "_CheckboxInput-DIFQR0HT.js": {
+    "file": "assets/js/chunks/CheckboxInput-DIFQR0HT.js",
+    "name": "CheckboxInput",
+    "imports": [
+      "_AutocompleteInput-C1PGjSeS.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/CheckboxInput-CUU35C6q.css"
+    ],
+    "assets": [
+      "assets/img/double-arrow-DkQhunId.svg"
+    ]
+  },
+  "_DateRangeFilter-9e3F7h-a.css": {
+    "file": "assets/css/DateRangeFilter-9e3F7h-a.css",
+    "src": "_DateRangeFilter-9e3F7h-a.css"
+  },
+  "_DateRangeFilter-DlQtVGNo.js": {
+    "file": "assets/js/chunks/DateRangeFilter-DlQtVGNo.js",
+    "name": "DateRangeFilter",
+    "imports": [
+      "_ru.es-BU9Gbdrk.js",
+      "assets/vue/entrypoints/lk-datepicker.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js"
+    ],
+    "css": [
+      "assets/css/DateRangeFilter-9e3F7h-a.css"
+    ]
+  },
+  "_DeleteConfirmModal-BDNkBwI0.js": {
+    "file": "assets/js/chunks/DeleteConfirmModal-BDNkBwI0.js",
+    "name": "DeleteConfirmModal",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/DeleteConfirmModal-Bsx9uojj.css"
+    ]
+  },
+  "_DeleteConfirmModal-Bsx9uojj.css": {
+    "file": "assets/css/DeleteConfirmModal-Bsx9uojj.css",
+    "src": "_DeleteConfirmModal-Bsx9uojj.css"
+  },
+  "_EasyDataTableWrapper-CfG6tW4E.js": {
+    "file": "assets/js/chunks/EasyDataTableWrapper-CfG6tW4E.js",
+    "name": "EasyDataTableWrapper",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css"
+    ]
+  },
+  "_EasyDataTableWrapper-Ev7WQvgQ.css": {
+    "file": "assets/css/EasyDataTableWrapper-Ev7WQvgQ.css",
+    "src": "_EasyDataTableWrapper-Ev7WQvgQ.css"
+  },
+  "_NewsDetailModal-M7XIU5Qd.js": {
+    "file": "assets/js/chunks/NewsDetailModal-M7XIU5Qd.js",
+    "name": "NewsDetailModal",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js"
+    ],
+    "assets": [
+      "assets/img/563x304 (1)-KBSjg7Ja.jpg",
+      "assets/img/563x304-8PI7wwWf.jpg",
+      "assets/img/800x400 (1)-DehTG3JH.jpg",
+      "assets/img/800x400 (2)-B-Ks_FTB.jpg",
+      "assets/img/800x400-Bd9KAYgL.jpg",
+      "assets/img/scale_1200 (1)-CloB-gPO.jpg",
+      "assets/img/scale_1200-CHtVQ_Ge.jpg",
+      "assets/img/Logotype_aerline_light-BjokHjWg.png"
+    ]
+  },
+  "_TextInput-B-9ZZzjH.css": {
+    "file": "assets/css/TextInput-B-9ZZzjH.css",
+    "src": "_TextInput-B-9ZZzjH.css"
+  },
+  "_TextInput-DRKSnHb_.js": {
+    "file": "assets/js/chunks/TextInput-DRKSnHb_.js",
+    "name": "TextInput",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/TextInput-B-9ZZzjH.css"
+    ]
+  },
+  "__plugin-vue_export-helper-1tPrXgE0.js": {
+    "file": "assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_global-modal-dZf6PbYv.js": {
+    "file": "assets/js/chunks/global-modal-dZf6PbYv.js",
+    "name": "global-modal",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_globalModal-WavfrdGt.js"
+    ]
+  },
+  "_globalModal-WavfrdGt.js": {
+    "file": "assets/js/chunks/globalModal-WavfrdGt.js",
+    "name": "globalModal",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js"
+    ]
+  },
+  "_index-7GPoofoh.js": {
+    "file": "assets/js/chunks/index-7GPoofoh.js",
+    "name": "index"
+  },
+  "_modal-manager-BXwv0V3q.js": {
+    "file": "assets/js/chunks/modal-manager-BXwv0V3q.js",
+    "name": "modal-manager"
+  },
+  "_ru-Kg3WaEbl.css": {
+    "file": "assets/css/ru-Kg3WaEbl.css",
+    "src": "_ru-Kg3WaEbl.css"
+  },
+  "_ru.es-BU9Gbdrk.js": {
+    "file": "assets/js/chunks/ru.es-BU9Gbdrk.js",
+    "name": "ru.es",
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js"
+    ],
+    "css": [
+      "assets/css/ru-Kg3WaEbl.css"
+    ]
+  },
+  "_runtime-dom.esm-bundler-DZCqFWTW.js": {
+    "file": "assets/js/chunks/runtime-dom.esm-bundler-DZCqFWTW.js",
+    "name": "runtime-dom.esm-bundler"
+  },
+  "_select-arrow-He2ejS2L.js": {
+    "file": "assets/js/chunks/select-arrow-He2ejS2L.js",
+    "name": "select-arrow",
+    "assets": [
+      "assets/img/select-arrow-BP51TTpS.svg"
+    ]
+  },
+  "_slider-q_NEEFv1.js": {
+    "file": "assets/js/chunks/slider-q_NEEFv1.js",
+    "name": "slider"
+  },
+  "assets/img/double-arrow.svg": {
+    "file": "assets/img/double-arrow-DkQhunId.svg",
+    "src": "assets/img/double-arrow.svg"
+  },
+  "assets/img/icons/callcalling.svg": {
+    "file": "assets/img/callcalling-_7VMGJtF.svg",
+    "src": "assets/img/icons/callcalling.svg"
+  },
+  "assets/img/icons/callcalling_white.svg": {
+    "file": "assets/img/callcalling_white-BPRUXMnE.svg",
+    "src": "assets/img/icons/callcalling_white.svg"
+  },
+  "assets/img/icons/cube.svg": {
+    "file": "assets/img/cube-xW9FiDQr.svg",
+    "src": "assets/img/icons/cube.svg"
+  },
+  "assets/img/icons/edit.svg": {
+    "file": "assets/img/edit-Bxc_5xGJ.svg",
+    "src": "assets/img/icons/edit.svg"
+  },
+  "assets/img/icons/logos_telegram.svg": {
+    "file": "assets/img/logos_telegram-DAaG1Vgd.svg",
+    "src": "assets/img/icons/logos_telegram.svg"
+  },
+  "assets/img/icons/logos_whatsapp-icon.svg": {
+    "file": "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+    "src": "assets/img/icons/logos_whatsapp-icon.svg"
+  },
+  "assets/img/icons/messages3.svg": {
+    "file": "assets/img/messages3-BrscMbdi.svg",
+    "src": "assets/img/icons/messages3.svg"
+  },
+  "assets/img/icons/messages3_white.svg": {
+    "file": "assets/img/messages3_white-CxOA5ieA.svg",
+    "src": "assets/img/icons/messages3_white.svg"
+  },
+  "assets/img/icons/order-tracking/checked.svg": {
+    "file": "assets/img/checked-KxLizkFk.svg",
+    "src": "assets/img/icons/order-tracking/checked.svg"
+  },
+  "assets/img/icons/order-tracking/denied.svg": {
+    "file": "assets/img/denied-mR4BVpBn.svg",
+    "src": "assets/img/icons/order-tracking/denied.svg"
+  },
+  "assets/img/icons/order-tracking/folder-plus.svg": {
+    "file": "assets/img/folder-plus-CMAG_r68.svg",
+    "src": "assets/img/icons/order-tracking/folder-plus.svg"
+  },
+  "assets/img/icons/order-tracking/message-dots.svg": {
+    "file": "assets/img/message-dots-CN7DWFsZ.svg",
+    "src": "assets/img/icons/order-tracking/message-dots.svg"
+  },
+  "assets/img/icons/order-tracking/pvz.svg": {
+    "file": "assets/img/pvz-Dl8vKBnA.svg",
+    "src": "assets/img/icons/order-tracking/pvz.svg"
+  },
+  "assets/img/icons/order-tracking/trouble.svg": {
+    "file": "assets/img/trouble-Cvl3i24o.svg",
+    "src": "assets/img/icons/order-tracking/trouble.svg"
+  },
+  "assets/img/icons/order-tracking/truck-fast.svg": {
+    "file": "assets/img/truck-fast-HdQ00Q51.svg",
+    "src": "assets/img/icons/order-tracking/truck-fast.svg"
+  },
+  "assets/img/icons/q.svg": {
+    "file": "assets/img/q-8XezpOIm.svg",
+    "src": "assets/img/icons/q.svg"
+  },
+  "assets/img/icons/vuesax.svg": {
+    "file": "assets/img/vuesax-B2MydD8A.svg",
+    "src": "assets/img/icons/vuesax.svg"
+  },
+  "assets/img/layout/Logotype_aerline_light.png": {
+    "file": "assets/img/Logotype_aerline_light-BjokHjWg.png",
+    "src": "assets/img/layout/Logotype_aerline_light.png"
+  },
+  "assets/img/layout/Logotype_aerline_sliced.png": {
+    "file": "assets/img/Logotype_aerline_sliced-BwscNV8g.png",
+    "src": "assets/img/layout/Logotype_aerline_sliced.png"
+  },
+  "assets/img/layout/Logotype_aerline_white.png": {
+    "file": "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+    "src": "assets/img/layout/Logotype_aerline_white.png"
+  },
+  "assets/img/layout/aeroline_logo.svg": {
+    "file": "assets/img/aeroline_logo-BATjs7xh.svg",
+    "src": "assets/img/layout/aeroline_logo.svg"
+  },
+  "assets/img/layout/circles.svg": {
+    "file": "assets/img/circles-Cun3gczq.svg",
+    "src": "assets/img/layout/circles.svg"
+  },
+  "assets/img/layout/delivery-man.png": {
+    "file": "assets/img/delivery-man-Bpg7pyAz.png",
+    "src": "assets/img/layout/delivery-man.png"
+  },
+  "assets/img/layout/news-bg.jpg": {
+    "file": "assets/img/news-bg-BAn4-K8q.jpg",
+    "src": "assets/img/layout/news-bg.jpg"
+  },
+  "assets/img/layout/order-tracking-img.png": {
+    "file": "assets/img/order-tracking-img-CkPtxPsa.png",
+    "src": "assets/img/layout/order-tracking-img.png"
+  },
+  "assets/img/layout/payments-hero.png": {
+    "file": "assets/img/payments-hero-DUi_PueL.png",
+    "src": "assets/img/layout/payments-hero.png"
+  },
+  "assets/img/layout/payments-logos/logos.png": {
+    "file": "assets/img/logos-L4pV1jbf.png",
+    "src": "assets/img/layout/payments-logos/logos.png"
+  },
+  "assets/img/layout/payments-logos/payments-tabs1.jpg": {
+    "file": "assets/img/payments-tabs1-BG4TGZAn.jpg",
+    "src": "assets/img/layout/payments-logos/payments-tabs1.jpg"
+  },
+  "assets/img/layout/payments-logos/payments-tabs2.jpg": {
+    "file": "assets/img/payments-tabs2-D43FroUp.jpg",
+    "src": "assets/img/layout/payments-logos/payments-tabs2.jpg"
+  },
+  "assets/img/layout/payments-logos/payments-tabs3.jpg": {
+    "file": "assets/img/payments-tabs3-Dz0ejBoT.jpg",
+    "src": "assets/img/layout/payments-logos/payments-tabs3.jpg"
+  },
+  "assets/img/layout/payments-logos/payments-tabs4.jpg": {
+    "file": "assets/img/payments-tabs4-Bonz5wY3.jpg",
+    "src": "assets/img/layout/payments-logos/payments-tabs4.jpg"
+  },
+  "assets/img/layout/payments-logos/pribyl.png": {
+    "file": "assets/img/pribyl-CON5M6uL.png",
+    "src": "assets/img/layout/payments-logos/pribyl.png"
+  },
+  "assets/img/layout/payments-logos/terminal.png": {
+    "file": "assets/img/terminal-CuhRG-hB.png",
+    "src": "assets/img/layout/payments-logos/terminal.png"
+  },
+  "assets/img/layout/services-bg.jpg": {
+    "file": "assets/img/services-bg-DayX8jcv.jpg",
+    "src": "assets/img/layout/services-bg.jpg"
+  },
+  "assets/img/layout/vacancy-hero.jpg": {
+    "file": "assets/img/vacancy-hero-BxE00Vlq.jpg",
+    "src": "assets/img/layout/vacancy-hero.jpg"
+  },
+  "assets/img/mens-hands.png": {
+    "file": "assets/img/mens-hands-sM_EUFJA.png",
+    "src": "assets/img/mens-hands.png"
+  },
+  "assets/img/news/563x304 (1).jpg": {
+    "file": "assets/img/563x304 (1)-KBSjg7Ja.jpg",
+    "src": "assets/img/news/563x304 (1).jpg"
+  },
+  "assets/img/news/563x304.jpg": {
+    "file": "assets/img/563x304-8PI7wwWf.jpg",
+    "src": "assets/img/news/563x304.jpg"
+  },
+  "assets/img/news/800x400 (1).jpg": {
+    "file": "assets/img/800x400 (1)-DehTG3JH.jpg",
+    "src": "assets/img/news/800x400 (1).jpg"
+  },
+  "assets/img/news/800x400 (2).jpg": {
+    "file": "assets/img/800x400 (2)-B-Ks_FTB.jpg",
+    "src": "assets/img/news/800x400 (2).jpg"
+  },
+  "assets/img/news/800x400.jpg": {
+    "file": "assets/img/800x400-Bd9KAYgL.jpg",
+    "src": "assets/img/news/800x400.jpg"
+  },
+  "assets/img/news/scale_1200 (1).jpg": {
+    "file": "assets/img/scale_1200 (1)-CloB-gPO.jpg",
+    "src": "assets/img/news/scale_1200 (1).jpg"
+  },
+  "assets/img/news/scale_1200.jpg": {
+    "file": "assets/img/scale_1200-CHtVQ_Ge.jpg",
+    "src": "assets/img/news/scale_1200.jpg"
+  },
+  "assets/img/pilot.png": {
+    "file": "assets/img/pilot-CV20KYFc.png",
+    "src": "assets/img/pilot.png"
+  },
+  "assets/img/search.svg": {
+    "file": "assets/img/search-CYPbi9xb.svg",
+    "src": "assets/img/search.svg"
+  },
+  "assets/img/sections-button-arrow.svg": {
+    "file": "assets/img/sections-button-arrow-DwtEv55Z.svg",
+    "src": "assets/img/sections-button-arrow.svg"
+  },
+  "assets/img/sections/calculator.png": {
+    "file": "assets/img/calculator-tItVAvRt.png",
+    "src": "assets/img/sections/calculator.png"
+  },
+  "assets/img/sections/feedback.png": {
+    "file": "assets/img/feedback-DiNwoEie.png",
+    "src": "assets/img/sections/feedback.png"
+  },
+  "assets/img/sections/helper.png": {
+    "file": "assets/img/helper-DL7cmOck.png",
+    "src": "assets/img/sections/helper.png"
+  },
+  "assets/img/sections/international.png": {
+    "file": "assets/img/international-BEmQ72HF.png",
+    "src": "assets/img/sections/international.png"
+  },
+  "assets/img/sections/payment.png": {
+    "file": "assets/img/payment-BlCFAG8C.png",
+    "src": "assets/img/sections/payment.png"
+  },
+  "assets/img/sections/request-for-calculation.png": {
+    "file": "assets/img/request-for-calculation-D_Epmwlg.png",
+    "src": "assets/img/sections/request-for-calculation.png"
+  },
+  "assets/img/sections/shipping.png": {
+    "file": "assets/img/shipping-JM3RDj5L.png",
+    "src": "assets/img/sections/shipping.png"
+  },
+  "assets/img/sections/tariffs.png": {
+    "file": "assets/img/tariffs-ByN9uM2m.png",
+    "src": "assets/img/sections/tariffs.png"
+  },
+  "assets/img/sections/track.png": {
+    "file": "assets/img/track-Cu7Qp3LN.png",
+    "src": "assets/img/sections/track.png"
+  },
+  "assets/img/select-arrow.svg": {
+    "file": "assets/img/select-arrow-BP51TTpS.svg",
+    "src": "assets/img/select-arrow.svg"
+  },
+  "assets/img/slider/slide-fourth.png": {
+    "file": "assets/img/slide-fourth-BzvwDFsr.png",
+    "src": "assets/img/slider/slide-fourth.png"
+  },
+  "assets/img/slider/slide-three.png": {
+    "file": "assets/img/slide-three-ClaKcOil.png",
+    "src": "assets/img/slider/slide-three.png"
+  },
+  "assets/img/slider/snow-flake.svg": {
+    "file": "assets/img/snow-flake-BFAJ6vTM.svg",
+    "src": "assets/img/slider/snow-flake.svg"
+  },
+  "assets/js/main.js": {
+    "file": "assets/js/mainJs-BOV5nbSg.js",
+    "name": "mainJs",
+    "src": "assets/js/main.js",
+    "isEntry": true,
+    "imports": [
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js"
+    ],
+    "css": [
+      "assets/css/mainJs-BNQiL91r.css"
+    ]
+  },
+  "assets/js/modules/global-ui.js": {
+    "file": "assets/js/globalUiJs-Bq6ceTVX.js",
+    "name": "globalUiJs",
+    "src": "assets/js/modules/global-ui.js",
+    "isEntry": true,
+    "imports": [
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js"
+    ],
+    "css": [
+      "assets/css/globalUiJs-BaQL4gkF.css"
+    ]
+  },
+  "assets/js/modules/home-page.js": {
+    "file": "assets/js/homePageJs-RcR1OqL1.js",
+    "name": "homePageJs",
+    "src": "assets/js/modules/home-page.js",
+    "isEntry": true,
+    "imports": [
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_globalModal-WavfrdGt.js",
+      "_NewsDetailModal-M7XIU5Qd.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "css": [
+      "assets/css/homePageJs-Dx2n7P6X.css"
+    ],
+    "assets": [
+      "bulk-order..html",
+      "calculator..html",
+      "contacts..html",
+      "cooperation..html",
+      "assets/copy-assets-CDK2vOol.js",
+      "helper..html",
+      "index..html",
+      "assets/main.js-Dxcng8Lk.bak",
+      "news..html",
+      "notifications..html",
+      "order-list..html",
+      "order-new..html",
+      "order-tracking..html",
+      "assets/data/package-lock-BkC8jPWj.json",
+      "assets/data/package-BU77udTe.json",
+      "payments..html",
+      "assets/postcss.config-By4aJUYq.js",
+      "profile..html",
+      "reconciliation-act..html",
+      "reports..html",
+      "senders-receivers..html",
+      "service-acts..html",
+      "services..html",
+      "assets/tailwind.config-oiuvnReP.js",
+      "user-create..html",
+      "vacancies..html",
+      "assets/vite.config-C6FIYgGP.js",
+      "assets/img/Logotype_aerline_light-BjokHjWg.png"
+    ]
+  },
+  "assets/js/modules/profile-page.js": {
+    "file": "assets/js/profilePageJs-B65luuBh.js",
+    "name": "profilePageJs",
+    "src": "assets/js/modules/profile-page.js",
+    "isEntry": true
+  },
+  "assets/js/modules/senders-receivers-page.js": {
+    "file": "assets/js/sendersReceiversPageJs-BSR9iBMH.js",
+    "name": "sendersReceiversPageJs",
+    "src": "assets/js/modules/senders-receivers-page.js",
+    "isEntry": true,
+    "imports": [
+      "_index-7GPoofoh.js",
+      "_modal-manager-BXwv0V3q.js"
+    ]
+  },
+  "assets/js/modules/service-acts-page.js": {
+    "file": "assets/js/serviceActsPageJs-DBILjNPe.js",
+    "name": "serviceActsPageJs",
+    "src": "assets/js/modules/service-acts-page.js",
+    "isEntry": true,
+    "imports": [
+      "_index-7GPoofoh.js"
+    ]
+  },
+  "assets/vue/entrypoints/calculator-page.js": {
+    "file": "assets/js/calculatorPageJs-DPvKWIn6.js",
+    "name": "calculatorPageJs",
+    "src": "assets/vue/entrypoints/calculator-page.js",
+    "isEntry": true,
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_CheckboxInput-DIFQR0HT.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_select-arrow-He2ejS2L.js",
+      "_TextInput-DRKSnHb_.js",
+      "_AutocompleteInput-C1PGjSeS.js",
+      "_ru.es-BU9Gbdrk.js"
+    ],
+    "css": [
+      "assets/css/calculatorPageJs-Dni7pzj5.css"
+    ]
+  },
+  "assets/vue/entrypoints/lk-datepicker.js": {
+    "file": "assets/js/lkDatepickerJs-iq-wnAN6.js",
+    "name": "lkDatepickerJs",
+    "src": "assets/vue/entrypoints/lk-datepicker.js",
+    "isEntry": true,
+    "imports": [
+      "_ru.es-BU9Gbdrk.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js"
+    ],
+    "css": [
+      "assets/css/lkDatepickerJs-CRmr_k3c.css"
+    ]
+  },
+  "assets/vue/entrypoints/news-page.js": {
+    "file": "assets/js/newsPageVueJs-f_3neQUO.js",
+    "name": "newsPageVueJs",
+    "src": "assets/vue/entrypoints/news-page.js",
+    "isEntry": true,
+    "imports": [
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_NewsDetailModal-M7XIU5Qd.js",
+      "_globalModal-WavfrdGt.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_DateRangeFilter-DlQtVGNo.js",
+      "_ru.es-BU9Gbdrk.js",
+      "assets/vue/entrypoints/lk-datepicker.js"
+    ],
+    "css": [
+      "assets/css/newsPageVueJs-G7RwvH9W.css"
+    ],
+    "assets": [
+      "assets/img/Logotype_aerline_light-BjokHjWg.png"
+    ]
+  },
+  "bulk-order.html": {
+    "file": "bulk-order..html",
+    "src": "bulk-order.html"
+  },
+  "calculator.html": {
+    "file": "calculator..html",
+    "src": "calculator.html"
+  },
+  "contacts.html": {
+    "file": "assets/js/contacts-BzgcaS52.js",
+    "name": "contacts",
+    "src": "contacts.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_AutocompleteInput-C1PGjSeS.js",
+      "_globalModal-WavfrdGt.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_select-arrow-He2ejS2L.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "cooperation.html": {
+    "file": "cooperation..html",
+    "src": "cooperation.html"
+  },
+  "copy-assets.js": {
+    "file": "assets/copy-assets-CDK2vOol.js",
+    "src": "copy-assets.js"
+  },
+  "helper.html": {
+    "file": "helper..html",
+    "src": "helper.html"
+  },
+  "index.html": {
+    "file": "assets/js/main-CNI-sSUy.js",
+    "name": "main",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_CheckboxInput-DIFQR0HT.js",
+      "assets/js/modules/home-page.js",
+      "_globalModal-WavfrdGt.js",
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_AutocompleteInput-C1PGjSeS.js",
+      "_select-arrow-He2ejS2L.js",
+      "_NewsDetailModal-M7XIU5Qd.js"
+    ],
+    "css": [
+      "assets/css/main-BGHvOoJE.css"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/snow-flake-BFAJ6vTM.svg",
+      "assets/img/slide-three-ClaKcOil.png",
+      "assets/img/slide-fourth-BzvwDFsr.png",
+      "assets/img/search-CYPbi9xb.svg",
+      "assets/img/request-for-calculation-D_Epmwlg.png",
+      "assets/img/sections-button-arrow-DwtEv55Z.svg",
+      "assets/img/shipping-JM3RDj5L.png",
+      "assets/img/track-Cu7Qp3LN.png",
+      "assets/img/feedback-DiNwoEie.png",
+      "assets/img/payment-BlCFAG8C.png",
+      "assets/img/tariffs-ByN9uM2m.png",
+      "assets/img/helper-DL7cmOck.png",
+      "assets/img/calculator-tItVAvRt.png",
+      "assets/img/international-BEmQ72HF.png",
+      "assets/img/mens-hands-sM_EUFJA.png",
+      "assets/img/Logotype_aerline_sliced-BwscNV8g.png",
+      "assets/img/circles-Cun3gczq.svg",
+      "assets/img/pilot-CV20KYFc.png",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "main.js.bak": {
+    "file": "assets/main.js-Dxcng8Lk.bak",
+    "src": "main.js.bak"
+  },
+  "news.html": {
+    "file": "news..html",
+    "src": "news.html"
+  },
+  "notifications.html": {
+    "file": "notifications..html",
+    "src": "notifications.html"
+  },
+  "order-list.html": {
+    "file": "assets/js/orderList-CYoxE8Nq.js",
+    "name": "orderList",
+    "src": "order-list.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_globalModal-WavfrdGt.js",
+      "_EasyDataTableWrapper-CfG6tW4E.js",
+      "_DeleteConfirmModal-BDNkBwI0.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-DRKSnHb_.js"
+    ],
+    "css": [
+      "assets/css/orderList-CtTyDKKD.css"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "order-new.html": {
+    "file": "order-new..html",
+    "src": "order-new.html"
+  },
+  "order-tracking.html": {
+    "file": "assets/js/orderTracking-7SD5AdvI.js",
+    "name": "orderTracking",
+    "src": "order-tracking.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_globalModal-WavfrdGt.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-DRKSnHb_.js"
+    ],
+    "assets": [
+      "assets/img/search-CYPbi9xb.svg",
+      "assets/img/folder-plus-CMAG_r68.svg",
+      "assets/img/message-dots-CN7DWFsZ.svg",
+      "assets/img/denied-mR4BVpBn.svg",
+      "assets/img/trouble-Cvl3i24o.svg",
+      "assets/img/truck-fast-HdQ00Q51.svg",
+      "assets/img/pvz-Dl8vKBnA.svg",
+      "assets/img/checked-KxLizkFk.svg",
+      "assets/img/order-tracking-img-CkPtxPsa.png",
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "package-lock.json": {
+    "file": "assets/data/package-lock-BkC8jPWj.json",
+    "src": "package-lock.json"
+  },
+  "package.json": {
+    "file": "assets/data/package-BU77udTe.json",
+    "src": "package.json"
+  },
+  "payments.html": {
+    "file": "assets/js/payments-Cr0JuxpZ.js",
+    "name": "payments",
+    "src": "payments.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_globalModal-WavfrdGt.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/payments-hero-DUi_PueL.png",
+      "assets/img/logos-L4pV1jbf.png",
+      "assets/img/payments-tabs1-BG4TGZAn.jpg",
+      "assets/img/payments-tabs2-D43FroUp.jpg",
+      "assets/img/payments-tabs3-Dz0ejBoT.jpg",
+      "assets/img/payments-tabs4-Bonz5wY3.jpg",
+      "assets/img/terminal-CuhRG-hB.png",
+      "assets/img/pribyl-CON5M6uL.png",
+      "assets/img/request-for-calculation-D_Epmwlg.png",
+      "assets/img/sections-button-arrow-DwtEv55Z.svg",
+      "assets/img/shipping-JM3RDj5L.png",
+      "assets/img/track-Cu7Qp3LN.png",
+      "assets/img/feedback-DiNwoEie.png",
+      "assets/img/payment-BlCFAG8C.png",
+      "assets/img/tariffs-ByN9uM2m.png",
+      "assets/img/helper-DL7cmOck.png",
+      "assets/img/calculator-tItVAvRt.png",
+      "assets/img/international-BEmQ72HF.png",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "postcss.config.js": {
+    "file": "assets/postcss.config-By4aJUYq.js",
+    "src": "postcss.config.js"
+  },
+  "profile.html": {
+    "file": "assets/js/profile-DgLK0nYJ.js",
+    "name": "profile",
+    "src": "profile.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "assets/js/modules/profile-page.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_TextInput-DRKSnHb_.js",
+      "_globalModal-WavfrdGt.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/edit-Bxc_5xGJ.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "reconciliation-act.html": {
+    "file": "reconciliation-act..html",
+    "src": "reconciliation-act.html"
+  },
+  "reports.html": {
+    "file": "reports..html",
+    "src": "reports.html"
+  },
+  "senders-receivers.html": {
+    "file": "assets/js/sendersReceivers-B2SD4H1M.js",
+    "name": "sendersReceivers",
+    "src": "senders-receivers.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_globalModal-WavfrdGt.js",
+      "_EasyDataTableWrapper-CfG6tW4E.js",
+      "_DeleteConfirmModal-BDNkBwI0.js",
+      "_TextInput-DRKSnHb_.js",
+      "_select-arrow-He2ejS2L.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js"
+    ],
+    "css": [
+      "assets/css/sendersReceivers-DUoo2NDk.css"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "service-acts.html": {
+    "file": "assets/js/serviceActs-xvebzdDp.js",
+    "name": "serviceActs",
+    "src": "service-acts.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_TextInput-DRKSnHb_.js",
+      "_DateRangeFilter-DlQtVGNo.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js",
+      "_globalModal-WavfrdGt.js",
+      "_EasyDataTableWrapper-CfG6tW4E.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_ru.es-BU9Gbdrk.js",
+      "assets/vue/entrypoints/lk-datepicker.js"
+    ],
+    "css": [
+      "assets/css/serviceActs-DFK5ofIZ.css"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "services.html": {
+    "file": "assets/js/services-DpNFboKL.js",
+    "name": "services",
+    "src": "services.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_globalModal-WavfrdGt.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/services-bg-DayX8jcv.jpg",
+      "assets/img/shipping-JM3RDj5L.png",
+      "assets/img/calculator-tItVAvRt.png",
+      "assets/img/international-BEmQ72HF.png",
+      "assets/img/circles-Cun3gczq.svg",
+      "assets/img/delivery-man-Bpg7pyAz.png",
+      "assets/img/request-for-calculation-D_Epmwlg.png",
+      "assets/img/sections-button-arrow-DwtEv55Z.svg",
+      "assets/img/track-Cu7Qp3LN.png",
+      "assets/img/feedback-DiNwoEie.png",
+      "assets/img/payment-BlCFAG8C.png",
+      "assets/img/tariffs-ByN9uM2m.png",
+      "assets/img/helper-DL7cmOck.png",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "tailwind.config.js": {
+    "file": "assets/tailwind.config-oiuvnReP.js",
+    "src": "tailwind.config.js"
+  },
+  "user-create.html": {
+    "file": "user-create..html",
+    "src": "user-create.html"
+  },
+  "vacancies.html": {
+    "file": "assets/js/vacancies-JDSVtsl4.js",
+    "name": "vacancies",
+    "src": "vacancies.html",
+    "isEntry": true,
+    "imports": [
+      "_global-modal-dZf6PbYv.js",
+      "assets/js/main.js",
+      "assets/js/modules/global-ui.js",
+      "_runtime-dom.esm-bundler-DZCqFWTW.js",
+      "_globalModal-WavfrdGt.js",
+      "_slider-q_NEEFv1.js",
+      "_modal-manager-BXwv0V3q.js",
+      "_TextInput-DRKSnHb_.js",
+      "__plugin-vue_export-helper-1tPrXgE0.js"
+    ],
+    "assets": [
+      "assets/img/aeroline_logo-BATjs7xh.svg",
+      "assets/img/logos_telegram-DAaG1Vgd.svg",
+      "assets/img/logos_whatsapp-icon-DiAOUPdJ.svg",
+      "assets/img/cube-xW9FiDQr.svg",
+      "assets/img/vuesax-B2MydD8A.svg",
+      "assets/img/q-8XezpOIm.svg",
+      "assets/img/messages3-BrscMbdi.svg",
+      "assets/img/callcalling-_7VMGJtF.svg",
+      "assets/img/vacancy-hero-BxE00Vlq.jpg",
+      "assets/img/select-arrow-BP51TTpS.svg",
+      "assets/img/Logotype_aerline_white-BS2VaNgo.png",
+      "assets/img/messages3_white-CxOA5ieA.svg",
+      "assets/img/callcalling_white-BPRUXMnE.svg"
+    ]
+  },
+  "vite.config.js": {
+    "file": "assets/vite.config-C6FIYgGP.js",
+    "src": "vite.config.js"
+  }
+}

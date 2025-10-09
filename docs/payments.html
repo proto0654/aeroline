@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full overflow-x-hidden" data-theme="aeroline">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aeroline - Aeroline</title>
+  <style>
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+      position: relative;
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/js/payments-Cr0JuxpZ.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/runtime-dom.esm-bundler-DZCqFWTW.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/globalModal-WavfrdGt.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/global-modal-dZf6PbYv.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/slider-q_NEEFv1.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/modal-manager-BXwv0V3q.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/mainJs-BOV5nbSg.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/_plugin-vue_export-helper-1tPrXgE0.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/chunks/TextInput-DRKSnHb_.js">
+  <link rel="modulepreload" crossorigin href="./assets/js/globalUiJs-Bq6ceTVX.js">
+  <link rel="stylesheet" crossorigin href="./assets/css/mainJs-BNQiL91r.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/TextInput-B-9ZZzjH.css">
+  <link rel="stylesheet" crossorigin href="./assets/css/globalUiJs-BaQL4gkF.css">
+</head>
+<body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
+<div class="vue-app-mount-point"></div>
+<header class="bg-white max-w-[1920px] mx-auto w-full">
+  <div class="container mx-auto px-4 max-w-[1200px]">
+    <div class="flex justify-between items-center py-2 md:py-4">
+      <div class="logo flex items-center">
+       <a href="index.html">
+        <img src="./assets/img/aeroline_logo-BATjs7xh.svg" alt="Aeroline" class="h-15 md:h-20">
+       </a>
+      </div>
+      
+      <!-- Социальные иконки на десктопе -->
+      <div class="hidden lg:flex items-center space-x-6">
+        <div class="flex items-center space-x-3">
+          <a href="https://t.me/aeroline" class="text-brand-blue" target="_blank">
+          <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
+        </a>
+        <a href="https://wa.me/83912050025" class="text-brand-blue" target="_blank">
+          <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
+        </a>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <a href="#" class="text-brand-blue">
+          <img src="./assets/img/cube-xW9FiDQr.svg" alt="Cube" class="h-11 w-11">
+        </a>
+        <a href="./calculator.html" class="text-brand-blue">
+          <img src="./assets/img/vuesax-B2MydD8A.svg" alt="Question" class="h-9 w-9">
+        </a>
+        <a href="#" class="text-brand-blue">
+          <img src="./assets/img/q-8XezpOIm.svg" alt="Question" class="h-9 w-9">
+        </a>
+        </div>
+        <button class="bg-brand-blue font-weight-regular text-brand-white px-6 py-2 rounded-lg body-secondary inline-block open-login-modal-btn">Войти</button>
+      </div>
+      
+      <!-- Бургер-меню для мобильных устройств -->
+      <button id="burger-menu-btn" class="lg:hidden flex flex-col  items-center justify-center text-brand-blue bg-brand-light rounded-full p-3 space-y-1">
+        <span class="burger-line w-5 h-0.5 bg-brand-blue transition-transform duration-300"></span>
+        <span class="burger-line w-5 h-0.5 bg-brand-blue transition-opacity duration-300"></span>
+        <span class="burger-line w-5 h-0.5 bg-brand-blue transition-transform duration-300"></span>
+      </button>
+    </div>
+    
+    <!-- Навигация и контакты в десктопе -->
+    <div class="hidden lg:flex justify-between border-t border-gray-200">
+      <div class="text-body flex items-center space-x-4 py-3">
+        <a href="mailto:mail@aeroline.su" class="flex items-center text-brand-blue" target="_blank">
+          <img src="./assets/img/messages3-BrscMbdi.svg" alt="Email" class="h-6 w-6 mr-2">
+          mail@aeroline.su
+        </a>
+        <a href="tel:83912050025" class=" text-body flex items-center text-brand-blue" target="_blank">
+          <img src="./assets/img/callcalling-_7VMGJtF.svg" alt="Phone" class="h-6 w-6 mr-2">
+          8 391 205 00 25
+        </a>
+      </div>
+      <nav class="md:block min-w-[35rem]">
+        <ul class="flex justify-between w-full items-center py-5 space-x-3 [&>li]:uppercase [&>li]:text-caption-menu [&>li]:font-medium">
+              <li><a href="order-list.html" class="text-brand-gray hover:text-brand-blue transition-colors">Список заказов</a></li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Создать заказ
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="order-new.html" class="text-brand-gray hover:text-brand-blue">Новый заказ</a></li>
+                  <li><a href="bulk-order.html" class="text-brand-gray hover:text-brand-blue">Массовый заказ</a></li>
+                </ul>
+              </li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Сервис
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="calculator.html" class="text-brand-gray hover:text-brand-blue">Калькулятор</a></li>
+                  <li><a href="order-tracking.html" class="text-brand-gray hover:text-brand-blue">Отследить заказ</a></li>
+                </ul>
+              </li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Отчёты
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="service-acts.html" class="text-brand-gray hover:text-brand-blue">Акты оказания услуг</a></li>
+                  <li><a href="reconciliation-act.html" class="text-brand-gray hover:text-brand-blue">Запросить акт сверки</a></li>
+                  <li><a href="reports.html" class="text-brand-gray hover:text-brand-blue">Отчёты</a></li>
+                </ul>
+              </li>
+              <li class="dropdown dropdown-hover relative">
+                <label tabindex="0" class="cursor-pointer text-brand-gray hover:text-brand-blue transition-colors flex items-center">
+                  Аккаунт
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 mt-0 z-50">
+                  <li><a href="profile.html" class="text-brand-gray hover:text-brand-blue">Профиль</a></li>
+                  <li><a href="cooperation.html" class="text-brand-gray hover:text-brand-blue">Данные о сотрудничестве</a></li>
+                  <li><a href="user-create.html" class="text-brand-gray hover:text-brand-blue">Создание пользователя</a></li>
+                  <li><a href="notifications.html" class="text-brand-gray hover:text-brand-blue">Информация об уведомлениях</a></li>
+                  <li><a href="senders-receivers.html" class="text-brand-gray hover:text-brand-blue">Карточки отправителей и получателей</a></li>
+                </ul>
+              </li>
+              <li><a href="helper.html" class="text-brand-gray hover:text-brand-blue transition-colors">Страница «Помощник»</a></li>
+        </ul>
+      </nav>
+      
+    </div>
+  </div>
+  
+  <!-- Мобильное меню на весь экран -->
+  <div id="mobile-menu" class="absolute inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 lg:hidden">
+    <div class="w-[100vw] px-3 py-2 h-[100vh] max-h-[100vh] flex flex-col gap-4  h-full overflow-y-auto">
+      <div class="flex justify-between items-center  border-b border-gray-200 " id="mobile-menu-header">
+       <div class="logo flex items-center">
+       <a href="index.html">
+        <img src="./assets/img/aeroline_logo-BATjs7xh.svg" alt="Aeroline" class="h-15 md:h-20">
+       </a>
+      </div>
+        <button id="mobile-close-btn" class="text-brand-blue bg-brand-light rounded-full p-3 mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <nav class="px-2" id="mobile-menu-nav">
+        <ul class="space-y-[2vh]" id="mobile-menu-list">
+          <li><a href="order-list.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Список заказов</a></li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Создать заказ
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="order-new.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Новый заказ</a></li>
+              <li><a href="bulk-order.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Массовый заказ</a></li>
+            </ul>
+          </li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Сервис
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="calculator.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Калькулятор</a></li>
+              <li><a href="order-tracking.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Отследить заказ</a></li>
+            </ul>
+          </li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Отчёты
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="service-acts.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Акты оказания услуг</a></li>
+              <li><a href="reconciliation-act.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Запросить акт сверки</a></li>
+              <li><a href="reports.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Отчёты</a></li>
+            </ul>
+          </li>
+          <li class="mobile-menu-parent">
+            <button type="button" class="caption-regular uppercase flex items-center w-full justify-between mobile-menu-toggle text-brand-gray hover:text-brand-blue">
+              Аккаунт
+              <span class="ml-2 transition-transform duration-200">
+                <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </button>
+            <ul class="mobile-menu-submenu hidden mt-2 space-y-2">
+              <li><a href="profile.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Профиль</a></li>
+              <li><a href="cooperation.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Данные о сотрудничестве</a></li>
+              <li><a href="user-create.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Создание пользователя</a></li>
+              <li><a href="notifications.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Информация об уведомлениях</a></li>
+              <li><a href="senders-receivers.html" class="caption-regular block text-brand-gray hover:text-brand-blue">Карточки отправителей и получателей</a></li>
+            </ul>
+          </li>
+          <li><a href="helper.html" class="caption-regular uppercase block text-brand-gray hover:text-brand-blue">Страница «Помощник»</a></li>
+        </ul>
+      </nav>
+      
+      
+      <div class="w-full flex flex-col gap-5 mt-auto pt-10">
+        <div class="space-y-5 d-flex flex-col gap-4" id="mobile-menu-contacts">
+        <div class="flex items-center space-x-2" id="mobile-menu-social">
+          <a href="https://t.me/aeroline" class="text-white rounded-full" target="_blank">
+            <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-10 w-10">
+          </a>
+          <a href="https://wa.me/83912050025" class="text-white rounded-full" target="_blank">
+            <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-10 w-10">
+          </a>
+          
+        </div>
+        <a href="mailto:mail@aeroline.su" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-email" target="_blank">
+          <img src="./assets/img/messages3-BrscMbdi.svg" alt="Email" class="h-6 w-6 mx-2">
+          mail@aeroline.su
+        </a>
+        <a href="tel:83912050025" class="text-brand-gray caption-regular flex items-center body-secondary" id="mobile-menu-phone" target="_blank">
+          <img src="./assets/img/callcalling-_7VMGJtF.svg" alt="Phone" class="h-6 w-6 mx-2">
+          8 391 205 00 25
+        </a>
+        
+      </div>
+      <button class="bg-brand-blue text-brand-white px-4 py-2 rounded-xl w-full buttons-extraheadings justify-self-end open-login-modal-btn" id="mobile-menu-login">Войти</button>
+   
+      </div>
+       </div>
+  </div>
+</header>
+<div class="flex-grow flex flex-col"> <!-- Обертка для основного контента -->
+
+<main class="container mx-auto max-w-[1920px] flex-grow flex flex-col">
+  <!-- Скрытые данные для JavaScript -->
+  <script type="application/json" id="initial-data">
+  {
+    "paymentsFaq": [{"question":"Оплата не прошла, но у меня есть Платежное поручение. Выдадут ли мне по нему груз?","answer":"К сожалению, нет. Мы выдадим груз только после подтверждения поступления денежных средств на наш расчетный счет. Советуем связаться с вашим банком для уточнения статуса платежа."},{"question":"Как быстро поступают средства при безналичной оплате через банк?","answer":"После совершения платежа рекомендуем вам уточнить статус оплаты, обратившись по телефону единой горячей линии 8 (391) 205 00 25, либо в чате на сайте. Обычно средства поступают в течение 1-3 рабочих дней в зависимости от вашего банка."},{"question":"Где я могу распечатать счет на оплату грузоперевозки?","answer":"Счет на оплату грузоперевозки можно распечатать в личном кабинете на нашем сайте, либо запросить его в ближайшем офисе Aeroline. Также вы можете связаться с нашим отделом обслуживания клиентов для получения счета по электронной почте."},{"question":"Какие виды карт принимаются к онлайн-оплате?","answer":"Для онлайн-оплаты принимаются банковские карты Visa, Mastercard, Maestro и МИР. Также доступна оплата через СБП (Систему быстрых платежей), Apple Pay и Google Pay."},{"question":"На какой стадии возможна онлайн-оплата?","answer":"Онлайн-оплата возможна на любой стадии процесса доставки груза. Вы можете оплатить услугу как в момент оформления заказа, так и когда груз прибыл на терминал. Статус вашего заказа можно отслеживать в личном кабинете или запросить по номеру телефона горячей линии."}]
+  }
+  </script>
+
+  <script>
+    window.initialData = JSON.parse(document.getElementById('initial-data').textContent);
+  </script>
+
+  <!-- Заголовок страницы -->
+  <section class="py-12 md:py-16 lg:py-20 relative overflow-hidden max-w-[1200px] mx-auto">
+    <div class="flex flex-col md:flex-row items-center gap-8 relative z-10">
+      <div class="w-full md:w-1/2 flex justify-center md:justify-start">
+        <img src="./assets/img/payments-hero-DUi_PueL.png" alt="Платежные карты" class="w-full">
+      </div>
+      <div class="w-full md:w-1/2 px-4 md:px-0">
+        <h1 class="text-h3 md:text-h2 font-bold text-brand-gray mb-4">ПЛАТЕЖИ</h1>
+        <p class="text-body-secondary text-brand-gray">
+          Оплатить услуги доступным способом на сайте, используя банковские карты Visa, Mastercard, Maestro, МИР, также наличными в офисе, либо безналичным образом.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Блок "Платежи" -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div class="flex flex-col md:flex-row gap-8 ">
+      <!-- Левая часть - форма оплаты -->
+      <div class="w-full md:w-1/2 bg-base-200 p-4 md:p-8 rounded-lg">
+        <h2 class="text-h5 font-bold text-base-content mb-2">Платежи</h2>
+        <form id="payment-form" class="form-control w-full">
+          <div class="flex flex-col md:flex-row w-full gap-2">
+            <div class="flex items-center grow form-dark form">
+              <input type="text" id="order-number" placeholder="Номер заказа" class="input input-bordered w-full" required>
+            </div>
+            <button type="submit" class="btn-gray min-w-[6em] px-5 py-3">
+              Оплатить заказ
+            </button>
+          </div>
+
+          <div class="relative mt-2 w-full">
+            <span
+              class="text-sm text-base-content underline cursor-pointer tooltip tooltip-bottom block w-full  md:w-auto md:max-w-[20rem] xl:inline-block"
+              id="order-hint-trigger"
+              data-tip="Обычно номер заказа можно найти в СМС, email, или в личном кабинете.&#10;Если у вас нет номера заказа — запросите его у продавца или отправителя."
+              tabindex="0"
+            >
+              Где найти номер заказа?
+            </span>
+          </div>
+
+          <div class="form-control mt-4">
+            <label class="label cursor-pointer">
+              <input type="checkbox" id="send-check-email" class="checkbox checkbox-primary" />
+              <span class="label-text">Отправить чек на почту</span>
+            </label>
+          </div>
+          
+          <div id="email-field" class="mt-3 hidden">
+            <div class="form-control form-dark form">
+              <input type="email" id="email-input" placeholder="Введите email" class="input input-bordered w-full">
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Правая часть - платежные системы -->
+      <div class="w-full md:w-1/2">
+       <img src="./assets/img/logos-L4pV1jbf.png" alt="Платежные карты" class="w-full">
+      </div>
+    </div>
+  </section>
+
+  <!-- Блок "Рассчитайте стоимость" -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <div class="rounded-2xl">
+      <h2 class="text-h3 md:text-h2 font-bold text-brand-gray mb-6 leading-1.2">Рассчитайте стоимость</h2>
+      <p class="text-body-secondary text-brand-gray mb-8">Выберите удобный для себя способ оплаты</p>
+      
+      <div class="payment-tabs">
+        <div class="flex flex-row gap-2 mb-8 p-2 bg-brand-light rounded-lg overflow-x-auto [&>button]:flex-1 [&>button]:px-5 [&>button]:whitespace-nowrap [&>button]:tracking-wider">
+          <button class="payment-tab px-4 py-3 text-center bg-white rounded-lg border border-transparent text-brand-gray flex justify-center items-center" data-tab="online">ОНЛАЙН</button>
+          <button class="payment-tab px-4 py-3 text-center bg-brand-light rounded-lg border border-transparent text-brand-gray flex justify-center items-center" data-tab="office">ОФИС AEROLINE</button>
+          <button class="payment-tab px-4 py-3 text-center bg-brand-light rounded-lg border border-transparent text-brand-gray flex justify-center items-center" data-tab="bank">В БАНКЕ</button>
+          <button class="payment-tab px-4 py-3 text-center bg-brand-light rounded-lg border border-transparent text-brand-gray flex justify-center items-center" data-tab="courier">КУРЬЕРУ</button>
+        </div>
+        
+        <div class="payment-tab-content" id="tab-online">
+          <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch">
+            <div class="w-full md:w-2/5">
+              <img src="./assets/img/payments-tabs1-BG4TGZAn.jpg" alt="Онлайн-оплата" class="w-full h-auto rounded-lg h-full object-cover">
+            </div>
+            <div class="w-full md:w-3/5">
+              <p class="md:text-body-secondary text-brand-gray mb-6">
+                Этот способ доступен для всех клиентов Aeroline, имеющих номер заказа. Для физических лиц ограничений по онлайн оплате нет. Вы можете воспользоваться СБП (системой быстрых платежей) и картами Visa, Mastercard, Maestro, МИР. Для юридических лиц этот вид оплаты доступен только c корпоративной карты
+              </p>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="payment-tab-content hidden" id="tab-office">
+          <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch">
+            <div class="w-full md:w-2/5">
+              <img src="./assets/img/payments-tabs2-D43FroUp.jpg" alt="Оплата в офисе" class="w-full h-auto rounded-lg h-full object-cover">
+            </div>
+            <div class="w-full md:w-3/5">
+              <p class="md:text-body-secondary text-brand-gray mb-6">
+                Оплата в офисе Aeroline доступна в рабочие часы по адресам наших терминалов. Вы можете оплатить наличными или банковской картой. Оплата производится после предъявления документа, удостоверяющего личность. При оплате вам будет выдан кассовый чек.
+              </p>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="payment-tab-content hidden" id="tab-bank">
+          <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch">
+            <div class="w-full md:w-2/5">
+              <img src="./assets/img/payments-tabs3-Dz0ejBoT.jpg" alt="Оплата в банке" class="w-full h-auto rounded-lg h-full object-cover">
+            </div>
+            <div class="w-full md:w-3/5">
+              <p class="md:text-body-secondary text-brand-gray mb-6">
+                При оплате в банке вам необходимо запросить реквизиты счета в нашей компании для осуществления платежа. После получения платежа мы отправим вам чек об оплате на указанный вами электронный адрес. Обратите внимание, что банковские переводы могут занимать до 3 рабочих дней.
+              </p>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="payment-tab-content hidden" id="tab-courier">
+          <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch">
+            <div class="w-full md:w-2/5">
+              <img src="./assets/img/payments-tabs4-Bonz5wY3.jpg" alt="Оплата курьеру" class="w-full h-auto rounded-lg h-full object-cover">
+            </div>
+            <div class="w-full md:w-3/5">
+              <p class="md:text-body-secondary text-brand-gray mb-6">
+                Оплата курьеру доступна при получении груза с доставкой. Вы можете оплатить наличными или банковской картой курьеру при получении груза. При оплате вам будет выдан документ, подтверждающий факт оплаты. Чек будет направлен на указанный вами электронный адрес.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Блок "Когда можно оплатить" -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <h2 class="text-h4 md:text-h3 font-bold text-brand-gray mb-6">Когда можно оплатить</h2>
+    <p class="text-body-secondary text-brand-gray mb-8">Оплата возможна, когда груз прибыл на терминале</p>
+    
+    <div class="delivery-status-tabs">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 p-2 bg-brand-light rounded-lg">
+        <button class="delivery-tab px-4 py-3 text-center bg-white rounded-lg border border-transparent text-brand-gray flex justify-center items-center" data-tab="processing">ОБРАБОТКА НА ТЕРМИНАЛЕ</button>
+        <button class="delivery-tab px-4 py-3 text-center bg-brand-light rounded-lg border border-transparent text-brand-gray flex justify-center items-center" data-tab="arrived">ПРИБЫЛ</button>
+      </div>
+      
+      <div class="delivery-tab-content" id="tab-processing">
+        <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+          <div class="w-full md:w-1/4">
+            <img src="./assets/img/terminal-CuhRG-hB.png" alt="Оплата на терминале" class="w-full max-w-xs h-auto rounded-lg">
+          </div>
+          <div class="w-full md:w-3/4">
+            <p class="text-body-secondary text-brand-gray">
+              Вы можете оплатить перевозку, когда груз прибыл на терминале, отправлен со склада в путь, прибыл в пункт Aeroline в городе получателя: на любом этапе следования груза. Обращаем ваше внимание, что на всем пути вы можете отслеживать движение груза
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="delivery-tab-content hidden" id="tab-arrived">
+        <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+          <div class="w-full md:w-1/4">
+            <img src="./assets/img/pribyl-CON5M6uL.png" alt="Груз прибыл" class="w-full max-w-xs h-auto rounded-lg">
+          </div>
+          <div class="w-full md:w-3/4">
+            <p class="text-body-secondary text-brand-gray">
+              После прибытия груза на терминал вы можете произвести оплату любым доступным способом. Статус "Прибыл" означает, что груз готов к выдаче и находится на терминале получателя. Не забудьте взять с собой документ, удостоверяющий личность, для получения груза.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Блок "Часто задаваемые вопросы" -->
+  <section class="mb-12 md:mb-16 lg:mb-20 max-w-[1200px] mx-auto w-full px-4 xl:px-0">
+    <h2 class="text-h4 md:text-h3 font-bold text-brand-gray mb-8">Часто задаваемые вопросы</h2>
+    
+    <div class="space-y-4 md:space-y-6" id="faq-list">
+      <div class="faq-item bg-brand-light rounded-xl overflow-hidden p-2">
+        <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none faq-toggle">
+          <div>
+            <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Оплата не прошла, но у меня есть Платежное поручение. Выдадут ли мне по нему груз?</div>
+          </div>
+          <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+            <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 md:px-5 md:pb-6">
+          <div class="text-base">
+            <hr class="border-t border-t-2 border-white mb-4">
+            <p>К сожалению, нет. Мы выдадим груз только после подтверждения поступления денежных средств на наш расчетный счет. Советуем связаться с вашим банком для уточнения статуса платежа.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item bg-brand-light rounded-xl overflow-hidden p-2">
+        <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none faq-toggle">
+          <div>
+            <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Как быстро поступают средства при безналичной оплате через банк?</div>
+          </div>
+          <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+            <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 md:px-5 md:pb-6">
+          <div class="text-base">
+            <hr class="border-t border-t-2 border-white mb-4">
+            <p>После совершения платежа рекомендуем вам уточнить статус оплаты, обратившись по телефону единой горячей линии 8 (391) 205 00 25, либо в чате на сайте. Обычно средства поступают в течение 1-3 рабочих дней в зависимости от вашего банка.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item bg-brand-light rounded-xl overflow-hidden p-2">
+        <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none faq-toggle">
+          <div>
+            <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Где я могу распечатать счет на оплату грузоперевозки?</div>
+          </div>
+          <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+            <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 md:px-5 md:pb-6">
+          <div class="text-base">
+            <hr class="border-t border-t-2 border-white mb-4">
+            <p>Счет на оплату грузоперевозки можно распечатать в личном кабинете на нашем сайте, либо запросить его в ближайшем офисе Aeroline. Также вы можете связаться с нашим отделом обслуживания клиентов для получения счета по электронной почте.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item bg-brand-light rounded-xl overflow-hidden p-2">
+        <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none faq-toggle">
+          <div>
+            <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">Какие виды карт принимаются к онлайн-оплате?</div>
+          </div>
+          <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+            <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 md:px-5 md:pb-6">
+          <div class="text-base">
+            <hr class="border-t border-t-2 border-white mb-4">
+            <p>Для онлайн-оплаты принимаются банковские карты Visa, Mastercard, Maestro и МИР. Также доступна оплата через СБП (Систему быстрых платежей), Apple Pay и Google Pay.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item bg-brand-light rounded-xl overflow-hidden p-2">
+        <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none faq-toggle">
+          <div>
+            <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">На какой стадии возможна онлайн-оплата?</div>
+          </div>
+          <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
+            <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 md:px-5 md:pb-6">
+          <div class="text-base">
+            <hr class="border-t border-t-2 border-white mb-4">
+            <p>Онлайн-оплата возможна на любой стадии процесса доставки груза. Вы можете оплатить услугу как в момент оформления заказа, так и когда груз прибыл на терминал. Статус вашего заказа можно отслеживать в личном кабинете или запросить по номеру телефона горячей линии.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+    <div class="3xl:rounded-tl-3xl 3xl:rounded-tr-3xl max-w-[1920px] mx-auto bg-brand-light w-full">
+      <!-- Секция с карточками сервисов -->
+      <section
+        class="px-4 md:px-0 mt-8 md:mt-16 lg:mt-20 mb-12 mx-auto max-w-[1920px] bg-brand-light w-full 3xl:rounded-3xl"
+        id="services-cards"
+      >
+      
+        <div class="max-w-[1200px] mx-auto my-20">
+          <div
+            class="flex flex-col md:flex-row flex-wrap [&>div]:flex [&_span]:text-caption-regular [&_span]:md:pr-7 leading-1.2 [&_span]:text-center [&_span]:md:text-left [&_span]:text-sm [&_span]:md:text-h5 [&_span]:text-brand-gray [&_span]:font-semibold [&_span]:tracking-wide [&_span]:uppercase [&_img]:max-h-[100px] [&_img]:md:max-h-[200px] [&_a]:max-h-[220px] [&_.arrow-wrapper-img]:transition-transform [&_a]:hover:cursor-pointer [&_arrow-wrapper-img]:transform [&_arrow-wrapper-img]:-rotate-45"
+          >
+            <div
+              class="w-full md:w-2/5 md:px-2 [&>a]:service-card-item [&>a]:bg-white [&>a]:rounded-xl [&>a]:rounded-lg [&>a]:items-center [&>a]:group gap-x-4 flex-row flex-wrap gap-y-4 md:gap-y-0"
+            >
+              <a
+                href="#"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/request-for-calculation-D_Epmwlg.png"
+                  alt="Запрос на расчет"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Запрос на расчет</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="#"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] flex-col justify-around relative md:h-auto md:hidden"
+              >
+                <img
+                  src="./assets/img/shipping-JM3RDj5L.png"
+                  alt="Заявка на перевозку"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Заявка на перевозку</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="#"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/track-Cu7Qp3LN.png"
+                  alt="Отследить груз"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Отследить груз</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="#"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/feedback-DiNwoEie.png"
+                  alt="Обратная связь"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Обратная связь</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="#"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] flex-col justify-around items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/payment-BlCFAG8C.png"
+                  alt="Тарифы"
+                  class="w-full md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:pt-0 md:p6"
+                >Оплата</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:bottom-0 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="#"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] flex-col justify-around items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/tariffs-ByN9uM2m.png"
+                  alt="Тарифы"
+                  class="w-full md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-6"
+                >Тарифы</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:bottom-0 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+            </div>
+            <div
+              class="mt-4 md:mt-0 w-full md:w-3/5 md:px-2 [&>a]:service-card-item [&>a]:bg-white [&>a]:rounded-xl [&>a]:rounded-lg [&>a]:items-center [&>a]:group gap-4 flex-row flex-wrap"
+            >
+              <a
+                href="#"
+                class="hidden md:flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full sm:flex-col sm:justify-around md:flex-row md:justify-start sm:items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/shipping-JM3RDj5L.png"
+                  alt="Заявка на перевозку"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Заявка на перевозку</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="#"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/helper-DL7cmOck.png"
+                  alt="Страница «Помощник»"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Страница «Помощник»</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="./calculator.html"
+                class="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.5rem)] md:w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative md:h-[240px]"
+              >
+                <img
+                  src="./assets/img/calculator-tItVAvRt.png"
+                  alt="Калькулятор"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Калькулятор</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+              <a
+                href="#"
+                class="flex w-full flex-col justify-around md:flex-row md:justify-start items-start md:items-center relative md:h-[240px] mb-4"
+              >
+                <img
+                  src="./assets/img/international-BEmQ72HF.png"
+                  alt="Запрос на международную перевозку"
+                  class="w-full md:w-16 md:h-16 md:mr-4 md:min-w-[40%] min-w-[40%] h-[170px] md:h-[170px] object-contain object-center"
+                />
+                <span
+                  class="text-brand-gray group-hover:text-brand-blue transition-colors text-left w-full p-4 md:p-0"
+                >Запрос на международную перевозку</span>
+                <div
+                  class="ml-auto arrow-wrapper md:block hidden md:absolute md:top-1/2 md:-translate-y-1/2 md:right-4"
+                >
+                  <img
+                    src="./assets/img/sections-button-arrow-DwtEv55Z.svg"
+                    alt=""
+                    class="w-4 h-4 -rotate-45 arrow-wrapper-img"
+                  />
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>    </div>  
+ 
+</main>
+
+
+</div> <!-- Закрытие обертки основного контента -->
+<footer class="bg-brand-gray text-brand-white py-12 w-full">
+  <div class="container mx-auto px-4 max-w-[1200px]">
+    <!-- Мобильный футер -->
+    <div class="md:hidden flex flex-col items-start space-y-8">
+
+
+
+
+      <div class="flex flex-col w-full gap-y-10">
+        <img src="./assets/img/Logotype_aerline_white-BS2VaNgo.png" alt="Aeroline" class="h-12 mb-4 object-contain object-left">
+        <nav class="w-full">
+          <div class="grid md:grid-cols-2 gap-y-6 gap-x-6">
+            <div class="flex flex-col space-y-3">
+              <a href="index.html" class="caps-regular block">Главная</a>
+              <a href="services.html" class="caps-regular block">Услуги</a>
+              <a href="payments.html" class="caps-regular block">Платежи</a>
+              <a href="news.html" class="caps-regular block">Новости</a>
+              <a href="vacancies.html" class="caps-regular block">Вакансии</a>
+            </div>
+            <div class="flex flex-col space-y-3">
+              <a href="contacts.html" class="caps-regular block">Контакты</a>
+              <a href="order-tracking.html" class="caps-regular block">Отслеживание заказа</a>
+              <a href="helper.html" class="caps-regular block">Страница «Помощник»</a>
+              <a href="user-create.html" class="caps-regular block">Регистрация</a>
+            </div>
+          </div>
+        </nav>
+
+
+        <div class="flex flex-col items-stretch gap-y-2">
+          <div class="flex items-center space-x-4 my-6">
+            <a href="https://t.me/aeroline" class="text-white" target="_blank">
+              <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
+            </a>
+
+            <a href="https://wa.me/83912050025" class="text-white" target="_blank">
+              <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
+            </a>
+          </div>
+          <a href="mailto:mail@aeroline.su" class="body-secondary flex items-center mb-2" target="_blank">
+            <img src="./assets/img/messages3_white-CxOA5ieA.svg" alt="Email" class="h-6 w-6 mr-2">
+            mail@aeroline.su
+          </a>
+          <a href="tel:83912050025" class="body-secondary flex items-center mb-8" target="_blank">
+            <img src="./assets/img/callcalling_white-BPRUXMnE.svg" alt="Phone" class="h-6 w-6 mr-2">
+            8 391 205 00 25
+          </a>
+        </div>
+      </div>
+
+
+
+      <div class="w-full d-flex justify-between flex-row flex-nowrap">
+        <p class="caption-regular text-white/50 mb-2 d-inline w-1/2">@2025</p>
+        <a href="privacy.html" class="text-body-secondary text-white/50 d-inline w-1/2">Политика конфиденциальности</a>
+      </div>
+    </div>
+
+    <!-- Десктопный футер -->
+    <div class="hidden md:flex justify-between">
+      <div class="flex flex-col items-start">
+        <img src="./assets/img/Logotype_aerline_white-BS2VaNgo.png" alt="Aeroline" class="h-11 mb-8">
+        <p class="caption-regular text-white/50">@2025</p>
+        <a href="privacy.html" class="text-body text-white/50 hover:text-white transition-colors">Политика конфиденциальности</a>
+      </div>
+
+      <div class="flex flex-col">
+        <a href="mailto:mail@aeroline.su" class="caption-regular flex items-center mb-3 hover:text-brand-blue transition-colors" target="_blank">
+          <img src="./assets/img/messages3_white-CxOA5ieA.svg" alt="Email" class="h-6 w-6 mr-2">
+          mail@aeroline.su
+        </a>
+        <a href="tel:83912050025" class="caption-regular flex items-center mb-4 hover:text-brand-blue transition-colors" target="_blank">
+          <img src="./assets/img/callcalling_white-BPRUXMnE.svg" alt="Phone" class="h-6 w-6 mr-2">
+          8 391 205 00 25
+        </a>
+        <div class="flex items-center space-x-3">
+          <a href="https://t.me/aeroline" class="text-white hover:opacity-80 transition-opacity" target="_blank">
+            <img src="./assets/img/logos_telegram-DAaG1Vgd.svg" alt="Telegram" class="h-8 w-8">
+          </a>
+          <a href="https://wa.me/83912050025" class="text-white hover:opacity-80 transition-opacity" target="_blank">
+            <img src="./assets/img/logos_whatsapp-icon-DiAOUPdJ.svg" alt="WhatsApp" class="h-8 w-8">
+          </a>
+        </div>
+      </div>
+
+      <div class="flex [&>*]:px-10 ml-10 uppercase">
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="index.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Главная</a>
+          <a href="services.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Услуги</a>
+          <a href="payments.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Платежи</a>
+          <a href="news.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Новости</a>
+          <a href="vacancies.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Вакансии</a>
+        </div>
+        <div class="flex flex-col grow-1 space-y-3 min-w-[220px] w-1/2">
+          <a href="contacts.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Контакты</a>
+          <a href="order-tracking.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Отслеживание заказа</a>
+          <a href="helper.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Страница «Помощник»</a>
+          <a href="user-create.html" class="text-caption-menu uppercase hover:text-brand-blue transition-colors medium tracking-wide">Регистрация</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+</body>
+
+</html>

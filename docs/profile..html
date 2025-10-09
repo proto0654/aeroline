@@ -1,0 +1,72 @@
+{{> header menuType="user"}}
+
+<main class="container mx-auto max-w-[1100px] px-4 py-12 flex-grow flex flex-col">
+  <h1 class="text-h2 font-bold mb-8">Профиль</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Левая колонка: Данные профиля -->
+    <div class="[&_*]:mb-2 [&_span]:font-bold [&_span]:text-brand-gray text-base md:text-lg">
+      <div>
+        <div class="text-sm text-brand-gray mb-1">ФИО/Компания</div>
+        <span>ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ<br>"АЭРОЛАЙНЭКСПРЕСС"</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">Юр. Адрес</div>
+        <span>Красноярск, 660048 ий край ул. Промышленная здание 25 а помещение 11</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">Адрес</div>
+        <span>Красноярск, 660000 РФ ий край а/я 5447</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">Телефон</div>
+        <span>+73912050025</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">Почта</div>
+        <div class="flex items-center bg-brand-light rounded-xl px-4 py-2 w-fit font-bold text-brand-gray gap-2">
+          <span>mail@aeroline.su</span>
+          <button id="edit-email-btn" type="button" class="open-edit-email-modal-btn">
+            <img src="assets/img/icons/edit.svg" alt="edit" class="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    
+      <div class="mt-6 flex flex-col gap-2">
+        <button id="change-password-btn" class="text-brand-blue underline w-fit open-change-password-modal-btn">Изменить пароль</button>
+        <a href="#" class="text-brand-red font-bold w-fit">Выйти из профиля</a>
+      </div>
+    </div>
+    <!-- Правая колонка: Реквизиты счета -->
+    <div class="[&_*]:mb-2 [&_span]:font-bold [&_span]:text-brand-gray text-base md:text-lg">
+      <div class="text-lg font-bold mb-4">Реквизиты счета</div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">ОГРН</div>
+        <span>1132468026680</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">БИК</div>
+        <span>040407877</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">Расчетный счет</div>
+        <span>40702810007340001083</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">Корреспондентский счет</div>
+        <span>30101810100000000877</span>
+      </div>
+      <div>
+        <div class="text-sm text-brand-gray mb-1">Наименование банка</div>
+        <span>Ф-л банка ГПБ (АО) в г. Красноярске, г.Красноярск</span>
+      </div>
+      <div class="mt-8">
+        <a href="#" class="text-brand-blue underline w-fit">Для изменения данных просьба обратиться в офис компании</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="{{basePath}}assets/vue/entrypoints/global-modal.js"></script>
+<script type="module" src="{{basePath}}assets/js/page-entrypoints/profile.js"></script>
+
+{{> footer menuType="user"}}

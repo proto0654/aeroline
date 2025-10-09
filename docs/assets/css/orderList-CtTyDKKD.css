@@ -1,0 +1,6 @@
+
+/* Скрываем стандартное поле поиска библиотеки */
+.easy-data-table-wrapper .p-4.border-b[data-v-92a78bb9],
+.easy-data-table-wrapper .easy-data-table__search[data-v-92a78bb9] {
+  display: none !important;
+}
