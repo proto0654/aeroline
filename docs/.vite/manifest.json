@@ -425,7 +425,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-Bjq0MicT.js",
+    "file": "assets/js/mainJs-CV2jXQD7.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -434,7 +434,7 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-vxsEF_2g.css"
+      "assets/css/mainJs-DUoDNPGa.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
@@ -526,7 +526,7 @@
     ]
   },
   "assets/vue/entrypoints/calculator-page.js": {
-    "file": "assets/js/calculatorPageJs-Wyduf5Wf.js",
+    "file": "assets/js/calculatorPageJs-CYPCjOPQ.js",
     "name": "calculatorPageJs",
     "src": "assets/vue/entrypoints/calculator-page.js",
     "isEntry": true,
@@ -541,7 +541,7 @@
       "_select-arrow-He2ejS2L.js"
     ],
     "css": [
-      "assets/css/calculatorPageJs-DWiWwx1W.css"
+      "assets/css/calculatorPageJs-86mMPeBx.css"
     ]
   },
   "assets/vue/entrypoints/lk-datepicker.js": {
@@ -587,7 +587,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-ppild2-j.js",
+    "file": "assets/js/contacts-C0yunWw1.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -636,7 +636,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-Cn4GGdHP.js",
+    "file": "assets/js/main-YXDFVZmD.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -701,7 +701,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-BIS5voG7.js",
+    "file": "assets/js/orderList-CUmEx33D.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -741,7 +741,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-Dhv1w4t7.js",
+    "file": "assets/js/orderTracking-BcIavDB2.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -788,7 +788,7 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-DJPMkuLU.js",
+    "file": "assets/js/payments-CJRr3m8T.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -840,7 +840,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-BfVHfzn1.js",
+    "file": "assets/js/profile-BLv_yD4-.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -880,7 +880,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-ZxI_ueUX.js",
+    "file": "assets/js/sendersReceivers-CdAwZUZW.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -916,7 +916,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-CfWGThEo.js",
+    "file": "assets/js/serviceActs-Dm0fG5F6.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -953,7 +953,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-BpTO96w7.js",
+    "file": "assets/js/services-CirfPgZp.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -1004,7 +1004,7 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-CPKRXS-i.js",
+    "file": "assets/js/vacancies-cDKV8dzI.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,

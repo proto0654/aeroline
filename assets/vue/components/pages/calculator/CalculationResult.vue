@@ -60,24 +60,25 @@
                 </div>
             </div>
 
-            <!-- Сообщения о параметрах по умолчанию -->
-            <div v-if="displayMessages.length > 0" class="my-4">
-                <button @click="toggleMessagesSpoiler"
-                    class="w-full flex items-starts justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
-                    <span class="font-bold text-blue-800 text-sm">Не все поля заполнены, использованы значения по
-                        умолчанию</span>
-                    <svg :class="['w-7 h-7 text-blue-600 transition-transform', isMessagesSpoilerExpanded ? 'rotate-180' : '']"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-
-                <div v-if="isMessagesSpoilerExpanded"
-                    class="bg-blue-50 border-l-4 border-blue-400 text-blue-800 p-4 mt-2 rounded-b-md text-sm animate-fade-in"
-                    role="alert">
-                    <ul class="list-disc list-inside space-y-1">
-                        <li v-for="(message, index) in displayMessages" :key="index">{{ message }}</li>
-                    </ul>
+            <!-- Информация о минимальных значениях -->
+            <div v-if="displayMessages.length > 0" class="mb-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0">
+                            <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-blue-800 mb-2">Использованы минимальные значения</h4>
+                            <ul class="space-y-1 text-sm text-blue-700">
+                                <li v-for="(message, index) in displayMessages" :key="index" class="flex items-start gap-2">
+                                    <span class="text-blue-500 mt-0.5">•</span>
+                                    <span>{{ message }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -272,8 +273,8 @@ const cargoInfo = computed(() => {
     // console.log('DEBUG: result.selectedTariff:', props.result?.selectedTariff);
     // console.log('DEBUG: result.selectedTariff.packageDetails:', props.result?.selectedTariff?.packageDetails);
 
-    const defaultPackage = props.calculatorConfig.defaultValues?.cargo?.package || {
-        length: '30', width: '20', height: '10', weight: '1', description: 'Посылка', declaredValue: 1000, packaging: 'box-s', selfMarking: false, dangerousGoods: false, tempControl: false, quantity: 1
+    const minimalValues = props.calculatorConfig.minimalValues?.cargo?.package || {
+        length: 10, width: 10, height: 5, weight: 0.1, quantity: 1
     };
 
     // Если есть packageDetails в выбранном тарифе — используем их (они всегда соответствуют расчету)
@@ -294,15 +295,15 @@ const cargoInfo = computed(() => {
         };
     }
 
-    // Иначе — используем данные из формы, применяя значения по умолчанию для отсутствующих полей
+    // Иначе — используем данные из формы, применяя минимальные значения для отсутствующих полей
     if (!props.formData.cargo || !props.formData.cargo.packages || props.formData.cargo.packages.length === 0) {
-        // console.log('DEBUG: Using default cargoInfo (form data is empty or no packages).');
-        const quantity = parseInt(defaultPackage.quantity) || 1;
+        // console.log('DEBUG: Using minimal cargoInfo (form data is empty or no packages).');
+        const quantity = minimalValues.quantity;
         return {
             count: formatNumber(quantity),
             countLabel: quantity === 1 ? 'место' : 'мест',
-            weight: formatWeight(parseFloat(defaultPackage.weight) * quantity),
-            volume: formatVolume((parseFloat(defaultPackage.length) * parseFloat(defaultPackage.width) * parseFloat(defaultPackage.height)) / 1000000 * quantity)
+            weight: formatWeight(minimalValues.weight * quantity),
+            volume: formatVolume((minimalValues.length * minimalValues.width * minimalValues.height) / 1000000 * quantity)
         };
     }
 
@@ -312,16 +313,16 @@ const cargoInfo = computed(() => {
     let totalCount = 0;
     let countLabel = 'мест';
 
-    // Process each package from formData, applying defaults if values are missing
+    // Process each package from formData, applying minimal values if values are missing
     const processedPackages = cargo.packages.map(pkg => {
-        const useDefaultDimensions = !(parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0);
+        const useMinimalDimensions = !(parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0);
         return {
             ...pkg,
-            weight: (parseFloat(pkg.weight) > 0) ? parseFloat(pkg.weight) : parseFloat(defaultPackage.weight),
-            length: useDefaultDimensions ? parseFloat(defaultPackage.length) : parseFloat(pkg.length),
-            width: useDefaultDimensions ? parseFloat(defaultPackage.width) : parseFloat(pkg.width),
-            height: useDefaultDimensions ? parseFloat(defaultPackage.height) : parseFloat(pkg.height),
-            quantity: parseInt(pkg.quantity) > 0 ? parseInt(pkg.quantity) : 1
+            weight: (parseFloat(pkg.weight) > 0) ? parseFloat(pkg.weight) : minimalValues.weight,
+            length: useMinimalDimensions ? minimalValues.length : parseFloat(pkg.length),
+            width: useMinimalDimensions ? minimalValues.width : parseFloat(pkg.width),
+            height: useMinimalDimensions ? minimalValues.height : parseFloat(pkg.height),
+            quantity: parseInt(pkg.quantity) > 0 ? parseInt(pkg.quantity) : minimalValues.quantity
         };
     });
 
@@ -382,76 +383,44 @@ function formatVolume(value) {
     return new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(value);
 }
 
-// Вычисляем сообщения о параметрах по умолчанию
+// Вычисляем сообщения о минимальных значениях
 const displayMessages = computed(() => {
     const messages = [];
     const { formData, calculatorConfig } = props;
 
-    // console.log('DEBUG: displayMessages - formData.cargo:', formData.cargo);
-
-    const defaultPackage = calculatorConfig.defaultValues?.cargo?.package || {
-        length: '30', width: '20', height: '10', weight: '1', description: 'Посылка', declaredValue: 1000, packaging: 'box-s', selfMarking: false, dangerousGoods: false, tempControl: false, quantity: 1
+    // Получаем минимальные значения из конфигурации
+    const minimalValues = calculatorConfig.minimalValues?.cargo?.package || {
+        length: 10, width: 10, height: 5, weight: 0.1, quantity: 1
     };
 
-    // console.log('DEBUG: displayMessages - defaultPackage:', defaultPackage);
-
-    // 1. Проверка параметров груза по умолчанию (раздельно для веса и габаритов)
-    let cargoWeightProvided = false;
-    let cargoDimensionsProvided = false;
-
+    // Проверяем, используются ли минимальные значения
     if (formData.cargo && formData.cargo.packages && formData.cargo.packages.length > 0) {
         const firstPackage = formData.cargo.packages[0];
-        // console.log('DEBUG: displayMessages - firstPackage:', firstPackage);
-
-        cargoWeightProvided = (firstPackage.weight && parseFloat(firstPackage.weight) > 0);
-        cargoDimensionsProvided = (firstPackage.length && parseFloat(firstPackage.length) > 0 &&
-            firstPackage.width && parseFloat(firstPackage.width) > 0 &&
-            firstPackage.height && parseFloat(firstPackage.height) > 0);
+        
+        // Проверяем вес
+        const hasWeight = parseFloat(firstPackage.weight) > 0;
+        if (!hasWeight) {
+            messages.push(`Вес не указан. Используется минимальное значение: ${minimalValues.weight} кг`);
+        }
+        
+        // Проверяем габариты
+        const hasDimensions = parseFloat(firstPackage.length) > 0 && 
+                             parseFloat(firstPackage.width) > 0 && 
+                             parseFloat(firstPackage.height) > 0;
+        if (!hasDimensions) {
+            messages.push(`Габариты не указаны. Используются минимальные значения: ${minimalValues.length}×${minimalValues.width}×${minimalValues.height} см`);
+        }
+        
+        // Проверяем количество
+        const hasQuantity = parseInt(firstPackage.quantity) > 0;
+        if (!hasQuantity) {
+            messages.push(`Количество не указано. Используется минимальное значение: ${minimalValues.quantity} шт`);
+        }
     } else {
-        // If no cargo or packages are provided in formData, then neither weight nor dimensions are provided by user
-        cargoWeightProvided = false;
-        cargoDimensionsProvided = false;
+        // Если нет посылок вообще, используем минимальные значения
+        messages.push(`Параметры груза не указаны. Используются минимальные значения: вес ${minimalValues.weight} кг, габариты ${minimalValues.length}×${minimalValues.width}×${minimalValues.height} см, количество ${minimalValues.quantity} шт`);
     }
 
-    // console.log('DEBUG: displayMessages - cargoWeightProvided:', cargoWeightProvided);
-    // console.log('DEBUG: displayMessages - cargoDimensionsProvided:', cargoDimensionsProvided);
-
-    if (!cargoWeightProvided) {
-        const defaultWeight = parseFloat(defaultPackage.weight) * (parseInt(defaultPackage.quantity) || 1);
-        messages.push(`Вес груза не указан. Используется значение по умолчанию: ${formatWeight(defaultWeight)} кг.`);
-    }
-
-    if (!cargoDimensionsProvided) {
-        const defaultVolume = (parseFloat(defaultPackage.length) * parseFloat(defaultPackage.width) * parseFloat(defaultPackage.height)) / 1000000 * (parseInt(defaultPackage.quantity) || 1);
-        messages.push(`Габариты груза не указаны. Используются значения по умолчанию: ${defaultPackage.length}x${defaultPackage.width}x${defaultPackage.height} см, Объем ${formatVolume(defaultVolume)} м³.`);
-    }
-
-    // 2. Проверка даты отправки по умолчанию
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const defaultDepartureDate = tomorrow.toISOString().split('T')[0];
-    if (!formData.departure.date || new Date(formData.departure.date).toISOString().split('T')[0] === defaultDepartureDate) {
-        messages.push(`Дата отправки не указана. Используется завтрашняя дата: ${formatDate(defaultDepartureDate)}.`);
-    }
-
-    // 3. Проверка пункта отправления по умолчанию
-    // Убедимся, что formData.departure.location является пустой строкой, а не объектом, который может быть по умолчанию.
-    // Поле location может быть объектом { id: ..., name: ..., coordinates: ... } если выбран терминал.
-    // Если это просто город, то location будет пустой строкой, и тогда мы считаем, что терминал по умолчанию.
-    const isDepartureLocationProvided = formData.departure.location &&
-        (typeof formData.departure.location === 'object' ? !!formData.departure.location.id : formData.departure.location.trim() !== '');
-    if (!isDepartureLocationProvided) {
-        messages.push(`Пункт отправления не указан. Используется терминал по умолчанию в городе ${formData.direction.from || 'отправления'}.`);
-    }
-
-    // 4. Проверка пункта назначения по умолчанию
-    const isDestinationLocationProvided = formData.destination.location &&
-        (typeof formData.destination.location === 'object' ? !!formData.destination.location.id : formData.destination.location.trim() !== '');
-    if (!isDestinationLocationProvided) {
-        messages.push(`Пункт назначения не указан. Используется терминал по умолчанию в городе ${formData.direction.to || 'назначения'}.`);
-    }
-
-    // console.log('DEBUG: displayMessages - final messages:', messages);
     return messages;
 });
 
@@ -509,12 +478,6 @@ function formatDate(date) {
     return `${day}.${month}.${year}`;
 }
 
-// Состояние для раскрытия спойлера сообщений о параметрах по умолчанию
-const isMessagesSpoilerExpanded = ref(false);
-
-function toggleMessagesSpoiler() {
-    isMessagesSpoilerExpanded.value = !isMessagesSpoilerExpanded.value;
-}
 </script>
 
 <style scoped>

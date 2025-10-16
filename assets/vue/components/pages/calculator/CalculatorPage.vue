@@ -419,11 +419,6 @@ function getAllTariffsWithStatus() {
     const defaultTariff = getDefaultTariff();
     const defaultTariffCost = calculateDefaultTariffCost(defaultTariff, cargoData, distanceKm);
     
-    console.log('Общий тариф:', defaultTariff);
-    console.log('Данные груза:', cargoData);
-    console.log('Расстояние:', distanceKm);
-    console.log('Результат расчета:', defaultTariffCost);
-    
     if (defaultTariffCost) {
         defaultTariff.cost = defaultTariffCost.totalCost;
         defaultTariff.deliveryInfo = {

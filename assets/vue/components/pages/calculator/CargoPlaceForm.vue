@@ -12,20 +12,6 @@
         <!-- 2-й ряд: объём -->
         <div class="bg-gray-200 rounded-lg p-4 text-gray-500 text-lg">Объём, куб.м: {{ calculatedVolume }}</div>
         
-        <!-- Информация о минимальных значениях -->
-        <div v-if="usesMinimalValues" class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700">
-            <div class="flex items-start gap-2">
-                <span class="text-blue-500">ℹ</span>
-                <div>
-                    <div class="font-medium mb-1">Используются минимальные значения для расчета:</div>
-                    <ul class="space-y-1 text-xs">
-                        <li v-if="usesMinimalWeight">• Вес: {{ minimalValues.weight }} кг</li>
-                        <li v-if="usesMinimalDimensions">• Габариты: {{ minimalValues.length }}×{{ minimalValues.width }}×{{ minimalValues.height }} см</li>
-                        <li v-if="usesMinimalQuantity">• Количество: {{ minimalValues.quantity }} шт</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         <!-- 3-й ряд: вес и счетчик одинаковых мест -->
         <div class="flex items-center gap-4">
             <CalculatorTextInput :name="`pkg_${id}_weight`" placeholder="Вес, кг" v-model="weight" type="number"
@@ -155,38 +141,6 @@ const packagingOptions = computed(() => {
     }));
 });
 
-// Минимальные значения из конфигурации
-const minimalValues = computed(() => {
-    return props.calculatorConfig.minimalValues?.cargo?.package || {
-        length: 10, width: 10, height: 5, weight: 0.1, quantity: 1
-    };
-});
-
-// Проверяем, используются ли минимальные значения
-const usesMinimalWeight = computed(() => {
-    return !(parseFloat(weight.value) > 0);
-});
-
-const usesMinimalDimensions = computed(() => {
-    return !(parseFloat(length.value) > 0 && parseFloat(width.value) > 0 && parseFloat(height.value) > 0);
-});
-
-const usesMinimalQuantity = computed(() => {
-    return !(parseInt(quantity.value) > 0);
-});
-
-const usesMinimalValues = computed(() => {
-    return usesMinimalWeight.value || usesMinimalDimensions.value || usesMinimalQuantity.value;
-});
-
-// Экспортируем computed свойства для использования в template
-defineExpose({
-    usesMinimalValues,
-    usesMinimalWeight,
-    usesMinimalDimensions,
-    usesMinimalQuantity,
-    minimalValues
-});
 
 // Функции для управления количеством
 function incrementQuantity() {

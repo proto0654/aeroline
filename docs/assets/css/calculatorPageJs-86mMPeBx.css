@@ -129,10 +129,10 @@
   background-color: transparent !important;
 }
 
-.animate-fade-in[data-v-2a09b3d2] {
-    animation: fadeIn-2a09b3d2 0.2s ease-in-out;
+.animate-fade-in[data-v-df2000e1] {
+    animation: fadeIn-df2000e1 0.2s ease-in-out;
 }
-@keyframes fadeIn-2a09b3d2 {
+@keyframes fadeIn-df2000e1 {
 from {
         opacity: 0;
         transform: translateY(-5px);

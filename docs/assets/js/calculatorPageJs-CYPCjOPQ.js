@@ -366,28 +366,19 @@ const PackagingSelector = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId"
 const _hoisted_1$6 = { class: "flex flex-col gap-4" };
 const _hoisted_2$6 = { class: "grid grid-cols-1 md:grid-cols-3 gap-4 [&_.text-input-vue>input]:text-center" };
 const _hoisted_3$5 = { class: "bg-gray-200 rounded-lg p-4 text-gray-500 text-lg" };
-const _hoisted_4$5 = {
-  key: 0,
-  class: "bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700"
-};
-const _hoisted_5$4 = { class: "flex items-start gap-2" };
-const _hoisted_6$3 = { class: "space-y-1 text-xs" };
-const _hoisted_7$3 = { key: 0 };
-const _hoisted_8$1 = { key: 1 };
-const _hoisted_9$1 = { key: 2 };
-const _hoisted_10$1 = { class: "flex items-center gap-4" };
-const _hoisted_11$1 = {
+const _hoisted_4$5 = { class: "flex items-center gap-4" };
+const _hoisted_5$4 = {
   key: 0,
   class: "flex items-center gap-2 flex-shrink-0"
 };
-const _hoisted_12$1 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
-const _hoisted_13$1 = ["disabled"];
-const _hoisted_14$1 = { class: "px-4 py-2 bg-white text-center min-w-[60px]" };
-const _hoisted_15$1 = { class: "border-t border-gray-200 pt-4 flex flex-col gap-4" };
-const _hoisted_16$1 = { class: "flex flex-col gap-3" };
-const _hoisted_17$1 = { class: "flex items-start gap-2" };
-const _hoisted_18$1 = { class: "flex items-start gap-2" };
-const _hoisted_19$1 = { class: "flex items-start gap-2" };
+const _hoisted_6$3 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
+const _hoisted_7$3 = ["disabled"];
+const _hoisted_8$1 = { class: "px-4 py-2 bg-white text-center min-w-[60px]" };
+const _hoisted_9$1 = { class: "border-t border-gray-200 pt-4 flex flex-col gap-4" };
+const _hoisted_10$1 = { class: "flex flex-col gap-3" };
+const _hoisted_11$1 = { class: "flex items-start gap-2" };
+const _hoisted_12$1 = { class: "flex items-start gap-2" };
+const _hoisted_13$1 = { class: "flex items-start gap-2" };
 const _sfc_main$7 = {
   __name: "CargoPlaceForm",
   props: {
@@ -396,7 +387,7 @@ const _sfc_main$7 = {
     calculatorConfig: { type: Object, default: () => ({}) }
   },
   emits: ["update:modelValue", "duplicate"],
-  setup(__props, { expose: __expose, emit: __emit }) {
+  setup(__props, { emit: __emit }) {
     const props = __props;
     const emit = __emit;
     const id = ref(props.modelValue.id || Date.now());
@@ -419,35 +410,6 @@ const _sfc_main$7 = {
         uidUnit: p.uidUnit,
         price: p.price
       }));
-    });
-    const minimalValues = computed(() => {
-      var _a, _b;
-      return ((_b = (_a = props.calculatorConfig.minimalValues) == null ? void 0 : _a.cargo) == null ? void 0 : _b.package) || {
-        length: 10,
-        width: 10,
-        height: 5,
-        weight: 0.1,
-        quantity: 1
-      };
-    });
-    const usesMinimalWeight = computed(() => {
-      return !(parseFloat(weight.value) > 0);
-    });
-    const usesMinimalDimensions = computed(() => {
-      return !(parseFloat(length.value) > 0 && parseFloat(width.value) > 0 && parseFloat(height.value) > 0);
-    });
-    const usesMinimalQuantity = computed(() => {
-      return !(parseInt(quantity.value) > 0);
-    });
-    const usesMinimalValues = computed(() => {
-      return usesMinimalWeight.value || usesMinimalDimensions.value || usesMinimalQuantity.value;
-    });
-    __expose({
-      usesMinimalValues,
-      usesMinimalWeight,
-      usesMinimalDimensions,
-      usesMinimalQuantity,
-      minimalValues
     });
     function incrementQuantity() {
       quantity.value++;
@@ -533,20 +495,7 @@ const _sfc_main$7 = {
           }, null, 8, ["name", "modelValue"])
         ]),
         createBaseVNode("div", _hoisted_3$5, "Объём, куб.м: " + toDisplayString(calculatedVolume.value), 1),
-        usesMinimalValues.value ? (openBlock(), createElementBlock("div", _hoisted_4$5, [
-          createBaseVNode("div", _hoisted_5$4, [
-            _cache[11] || (_cache[11] = createBaseVNode("span", { class: "text-blue-500" }, "ℹ", -1)),
-            createBaseVNode("div", null, [
-              _cache[10] || (_cache[10] = createBaseVNode("div", { class: "font-medium mb-1" }, "Используются минимальные значения для расчета:", -1)),
-              createBaseVNode("ul", _hoisted_6$3, [
-                usesMinimalWeight.value ? (openBlock(), createElementBlock("li", _hoisted_7$3, "• Вес: " + toDisplayString(minimalValues.value.weight) + " кг", 1)) : createCommentVNode("", true),
-                usesMinimalDimensions.value ? (openBlock(), createElementBlock("li", _hoisted_8$1, "• Габариты: " + toDisplayString(minimalValues.value.length) + "×" + toDisplayString(minimalValues.value.width) + "×" + toDisplayString(minimalValues.value.height) + " см", 1)) : createCommentVNode("", true),
-                usesMinimalQuantity.value ? (openBlock(), createElementBlock("li", _hoisted_9$1, "• Количество: " + toDisplayString(minimalValues.value.quantity) + " шт", 1)) : createCommentVNode("", true)
-              ])
-            ])
-          ])
-        ])) : createCommentVNode("", true),
-        createBaseVNode("div", _hoisted_10$1, [
+        createBaseVNode("div", _hoisted_4$5, [
           createVNode(CalculatorTextInput, {
             name: `pkg_${id.value}_weight`,
             placeholder: "Вес, кг",
@@ -558,16 +507,16 @@ const _sfc_main$7 = {
             "display-suffix": "кг",
             "show-formatted-when-blurred": true
           }, null, 8, ["name", "modelValue"]),
-          __props.showDuplicateButton ? (openBlock(), createElementBlock("div", _hoisted_11$1, [
-            _cache[12] || (_cache[12] = createBaseVNode("span", { class: "text-sm text-gray-600" }, "Одинаковые места", -1)),
-            createBaseVNode("div", _hoisted_12$1, [
+          __props.showDuplicateButton ? (openBlock(), createElementBlock("div", _hoisted_5$4, [
+            _cache[10] || (_cache[10] = createBaseVNode("span", { class: "text-sm text-gray-600" }, "Одинаковые места", -1)),
+            createBaseVNode("div", _hoisted_6$3, [
               createBaseVNode("button", {
                 type: "button",
                 class: normalizeClass(["px-3 py-2", quantity.value <= 1 ? "bg-gray-100 text-gray-300" : "text-gray-700 hover:bg-brand-blue hover:text-white"]),
                 onClick: decrementQuantity,
                 disabled: quantity.value <= 1
-              }, "−", 10, _hoisted_13$1),
-              createBaseVNode("span", _hoisted_14$1, toDisplayString(quantity.value), 1),
+              }, "−", 10, _hoisted_7$3),
+              createBaseVNode("span", _hoisted_8$1, toDisplayString(quantity.value), 1),
               createBaseVNode("button", {
                 type: "button",
                 class: "px-3 py-2 bg-gray-100 hover:bg-brand-blue text-gray-700 hover:text-white",
@@ -576,9 +525,9 @@ const _sfc_main$7 = {
             ])
           ])) : createCommentVNode("", true)
         ]),
-        createBaseVNode("div", _hoisted_15$1, [
+        createBaseVNode("div", _hoisted_9$1, [
           createBaseVNode("div", null, [
-            _cache[13] || (_cache[13] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
+            _cache[11] || (_cache[11] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
               createBaseVNode("label", { class: "text-sm font-medium text-gray-700" }, "Описание содержимого"),
               createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
@@ -595,7 +544,7 @@ const _sfc_main$7 = {
             }, null, 8, ["name", "modelValue"])
           ]),
           createBaseVNode("div", null, [
-            _cache[14] || (_cache[14] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
+            _cache[12] || (_cache[12] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
               createBaseVNode("label", { class: "text-sm font-medium text-gray-700" }, "Оценочная стоимость грузоместа, ₽"),
               createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
@@ -620,43 +569,43 @@ const _sfc_main$7 = {
             modelValue: packagingItems.value,
             "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => packagingItems.value = $event)
           }, null, 8, ["name", "options", "modelValue"]),
-          createBaseVNode("div", _hoisted_16$1, [
-            createBaseVNode("div", _hoisted_17$1, [
+          createBaseVNode("div", _hoisted_10$1, [
+            createBaseVNode("div", _hoisted_11$1, [
               createVNode(CalculatorCheckboxInput, {
                 name: `pkg_${id.value}_self_marking`,
                 label: "Самостоятельная маркировка груза",
                 modelValue: selfMarking.value,
                 "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => selfMarking.value = $event)
               }, null, 8, ["name", "modelValue"]),
-              _cache[15] || (_cache[15] = createBaseVNode("span", {
+              _cache[13] || (_cache[13] = createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
                 "data-tip": "Если вы самостоятельно промаркировали груз штрихкодом или QR-кодом согласно нашим требованиям."
               }, [
                 createBaseVNode("span", { class: "inline-flex items-center justify-center w-5 h-5 text-sm border border-gray-400 rounded-full text-gray-600 hover:bg-gray-100" }, "?")
               ], -1))
             ]),
-            createBaseVNode("div", _hoisted_18$1, [
+            createBaseVNode("div", _hoisted_12$1, [
               createVNode(CalculatorCheckboxInput, {
                 name: `pkg_${id.value}_dangerous`,
                 label: "Есть опасный груз",
                 modelValue: dangerousGoods.value,
                 "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => dangerousGoods.value = $event)
               }, null, 8, ["name", "modelValue"]),
-              _cache[16] || (_cache[16] = createBaseVNode("span", {
+              _cache[14] || (_cache[14] = createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
                 "data-tip": "Отметьте, если груз содержит опасные вещества (легковоспламеняющиеся, токсичные, коррозионные материалы). Требуется специальная документация."
               }, [
                 createBaseVNode("span", { class: "inline-flex items-center justify-center w-5 h-5 text-sm border border-gray-400 rounded-full text-gray-600 hover:bg-gray-100" }, "?")
               ], -1))
             ]),
-            createBaseVNode("div", _hoisted_19$1, [
+            createBaseVNode("div", _hoisted_13$1, [
               createVNode(CalculatorCheckboxInput, {
                 name: `pkg_${id.value}_temp`,
                 label: "Требуется температурный режим",
                 modelValue: tempControl.value,
                 "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => tempControl.value = $event)
               }, null, 8, ["name", "modelValue"]),
-              _cache[17] || (_cache[17] = createBaseVNode("span", {
+              _cache[15] || (_cache[15] = createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
                 "data-tip": "Для грузов, требующих поддержания определенной температуры при транспортировке (продукты питания, медикаменты)."
               }, [
@@ -669,7 +618,7 @@ const _sfc_main$7 = {
     };
   }
 };
-const CargoPlaceForm = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-8dab345f"]]);
+const CargoPlaceForm = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-d3da6083"]]);
 const _hoisted_1$5 = { class: "w-full" };
 const _hoisted_2$5 = { class: "flex gap-2 mb-4 justify-between items-start" };
 const _hoisted_3$4 = { class: "overflow-x-auto flex gap-2 flex-1 min-w-0 rounded-lg" };
@@ -1473,105 +1422,103 @@ const _hoisted_17 = {
 const _hoisted_18 = { class: "text-lg font-bold text-gray-900" };
 const _hoisted_19 = {
   key: 0,
-  class: "my-4"
+  class: "mb-4"
 };
-const _hoisted_20 = {
-  key: 0,
-  class: "bg-blue-50 border-l-4 border-blue-400 text-blue-800 p-4 mt-2 rounded-b-md text-sm animate-fade-in",
-  role: "alert"
-};
-const _hoisted_21 = { class: "list-disc list-inside space-y-1" };
-const _hoisted_22 = {
+const _hoisted_20 = { class: "bg-blue-50 border border-blue-200 rounded-lg p-4" };
+const _hoisted_21 = { class: "flex items-start gap-3" };
+const _hoisted_22 = { class: "flex-1" };
+const _hoisted_23 = { class: "space-y-1 text-sm text-blue-700" };
+const _hoisted_24 = {
   key: 1,
   class: "border-b pb-4 mb-4"
 };
-const _hoisted_23 = { class: "flex justify-between items-center mb-2" };
-const _hoisted_24 = { class: "font-bold text-lg" };
-const _hoisted_25 = { class: "font-bold text-lg" };
-const _hoisted_26 = { class: "text-sm text-gray-500 mb-3" };
-const _hoisted_27 = {
+const _hoisted_25 = { class: "flex justify-between items-center mb-2" };
+const _hoisted_26 = { class: "font-bold text-lg" };
+const _hoisted_27 = { class: "font-bold text-lg" };
+const _hoisted_28 = { class: "text-sm text-gray-500 mb-3" };
+const _hoisted_29 = {
   key: 0,
   class: "text-sm text-blue-600 mb-2"
 };
-const _hoisted_28 = { key: 0 };
-const _hoisted_29 = {
+const _hoisted_30 = { key: 0 };
+const _hoisted_31 = {
   key: 1,
   class: "text-sm text-green-600 mb-3"
 };
-const _hoisted_30 = {
+const _hoisted_32 = {
   key: 2,
   class: "space-y-4 mb-6"
 };
-const _hoisted_31 = ["onClick"];
-const _hoisted_32 = { class: "flex justify-between items-start mb-2 relative" };
-const _hoisted_33 = { class: "flex-1" };
-const _hoisted_34 = { class: "font-semibold text-gray-800 flex items-center gap-2" };
-const _hoisted_35 = {
+const _hoisted_33 = ["onClick"];
+const _hoisted_34 = { class: "flex justify-between items-start mb-2 relative" };
+const _hoisted_35 = { class: "flex-1" };
+const _hoisted_36 = { class: "font-semibold text-gray-800 flex items-center gap-2" };
+const _hoisted_37 = {
   key: 0,
   class: "absolute top-0 right-0 left-auto -translate-y-7 translate-x-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
 };
-const _hoisted_36 = { class: "text-sm text-gray-600 mb-1" };
-const _hoisted_37 = { class: "text-xs text-gray-500 mb-1" };
-const _hoisted_38 = { key: 0 };
-const _hoisted_39 = { key: 1 };
-const _hoisted_40 = {
+const _hoisted_38 = { class: "text-sm text-gray-600 mb-1" };
+const _hoisted_39 = { class: "text-xs text-gray-500 mb-1" };
+const _hoisted_40 = { key: 0 };
+const _hoisted_41 = { key: 1 };
+const _hoisted_42 = {
   key: 0,
   class: "text-xs text-red-500 mb-1 font-medium"
 };
-const _hoisted_41 = {
+const _hoisted_43 = {
   key: 1,
   class: "mt-1 text-sm text-blue-600"
 };
-const _hoisted_42 = { key: 0 };
-const _hoisted_43 = { class: "text-right" };
-const _hoisted_44 = {
+const _hoisted_44 = { key: 0 };
+const _hoisted_45 = { class: "text-right" };
+const _hoisted_46 = {
   key: 0,
   class: "text-xl font-bold text-gray-800"
 };
-const _hoisted_45 = {
+const _hoisted_47 = {
   key: 1,
   class: "text-xl font-bold text-gray-400"
 };
-const _hoisted_46 = {
+const _hoisted_48 = {
   key: 0,
   class: "mt-3 pt-3 border-t border-gray-200"
 };
-const _hoisted_47 = ["onClick"];
-const _hoisted_48 = {
+const _hoisted_49 = ["onClick"];
+const _hoisted_50 = {
   key: 0,
   class: "mt-3 space-y-1 text-sm animate-fade-in"
 };
-const _hoisted_49 = { key: 0 };
-const _hoisted_50 = {
+const _hoisted_51 = { key: 0 };
+const _hoisted_52 = {
   key: 0,
   class: "border-t pt-2 mt-2"
 };
-const _hoisted_51 = { class: "flex justify-between" };
-const _hoisted_52 = { class: "font-medium" };
-const _hoisted_53 = {
+const _hoisted_53 = { class: "flex justify-between" };
+const _hoisted_54 = { class: "font-medium" };
+const _hoisted_55 = {
   key: 0,
   class: "flex justify-between"
 };
-const _hoisted_54 = { class: "font-medium" };
-const _hoisted_55 = {
+const _hoisted_56 = { class: "font-medium" };
+const _hoisted_57 = {
   key: 3,
   class: "border-t pt-4"
 };
-const _hoisted_56 = {
+const _hoisted_58 = {
   key: 0,
   class: "text-sm space-y-1 mb-3"
 };
-const _hoisted_57 = { class: "flex justify-between text-gray-600" };
-const _hoisted_58 = {
+const _hoisted_59 = { class: "flex justify-between text-gray-600" };
+const _hoisted_60 = {
   key: 0,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_59 = {
+const _hoisted_61 = {
   key: 1,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_60 = { class: "flex justify-between items-center font-bold text-lg border-t pt-3" };
-const _hoisted_61 = { class: "text-xl" };
+const _hoisted_62 = { class: "flex justify-between items-center font-bold text-lg border-t pt-3" };
+const _hoisted_63 = { class: "text-xl" };
 const _sfc_main$1 = {
   __name: "CalculationResult",
   props: {
@@ -1613,11 +1560,11 @@ const _sfc_main$1 = {
     });
     const cargoInfo = computed(() => {
       var _a, _b;
-      const defaultPackage = ((_b = (_a = props.calculatorConfig.defaultValues) == null ? void 0 : _a.cargo) == null ? void 0 : _b.package) || {
-        length: "30",
-        width: "20",
-        height: "10",
-        weight: "1",
+      const minimalValues = ((_b = (_a = props.calculatorConfig.minimalValues) == null ? void 0 : _a.cargo) == null ? void 0 : _b.package) || {
+        length: 10,
+        width: 10,
+        height: 5,
+        weight: 0.1,
         quantity: 1
       };
       if (props.result && props.result.selectedTariff && props.result.selectedTariff.packageDetails && props.result.selectedTariff.packageDetails.length > 0) {
@@ -1634,12 +1581,12 @@ const _sfc_main$1 = {
         };
       }
       if (!props.formData.cargo || !props.formData.cargo.packages || props.formData.cargo.packages.length === 0) {
-        const quantity = parseInt(defaultPackage.quantity) || 1;
+        const quantity = minimalValues.quantity;
         return {
           count: formatNumber(quantity),
           countLabel: quantity === 1 ? "место" : "мест",
-          weight: formatWeight(parseFloat(defaultPackage.weight) * quantity),
-          volume: formatVolume(parseFloat(defaultPackage.length) * parseFloat(defaultPackage.width) * parseFloat(defaultPackage.height) / 1e6 * quantity)
+          weight: formatWeight(minimalValues.weight * quantity),
+          volume: formatVolume(minimalValues.length * minimalValues.width * minimalValues.height / 1e6 * quantity)
         };
       }
       const { cargo } = props.formData;
@@ -1648,14 +1595,14 @@ const _sfc_main$1 = {
       let totalCount = 0;
       let countLabel = "мест";
       const processedPackages = cargo.packages.map((pkg) => {
-        const useDefaultDimensions = !(parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0);
+        const useMinimalDimensions = !(parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0);
         return {
           ...pkg,
-          weight: parseFloat(pkg.weight) > 0 ? parseFloat(pkg.weight) : parseFloat(defaultPackage.weight),
-          length: useDefaultDimensions ? parseFloat(defaultPackage.length) : parseFloat(pkg.length),
-          width: useDefaultDimensions ? parseFloat(defaultPackage.width) : parseFloat(pkg.width),
-          height: useDefaultDimensions ? parseFloat(defaultPackage.height) : parseFloat(pkg.height),
-          quantity: parseInt(pkg.quantity) > 0 ? parseInt(pkg.quantity) : 1
+          weight: parseFloat(pkg.weight) > 0 ? parseFloat(pkg.weight) : minimalValues.weight,
+          length: useMinimalDimensions ? minimalValues.length : parseFloat(pkg.length),
+          width: useMinimalDimensions ? minimalValues.width : parseFloat(pkg.width),
+          height: useMinimalDimensions ? minimalValues.height : parseFloat(pkg.height),
+          quantity: parseInt(pkg.quantity) > 0 ? parseInt(pkg.quantity) : minimalValues.quantity
         };
       });
       if (cargo.mode === "individual") {
@@ -1707,44 +1654,29 @@ const _sfc_main$1 = {
       var _a, _b;
       const messages = [];
       const { formData, calculatorConfig } = props;
-      const defaultPackage = ((_b = (_a = calculatorConfig.defaultValues) == null ? void 0 : _a.cargo) == null ? void 0 : _b.package) || {
-        length: "30",
-        width: "20",
-        height: "10",
-        weight: "1",
+      const minimalValues = ((_b = (_a = calculatorConfig.minimalValues) == null ? void 0 : _a.cargo) == null ? void 0 : _b.package) || {
+        length: 10,
+        width: 10,
+        height: 5,
+        weight: 0.1,
         quantity: 1
       };
-      let cargoWeightProvided = false;
-      let cargoDimensionsProvided = false;
       if (formData.cargo && formData.cargo.packages && formData.cargo.packages.length > 0) {
         const firstPackage = formData.cargo.packages[0];
-        cargoWeightProvided = firstPackage.weight && parseFloat(firstPackage.weight) > 0;
-        cargoDimensionsProvided = firstPackage.length && parseFloat(firstPackage.length) > 0 && firstPackage.width && parseFloat(firstPackage.width) > 0 && firstPackage.height && parseFloat(firstPackage.height) > 0;
+        const hasWeight = parseFloat(firstPackage.weight) > 0;
+        if (!hasWeight) {
+          messages.push(`Вес не указан. Используется минимальное значение: ${minimalValues.weight} кг`);
+        }
+        const hasDimensions = parseFloat(firstPackage.length) > 0 && parseFloat(firstPackage.width) > 0 && parseFloat(firstPackage.height) > 0;
+        if (!hasDimensions) {
+          messages.push(`Габариты не указаны. Используются минимальные значения: ${minimalValues.length}×${minimalValues.width}×${minimalValues.height} см`);
+        }
+        const hasQuantity = parseInt(firstPackage.quantity) > 0;
+        if (!hasQuantity) {
+          messages.push(`Количество не указано. Используется минимальное значение: ${minimalValues.quantity} шт`);
+        }
       } else {
-        cargoWeightProvided = false;
-        cargoDimensionsProvided = false;
-      }
-      if (!cargoWeightProvided) {
-        const defaultWeight = parseFloat(defaultPackage.weight) * (parseInt(defaultPackage.quantity) || 1);
-        messages.push(`Вес груза не указан. Используется значение по умолчанию: ${formatWeight(defaultWeight)} кг.`);
-      }
-      if (!cargoDimensionsProvided) {
-        const defaultVolume = parseFloat(defaultPackage.length) * parseFloat(defaultPackage.width) * parseFloat(defaultPackage.height) / 1e6 * (parseInt(defaultPackage.quantity) || 1);
-        messages.push(`Габариты груза не указаны. Используются значения по умолчанию: ${defaultPackage.length}x${defaultPackage.width}x${defaultPackage.height} см, Объем ${formatVolume(defaultVolume)} м³.`);
-      }
-      const tomorrow = /* @__PURE__ */ new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const defaultDepartureDate = tomorrow.toISOString().split("T")[0];
-      if (!formData.departure.date || new Date(formData.departure.date).toISOString().split("T")[0] === defaultDepartureDate) {
-        messages.push(`Дата отправки не указана. Используется завтрашняя дата: ${formatDate(defaultDepartureDate)}.`);
-      }
-      const isDepartureLocationProvided = formData.departure.location && (typeof formData.departure.location === "object" ? !!formData.departure.location.id : formData.departure.location.trim() !== "");
-      if (!isDepartureLocationProvided) {
-        messages.push(`Пункт отправления не указан. Используется терминал по умолчанию в городе ${formData.direction.from || "отправления"}.`);
-      }
-      const isDestinationLocationProvided = formData.destination.location && (typeof formData.destination.location === "object" ? !!formData.destination.location.id : formData.destination.location.trim() !== "");
-      if (!isDestinationLocationProvided) {
-        messages.push(`Пункт назначения не указан. Используется терминал по умолчанию в городе ${formData.direction.to || "назначения"}.`);
+        messages.push(`Параметры груза не указаны. Используются минимальные значения: вес ${minimalValues.weight} кг, габариты ${minimalValues.length}×${minimalValues.width}×${minimalValues.height} см, количество ${minimalValues.quantity} шт`);
       }
       return messages;
     });
@@ -1786,13 +1718,9 @@ const _sfc_main$1 = {
       const year = d.getFullYear();
       return `${day}.${month}.${year}`;
     }
-    const isMessagesSpoilerExpanded = ref(false);
-    function toggleMessagesSpoiler() {
-      isMessagesSpoilerExpanded.value = !isMessagesSpoilerExpanded.value;
-    }
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("aside", _hoisted_1$1, [
-        _cache[22] || (_cache[22] = createBaseVNode("h2", { class: "text-h4 font-bold mb-4" }, "Стоимость перевозки", -1)),
+        _cache[23] || (_cache[23] = createBaseVNode("h2", { class: "text-h4 font-bold mb-4" }, "Стоимость перевозки", -1)),
         !__props.result || !__props.result.isValid ? (openBlock(), createElementBlock("div", _hoisted_2$1, _cache[1] || (_cache[1] = [
           createBaseVNode("p", null, "Заполните все обязательные поля, чтобы увидеть стоимость перевозки.", -1),
           createBaseVNode("div", { class: "mt-3 text-sm text-gray-400" }, [
@@ -1852,51 +1780,56 @@ const _sfc_main$1 = {
             ])) : createCommentVNode("", true)
           ]),
           displayMessages.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_19, [
-            createBaseVNode("button", {
-              onClick: toggleMessagesSpoiler,
-              class: "w-full flex items-starts justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-            }, [
-              _cache[8] || (_cache[8] = createBaseVNode("span", { class: "font-bold text-blue-800 text-sm" }, "Не все поля заполнены, использованы значения по умолчанию", -1)),
-              (openBlock(), createElementBlock("svg", {
-                class: normalizeClass(["w-7 h-7 text-blue-600 transition-transform", isMessagesSpoilerExpanded.value ? "rotate-180" : ""]),
-                fill: "none",
-                stroke: "currentColor",
-                viewBox: "0 0 24 24"
-              }, _cache[7] || (_cache[7] = [
-                createBaseVNode("path", {
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round",
-                  "stroke-width": "2",
-                  d: "M19 9l-7 7-7-7"
-                }, null, -1)
-              ]), 2))
-            ]),
-            isMessagesSpoilerExpanded.value ? (openBlock(), createElementBlock("div", _hoisted_20, [
-              createBaseVNode("ul", _hoisted_21, [
-                (openBlock(true), createElementBlock(Fragment, null, renderList(displayMessages.value, (message, index2) => {
-                  return openBlock(), createElementBlock("li", { key: index2 }, toDisplayString(message), 1);
-                }), 128))
+            createBaseVNode("div", _hoisted_20, [
+              createBaseVNode("div", _hoisted_21, [
+                _cache[9] || (_cache[9] = createBaseVNode("div", { class: "flex-shrink-0" }, [
+                  createBaseVNode("svg", {
+                    class: "w-5 h-5 text-blue-500 mt-0.5",
+                    fill: "currentColor",
+                    viewBox: "0 0 20 20"
+                  }, [
+                    createBaseVNode("path", {
+                      "fill-rule": "evenodd",
+                      d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z",
+                      "clip-rule": "evenodd"
+                    })
+                  ])
+                ], -1)),
+                createBaseVNode("div", _hoisted_22, [
+                  _cache[8] || (_cache[8] = createBaseVNode("h4", { class: "font-medium text-blue-800 mb-2" }, "Использованы минимальные значения", -1)),
+                  createBaseVNode("ul", _hoisted_23, [
+                    (openBlock(true), createElementBlock(Fragment, null, renderList(displayMessages.value, (message, index2) => {
+                      return openBlock(), createElementBlock("li", {
+                        key: index2,
+                        class: "flex items-start gap-2"
+                      }, [
+                        _cache[7] || (_cache[7] = createBaseVNode("span", { class: "text-blue-500 mt-0.5" }, "•", -1)),
+                        createBaseVNode("span", null, toDisplayString(message), 1)
+                      ]);
+                    }), 128))
+                  ])
+                ])
               ])
-            ])) : createCommentVNode("", true)
+            ])
           ])) : createCommentVNode("", true),
-          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_22, [
-            createBaseVNode("div", _hoisted_23, [
-              createBaseVNode("span", _hoisted_24, toDisplayString(__props.result.selectedTariff.name), 1),
-              createBaseVNode("span", _hoisted_25, toDisplayString(formatCurrency(__props.result.selectedTariff.cost)), 1)
+          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_24, [
+            createBaseVNode("div", _hoisted_25, [
+              createBaseVNode("span", _hoisted_26, toDisplayString(__props.result.selectedTariff.name), 1),
+              createBaseVNode("span", _hoisted_27, toDisplayString(formatCurrency(__props.result.selectedTariff.cost)), 1)
             ]),
-            createBaseVNode("div", _hoisted_26, toDisplayString(__props.result.selectedTariff.description), 1),
-            __props.result.selectedTariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_27, [
-              _cache[9] || (_cache[9] = createBaseVNode("span", { class: "font-medium" }, "Время доставки:", -1)),
+            createBaseVNode("div", _hoisted_28, toDisplayString(__props.result.selectedTariff.description), 1),
+            __props.result.selectedTariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_29, [
+              _cache[10] || (_cache[10] = createBaseVNode("span", { class: "font-medium" }, "Время доставки:", -1)),
               createTextVNode(" " + toDisplayString(__props.result.selectedTariff.deliveryInfo.description) + " ", 1),
-              __props.result.selectedTariff.deliveryInfo.days ? (openBlock(), createElementBlock("span", _hoisted_28, " (" + toDisplayString(__props.result.selectedTariff.deliveryInfo.days) + " дн.)", 1)) : createCommentVNode("", true)
+              __props.result.selectedTariff.deliveryInfo.days ? (openBlock(), createElementBlock("span", _hoisted_30, " (" + toDisplayString(__props.result.selectedTariff.deliveryInfo.days) + " дн.)", 1)) : createCommentVNode("", true)
             ])) : createCommentVNode("", true),
-            __props.result.selectedTariff.minDeliveryDate ? (openBlock(), createElementBlock("div", _hoisted_29, [
-              _cache[10] || (_cache[10] = createBaseVNode("span", { class: "font-medium" }, "Минимальная дата доставки:", -1)),
+            __props.result.selectedTariff.minDeliveryDate ? (openBlock(), createElementBlock("div", _hoisted_31, [
+              _cache[11] || (_cache[11] = createBaseVNode("span", { class: "font-medium" }, "Минимальная дата доставки:", -1)),
               createTextVNode(" " + toDisplayString(formatDate(__props.result.selectedTariff.minDeliveryDate.date)), 1)
             ])) : createCommentVNode("", true)
           ])) : createCommentVNode("", true),
-          __props.result.allTariffs && __props.result.allTariffs.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_30, [
-            _cache[16] || (_cache[16] = createBaseVNode("h3", { class: "text-lg font-semibold text-gray-800" }, "Все тарифы:", -1)),
+          __props.result.allTariffs && __props.result.allTariffs.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_32, [
+            _cache[17] || (_cache[17] = createBaseVNode("h3", { class: "text-lg font-semibold text-gray-800" }, "Все тарифы:", -1)),
             (openBlock(true), createElementBlock(Fragment, null, renderList(__props.result.allTariffs, (tariff) => {
               var _a;
               return openBlock(), createElementBlock("div", {
@@ -1908,29 +1841,29 @@ const _sfc_main$1 = {
                 ]),
                 onClick: ($event) => tariff.isAvailable && _ctx.$emit("selectTariff", tariff.id)
               }, [
-                createBaseVNode("div", _hoisted_32, [
-                  createBaseVNode("div", _hoisted_33, [
-                    createBaseVNode("h4", _hoisted_34, [
+                createBaseVNode("div", _hoisted_34, [
+                  createBaseVNode("div", _hoisted_35, [
+                    createBaseVNode("h4", _hoisted_36, [
                       createTextVNode(toDisplayString(tariff.fullName) + " ", 1),
-                      tariff.isAvailable && tariff.isRecommended ? (openBlock(), createElementBlock("span", _hoisted_35, " Экономия " + toDisplayString(Math.round(tariff.savings)) + " ₽. Рекомендуем! ", 1)) : createCommentVNode("", true)
+                      tariff.isAvailable && tariff.isRecommended ? (openBlock(), createElementBlock("span", _hoisted_37, " Экономия " + toDisplayString(Math.round(tariff.savings)) + " ₽. Рекомендуем! ", 1)) : createCommentVNode("", true)
                     ]),
-                    createBaseVNode("p", _hoisted_36, toDisplayString(tariff.description || tariff.name || "Доставка груза"), 1),
-                    createBaseVNode("ul", _hoisted_37, [
-                      tariff.transportationCoefficient ? (openBlock(), createElementBlock("li", _hoisted_38, "Коэффициент перевозки: " + toDisplayString(tariff.transportationCoefficient), 1)) : createCommentVNode("", true),
-                      tariff.deliveryInfo ? (openBlock(), createElementBlock("li", _hoisted_39, "Время доставки: " + toDisplayString(tariff.deliveryInfo.description), 1)) : createCommentVNode("", true)
+                    createBaseVNode("p", _hoisted_38, toDisplayString(tariff.description || tariff.name || "Доставка груза"), 1),
+                    createBaseVNode("ul", _hoisted_39, [
+                      tariff.transportationCoefficient ? (openBlock(), createElementBlock("li", _hoisted_40, "Коэффициент перевозки: " + toDisplayString(tariff.transportationCoefficient), 1)) : createCommentVNode("", true),
+                      tariff.deliveryInfo ? (openBlock(), createElementBlock("li", _hoisted_41, "Время доставки: " + toDisplayString(tariff.deliveryInfo.description), 1)) : createCommentVNode("", true)
                     ]),
-                    !tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_40, " Недоступно: " + toDisplayString(tariff.reason), 1)) : createCommentVNode("", true),
-                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_41, [
-                      _cache[11] || (_cache[11] = createBaseVNode("span", { class: "font-medium" }, "Время доставки:", -1)),
+                    !tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_42, " Недоступно: " + toDisplayString(tariff.reason), 1)) : createCommentVNode("", true),
+                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_43, [
+                      _cache[12] || (_cache[12] = createBaseVNode("span", { class: "font-medium" }, "Время доставки:", -1)),
                       createTextVNode(" " + toDisplayString(tariff.deliveryInfo.description) + " ", 1),
-                      tariff.deliveryInfo.days ? (openBlock(), createElementBlock("span", _hoisted_42, " (" + toDisplayString(tariff.deliveryInfo.days) + " дн.)", 1)) : createCommentVNode("", true)
+                      tariff.deliveryInfo.days ? (openBlock(), createElementBlock("span", _hoisted_44, " (" + toDisplayString(tariff.deliveryInfo.days) + " дн.)", 1)) : createCommentVNode("", true)
                     ])) : createCommentVNode("", true)
                   ]),
-                  createBaseVNode("div", _hoisted_43, [
-                    tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_44, toDisplayString(tariff.cost ? Math.round(tariff.cost).toLocaleString() : "0") + " ₽", 1)) : (openBlock(), createElementBlock("div", _hoisted_45, "—"))
+                  createBaseVNode("div", _hoisted_45, [
+                    tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_46, toDisplayString(tariff.cost ? Math.round(tariff.cost).toLocaleString() : "0") + " ₽", 1)) : (openBlock(), createElementBlock("div", _hoisted_47, "—"))
                   ])
                 ]),
-                tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_46, [
+                tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_48, [
                   createBaseVNode("button", {
                     onClick: withModifiers(($event) => toggleTariffDetails(tariff.id), ["stop"]),
                     class: "text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
@@ -1941,7 +1874,7 @@ const _sfc_main$1 = {
                       fill: "none",
                       stroke: "currentColor",
                       viewBox: "0 0 24 24"
-                    }, _cache[12] || (_cache[12] = [
+                    }, _cache[13] || (_cache[13] = [
                       createBaseVNode("path", {
                         "stroke-linecap": "round",
                         "stroke-linejoin": "round",
@@ -1949,9 +1882,9 @@ const _sfc_main$1 = {
                         d: "M19 9l-7 7-7-7"
                       }, null, -1)
                     ]), 2))
-                  ], 8, _hoisted_47),
-                  expandedTariffs.value.includes(tariff.id) && tariff.details ? (openBlock(), createElementBlock("div", _hoisted_48, [
-                    _cache[15] || (_cache[15] = createBaseVNode("h5", { class: "font-medium text-gray-700 mb-2" }, "Детализация расчета:", -1)),
+                  ], 8, _hoisted_49),
+                  expandedTariffs.value.includes(tariff.id) && tariff.details ? (openBlock(), createElementBlock("div", _hoisted_50, [
+                    _cache[16] || (_cache[16] = createBaseVNode("h5", { class: "font-medium text-gray-700 mb-2" }, "Детализация расчета:", -1)),
                     (openBlock(true), createElementBlock(Fragment, null, renderList(tariff.details, (detail) => {
                       return openBlock(), createElementBlock("div", {
                         key: detail.name,
@@ -1965,44 +1898,44 @@ const _sfc_main$1 = {
                         ])
                       }, [
                         createBaseVNode("span", null, toDisplayString(detail.name), 1),
-                        !detail.isHeader && !detail.isSubHeader && !detail.isDetail ? (openBlock(), createElementBlock("span", _hoisted_49, toDisplayString(detail.cost < 0 ? "" : "+") + toDisplayString(formatCurrency(detail.cost)), 1)) : createCommentVNode("", true)
+                        !detail.isHeader && !detail.isSubHeader && !detail.isDetail ? (openBlock(), createElementBlock("span", _hoisted_51, toDisplayString(detail.cost < 0 ? "" : "+") + toDisplayString(formatCurrency(detail.cost)), 1)) : createCommentVNode("", true)
                       ], 2);
                     }), 128)),
-                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_50, [
-                      createBaseVNode("div", _hoisted_51, [
-                        _cache[13] || (_cache[13] = createBaseVNode("span", { class: "text-gray-600" }, "Время доставки:", -1)),
-                        createBaseVNode("span", _hoisted_52, toDisplayString(tariff.deliveryInfo.days) + " дн.", 1)
+                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_52, [
+                      createBaseVNode("div", _hoisted_53, [
+                        _cache[14] || (_cache[14] = createBaseVNode("span", { class: "text-gray-600" }, "Время доставки:", -1)),
+                        createBaseVNode("span", _hoisted_54, toDisplayString(tariff.deliveryInfo.days) + " дн.", 1)
                       ]),
-                      __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_53, [
-                        _cache[14] || (_cache[14] = createBaseVNode("span", { class: "text-gray-600" }, "Расстояние:", -1)),
-                        createBaseVNode("span", _hoisted_54, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
+                      __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_55, [
+                        _cache[15] || (_cache[15] = createBaseVNode("span", { class: "text-gray-600" }, "Расстояние:", -1)),
+                        createBaseVNode("span", _hoisted_56, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
                       ])) : createCommentVNode("", true)
                     ])) : createCommentVNode("", true)
                   ])) : createCommentVNode("", true)
                 ])) : createCommentVNode("", true)
-              ], 10, _hoisted_31);
+              ], 10, _hoisted_33);
             }), 128))
           ])) : createCommentVNode("", true),
-          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_55, [
-            __props.result.selectedTariff.summary ? (openBlock(), createElementBlock("div", _hoisted_56, [
-              createBaseVNode("div", _hoisted_57, [
-                _cache[17] || (_cache[17] = createBaseVNode("span", null, "Тарифная стоимость:", -1)),
+          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_57, [
+            __props.result.selectedTariff.summary ? (openBlock(), createElementBlock("div", _hoisted_58, [
+              createBaseVNode("div", _hoisted_59, [
+                _cache[18] || (_cache[18] = createBaseVNode("span", null, "Тарифная стоимость:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.baseCost)), 1)
               ]),
-              __props.result.selectedTariff.summary.additionalServices !== 0 ? (openBlock(), createElementBlock("div", _hoisted_58, [
-                _cache[18] || (_cache[18] = createBaseVNode("span", null, "Дополнительные услуги:", -1)),
+              __props.result.selectedTariff.summary.additionalServices !== 0 ? (openBlock(), createElementBlock("div", _hoisted_60, [
+                _cache[19] || (_cache[19] = createBaseVNode("span", null, "Дополнительные услуги:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.additionalServices)), 1)
               ])) : createCommentVNode("", true),
-              __props.result.selectedTariff.summary.distance > 0 ? (openBlock(), createElementBlock("div", _hoisted_59, [
-                _cache[19] || (_cache[19] = createBaseVNode("span", null, "Стоимость расстояния:", -1)),
+              __props.result.selectedTariff.summary.distance > 0 ? (openBlock(), createElementBlock("div", _hoisted_61, [
+                _cache[20] || (_cache[20] = createBaseVNode("span", null, "Стоимость расстояния:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.distance)), 1)
               ])) : createCommentVNode("", true)
             ])) : createCommentVNode("", true),
-            createBaseVNode("div", _hoisted_60, [
-              _cache[20] || (_cache[20] = createBaseVNode("span", null, "Общая стоимость", -1)),
-              createBaseVNode("span", _hoisted_61, toDisplayString(formatCurrency(__props.result.selectedTariff.cost)), 1)
+            createBaseVNode("div", _hoisted_62, [
+              _cache[21] || (_cache[21] = createBaseVNode("span", null, "Общая стоимость", -1)),
+              createBaseVNode("span", _hoisted_63, toDisplayString(formatCurrency(__props.result.selectedTariff.cost)), 1)
             ]),
-            _cache[21] || (_cache[21] = createBaseVNode("div", { class: "text-xs text-gray-400 mt-1" }, " С учетом НДС ", -1))
+            _cache[22] || (_cache[22] = createBaseVNode("div", { class: "text-xs text-gray-400 mt-1" }, " С учетом НДС ", -1))
           ])) : createCommentVNode("", true),
           createBaseVNode("button", {
             onClick: _cache[0] || (_cache[0] = ($event) => _ctx.$emit("print")),
@@ -2013,7 +1946,7 @@ const _sfc_main$1 = {
     };
   }
 };
-const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-2a09b3d2"]]);
+const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-df2000e1"]]);
 const _hoisted_1 = { class: "flex flex-col flex-1 lg:flex-row gap-8 min-w-0" };
 const _hoisted_2 = { class: "flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0" };
 const _hoisted_3 = { class: "bg-brand-light p-5 rounded-lg" };
@@ -2231,10 +2164,6 @@ const _sfc_main = {
       });
       const defaultTariff = getDefaultTariff();
       const defaultTariffCost = calculateDefaultTariffCost(defaultTariff, cargoData, distanceKm);
-      console.log("Общий тариф:", defaultTariff);
-      console.log("Данные груза:", cargoData);
-      console.log("Расстояние:", distanceKm);
-      console.log("Результат расчета:", defaultTariffCost);
       if (defaultTariffCost) {
         defaultTariff.cost = defaultTariffCost.totalCost;
         defaultTariff.deliveryInfo = {
