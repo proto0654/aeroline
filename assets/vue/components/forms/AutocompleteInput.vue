@@ -1,12 +1,12 @@
 <template>
     <div>
-        <label v-if="label" :for="inputId" class="">
+        <label v-if="label" :for="inputId" class="block text-brand-gray font-medium mb-2">
             {{ label }}
         </label>
 
         <div class="relative w-full">
             <input :id="inputId" ref="inputRef" type="text"
-                class="rounded-lg border border-gray-200 px-4 py-3 w-full focus:outline-none text-body-secondary focus:border-gray!"
+                class="vue-form-field w-full"
                 :class="[
                     errorMessage ? 'border-red-500' : '',
                     disabled ? 'bg-gray-100 cursor-not-allowed' : ''
@@ -19,9 +19,8 @@
             <img v-if="!isSpecificOfficeSelected" src="/assets/img/select-arrow.svg" alt=""
                 class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-10" />
 
-            <button v-if="showResetButton && inputValue" type="button" @click="resetInput" :class="[
-                'absolute top-1/2 -translate-y-1/2 text-brand-blue hover:text-red-500 z-20 bg-white p-2',
-                isSpecificOfficeSelected ? 'right-1' : 'right-8'
+            <button v-if="showResetButton && inputValue && inputValue.trim() && isSpecificOfficeSelected" type="button" @click="resetInput" :class="[
+                'absolute top-1/2 -translate-y-1/2 text-brand-blue hover:text-red-500 z-20 bg-white p-2 right-1'
             ]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -50,6 +49,7 @@
 
 <script setup>
 import { computed, ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
+import { formatLocalityName, formatSelectedLocalityName } from '../../utils/localityFormatter.js';
 import { useField } from 'vee-validate';
 
 const props = defineProps({
@@ -90,10 +90,6 @@ const props = defineProps({
         required: true,
         default: () => []
     },
-    onlyCities: {
-        type: Boolean,
-        default: false
-    },
     showResetButton: {
         type: Boolean,
         default: false
@@ -101,6 +97,22 @@ const props = defineProps({
     emitFullItem: {
         type: Boolean,
         default: false
+    },
+    useApiSearch: {
+        type: Boolean,
+        default: false
+    },
+    apiSearchFunction: {
+        type: Function,
+        default: null
+    },
+    itemFormatter: {
+        type: Function,
+        default: null
+    },
+    selectedValueFormatter: {
+        type: Function,
+        default: null
     }
 });
 
@@ -117,6 +129,8 @@ const listRef = ref(null);
 const isDropdownVisible = ref(false);
 const currentIndex = ref(-1);
 const selectedItem = ref(null); // Хранит выбранный объект (офис или город)
+const apiSearchResults = ref([]);
+const isApiSearching = ref(false);
 
 // VeeValidate интеграция
 const {
@@ -141,18 +155,18 @@ watch(() => props.modelValue, (newValue) => {
 watch(inputValue, (newValue) => {
     emit('update:modelValue', newValue);
 
-    // Ищем соответствующий офис в items для установки selectedItem
+    // Ищем соответствующий элемент в items для установки selectedItem
     if (newValue && newValue.trim()) {
         const foundItem = props.items.find(item => {
-            if (props.onlyCities) {
-                // В режиме onlyCities ищем по точному совпадению города
-                return item.city === newValue.trim();
-            } else {
-                // В обычном режиме ищем по полной строке или по городу + адресу
-                const fullString = formatItemToString(item);
-                const cityAddressString = item.city + (item.address ? ', ' + item.address : '');
-                return fullString === newValue.trim() || cityAddressString === newValue.trim();
+            // Для ПВЗ ищем по отформатированному имени
+            if (props.itemFormatter) {
+                const formattedName = props.itemFormatter(item);
+                return formattedName === newValue.trim();
             }
+            
+            // Для городов ищем по точному совпадению города
+            const cityName = item.name || item.locality || item.city;
+            return cityName === newValue.trim();
         });
 
         if (foundItem) {
@@ -173,101 +187,172 @@ const filteredItems = computed(() => {
         return getUniqueItems();
     }
 
-    if (props.onlyCities) {
-        // В режиме только городов фильтруем только по названию города
-        const byCityStart = new Map();
-        const byCityInclude = new Map();
-
-        // Сначала собираем все уникальные города
-        const uniqueCities = new Map();
-        props.items.forEach(item => {
-            if (item.city) {
-                const cityName = item.city.trim();
-                const cityLower = cityName.toLowerCase();
-                if (!uniqueCities.has(cityLower)) {
-                    uniqueCities.set(cityLower, item);
-                }
-            }
-        });
-
-        // Теперь фильтруем уникальные города
-        uniqueCities.forEach((item, cityLower) => {
-            if (cityLower.startsWith(query)) {
-                byCityStart.set(cityLower, item);
-            } else if (cityLower.includes(query)) {
-                byCityInclude.set(cityLower, item);
-            }
-        });
-
-        return [...byCityStart.values(), ...byCityInclude.values()];
+    // Если используется API поиск, возвращаем результаты API
+    if (props.useApiSearch && props.apiSearchFunction) {
+        return apiSearchResults.value;
     }
 
+    // Локальный поиск по загруженным данным
+    const byCityExact = [];
     const byCityStart = [];
     const byCityInclude = [];
-    const byOther = [];
+    const byRegion = [];
 
     props.items.forEach(item => {
-        if (item.city && item.city.toLowerCase().startsWith(query)) {
+        // Handle different item structures (localities vs PVZ)
+        const cityName = item.name || item.locality || item.city;
+        const regionName = item.region?.name || '';
+        const federalDistrict = item.region?.federalDistrict || '';
+        
+        // For PVZ items, use different search fields
+        const pvzType = item.type || '';
+        const pvzStreet = item.street || '';
+        const pvzHouseNumber = item.houseNumber || '';
+        const pvzPhone = item.phone || '';
+        
+        // Check if this is a PVZ item (has type field)
+        if (pvzType) {
+            const typeLower = pvzType.toLowerCase();
+            const streetLower = pvzStreet.toLowerCase();
+            const houseLower = pvzHouseNumber.toLowerCase();
+            const phoneLower = pvzPhone.toLowerCase();
+            
+            // Create combined search string for PVZ
+            const combinedString = `${typeLower} ${streetLower} ${houseLower} ${phoneLower}`.trim();
+            
+            // Check for matches in PVZ fields
+            const typeExact = typeLower === query;
+            const typeStart = typeLower.startsWith(query);
+            const typeInclude = typeLower.includes(query);
+            const streetMatch = streetLower.includes(query);
+            const houseMatch = houseLower.includes(query);
+            const phoneMatch = phoneLower.includes(query);
+            const combinedMatch = combinedString.includes(query);
+            
+            // PVZ search priority: type exact > type start > type include > other fields
+            if (typeExact) {
+                byCityExact.push(item);
+            } else if (typeStart) {
+                byCityStart.push(item);
+            } else if (typeInclude || streetMatch || houseMatch || phoneMatch || combinedMatch) {
+                byCityInclude.push(item);
+            }
+            return;
+        }
+        
+        // Original locality search logic
+        if (!cityName) return;
+
+        const cityLower = cityName.toLowerCase();
+        const regionLower = regionName.toLowerCase();
+        const federalLower = federalDistrict.toLowerCase();
+
+        // Создаем комбинированную строку для поиска
+        const combinedString = `${cityLower} ${regionLower} ${federalLower}`.trim();
+
+        // Проверяем все поля одновременно для более гибкого поиска
+        const cityExact = cityLower === query;
+        const cityStart = cityLower.startsWith(query);
+        const cityInclude = cityLower.includes(query);
+        const regionMatch = regionLower.includes(query);
+        const federalMatch = federalLower.includes(query);
+        const combinedMatch = combinedString.includes(query);
+
+        // Точное совпадение города - приоритет 1
+        if (cityExact) {
+            byCityExact.push(item);
+        }
+        // Город начинается с запроса - приоритет 2
+        else if (cityStart) {
             byCityStart.push(item);
-        } else if (item.city && item.city.toLowerCase().includes(query)) {
+        }
+        // Город содержит запрос - приоритет 3
+        else if (cityInclude) {
             byCityInclude.push(item);
-        } else if (
-            (item.address && item.address.toLowerCase().includes(query)) ||
-            (item.type && item.type.toLowerCase().includes(query)) ||
-            (item.phone && item.phone.toLowerCase().includes(query))
-        ) {
-            byOther.push(item);
+        }
+        // Регион, федеральный округ или комбинированная строка содержит запрос - приоритет 4
+        else if (regionMatch || federalMatch || combinedMatch) {
+            byRegion.push(item);
         }
     });
 
-    return [...byCityStart, ...byCityInclude, ...byOther];
+    return [...byCityExact, ...byCityStart, ...byCityInclude, ...byRegion];
 });
 
 // Helper functions
 const getUniqueItems = () => {
-    if (props.onlyCities) {
-        const uniqueCities = new Map();
-        props.items.forEach(item => {
-            if (item.city) {
-                const cityName = item.city.trim();
-                const cityLower = cityName.toLowerCase();
-                if (!uniqueCities.has(cityLower)) {
-                    uniqueCities.set(cityLower, item);
-                }
-            }
-        });
-        return [...uniqueCities.values()];
-    }
-    return props.items; // По умолчанию показываем все офисы
+    // Возвращаем все элементы без фильтрации по уникальности
+    // Потому что города с одинаковыми названиями могут быть из разных регионов
+    return props.items.filter(item => {
+        // Handle different item structures (localities vs PVZ)
+        const cityName = item.name || item.locality || item.city;
+        const pvzType = item.type; // For PVZ items
+        
+        // For PVZ items, check if they have a type (office type)
+        if (pvzType) {
+            return pvzType && pvzType.trim() !== '';
+        }
+        
+        // For locality items, check city name
+        return cityName && cityName.trim() !== '';
+    });
 };
 
 const formatItemToString = (item) => {
-    if (props.onlyCities) {
-        return item.city || '';
+    if (props.itemFormatter) {
+        return props.itemFormatter(item);
     }
-    return `${item.city || ''}${item.address ? ', ' + item.address : ''}${item.phone ? ', ' + item.phone : ''}`;
+    return formatLocalityName(item);
+};
+
+const formatSelectedValue = (item) => {
+    if (props.selectedValueFormatter) {
+        return props.selectedValueFormatter(item);
+    }
+    return formatSelectedLocalityName(item);
 };
 
 const formatItemHTML = (item) => {
-    if (props.onlyCities) {
-        return `
-            <div style="line-height:1.3; padding:2px 0;">
-                <div style="font-weight:bold;">${item.city || ''}</div>
-            </div>
-        `;
-    }
+    const formattedText = formatItemToString(item);
     return `
         <div style="line-height:1.3; padding:2px 0;">
-            <div style="font-weight:bold;">${item.city || ''}</div>
-            <div>${item.address || ''}</div>
-            <div style="color:#888; font-size:0.95em;">${item.type || ''}</div>
-            <div style="color:#008DD2; font-size:0.98em;">${item.phone || ''}</div>
+            <div>${formattedText}</div>
         </div>
     `;
 };
 
 const getItemKey = (item, index) => {
-    return `${item.city || ''}-${item.address || ''}-${index}`;
+    return `${item.locality || item.city || ''}-${item.street || item.address || ''}-${index}`;
+};
+
+// API поиск
+const performApiSearch = async (query) => {
+    if (!props.apiSearchFunction || !query) {
+        apiSearchResults.value = [];
+        return;
+    }
+
+    isApiSearching.value = true;
+    try {
+        const results = await props.apiSearchFunction(query);
+        apiSearchResults.value = results || [];
+    } catch (error) {
+        console.error('Ошибка API поиска:', error);
+        apiSearchResults.value = [];
+    } finally {
+        isApiSearching.value = false;
+    }
+};
+
+// Debounced API поиск
+let searchTimeout = null;
+const debouncedApiSearch = (query) => {
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+    searchTimeout = setTimeout(() => {
+        performApiSearch(query);
+    }, 300); // 300ms задержка
 };
 
 // Event handlers
@@ -280,9 +365,18 @@ const onInput = () => {
 
     if (!value) {
         isDropdownVisible.value = false;
+        apiSearchResults.value = [];
         return;
     }
 
+    // Если используется API поиск, выполняем поиск через API
+    if (props.useApiSearch && props.apiSearchFunction) {
+        debouncedApiSearch(value);
+        isDropdownVisible.value = true;
+        return;
+    }
+
+    // Локальный поиск
     if (filteredItems.value.length === 0) {
         isDropdownVisible.value = false;
         return;
@@ -322,7 +416,7 @@ const showAllSuggestions = () => {
 };
 
 const selectItem = (item) => {
-    inputValue.value = formatItemToString(item);
+    inputValue.value = formatSelectedValue(item);
     selectedItem.value = item; // Сохраняем выбранный объект
     isDropdownVisible.value = false;
 
@@ -331,7 +425,7 @@ const selectItem = (item) => {
         if (props.emitFullItem) {
             emit('itemSelected', item);
         } else {
-            emit('itemSelected', { city: item.city });
+            emit('itemSelected', { city: item.locality || item.city });
         }
     });
 };
@@ -346,9 +440,17 @@ const selectItemById = (id) => {
     return false;
 };
 
-// Expose метод для использования из родительского компонента
+// Метод для установки значения ввода извне
+const setInputValue = (value) => {
+    inputValue.value = value;
+    isDropdownVisible.value = false;
+    currentIndex.value = -1;
+};
+
+// Expose методы для использования из родительского компонента
 defineExpose({
-    selectItemById
+    selectItemById,
+    setInputValue
 });
 
 const onKeydown = (e) => {
@@ -429,13 +531,32 @@ onUnmounted(() => {
 
 <style scoped>
 .vue-form-field {
-    padding-right: 2.5rem;
-    width: 100%;
-    border-width: 1px;
-    border-radius: 0.5rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1rem;
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.75rem 1rem; /* px-4 py-3 */
+  font-size: inherit;
+  background-color: white;
+  color: #6b7280; /* text-body-secondary */
+  font-family: inherit;
+  height: auto;
+  min-height: 3rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.vue-form-field:focus {
+  outline: none;
+  border-color: #008dd2; /* brand-blue */
+  box-shadow: 0 0 0 2px rgba(0, 141, 210, 0.1);
+}
+
+.vue-form-field::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+
+.vue-form-field:disabled {
+  background-color: #f3f4f6; /* gray-100 */
+  cursor: not-allowed;
+  color: #9ca3af; /* gray-400 */
 }
 
 .base-form-error {

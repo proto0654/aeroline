@@ -323,45 +323,42 @@ window.selectOfficeCard = selectOfficeCard;
  * Инициализация карты с маркерами офисов
  * @param {string} basePath - базовый путь для загрузки ресурсов (массив офисов теперь читается из data-атрибута элемента #map)
  */
-export function initMap(basePath) {
+export async function initMap(basePath) {
   try {
+    // Проверяем, загружен ли API Яндекс.Карт
+    if (typeof ymaps === 'undefined') {
+      console.error('API Яндекс.Карт не загружен. Проверьте подключение к интернету.');
+      return;
+    }
+
     // Ждем загрузки API Яндекс.Карт
-    ymaps.ready(function () {
+    ymaps.ready(async function () {
       const mapElement = document.getElementById("map");
       if (!mapElement) {
         console.error("Элемент карты #map не найден!");
         return;
       }
 
-      const officesDataAttr = mapElement.getAttribute("data-offices");
       let offices = [];
 
-      if (officesDataAttr) {
-        try {
-          offices = JSON.parse(officesDataAttr);
-          console.log(
-            "Данные офисов загружены из data-атрибута:",
-            offices.length
-          );
-        } catch (error) {
-          console.error(
-            "Ошибка при парсинге данных офисов из data-атрибута:",
-            error
-          );
-          // offices останется пустым массивом
-        }
-      } else {
-        // Удален лог о ненахождении данных, теперь это не ошибка, если атрибут пустой
-        console.log(
-          "Атрибут data-offices не найден или пуст. Инициализация карты без маркеров."
-        );
+      // Загружаем данные из API
+      const response = await fetch('https://08615a563fb9b4f8.mokky.dev/billingAddresses');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      const apiData = await response.json();
+      // Конвертируем данные API в формат, ожидаемый картой
+      offices = apiData.map(addr => ({
+        city: addr.locality || addr.city || '',
+        address: addr.street ? `${addr.street} ${addr.houseNumber || ''}`.trim() : (addr.address || ''),
+        type: addr.type || '',
+        phone: addr.phone || '',
+        email: addr.email || '',
+        coordinates: addr.coordinates || []
+      }));
+      console.log("Данные офисов загружены из API:", offices.length);
 
-      // Если офисов нет, можно остановить инициализацию или показать пустую карту
-      if (!offices || offices.length === 0) {
-        console.log("Нет данных офисов для отображения на карте.");
-        // Продолжаем инициализацию пустой карты, если нет офисов
-      }
 
       // Центрируем карту с учетом типа устройства
       const initialZoom = getZoomForDevice(mapConfig.initialView.zoom);

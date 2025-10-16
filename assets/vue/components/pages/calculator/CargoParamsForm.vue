@@ -4,13 +4,13 @@
 
         <!-- Переключатель режима -->
         <div class="flex border border-gray-200 rounded-lg p-1 mb-4 w-full">
-            <button @click.prevent="setMode('individual')"
-                :class="['flex-1 py-4 uppercase text-caps-regular px-4 rounded-md', mode === 'individual' ? 'bg-brand-blue text-white shadow' : 'text-gray-600']">
-                Места по-отдельности
-            </button>
             <button @click.prevent="setMode('total')"
                 :class="['flex-1 py-4 uppercase text-caps-regular px-4 rounded-md', mode === 'total' ? 'bg-brand-blue text-white shadow' : 'text-gray-600']">
                 Общий вес и объём
+            </button>
+            <button @click.prevent="setMode('individual')"
+                :class="['flex-1 py-4 uppercase text-caps-regular px-4 rounded-md', mode === 'individual' ? 'bg-brand-blue text-white shadow' : 'text-gray-600']">
+                Места по-отдельности
             </button>
         </div>
 
@@ -41,7 +41,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 // Текущий активный режим
-const mode = ref(props.modelValue.mode || 'individual');
+const mode = ref(props.modelValue.mode || 'total');
 
 // Функция создания дефолтного места
 function createDefaultPlace() {
@@ -52,8 +52,8 @@ function createDefaultPlace() {
         height: '',
         weight: '',
         description: '',
-        declaredValue: 1000,
-        packaging: 'box-s',
+        declaredValue: '',
+        packagingItems: [],
         selfMarking: false,
         dangerousGoods: false,
         tempControl: false,
@@ -74,7 +74,7 @@ const totalState = ref({
 // На этом этапе просто устанавливаем начальный режим.
 // Синхронизация данных будет происходить в вотче на props.modelValue
 function initializeComponent() {
-    mode.value = props.modelValue.mode || 'individual';
+    mode.value = props.modelValue.mode || 'total';
 }
 
 // Переключение режима (без копирования данных)
@@ -117,7 +117,7 @@ watch(() => props.modelValue, (newValue) => {
     isUpdatingFromParent = true;
 
     // Обновляем режим, если он изменился
-    mode.value = newValue.mode || 'individual';
+    mode.value = newValue.mode || 'total';
 
     // Всегда обновляем individualState.packages, если родитель передал данные для него
     if (newValue.packages && newValue.packages.length > 0 && newValue.mode === 'individual') {

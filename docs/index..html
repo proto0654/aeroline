@@ -6,8 +6,7 @@
   <!-- Скрытые данные для JavaScript -->
   <script type="application/json" id="initial-data">
     {
-      "sliders": {{{json sliders}}},
-      "offices": {{{json offices}}}
+      "sliders": {{{json sliders}}}
     }
   </script>
 
@@ -243,13 +242,6 @@
       window.initialData = JSON.parse(
         document.getElementById("initial-data").textContent
       );
-      document.addEventListener("DOMContentLoaded", function () {
-        window.officesData = window.initialData.offices;
-        console.log(
-          "Инициализированы данные офисов для карты:",
-          window.officesData.length
-        );
-      });
     </script>
   </section>
   <!-- Секция "Стать клиентом" -->

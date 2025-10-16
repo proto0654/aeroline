@@ -1,19 +1,21 @@
 import { createApp, h } from "vue";
 import DirectionForm from "@/components/pages/calculator/DirectionForm.vue";
+import apiService from "@/services/apiService.js";
 
 async function initDirectionForm() {
   const directionFormElement = document.getElementById("direction-form-app");
   if (!directionFormElement) return;
 
   try {
-    // Загружаем данные офисов для автокомплита
-    const officesResponse = await fetch("./assets/data/contacts.json");
-    const officesData = await officesResponse.json();
+    // Загружаем данные адресов и населенных пунктов из API
+    const billingAddressesData = await apiService.getBillingAddresses();
+    const localitiesData = await apiService.getLocalitiesWithRelations();
 
     const directionApp = createApp({
       data() {
         return {
-          offices: officesData.offices || [],
+          billingAddresses: billingAddressesData || [],
+          localities: localitiesData || [],
           direction: {
             from: "",
             to: "",
@@ -28,7 +30,8 @@ async function initDirectionForm() {
       },
       render() {
         return h(DirectionForm, {
-          offices: this.offices,
+          billingAddresses: this.billingAddresses,
+          localities: this.localities,
           modelValue: this.direction,
           showCalculateButton: true,
           showTitle: false,
@@ -38,32 +41,21 @@ async function initDirectionForm() {
     });
 
     directionApp.mount(directionFormElement);
-
-    // Добавляем глобальную функцию для кнопки "Рассчитать"
-    window.calculateCost = () => {
-      const app = directionApp._instance;
-      if (app && app.direction.from && app.direction.to) {
-        // Пока заглушка - можно потом добавить логику расчета или переход на калькулятор
-        alert(
-          `Расчет стоимости доставки: ${app.direction.from} → ${app.direction.to}`
-        );
-      } else {
-        alert("Пожалуйста, выберите города отправления и назначения");
-      }
-    };
   } catch (error) {
-    console.error("Ошибка при загрузке данных офисов:", error);
+    console.error("Ошибка при загрузке данных адресов:", error);
     // Монтируем компонент без данных в случае ошибки
     const directionApp = createApp({
       data() {
         return {
-          offices: [],
+          billingAddresses: [],
+          localities: [],
           direction: { from: "", to: "" },
         };
       },
       render() {
         return h(DirectionForm, {
-          offices: this.offices,
+          billingAddresses: this.billingAddresses,
+          localities: this.localities,
           modelValue: this.direction,
           showCalculateButton: true,
           showTitle: false,

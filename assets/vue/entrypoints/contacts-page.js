@@ -7,6 +7,7 @@ import apiService from "@/services/apiService.js";
 const selectedCity = ref("Все города");
 const offices = ref([]);
 const cities = ref([]);
+const localities = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
@@ -16,13 +17,15 @@ const loadContactsData = async () => {
   error.value = null;
   
   try {
-    // Загружаем офисы из API
-    const officesData = await apiService.getOffices();
-    offices.value = officesData;
+    // Загружаем офисы и населенные пункты из API
+    const officesData = await apiService.getBillingAddressesWithRelations();
+    const localitiesData = await apiService.getLocalitiesWithRelations();
     
-    // Извлекаем уникальные города из офисов
-    const uniqueCities = [...new Set(officesData.map(office => office.city))];
-    cities.value = uniqueCities;
+    offices.value = officesData;
+    localities.value = localitiesData;
+    
+    // Используем localities для городов вместо извлечения из офисов
+    cities.value = localitiesData.map(locality => locality.name);
     
   } catch (err) {
     console.error('Ошибка загрузки контактов:', err);
@@ -59,6 +62,7 @@ const cityFilterApp = createApp({
       h(CityAutocompleteForm, {
         offices: offices.value,
         cities: cities.value,
+        localities: localities.value,
         loading: loading.value,
         error: error.value,
         onCitySelected,

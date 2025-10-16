@@ -1,5 +1,6 @@
 @import "vanilla-calendar-pro/styles/index.css";
 @import "./forms.css";
+@import "./mobile-tooltips.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

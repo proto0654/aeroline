@@ -8,21 +8,28 @@
         <div
             class="flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0">
             <div class="bg-brand-light p-5 rounded-lg">
-                <DirectionForm :offices="offices" v-model="formData.direction" :onlyCities="true" />
+                <DirectionForm :billingAddresses="billingAddresses" :localities="localities" v-model="formData.direction" />
+            </div>
+
+            <!-- Пункты доставки -->
+            <div v-if="formData.direction.from || formData.direction.to" class="bg-brand-light p-5 rounded-lg">
+                <h2 class="text-h4 font-bold mb-4">Пункты доставки</h2>
+                <div class="flex flex-col gap-6">
+                    <DeliveryPointForm v-if="formData.direction.from" title="Пункт отправки" terminal-label="Сдать на терминале"
+                        address-label="Забрать по адресу" name-prefix="departure" :city="formData.direction.from"
+                        :billingAddresses="billingAddresses" v-model="formData.departure" 
+                        @update:modelValue="(value) => { console.log('CalculatorPage: Обновление departure', value); formData.departure = value; }" />
+                    <DeliveryPointForm v-if="formData.direction.to" title="Пункт назначения" terminal-label="Получить на терминале"
+                        address-label="Доставить по адресу" name-prefix="destination" :city="formData.direction.to"
+                        :billingAddresses="billingAddresses" v-model="formData.destination" 
+                        @update:modelValue="(value) => { console.log('CalculatorPage: Обновление destination', value); formData.destination = value; }" />
+                    <ExtraOptionsForm v-model="formData.extraOptions" />
+                </div>
             </div>
 
             <div class="bg-brand-light p-5 rounded-lg">
-                <CargoParamsForm v-if="calculatorConfig.packaging" :calculator-config="calculatorConfig"
+                <CargoParamsForm :calculator-config="calculatorConfig"
                     v-model="formData.cargo" />
-                <DeliveryPointForm title="Пункт отправки" terminal-label="Сдать на терминале"
-                    address-label="Забрать по адресу" name-prefix="departure" :city="formData.direction.from"
-                    :offices="offices" v-model="formData.departure" />
-                <DeliveryPointForm title="Пункт назначения" terminal-label="Получить на терминале"
-                    address-label="Доставить по адресу" name-prefix="destination" :city="formData.direction.to"
-                    :offices="offices" v-model="formData.destination" />
-                <ExtraOptionsForm v-model="formData.extraOptions" />
-
-
             </div>
         </div>
 
@@ -36,23 +43,41 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed } from 'vue';
+import { ref, onMounted, reactive, computed, watch } from 'vue';
 import DirectionForm from './DirectionForm.vue';
 import CargoParamsForm from './CargoParamsForm.vue';
 import DeliveryPointForm from './DeliveryPointForm.vue';
 import ExtraOptionsForm from './ExtraOptionsForm.vue';
 import CalculationResult from './CalculationResult.vue';
+import apiService from '../../../services/apiService.js';
+import { formatSelectedLocalityName } from '../../../utils/localityFormatter.js';
 
-const offices = ref([]);
+// Новые данные из API
+const billingAddresses = ref([]);
+const localities = ref([]);
+const transportTypes = ref([]);
+const tariffGrids = ref([]);
+const tariffZones = ref([]);
+const takeDelivers = ref([]);
+const boxings = ref([]);
+const units = ref([]);
+const regions = ref([]);
+const cargoOptions = ref([]);
+
+// Конфигурация калькулятора (оставляем для совместимости)
 const calculatorConfig = ref({});
 
 const formData = reactive({
     direction: {
         from: '',
-        to: ''
+        to: '',
+        fromAddress: null, // Полный объект адреса отправки
+        toAddress: null,   // Полный объект адреса назначения
+        fromLocalityId: null, // ID населенного пункта отправки
+        toLocalityId: null    // ID населенного пункта назначения
     },
     cargo: {
-        mode: 'individual',
+        mode: 'total',
         packages: [{
             id: Date.now(),
             length: '',
@@ -60,8 +85,8 @@ const formData = reactive({
             height: '',
             weight: '',
             description: '',
-            declaredValue: 1000,
-            packaging: 'box-s',
+            declaredValue: '',
+            packagingItems: [],
             selfMarking: false,
             dangerousGoods: false,
             tempControl: false,
@@ -227,30 +252,52 @@ function checkTariffAvailability(tariff, cargoData, direction, distanceKm, depar
 
 // Обновленная функция получения всех тарифов с флагом доступности и причиной
 function getAllTariffsWithStatus() {
-    if (!calculatorConfig.value.tariffs || !isFormDataValid()) {
+    if (!transportTypes.value || !isFormDataValid()) {
         return [];
     }
     const { direction, cargo, departure, destination } = formData;
-    const defaultPackage = calculatorConfig.value.defaultValues?.cargo?.package || {
-        length: '30', width: '20', height: '10', weight: '1', description: 'Посылка', declaredValue: 1000, packaging: 'box-s', selfMarking: false, dangerousGoods: false, tempControl: false, quantity: 1
+    
+    // Минимальные учитываемые значения для расчета
+    const minimalValues = calculatorConfig.value.minimalValues?.cargo?.package || {
+        length: 10, width: 10, height: 5, weight: 0.1, quantity: 1
     };
 
-    // Process each package, applying defaults for missing weight or dimensions
+    // Process each package, applying minimal values for missing fields
     const processedPackages = (cargo.packages && cargo.packages.length > 0)
         ? cargo.packages.map(pkg => {
-            const useDefaultDimensions = !(parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0);
+            const hasWeight = parseFloat(pkg.weight) > 0;
+            const hasDimensions = parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0;
+            const hasQuantity = parseInt(pkg.quantity) > 0;
+            
             return {
                 ...pkg,
-                weight: (parseFloat(pkg.weight) > 0) ? parseFloat(pkg.weight) : parseFloat(defaultPackage.weight),
-                length: useDefaultDimensions ? parseFloat(defaultPackage.length) : parseFloat(pkg.length),
-                width: useDefaultDimensions ? parseFloat(defaultPackage.width) : parseFloat(pkg.width),
-                height: useDefaultDimensions ? parseFloat(defaultPackage.height) : parseFloat(pkg.height),
-                quantity: parseInt(pkg.quantity) > 0 ? parseInt(pkg.quantity) : 1
+                weight: hasWeight ? parseFloat(pkg.weight) : minimalValues.weight,
+                length: hasDimensions ? parseFloat(pkg.length) : minimalValues.length,
+                width: hasDimensions ? parseFloat(pkg.width) : minimalValues.width,
+                height: hasDimensions ? parseFloat(pkg.height) : minimalValues.height,
+                quantity: hasQuantity ? parseInt(pkg.quantity) : minimalValues.quantity,
+                // Флаги для отображения в UI
+                usesMinimalWeight: !hasWeight,
+                usesMinimalDimensions: !hasDimensions,
+                usesMinimalQuantity: !hasQuantity
             };
         })
         : [{
-            ...defaultPackage,
-            id: Date.now()
+            weight: minimalValues.weight,
+            length: minimalValues.length,
+            width: minimalValues.width,
+            height: minimalValues.height,
+            quantity: minimalValues.quantity,
+            description: 'Посылка',
+            declaredValue: '',
+            packagingItems: [],
+            selfMarking: false,
+            dangerousGoods: false,
+            tempControl: false,
+            id: Date.now(),
+            usesMinimalWeight: true,
+            usesMinimalDimensions: true,
+            usesMinimalQuantity: true
         }];
 
     const cargoData = { packages: processedPackages };
@@ -266,41 +313,21 @@ function getAllTariffsWithStatus() {
         date: destination.date || ''
     };
     let distanceKm = null;
-    if (offices.value && direction.from && direction.to) {
+    if (billingAddresses.value && direction.fromLocalityId && direction.toLocalityId) {
         let fromCoords = null;
         let toCoords = null;
-        if (typeof departureData.location === 'object' && departureData.location !== null && departureData.location.coordinates) {
-            fromCoords = departureData.location.coordinates;
-        } else if (typeof departureData.location === 'string' && departureData.location.includes(',')) {
-            const foundOffice = offices.value.find(o => {
-                const officeString = `${o.city}, ${o.address}`;
-                return departureData.location.includes(officeString) || departureData.location.includes(o.address);
-            });
-            if (foundOffice && foundOffice.coordinates) {
-                fromCoords = foundOffice.coordinates;
-            }
-        } else if (direction.from) {
-            const office = offices.value.find(o => o.city === direction.from);
-            if (office && office.coordinates) {
-                fromCoords = office.coordinates;
-            }
+        
+        // Ищем адреса по locality_id
+        const fromAddress = billingAddresses.value.find(addr => addr.locality_id === direction.fromLocalityId);
+        const toAddress = billingAddresses.value.find(addr => addr.locality_id === direction.toLocalityId);
+        
+        if (fromAddress && fromAddress.coordinates) {
+            fromCoords = fromAddress.coordinates;
         }
-        if (typeof destinationData.location === 'object' && destinationData.location !== null && destinationData.location.coordinates) {
-            toCoords = destinationData.location.coordinates;
-        } else if (typeof destinationData.location === 'string' && destinationData.location.includes(',')) {
-            const foundOffice = offices.value.find(o => {
-                const officeString = `${o.city}, ${o.address}`;
-                return destinationData.location.includes(officeString) || destinationData.location.includes(o.address);
-            });
-            if (foundOffice && foundOffice.coordinates) {
-                toCoords = foundOffice.coordinates;
-            }
-        } else if (direction.to) {
-            const office = offices.value.find(o => o.city === direction.to);
-            if (office && office.coordinates) {
-                toCoords = office.coordinates;
-            }
+        if (toAddress && toAddress.coordinates) {
+            toCoords = toAddress.coordinates;
         }
+        
         if (fromCoords && toCoords) {
             distanceKm = getDistanceKm(
                 parseFloat(fromCoords[0]),
@@ -310,303 +337,383 @@ function getAllTariffsWithStatus() {
             );
         }
     }
-    // Для каждого тарифа определяем доступность и причину
-    return calculatorConfig.value.tariffs.map(tariff => {
-        let reason = '';
-        let isAvailable = true;
-        // Проверяем ограничения вручную, чтобы получить причину
-        const { availability } = tariff;
-        let totalWeight = 0, totalVolume = 0, maxDeclaredValue = 0;
-        let totalPackagesCount = 0;
-        cargoData.packages.forEach(pkg => {
-            const weight = parseFloat(pkg.weight) || 0;
-            const volume = (parseFloat(pkg.length) * parseFloat(pkg.width) * parseFloat(pkg.height)) / 1000000 || 0;
-            const declaredValue = parseFloat(pkg.declaredValue) || 0;
-            const quantity = parseInt(pkg.quantity) || 1;
-            totalWeight += weight * quantity;
-            totalVolume += volume * quantity;
-            totalPackagesCount += quantity;
-            maxDeclaredValue = Math.max(maxDeclaredValue, declaredValue);
-        });
-        if (availability.minWeight && totalWeight < availability.minWeight) {
-            isAvailable = false;
-            reason = `Минимальный вес: ${availability.minWeight} кг`;
-        } else if (availability.maxWeight && totalWeight > availability.maxWeight) {
-            isAvailable = false;
-            reason = `Максимальный вес: ${availability.maxWeight} кг`;
-        } else if (availability.minVolume && totalVolume < availability.minVolume) {
-            isAvailable = false;
-            reason = `Минимальный объем: ${availability.minVolume} м³`;
-        } else if (availability.maxVolume && totalVolume > availability.maxVolume) {
-            isAvailable = false;
-            reason = `Максимальный объем: ${availability.maxVolume} м³`;
-        } else if (availability.minDeclaredValue && maxDeclaredValue < availability.minDeclaredValue) {
-            isAvailable = false;
-            reason = `Минимальная оценочная стоимость: ${availability.minDeclaredValue} ₽`;
-        } else if (availability.maxDeclaredValue && maxDeclaredValue > availability.maxDeclaredValue) {
-            isAvailable = false;
-            reason = `Максимальная оценочная стоимость: ${availability.maxDeclaredValue} ₽`;
-        } else if (distanceKm !== null && availability.minDistance && distanceKm < availability.minDistance) {
-            isAvailable = false;
-            reason = `Минимальное расстояние: ${availability.minDistance} км`;
-        } else if (distanceKm !== null && availability.maxDistance && distanceKm > availability.maxDistance) {
-            isAvailable = false;
-            reason = `Максимальное расстояние: ${availability.maxDistance} км`;
-        } else if (availability.allowedRegions.length > 0) {
-            const fromAllowed = availability.allowedRegions.some(region => direction.from.includes(region));
-            const toAllowed = availability.allowedRegions.some(region => direction.to.includes(region));
-            if (!fromAllowed || !toAllowed) {
-                isAvailable = false;
-                reason = `Доступно только для: ${availability.allowedRegions.join(', ')}`;
-            }
-        } else if (availability.excludedRegions.length > 0) {
-            const fromExcluded = availability.excludedRegions.some(region => direction.from.includes(region));
-            const toExcluded = availability.excludedRegions.some(region => direction.to.includes(region));
-            if (fromExcluded || toExcluded) {
-                isAvailable = false;
-                reason = `Недоступно для выбранных регионов`;
-            }
+    // Для каждого вида перевозки определяем доступность и причину
+    const result = transportTypes.value.map(transportType => {
+        // Сначала проверяем ограничения тарифа из конфигурации
+        const constraintCheck = checkTariffConstraints(transportType, cargoData, direction, distanceKm);
+        if (!constraintCheck.isAvailable) {
+            return {
+                ...transportType,
+                isAvailable: false,
+                cost: null,
+                reason: constraintCheck.reason
+            };
         }
-        // Проверка дат (только если тариф еще доступен)
-        if (isAvailable && departureData.date && availability.minAdvanceBookingDays !== undefined) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const depDate = new Date(departureData.date);
-            depDate.setHours(0, 0, 0, 0);
-            const daysDifference = Math.floor((depDate - today) / (1000 * 60 * 60 * 24));
-            if (daysDifference < availability.minAdvanceBookingDays) {
-                isAvailable = false;
-                reason = `Минимальный срок предварительного заказа: ${availability.minAdvanceBookingDays} дней`;
-            } else if (availability.maxAdvanceBookingDays && daysDifference > availability.maxAdvanceBookingDays) {
-                isAvailable = false;
-                reason = `Максимальный срок предварительного заказа: ${availability.maxAdvanceBookingDays} дней`;
-            }
+        
+        const calculationResult = calculateTariffCost(transportType);
+        
+        // Если расчет успешен, тариф доступен
+        if (calculationResult !== null) {
+            return {
+                ...transportType,
+                fullName: transportType.name,
+                isAvailable: true,
+                cost: calculationResult.totalCost,
+                reason: null
+            };
         }
-        // Проверка минимальной даты доставки (если указана дата назначения)
-        if (isAvailable && departureData.date && destinationData.date && distanceKm !== null) {
-            const minDelivery = calculateMinDeliveryDate(tariff, distanceKm, departureData.date);
-            if (minDelivery) {
-                const requestedDeliveryDate = new Date(destinationData.date);
-                if (requestedDeliveryDate < minDelivery.date) {
-                    isAvailable = false;
-                    reason = `Минимальная дата доставки: ${minDelivery.date.toLocaleDateString('ru-RU')}`;
+        
+        // Определяем причину недоступности
+        let reason = 'Нет данных для расчета';
+        
+        // Проверяем наличие адресов
+        if (!direction.fromLocalityId || !direction.toLocalityId) {
+            reason = 'Не выбраны города отправления и назначения';
+        } else {
+            // Проверяем наличие тарифной зоны
+            const tariffZone = tariffZones.value.find(tz => 
+                tz.takeLocality_id === direction.fromLocalityId && 
+                tz.deliverLocality_id === direction.toLocalityId &&
+                tz.transportType_id === transportType.id
+            );
+            
+            if (!tariffZone) {
+                reason = 'Нет тарифной зоны для данного направления';
+            } else {
+                // Проверяем вес груза
+                const totalWeight = processedPackages.reduce((sum, pkg) => {
+                    const weight = parseFloat(pkg.weight) || 0;
+                    const quantity = parseInt(pkg.quantity) || 1;
+                    return sum + (weight * quantity);
+                }, 0);
+                
+                // Находим максимальный вес в тарифной сетке для данного типа перевозки
+                const relevantTariffGrid = tariffGrids.value.filter(tg => 
+                    tg.transportType_id === transportType.id && 
+                    tg.numberZone === tariffZone.tariffZone.toString()
+                );
+                
+                if (relevantTariffGrid.length > 0) {
+                    const maxWeight = Math.max(...relevantTariffGrid.map(tg => tg.unitTo));
+                    if (totalWeight > maxWeight) {
+                        reason = `Превышен максимальный вес для данного тарифа (${maxWeight} кг)`;
+                    } else {
+                        reason = 'Нет данных для расчета';
+                    }
+                } else {
+                    reason = 'Нет тарифной сетки для данного направления';
                 }
             }
         }
+        
         return {
-            ...tariff,
-            isAvailable,
-            reason
+            ...transportType,
+            fullName: transportType.name,
+            isAvailable: false,
+            cost: null,
+            reason: reason
         };
     });
+    
+    // Всегда добавляем общий тариф как альтернативу
+    const defaultTariff = getDefaultTariff();
+    const defaultTariffCost = calculateDefaultTariffCost(defaultTariff, cargoData, distanceKm);
+    
+    console.log('Общий тариф:', defaultTariff);
+    console.log('Данные груза:', cargoData);
+    console.log('Расстояние:', distanceKm);
+    console.log('Результат расчета:', defaultTariffCost);
+    
+    if (defaultTariffCost) {
+        defaultTariff.cost = defaultTariffCost.totalCost;
+        defaultTariff.deliveryInfo = {
+            days: defaultTariffCost.deliveryDays,
+            description: `${defaultTariffCost.deliveryDays} дней`
+        };
+        defaultTariff.isAvailable = true;
+    }
+    // Добавляем общий тариф в начало списка
+    result.unshift(defaultTariff);
+    
+    return result;
 }
 
-// Функция для расчета стоимости конкретного тарифа
-function calculateTariffCost(tariff) {
-    const { calculationRules, packaging, defaultServices } = calculatorConfig.value;
+// Функция для получения общего тарифа по умолчанию
+function getDefaultTariff() {
+    // Выбираем самый универсальный тариф из API (Cargo-Базовый или Cargo-Стандарт)
+    const defaultTariffConfig = calculatorConfig.value.tariffs?.find(t => t.id === 'cargo-basic') || 
+                               calculatorConfig.value.tariffs?.find(t => t.id === 'cargo-region') ||
+                               calculatorConfig.value.tariffs?.[0];
+    
+    if (defaultTariffConfig) {
+        return {
+            id: 'default',
+            name: defaultTariffConfig.name,
+            fullName: defaultTariffConfig.name,
+            description: defaultTariffConfig.description || 'Тариф для данного направления',
+            transportationCoefficient: defaultTariffConfig.baseRatePerKg || 5000,
+            isAvailable: true, // Общий тариф всегда доступен
+            cost: null, // Будет рассчитан отдельно
+            reason: null,
+            deliveryInfo: {
+                days: defaultTariffConfig.deliveryTime?.baseDays || 5,
+                description: defaultTariffConfig.deliveryTime?.description || '5-7 дней'
+            },
+            minCost: defaultTariffConfig.minCost || 500
+        };
+    }
+    
+    // Fallback если нет конфигурации
+    return {
+        id: 'default',
+        name: 'Общий тариф',
+        fullName: 'Общий тариф',
+        description: 'Тариф для данного направления',
+        transportationCoefficient: 5000,
+        isAvailable: true, // Общий тариф всегда доступен
+        cost: null,
+        reason: null,
+        deliveryInfo: {
+            days: 5,
+            description: '5-7 дней'
+        }
+    };
+}
+
+// Функция для проверки ограничений тарифа
+function checkTariffConstraints(transportType, cargoData, direction, distanceKm) {
+    const tariffConfig = calculatorConfig.value.tariffs?.find(t => 
+        t.name === transportType.name || t.id === `cargo-${transportType.name.toLowerCase()}`
+    );
+    
+    if (!tariffConfig) {
+        return { isAvailable: true, reason: null };
+    }
+    
+    const constraints = tariffConfig.availability;
+    const totalWeight = cargoData.packages.reduce((sum, pkg) => sum + (pkg.weight * pkg.quantity), 0);
+    const totalVolume = cargoData.packages.reduce((sum, pkg) => {
+        const volume = (pkg.length * pkg.width * pkg.height) / 1000000; // см³ в м³
+        return sum + (volume * pkg.quantity);
+    }, 0);
+    
+    // Проверка веса
+    if (constraints.minWeight && totalWeight < constraints.minWeight) {
+        return { isAvailable: false, reason: `Минимальный вес для данного тарифа: ${constraints.minWeight} кг` };
+    }
+    if (constraints.maxWeight && totalWeight > constraints.maxWeight) {
+        return { isAvailable: false, reason: `Максимальный вес для данного тарифа: ${constraints.maxWeight} кг` };
+    }
+    
+    // Проверка объема
+    if (constraints.minVolume && totalVolume < constraints.minVolume) {
+        return { isAvailable: false, reason: `Минимальный объем для данного тарифа: ${constraints.minVolume} м³` };
+    }
+    if (constraints.maxVolume && totalVolume > constraints.maxVolume) {
+        return { isAvailable: false, reason: `Максимальный объем для данного тарифа: ${constraints.maxVolume} м³` };
+    }
+    
+    // Проверка расстояния
+    if (constraints.minDistance && distanceKm && distanceKm < constraints.minDistance) {
+        return { isAvailable: false, reason: `Минимальное расстояние для данного тарифа: ${constraints.minDistance} км` };
+    }
+    if (constraints.maxDistance && distanceKm && distanceKm > constraints.maxDistance) {
+        return { isAvailable: false, reason: `Максимальное расстояние для данного тарифа: ${constraints.maxDistance} км` };
+    }
+    
+    // Проверка регионов (если есть ограничения)
+    if (constraints.allowedRegions && constraints.allowedRegions.length > 0) {
+        const fromRegion = direction.fromAddress?.region_id;
+        const toRegion = direction.toAddress?.region_id;
+        const isFromAllowed = !fromRegion || constraints.allowedRegions.some(region => 
+            fromRegion.includes(region) || region.includes(fromRegion)
+        );
+        const isToAllowed = !toRegion || constraints.allowedRegions.some(region => 
+            toRegion.includes(region) || region.includes(toRegion)
+        );
+        
+        if (!isFromAllowed || !isToAllowed) {
+            return { isAvailable: false, reason: `Тариф доступен только для регионов: ${constraints.allowedRegions.join(', ')}` };
+        }
+    }
+    
+    return { isAvailable: true, reason: null };
+}
+
+// Функция для расчета стоимости общего тарифа
+function calculateDefaultTariffCost(defaultTariff, cargoData, distanceKm) {
+    if (!cargoData.packages || cargoData.packages.length === 0) {
+        return null;
+    }
+
+    const totalWeight = cargoData.packages.reduce((sum, pkg) => sum + (pkg.weight * pkg.quantity), 0);
+    const totalVolume = cargoData.packages.reduce((sum, pkg) => {
+        const volume = (pkg.length * pkg.width * pkg.height) / 1000000; // см³ в м³
+        return sum + (volume * pkg.quantity);
+    }, 0);
+
+    // Проверяем, что у нас есть валидные данные
+    if (totalWeight <= 0 && totalVolume <= 0) {
+        return null;
+    }
+
+    // Базовая стоимость по весу и объему
+    const coefficient = defaultTariff.transportationCoefficient || 5000;
+    const weightCost = totalWeight * coefficient;
+    const volumeCost = totalVolume * (coefficient * 100);
+    const minCost = defaultTariff.minCost || 500;
+    
+    const baseCost = Math.max(weightCost, volumeCost, minCost);
+
+    // Коэффициент расстояния (более консервативный)
+    const distanceCoefficient = distanceKm ? Math.max(1, Math.min(distanceKm / 200, 3)) : 1;
+    const totalCost = baseCost * distanceCoefficient;
+
+    // Время доставки
+    const deliveryDays = Math.max(1, Math.ceil((distanceKm || 100) / 500) + 2);
+
+    return {
+        totalCost: Math.round(totalCost),
+        deliveryDays: deliveryDays,
+        baseCost: Math.round(baseCost),
+        distanceCoefficient: distanceCoefficient
+    };
+}
+
+// Функция для расчета стоимости конкретного тарифа по новым формулам ТЗ
+function calculateTariffCost(typeTransportation) {
     const { cargo, departure, destination, extraOptions, direction } = formData;
 
-    // Значения по умолчанию из конфига
-    const defaultPackage = calculatorConfig.value.defaultValues?.cargo?.package || {
+    // 1. Найти адреса отправления и назначения
+    const fromAddress = billingAddresses.value.find(addr => addr.locality_id === direction.fromLocalityId);
+    const toAddress = billingAddresses.value.find(addr => addr.locality_id === direction.toLocalityId);
+    
+    if (!fromAddress || !toAddress) {
+        return null;
+    }
+
+    // 2. Найти тарифную зону для данного направления
+    const tariffZone = tariffZones.value.find(tz => 
+        tz.takeLocality_id === direction.fromLocalityId && 
+        tz.deliverLocality_id === direction.toLocalityId &&
+        tz.transportType_id === typeTransportation.id
+    );
+
+    if (!tariffZone) {
+        return null;
+    }
+
+    // 3. Найти параметры забора/доставки
+    const takeDeliverFrom = takeDelivers.value.find(td => 
+        td.billingAddress_id === fromAddress.id && 
+        td.transportType_id === typeTransportation.id
+    );
+    
+    const takeDeliverTo = takeDelivers.value.find(td => 
+        td.billingAddress_id === toAddress.id && 
+        td.transportType_id === typeTransportation.id
+    );
+
+    // 4. Найти тарифную сетку для данного вида перевозки и зоны
+    const relevantTarifGrid = tariffGrids.value.filter(tg => 
+        tg.transportType_id === typeTransportation.id && 
+        tg.numberZone === tariffZone.tariffZone.toString()
+    );
+
+    if (relevantTarifGrid.length === 0) {
+        return null;
+    }
+
+    // 5. Обработка груза согласно ТЗ
+    const packages = (cargo.packages && cargo.packages.length > 0) ? cargo.packages : [{
+        id: Date.now(),
         length: '30',
         width: '20',
         height: '10',
-        weight: '1',
+        weight: '5',
         description: 'Посылка',
-        declaredValue: 1000,
-        packaging: 'box-s',
+        declaredValue: 5000,
+        packagingItems: [],
         selfMarking: false,
         dangerousGoods: false,
         tempControl: false,
         quantity: 1
-    };
+    }];
 
-    // Используем существующие данные или значения по умолчанию
-    // Process each package, applying defaults for missing weight or dimensions
-    const packages = (cargo.packages && cargo.packages.length > 0)
-        ? cargo.packages.map(pkg => {
-            const useDefaultDimensions = !(parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0);
-            return {
-                ...pkg,
-                weight: (parseFloat(pkg.weight) > 0) ? parseFloat(pkg.weight) : parseFloat(defaultPackage.weight),
-                length: useDefaultDimensions ? parseFloat(defaultPackage.length) : parseFloat(pkg.length),
-                width: useDefaultDimensions ? parseFloat(defaultPackage.width) : parseFloat(pkg.width),
-                height: useDefaultDimensions ? parseFloat(defaultPackage.height) : parseFloat(pkg.height),
-                quantity: parseInt(pkg.quantity) > 0 ? parseInt(pkg.quantity) : 1
-            };
-        })
-        : [{
-            ...defaultPackage,
-            id: Date.now()
-        }];
-
-    // Значения по умолчанию для точек отправления и назначения
-    const defaultDeliveryMode = calculatorConfig.value.defaultValues?.delivery?.mode || 'terminal';
-
-    const departureData = {
-        deliveryMode: departure.deliveryMode || defaultDeliveryMode,
-        location: departure.location || '',
-        date: departure.date || (() => {
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            return tomorrow.toISOString().split('T')[0];
-        })()
-    };
-
-    const destinationData = {
-        deliveryMode: destination.deliveryMode || defaultDeliveryMode,
-        location: destination.location || '',
-        date: destination.date || ''
-    };
-
-    const extraOptionsData = {
-        requiresAccompanyingDocs: extraOptions.requiresAccompanyingDocs || false,
-        returnDocsToSender: extraOptions.returnDocsToSender || false
-    };
+    // Миграция старых данных для обратной совместимости
+    packages.forEach(pkg => {
+        if (pkg.packaging && !pkg.packagingItems) {
+            pkg.packagingItems = [{ uid: pkg.packaging, quantity: 1 }];
+        }
+    });
 
     const details = [];
-    const packageDetails = []; // Детализация по местам
+    const packageDetails = [];
 
-    // 1. Расчет веса и объема с учетом количества
-    let totalWeight = 0, totalVolume = 0, maxDeclaredValue = 0;
-    let hasAnyDangerousGoods = false, hasAnyTempControl = false;
+    let totalWeight = 0;
+    let totalVolume = 0;
     let totalPackagesCount = 0;
-    let totalPackagingCost = 0, totalMarkingDiscount = 0;
+    let maxDeclaredValue = 0;
+    let hasAnyDangerousGoods = false;
+    let hasAnyTempControl = false;
+    let additionalCosts = 0;
 
-    // Расчет расстояния для времени доставки
-    let distanceKm = null;
-    if (offices.value && direction.from && direction.to) {
-        let fromCoords = null;
-        let toCoords = null;
-
-        // Отладочная информация
-        // console.log('DEBUG: departure.location =', departureData.location);
-        // console.log('DEBUG: destination.location =', destinationData.location);
-        // console.log('DEBUG: direction.from =', direction.from);
-        // console.log('DEBUG: direction.to =', direction.to);
-
-        // Улучшенная логика получения координат отправления
-        if (typeof departureData.location === 'object' && departureData.location !== null && departureData.location.coordinates) {
-            fromCoords = departureData.location.coordinates;
-            // console.log('DEBUG: Using departure terminal coordinates:', fromCoords);
-        } else if (typeof departureData.location === 'string' && departureData.location.includes(',')) {
-            // Если location - строка с адресом, пытаемся найти соответствующий офис
-            const foundOffice = offices.value.find(o => {
-                const officeString = `${o.city}, ${o.address}`;
-                return departureData.location.includes(officeString) || departureData.location.includes(o.address);
-            });
-            if (foundOffice && foundOffice.coordinates) {
-                fromCoords = foundOffice.coordinates;
-                // console.log('DEBUG: Using departure terminal coordinates from string match:', fromCoords, 'from office:', foundOffice.address);
-            }
-        } else if (direction.from) {
-            // Если адрес, или не выбран терминал - берем первый офис в городе отправления
-            const office = offices.value.find(o => o.city === direction.from);
-            if (office && office.coordinates) {
-                fromCoords = office.coordinates;
-                // console.log('DEBUG: Using departure city coordinates:', fromCoords, 'from office:', office.address);
-            }
-        }
-
-        // Улучшенная логика получения координат назначения  
-        if (typeof destinationData.location === 'object' && destinationData.location !== null && destinationData.location.coordinates) {
-            toCoords = destinationData.location.coordinates;
-            // console.log('DEBUG: Using destination terminal coordinates:', toCoords);
-        } else if (typeof destinationData.location === 'string' && destinationData.location.includes(',')) {
-            // Если location - строка с адресом, пытаемся найти соответствующий офис
-            const foundOffice = offices.value.find(o => {
-                const officeString = `${o.city}, ${o.address}`;
-                return destinationData.location.includes(officeString) || destinationData.location.includes(o.address);
-            });
-            if (foundOffice && foundOffice.coordinates) {
-                toCoords = foundOffice.coordinates;
-                // console.log('DEBUG: Using destination terminal coordinates from string match:', toCoords, 'from office:', foundOffice.address);
-            }
-        } else if (direction.to) {
-            // Если адрес, или не выбран терминал - берем первый офис в городе назначения
-            const office = offices.value.find(o => o.city === direction.to);
-            if (office && office.coordinates) {
-                toCoords = office.coordinates;
-                // console.log('DEBUG: Using destination city coordinates:', toCoords, 'from office:', office.address);
-            }
-        }
-
-        // Если обе координаты найдены, рассчитываем расстояние
-        if (fromCoords && toCoords) {
-            distanceKm = getDistanceKm(
-                parseFloat(fromCoords[0]),
-                parseFloat(fromCoords[1]),
-                parseFloat(toCoords[0]),
-                parseFloat(toCoords[1])
-            );
-            // console.log('DEBUG: Calculated distance:', distanceKm, 'km');
-        }
-    }
-
-    // Расчет времени доставки
-    const deliveryTimeInfo = calculateDeliveryTime(tariff, distanceKm || 0);
-    const minDeliveryInfo = calculateMinDeliveryDate(tariff, distanceKm || 0, departureData.date);
-
-    // Детальный расчет для каждого места
+    // 6. Расчет по формулам ТЗ для каждого места
     packages.forEach((pkg, index) => {
+        const length = parseFloat(pkg.length) || 0;
+        const width = parseFloat(pkg.width) || 0;
+        const height = parseFloat(pkg.height) || 0;
         const weight = parseFloat(pkg.weight) || 0;
-        const volume = (parseFloat(pkg.length) * parseFloat(pkg.width) * parseFloat(pkg.height)) / 1000000 || 0;
-        const declaredValue = parseFloat(pkg.declaredValue) || 0;
         const quantity = parseInt(pkg.quantity) || 1;
+        const declaredValue = parseFloat(pkg.declaredValue) || 0;
 
-        const packageWeight = weight * quantity;
-        const packageVolume = volume * quantity;
+        // Формулы из ТЗ:
+        // V = L * W * H (в см³)
+        const volume = (length * width * height) / 1000000; // переводим в м³
+        
+        // Wv = V / transportationCoefficient
+        const volumetricWeight = volume / typeTransportation.transportationCoefficient;
+        
+        // Wf = count * weight
+        const actualWeight = weight * quantity;
+        
+        // W = max(Wv, Wf)
+        const calculatedWeight = Math.max(volumetricWeight, actualWeight);
 
-        totalWeight += packageWeight;
-        totalVolume += packageVolume;
+        totalWeight += calculatedWeight;
+        totalVolume += volume * quantity;
         totalPackagesCount += quantity;
         maxDeclaredValue = Math.max(maxDeclaredValue, declaredValue);
 
         if (pkg.dangerousGoods) hasAnyDangerousGoods = true;
         if (pkg.tempControl) hasAnyTempControl = true;
 
-        // Расчет стоимости для одного места
-        const singleWeightCost = weight * tariff.baseRatePerKg;
-        const singleVolumeCost = volume * tariff.baseRatePerM3;
-        const singleBaseCost = Math.max(singleWeightCost, singleVolumeCost, tariff.minCost / quantity);
-
-        // Упаковка для этого места
-        let packagePackagingCost = 0;
-        if (pkg.packaging && packaging) {
-            const packagingOption = packaging.find(p => p.id === pkg.packaging);
-            if (packagingOption && packagingOption.cost > 0) {
-                packagePackagingCost = packagingOption.cost;
-                totalPackagingCost += packagingOption.cost * quantity;
-            }
+        // Расчет стоимости упаковки для данного места
+        let packagingCost = 0;
+        if (pkg.packagingItems && pkg.packagingItems.length > 0) {
+            pkg.packagingItems.forEach(item => {
+                const boxing = boxings.value.find(b => b.id === item.uid);
+                if (boxing) {
+                    packagingCost += boxing.price * item.quantity;
+                }
+            });
         }
+        
+        // Добавляем стоимость упаковки к дополнительным расходам
+        additionalCosts += packagingCost * quantity;
 
-        // Самостоятельная маркировка для этого места
-        let packageMarkingDiscount = 0;
-        if (pkg.selfMarking && tariff.services?.selfMarking?.enabled) {
-            packageMarkingDiscount = Math.abs(tariff.services.selfMarking.cost);
-            totalMarkingDiscount += packageMarkingDiscount * quantity;
-        }
-
-        // Детализация для этого места
+        // Детализация места
         const packageInfo = {
             index: index + 1,
             description: pkg.description || `Место ${index + 1}`,
-            dimensions: `${pkg.length || 0}×${pkg.width || 0}×${pkg.height || 0} см`,
+            dimensions: `${length}×${width}×${height} см`,
             singleWeight: weight,
             singleVolume: volume,
+            volumetricWeight: volumetricWeight,
+            calculatedWeight: calculatedWeight,
             quantity: quantity,
-            totalWeight: packageWeight,
-            totalVolume: packageVolume,
-            singleWeightCost,
-            singleVolumeCost,
-            singleBaseCost,
-            totalBaseCost: singleBaseCost * quantity,
-            packaging: pkg.packaging,
-            packagingCost: packagePackagingCost,
-            totalPackagingCost: packagePackagingCost * quantity,
-            selfMarking: pkg.selfMarking,
-            markingDiscount: packageMarkingDiscount,
-            totalMarkingDiscount: packageMarkingDiscount * quantity,
+            totalWeight: calculatedWeight,
+            totalVolume: volume * quantity,
             dangerousGoods: pkg.dangerousGoods,
             tempControl: pkg.tempControl,
             declaredValue: declaredValue
@@ -614,364 +721,241 @@ function calculateTariffCost(tariff) {
         packageDetails.push(packageInfo);
     });
 
-    // 2. Расчет расстояния между пунктами
-    let distanceCost = 0;
-    const distanceCoefficient = calculationRules?.distanceCoefficient || 10;
-    if (offices.value && direction.from && direction.to) {
-        let fromCoordsDistance = null;
-        let toCoordsDistance = null;
+    // 7. Расчет стоимости по тарифной сетке
+    let baseCost = 0;
+    const totalCalculatedWeight = totalWeight;
 
-        // Улучшенная логика получения координат отправления (для distanceCost)
-        if (typeof departureData.location === 'object' && departureData.location !== null && departureData.location.coordinates) {
-            fromCoordsDistance = departureData.location.coordinates;
-        } else if (typeof departureData.location === 'string' && departureData.location.includes(',')) {
-            // Если location - строка с адресом, пытаемся найти соответствующий офис
-            const foundOffice = offices.value.find(o => {
-                const officeString = `${o.city}, ${o.address}`;
-                return departureData.location.includes(officeString) || departureData.location.includes(o.address);
-            });
-            if (foundOffice && foundOffice.coordinates) {
-                fromCoordsDistance = foundOffice.coordinates;
-            }
-        } else if (direction.from) {
-            // Если адрес, или не выбран терминал - берем первый офис в городе отправления
-            const office = offices.value.find(o => o.city === direction.from);
-            if (office && office.coordinates) {
-                fromCoordsDistance = office.coordinates;
-            }
-        }
+    // Найти подходящий диапазон в тарифной сетке
+    const applicableTariff = relevantTarifGrid.find(tg => 
+        totalCalculatedWeight >= tg.unitFrom && totalCalculatedWeight <= tg.unitTo
+    );
 
-        // Улучшенная логика получения координат назначения (для distanceCost)
-        if (typeof destinationData.location === 'object' && destinationData.location !== null && destinationData.location.coordinates) {
-            toCoordsDistance = destinationData.location.coordinates;
-        } else if (typeof destinationData.location === 'string' && destinationData.location.includes(',')) {
-            // Если location - строка с адресом, пытаемся найти соответствующий офис
-            const foundOffice = offices.value.find(o => {
-                const officeString = `${o.city}, ${o.address}`;
-                return destinationData.location.includes(officeString) || destinationData.location.includes(o.address);
-            });
-            if (foundOffice && foundOffice.coordinates) {
-                toCoordsDistance = foundOffice.coordinates;
-            }
-        } else if (direction.to) {
-            // Если адрес, или не выбран терминал - берем первый офис в городе назначения
-            const office = offices.value.find(o => o.city === direction.to);
-            if (office && office.coordinates) {
-                toCoordsDistance = office.coordinates;
-            }
-        }
-
-        // Если обе координаты найдены, рассчитываем расстояние
-        if (fromCoordsDistance && toCoordsDistance) {
-            distanceKm = getDistanceKm(
-                parseFloat(fromCoordsDistance[0]),
-                parseFloat(fromCoordsDistance[1]),
-                parseFloat(toCoordsDistance[0]),
-                parseFloat(toCoordsDistance[1])
-            );
-            distanceCost = distanceKm * distanceCoefficient;
+    if (applicableTariff) {
+        // Формула: startingPrice + ((W - unitFrom) / step) * stepPrice
+        const steps = Math.ceil((totalCalculatedWeight - applicableTariff.unitFrom) / applicableTariff.step);
+        baseCost = applicableTariff.startingPrice + (steps * applicableTariff.stepPrice);
+    } else {
+        // Если не найден подходящий диапазон, используем последний доступный
+        const lastTariff = relevantTarifGrid[relevantTarifGrid.length - 1];
+        if (lastTariff) {
+            const steps = Math.ceil((totalCalculatedWeight - lastTariff.unitFrom) / lastTariff.step);
+            baseCost = lastTariff.startingPrice + (steps * lastTariff.stepPrice);
         }
     }
 
-    // 3. Расчет базовой стоимости по тарифу
-    const weightCost = totalWeight * tariff.baseRatePerKg;
-    const volumeCost = totalVolume * tariff.baseRatePerM3;
-    let baseCost = Math.max(weightCost, volumeCost, tariff.minCost);
-
-    // Добавляем детализацию по местам
-    if (packageDetails.length > 0) {
-        details.push({ name: 'ДЕТАЛИЗАЦИЯ ПО МЕСТАМ', cost: 0, isHeader: true });
-
-        packageDetails.forEach(pkgDetail => {
-            // Заголовок места
-            const placeTitle = pkgDetail.quantity > 1
-                ? `${pkgDetail.description} (×${pkgDetail.quantity})`
-                : pkgDetail.description;
-            details.push({ name: placeTitle, cost: 0, isSubHeader: true });
-
-            // Характеристики места
-            details.push({
-                name: `  Размеры: ${pkgDetail.dimensions}, объем: ${pkgDetail.singleVolume.toFixed(3)} м³`,
-                cost: 0,
-                isDetail: true
-            });
-
-            if (pkgDetail.quantity > 1) {
-                details.push({
-                    name: `  Вес одного места: ${pkgDetail.singleWeight.toFixed(1)} кг`,
-                    cost: 0,
-                    isDetail: true
-                });
-                details.push({
-                    name: `  Общий вес: ${pkgDetail.totalWeight.toFixed(1)} кг (${pkgDetail.singleWeight.toFixed(1)} × ${pkgDetail.quantity})`,
-                    cost: 0,
-                    isDetail: true
-                });
-            } else {
-                details.push({
-                    name: `  Вес: ${pkgDetail.singleWeight.toFixed(1)} кг`,
-                    cost: 0,
-                    isDetail: true
-                });
-            }
-
-            // Стоимость места
-            if (pkgDetail.quantity > 1) {
-                details.push({
-                    name: `  Базовая стоимость одного места:`,
-                    cost: pkgDetail.singleBaseCost,
-                    isDetailCost: true
-                });
-                details.push({
-                    name: `  Стоимость всех мест (×${pkgDetail.quantity}):`,
-                    cost: pkgDetail.totalBaseCost,
-                    isDetailCost: true
-                });
-            } else {
-                details.push({
-                    name: `  Базовая стоимость места:`,
-                    cost: pkgDetail.singleBaseCost,
-                    isDetailCost: true
-                });
-            }
-
-            // Упаковка для места
-            if (pkgDetail.totalPackagingCost > 0) {
-                if (pkgDetail.quantity > 1) {
-                    details.push({
-                        name: `  Упаковка (×${pkgDetail.quantity}):`,
-                        cost: pkgDetail.totalPackagingCost,
-                        isDetailCost: true
-                    });
-                } else {
-                    details.push({
-                        name: `  Упаковка:`,
-                        cost: pkgDetail.totalPackagingCost,
-                        isDetailCost: true
-                    });
-                }
-            }
-
-            // Маркировка для места
-            if (pkgDetail.totalMarkingDiscount > 0) {
-                if (pkgDetail.quantity > 1) {
-                    details.push({
-                        name: `  Самостоятельная маркировка (×${pkgDetail.quantity}):`,
-                        cost: -pkgDetail.totalMarkingDiscount,
-                        isDetailCost: true
-                    });
-                } else {
-                    details.push({
-                        name: `  Самостоятельная маркировка:`,
-                        cost: -pkgDetail.totalMarkingDiscount,
-                        isDetailCost: true
-                    });
-                }
-            }
-
-            // Специальные отметки
-            if (pkgDetail.dangerousGoods) {
-                details.push({
-                    name: `  ⚠️ Опасный груз`,
-                    cost: 0,
-                    isDetail: true
-                });
-            }
-            if (pkgDetail.tempControl) {
-                details.push({
-                    name: `  🌡️ Температурный режим`,
-                    cost: 0,
-                    isDetail: true
-                });
-            }
-            if (pkgDetail.declaredValue > 0) {
-                details.push({
-                    name: `  💎 Оценочная стоимость: ${pkgDetail.declaredValue.toLocaleString('ru-RU')} ₽`,
-                    cost: 0,
-                    isDetail: true
-                });
-            }
-        });
-
-        details.push({ name: 'ИТОГО ПО МЕСТАМ', cost: 0, isHeader: true });
-        details.push({
-            name: `Общее количество мест: ${totalPackagesCount}`,
-            cost: 0,
-            isDetail: true
-        });
-        details.push({
-            name: `Общий вес: ${totalWeight.toFixed(1)} кг`,
-            cost: 0,
-            isDetail: true
-        });
-        details.push({
-            name: `Общий объем: ${totalVolume.toFixed(3)} м³`,
-            cost: 0,
-            isDetail: true
-        });
-        details.push({ name: 'РАСЧЕТ ТАРИФА', cost: 0, isHeader: true });
-    }
-
-    details.push({
-        name: `По весу: ${totalWeight.toFixed(1)} кг × ${tariff.baseRatePerKg} ₽/кг`,
-        cost: weightCost
-    });
-    details.push({
-        name: `По объему: ${totalVolume.toFixed(3)} м³ × ${tariff.baseRatePerM3} ₽/м³`,
-        cost: volumeCost
-    });
-
-    // 4. Применяем коэффициенты тарифа
+    // 8. Применение коэффициентов
     let totalMultiplier = 1;
-    const tariffCoefficients = tariff.coefficients || {};
 
-    if (hasAnyDangerousGoods && tariffCoefficients.dangerousGoodsMultiplier) {
-        const multiplier = tariffCoefficients.dangerousGoodsMultiplier;
-        totalMultiplier *= multiplier;
-        const markup = baseCost * (multiplier - 1);
-        details.push({ name: 'Наценка за опасный груз', cost: markup });
+    // Коэффициент зоны
+    if (tariffZone.coefficient) {
+        totalMultiplier *= tariffZone.coefficient;
     }
 
-    if (hasAnyTempControl && tariffCoefficients.temperatureControlMultiplier) {
-        const multiplier = tariffCoefficients.temperatureControlMultiplier;
-        totalMultiplier *= multiplier;
-        const markup = baseCost * (multiplier - 1);
-        details.push({ name: 'Наценка за температурный режим', cost: markup });
+    // Коэффициенты забора/доставки
+    if (takeDeliverFrom?.coefficientSurcharge) {
+        totalMultiplier *= takeDeliverFrom.coefficientSurcharge;
+    }
+    if (takeDeliverTo?.coefficientSurcharge) {
+        totalMultiplier *= takeDeliverTo.coefficientSurcharge;
     }
 
-    if (departureData.deliveryMode === 'address' && tariffCoefficients.fromAddressMultiplier) {
-        const multiplier = tariffCoefficients.fromAddressMultiplier;
-        totalMultiplier *= multiplier;
-        const markup = baseCost * (multiplier - 1);
-        details.push({ name: 'Забор от адреса', cost: markup });
+    // Надбавки
+    if (takeDeliverFrom?.surcharge) {
+        additionalCosts += takeDeliverFrom.surcharge;
+    }
+    if (takeDeliverTo?.surcharge) {
+        additionalCosts += takeDeliverTo.surcharge;
     }
 
-    if (destinationData.deliveryMode === 'address' && tariffCoefficients.toAddressMultiplier) {
-        const multiplier = tariffCoefficients.toAddressMultiplier;
-        totalMultiplier *= multiplier;
-        const markup = baseCost * (multiplier - 1);
-        details.push({ name: 'Доставка до адреса', cost: markup });
+    // Коэффициенты за опасный груз и температурный режим
+    if (hasAnyDangerousGoods) {
+        totalMultiplier *= 1.4; // Примерный коэффициент
+    }
+    if (hasAnyTempControl) {
+        totalMultiplier *= 1.25; // Примерный коэффициент
     }
 
-    // Скидка за множественные места (теперь учитываем общее количество)
-    if (totalPackagesCount >= (tariffCoefficients.multiplePackagesDiscount?.threshold || 5) &&
-        tariffCoefficients.multiplePackagesDiscount) {
-        const multiplier = tariffCoefficients.multiplePackagesDiscount.value;
-        totalMultiplier *= multiplier;
-        const discount = baseCost * (1 - multiplier);
-        details.push({ name: `Скидка за множественные места (${totalPackagesCount} шт.)`, cost: -discount });
-    }
-
+    // 9. Расчет итоговой стоимости
     const adjustedBaseCost = baseCost * totalMultiplier;
+    const finalCost = adjustedBaseCost + additionalCosts;
 
-    // 5. Дополнительные услуги
-    let additionalServicesCost = 0;
-    const tariffServices = tariff.services || {};
+    // 10. Формирование детализации
+    details.push({ name: 'РАСЧЕТ ПО ТЗ', cost: 0, isHeader: true });
+            details.push({
+        name: `Объем: ${totalVolume.toFixed(3)} м³`,
+        cost: 0
+            });
+                details.push({
+        name: `Объемный вес: ${(totalVolume / typeTransportation.transportationCoefficient).toFixed(2)} кг`,
+        cost: 0
+                });
+                details.push({
+        name: `Фактический вес: ${(totalWeight / totalPackagesCount).toFixed(2)} кг`,
+        cost: 0
+                });
+                details.push({
+        name: `Расчетный вес: ${totalCalculatedWeight.toFixed(2)} кг`,
+        cost: 0
+                });
+                details.push({
+        name: `Тарифная зона: ${tariffZone.tariffZone}`,
+        cost: 0
+                });
+                details.push({
+        name: `Базовая стоимость: ${baseCost.toFixed(2)} ₽`,
+        cost: baseCost
+        });
 
-    // Упаковка (уже посчитана выше)
-    if (totalPackagingCost > 0) {
-        additionalServicesCost += totalPackagingCost;
-        // Не добавляем в details, так как уже показано по местам
+    if (totalMultiplier !== 1) {
+                    details.push({
+            name: `Коэффициенты: ${totalMultiplier.toFixed(2)}`,
+            cost: adjustedBaseCost - baseCost
+        });
     }
-
-    // Самостоятельная маркировка (уже посчитана выше)
-    if (totalMarkingDiscount > 0) {
-        additionalServicesCost -= totalMarkingDiscount;
-        // Не добавляем в details, так как уже показано по местам
-    }
-
-    // Расстояние
-    if (distanceCost > 0) {
-        additionalServicesCost += distanceCost;
-        details.push({ name: `Расстояние: ${distanceKm.toFixed(2)} км (${distanceCoefficient} ₽/км)`, cost: distanceCost });
-    }
-
-    if (tariffServices.logisticProcessing?.enabled && tariffServices.logisticProcessing.cost > 0) {
-        additionalServicesCost += tariffServices.logisticProcessing.cost;
-        details.push({ name: defaultServices.logisticProcessing.name, cost: tariffServices.logisticProcessing.cost });
-    }
-
-    if (extraOptionsData.returnDocsToSender && tariffServices.documentReturn?.enabled) {
-        additionalServicesCost += tariffServices.documentReturn.cost;
-        details.push({ name: defaultServices.documentReturn.name, cost: tariffServices.documentReturn.cost });
-    }
-
-    if (extraOptionsData.requiresAccompanyingDocs && tariffServices.statusInfo?.enabled) {
-        additionalServicesCost += tariffServices.statusInfo.cost;
-        details.push({ name: defaultServices.statusInfo.name, cost: tariffServices.statusInfo.cost });
-    }
-
-    // Страхование (считаем от максимальной оценочной стоимости)
-    if (tariffServices.insurance?.enabled && maxDeclaredValue && maxDeclaredValue > 0) {
-        const insuranceCost = Math.max(
-            maxDeclaredValue * tariffServices.insurance.rate,
-            tariffServices.insurance.min
-        );
-        additionalServicesCost += insuranceCost;
-        details.push({
-            name: `${defaultServices.insurance.name} (${(tariffServices.insurance.rate * 100).toFixed(1)}% от ${maxDeclaredValue.toLocaleString('ru-RU')} ₽)`,
-            cost: insuranceCost
+    
+    if (additionalCosts > 0) {
+                    details.push({
+            name: `Дополнительные надбавки: ${additionalCosts.toFixed(2)} ₽`,
+            cost: additionalCosts
         });
     }
 
-    const finalCost = adjustedBaseCost + additionalServicesCost;
-
-    // Create summary object for the UI
-    const summary = {
-        baseCost: adjustedBaseCost,
-        additionalServices: additionalServicesCost - distanceCost, // Services without distance
-        distance: distanceCost,
-        multiplier: totalMultiplier
+    // 11. Информация о доставке
+    const deliveryInfo = {
+        days: tariffZone.minTermDays + Math.ceil((tariffZone.maxTermDays - tariffZone.minTermDays) / 2),
+        description: `${tariffZone.minTermDays}-${tariffZone.maxTermDays} дней`
     };
 
-    // 12. Возвращаем результат
     return {
-        tariff: tariff,
+        tariff: typeTransportation,
         totalCost: finalCost,
         details: details,
         packageDetails: packageDetails,
-        summary: summary,
-        // Добавляем информацию о времени доставки
-        deliveryInfo: deliveryTimeInfo,
-        minDeliveryDate: minDeliveryInfo,
-        distanceKm: distanceKm
+        summary: {
+            baseCost: adjustedBaseCost,
+            additionalServices: additionalCosts,
+            distance: 0,
+            multiplier: totalMultiplier
+        },
+        deliveryInfo: deliveryInfo,
+        minDeliveryDate: null,
+        distanceKm: null
     };
 }
 
 async function fetchData() {
     try {
-        const [officesRes, configRes] = await Promise.all([
-            fetch('./assets/data/contacts.json'),
-            fetch('./assets/data/calculator-data.json')
-        ]);
-        const officesData = await officesRes.json();
-        offices.value = officesData.offices || [];
-        calculatorConfig.value = await configRes.json();
+        // Загружаем данные по очереди для отладки
+        console.log('Начинаем загрузку данных...');
+        
+        const billingAddressesData = await apiService.getBillingAddressesWithRelations();
+        console.log('billingAddresses загружены:', billingAddressesData?.length || 0);
+        
+        const localitiesData = await apiService.getLocalitiesWithRelations();
+        console.log('localities загружены:', localitiesData?.length || 0);
+        
+        const transportTypesData = await apiService.getTransportTypes();
+        console.log('transportTypes загружены:', transportTypesData?.length || 0);
+        
+        const tariffGridsData = await apiService.getTariffGrids();
+        console.log('tariffGrids загружены:', tariffGridsData?.length || 0);
+        
+        const tariffZonesData = await apiService.getTariffZones();
+        console.log('tariffZones загружены:', tariffZonesData?.length || 0);
+        
+        const takeDeliversData = await apiService.getTakeDelivers();
+        console.log('takeDelivers загружены:', takeDeliversData?.length || 0);
+        
+        const boxingsData = await apiService.getBoxings();
+        console.log('boxings загружены:', boxingsData?.length || 0);
+        
+        const unitsData = await apiService.getUnits();
+        console.log('units загружены:', unitsData?.length || 0);
+        
+        const regionsData = await apiService.getRegions();
+        console.log('regions загружены:', regionsData?.length || 0);
+        
+        const cargoOptionsData = await apiService.getCargoOptions();
+        console.log('cargoOptions загружены:', cargoOptionsData?.length || 0);
 
-        // Проверка GET-параметров после загрузки данных офисов
+        // Сохраняем данные
+        billingAddresses.value = billingAddressesData || [];
+        localities.value = localitiesData || [];
+        transportTypes.value = transportTypesData || [];
+        tariffGrids.value = tariffGridsData || [];
+        tariffZones.value = tariffZonesData || [];
+        takeDelivers.value = takeDeliversData || [];
+        boxings.value = boxingsData || [];
+        units.value = unitsData || [];
+        regions.value = regionsData || [];
+        cargoOptions.value = cargoOptionsData || [];
+
+        console.log('Данные загружены:', {
+            billingAddresses: billingAddresses.value.length,
+            transportTypes: transportTypes.value.length,
+            tariffGrids: tariffGrids.value.length,
+            tariffZones: tariffZones.value.length,
+            takeDelivers: takeDelivers.value.length,
+            boxings: boxings.value.length,
+            units: units.value.length,
+            regions: regions.value.length,
+            cargoOptions: cargoOptions.value.length
+        });
+
+
+        // Создаем конфигурацию калькулятора для совместимости
+        calculatorConfig.value = {
+            packaging: boxings.value.map(box => ({
+                uid: box.id,
+                typeBoxing: box.typeBoxing,
+                uidUnit: box.uidUnit,
+                price: box.price
+            })),
+            cargoOptions: cargoOptions.value.map(option => ({
+                id: option.id,
+                name: option.name,
+                description: option.description,
+                type: option.type,
+                defaultValue: option.defaultValue,
+                costImpact: option.costImpact,
+                costValue: option.costValue,
+                multiplier: option.multiplier,
+                enabled: option.enabled
+            })),
+            defaultValues: {
+                cargo: {
+                    package: {
+                        length: '30',
+                        width: '20',
+                        height: '10',
+                        weight: '5',
+                        description: 'Посылка',
+                        declaredValue: '',
+                        packagingItems: [],
+                        selfMarking: false,
+                        dangerousGoods: false,
+                        tempControl: false,
+                        quantity: 1
+                    }
+                },
+                delivery: {
+                    mode: 'terminal',
+                    advanceBookingDays: 0
+                }
+            }
+        };
+
+        // Проверка GET-параметров после загрузки данных
         const urlParams = new URLSearchParams(window.location.search);
         const fromId = urlParams.get('from');
         const toId = urlParams.get('to');
 
-        if (fromId) {
-            const office = offices.value.find(o => o.id === parseInt(fromId));
-            if (office) {
-                // В калькуляторе используется onlyCities, поэтому сохраняем только город
-                formData.direction.from = office.city;
-                formData.departure.location = office;
-            }
-        }
-
-        if (toId) {
-            const office = offices.value.find(o => o.id === parseInt(toId));
-            if (office) {
-                // В калькуляторе используется onlyCities, поэтому сохраняем только город
-                formData.direction.to = office.city;
-                formData.destination.location = office;
-            }
-        }
+        // Сохраняем параметры для последующей установки
+        window.pendingAddresses = { fromId, toId };
     } catch (error) {
         console.error('Ошибка при загрузке данных:', error);
+        // Показываем ошибку пользователю, но не блокируем интерфейс
+        alert('Ошибка загрузки данных. Проверьте подключение к интернету.');
     }
 }
 
@@ -994,15 +978,18 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
 function isFormDataValid() {
     const { direction } = formData;
 
-    // Проверяем только основные поля - города отправления и назначения
+    // Проверяем основные поля - города отправления и назначения
     if (!direction.from || !direction.to) return false;
+    
+    // Проверяем наличие locality_id для корректного расчета
+    if (!direction.fromLocalityId || !direction.toLocalityId) return false;
 
     return true;
 }
 
 function calculateCost() {
-    // Проверяем загружен ли конфиг
-    if (!calculatorConfig.value.tariffs) {
+    // Проверяем загружены ли данные
+    if (!transportTypes.value || transportTypes.value.length === 0) {
         return null;
     }
 
@@ -1012,7 +999,7 @@ function calculateCost() {
     }
 
     // Получаем доступные тарифы
-    const availableTariffs = getAvailableTariffs();
+    const availableTariffs = transportTypes.value || [];
     if (availableTariffs.length === 0) {
         return null;
     }
@@ -1026,21 +1013,22 @@ function calculateCost() {
     const tariffCalculations = availableTariffs.map(tariff => {
         const calculation = calculateTariffCost(tariff);
         return {
-            tariff,
-            totalCost: calculation.totalCost,
-            details: calculation.details,
-            summary: calculation.summary
+            ...tariff,
+            cost: calculation ? calculation.totalCost : null,
+            details: calculation ? calculation.details : [],
+            summary: calculation ? calculation.summary : null,
+            isAvailable: calculation !== null
         };
     });
 
     // Сортируем тарифы по стоимости (от самого выгодного к самому дорогому)
-    tariffCalculations.sort((a, b) => a.totalCost - b.totalCost);
+    tariffCalculations.sort((a, b) => (a.cost || 0) - (b.cost || 0));
 
     // Рассчитываем экономию относительно самого дорогого тарифа
     const mostExpensive = tariffCalculations[tariffCalculations.length - 1];
     const tariffsWithSavings = tariffCalculations.map((calc, index) => ({
         ...calc,
-        savings: mostExpensive.totalCost - calc.totalCost,
+        savings: (mostExpensive.cost || 0) - (calc.cost || 0),
         isRecommended: index === 0 && tariffCalculations.length > 1 // Самый выгодный
     }));
 
@@ -1053,25 +1041,25 @@ function calculateCost() {
 
     // Если выбранный тариф недоступен или не выбран, берем самый выгодный
     if (!selectedTariff && tariffsWithSavings.length > 0) {
-        selectedTariff = tariffsWithSavings[0].tariff;
+        selectedTariff = tariffsWithSavings[0];
         formData.selectedTariff = selectedTariff.id;
     }
 
     // Находим результат для выбранного тарифа
-    const selectedCalculation = tariffsWithSavings.find(calc => calc.tariff.id === selectedTariff.id);
+    const selectedCalculation = tariffsWithSavings.find(calc => calc.id === selectedTariff.id);
 
     return {
-        totalCost: selectedCalculation.totalCost,
-        details: selectedCalculation.details,
+        totalCost: selectedCalculation ? selectedCalculation.cost : null,
+        details: selectedCalculation ? selectedCalculation.details : [],
         tariff: selectedTariff,
         availableTariffs: tariffsWithSavings,
-        summary: selectedCalculation.summary
+        summary: selectedCalculation ? selectedCalculation.summary : null
     };
 }
 
 // Reactive calculation result
 const calculationResult = computed(() => {
-    if (!calculatorConfig.value.tariffs || !formData.direction.from || !formData.direction.to) {
+    if (!transportTypes.value || !formData.direction.from || !formData.direction.to) {
         return {
             isValid: false,
             message: 'Заполните города отправления и назначения',
@@ -1087,18 +1075,18 @@ const calculationResult = computed(() => {
             const calculation = calculateTariffCost(tariff);
             return {
                 ...tariff,
-                totalCost: calculation.totalCost,
-                details: calculation.details,
-                packageDetails: calculation.packageDetails,
-                summary: calculation.summary,
-                deliveryInfo: calculation.deliveryInfo,
-                minDeliveryDate: calculation.minDeliveryInfo,
-                distanceKm: calculation.distanceKm
+                cost: calculation ? calculation.totalCost : null,
+                details: calculation ? calculation.details : [],
+                packageDetails: calculation ? calculation.packageDetails : [],
+                summary: calculation ? calculation.summary : null,
+                deliveryInfo: calculation ? calculation.deliveryInfo : null,
+                minDeliveryDate: calculation ? calculation.minDeliveryDate : null,
+                distanceKm: calculation ? calculation.distanceKm : null
             };
         } else {
             return {
                 ...tariff,
-                totalCost: null,
+                cost: null,
                 details: [],
                 summary: null,
                 deliveryInfo: null,
@@ -1109,20 +1097,20 @@ const calculationResult = computed(() => {
     });
 
     // Находим доступные тарифы и сортируем по цене
-    const available = tariffCalculations.filter(t => t.isAvailable).sort((a, b) => a.totalCost - b.totalCost);
-    const unavailable = tariffCalculations.filter(t => !t.isAvailable).sort((a, b) => a.priority - b.priority);
+    const available = tariffCalculations.filter(t => t.isAvailable).sort((a, b) => (a.cost || 0) - (b.cost || 0));
+    const unavailable = tariffCalculations.filter(t => !t.isAvailable);
 
     // Рассчитываем экономию относительно базового тарифа (cargo-basic)
-    const basicTariff = available.find(t => t.id === 'cargo-basic');
-    const basicCost = basicTariff ? basicTariff.totalCost : null;
+    const basicTariff = available.find(t => t.id === 1);
+    const basicCost = basicTariff ? basicTariff.cost : null;
 
     // Добавляем информацию об экономии и рекомендации
     const availableWithSavings = available.map((tariff, index) => {
         let savingsAmount = 0;
         let isRecommended = false;
 
-        if (basicCost && tariff.totalCost < basicCost) {
-            savingsAmount = basicCost - tariff.totalCost;
+        if (basicCost && tariff.cost < basicCost) {
+            savingsAmount = basicCost - tariff.cost;
             // Рекомендуем самый выгодный тариф при наличии экономии и нескольких доступных тарифов
             isRecommended = index === 0 && available.length > 1 && savingsAmount > 0;
         }
@@ -1146,8 +1134,9 @@ const calculationResult = computed(() => {
         formData.selectedTariff = selectedTariff.id;
     }
 
+
     return {
-        isValid: availableWithSavings.length > 0,
+        isValid: allSorted.length > 0, // Показываем интерфейс если есть любые тарифы (доступные или недоступные)
         message: availableWithSavings.length === 0 ? 'Нет доступных тарифов для указанных параметров' : '',
         allTariffs: allSorted,
         selectedTariff,
@@ -1160,9 +1149,44 @@ function printResult() {
     window.print();
 }
 
-function selectTariff(tariffId) {
-    formData.selectedTariff = tariffId;
+function selectTariff(tariffUid) {
+    formData.selectedTariff = tariffUid;
 }
 
-onMounted(fetchData);
+// Функция для установки адресов из GET-параметров
+function setAddressesFromParams() {
+    if (!window.pendingAddresses) return;
+    
+    const { fromId, toId } = window.pendingAddresses;
+    
+    if (fromId) {
+        const locality = localities.value.find(loc => loc.id == fromId);
+        if (locality) {
+            formData.direction.fromAddress = locality;
+            formData.direction.from = formatSelectedLocalityName(locality);
+            formData.direction.fromLocalityId = locality.id;
+        }
+    }
+    
+    if (toId) {
+        const locality = localities.value.find(loc => loc.id == toId);
+        if (locality) {
+            formData.direction.toAddress = locality;
+            formData.direction.to = formatSelectedLocalityName(locality);
+            formData.direction.toLocalityId = locality.id;
+        }
+    }
+    
+    // Очищаем сохраненные параметры
+    delete window.pendingAddresses;
+}
+
+
+onMounted(async () => {
+    await fetchData();
+    // Устанавливаем адреса после загрузки данных и инициализации компонентов
+    setTimeout(() => {
+        setAddressesFromParams();
+    }, 100);
+});
 </script>

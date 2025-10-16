@@ -85,7 +85,7 @@
             <div v-if="result.selectedTariff" class="border-b pb-4 mb-4">
                 <div class="flex justify-between items-center mb-2">
                     <span class="font-bold text-lg">{{ result.selectedTariff.name }}</span>
-                    <span class="font-bold text-lg">{{ formatCurrency(result.selectedTariff.totalCost) }}</span>
+                    <span class="font-bold text-lg">{{ formatCurrency(result.selectedTariff.cost) }}</span>
                 </div>
                 <div class="text-sm text-gray-500 mb-3">{{ result.selectedTariff.description }}</div>
 
@@ -114,33 +114,18 @@
                     <div class="flex justify-between items-start mb-2 relative">
                         <div class="flex-1">
                             <h4 class="font-semibold text-gray-800 flex items-center gap-2">
-                                {{ tariff.name }}
+                                {{ tariff.fullName }}
                                 <span v-if="tariff.isAvailable && tariff.isRecommended"
                                     class="absolute top-0 right-0 left-auto -translate-y-7 translate-x-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
                                     Экономия {{ Math.round(tariff.savings) }} ₽. Рекомендуем!
                                 </span>
                             </h4>
-                            <p class="text-sm text-gray-600 mb-1">{{ tariff.description }}</p>
+                            <p class="text-sm text-gray-600 mb-1">{{ tariff.description || tariff.name || 'Доставка груза' }}</p>
 
-                            <!-- Условия тарифа -->
+                            <!-- Информация о тарифе -->
                             <ul class="text-xs text-gray-500 mb-1">
-                                <li v-if="tariff.availability.minWeight">Мин. вес: {{ tariff.availability.minWeight }}
-                                    кг</li>
-                                <li v-if="tariff.availability.maxWeight">Макс. вес: {{ tariff.availability.maxWeight }}
-                                    кг</li>
-                                <li v-if="tariff.availability.minVolume">Мин. объем: {{ tariff.availability.minVolume }}
-                                    м³</li>
-                                <li v-if="tariff.availability.maxVolume">Макс. объем: {{ tariff.availability.maxVolume
-                                    }} м³</li>
-                                <li v-if="tariff.availability.minDeclaredValue">Мин. оценочная стоимость: {{
-                                    tariff.availability.minDeclaredValue }} ₽</li>
-                                <li v-if="tariff.availability.maxDeclaredValue">Макс. оценочная стоимость: {{
-                                    tariff.availability.maxDeclaredValue }} ₽</li>
-                                <li v-if="tariff.availability.maxDistance">Макс. расстояние: {{
-                                    tariff.availability.maxDistance }} км</li>
-                                <li
-                                    v-if="tariff.availability.allowedRegions && tariff.availability.allowedRegions.length">
-                                    Только для: {{ tariff.availability.allowedRegions.join(', ') }}</li>
+                                <li v-if="tariff.transportationCoefficient">Коэффициент перевозки: {{ tariff.transportationCoefficient }}</li>
+                                <li v-if="tariff.deliveryInfo">Время доставки: {{ tariff.deliveryInfo.description }}</li>
                             </ul>
 
                             <!-- Причина недоступности -->
@@ -153,14 +138,10 @@
                                 <span class="font-medium">Время доставки:</span> {{ tariff.deliveryInfo.description }}
                                 <span v-if="tariff.deliveryInfo.days"> ({{ tariff.deliveryInfo.days }} дн.)</span>
                             </div>
-                            <div v-if="tariff.minDeliveryDate" class="text-sm text-green-600">
-                                <span class="font-medium">Минимальная дата доставки:</span>
-                                {{ formatDate(tariff.minDeliveryDate.date) }}
-                            </div>
                         </div>
                         <div class="text-right">
                             <div v-if="tariff.isAvailable" class="text-xl font-bold text-gray-800">{{
-                                Math.round(tariff.totalCost) }} ₽</div>
+                                tariff.cost ? Math.round(tariff.cost).toLocaleString() : '0' }} ₽</div>
                             <div v-else class="text-xl font-bold text-gray-400">—</div>
                         </div>
                     </div>
@@ -227,7 +208,7 @@
 
                 <div class="flex justify-between items-center font-bold text-lg border-t pt-3">
                     <span>Общая стоимость</span>
-                    <span class="text-xl">{{ formatCurrency(result.selectedTariff.totalCost) }}</span>
+                    <span class="text-xl">{{ formatCurrency(result.selectedTariff.cost) }}</span>
                 </div>
 
                 <div class="text-xs text-gray-400 mt-1">
@@ -263,11 +244,11 @@ defineEmits(['print', 'selectTariff']);
 // Состояние для раскрытия детализации по тарифам
 const expandedTariffs = ref([]);
 
-function toggleTariffDetails(tariffId) {
-    if (expandedTariffs.value.includes(tariffId)) {
-        expandedTariffs.value = expandedTariffs.value.filter(id => id !== tariffId);
+function toggleTariffDetails(tariffUid) {
+    if (expandedTariffs.value.includes(tariffUid)) {
+        expandedTariffs.value = expandedTariffs.value.filter(uid => uid !== tariffUid);
     } else {
-        expandedTariffs.value.push(tariffId);
+        expandedTariffs.value.push(tariffUid);
     }
 }
 

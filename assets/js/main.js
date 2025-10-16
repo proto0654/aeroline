@@ -88,97 +88,35 @@ function initializePage() {
   const mapContainer = document.getElementById('map');
   if (mapContainer) {
     console.log('Найден контейнер карты, начинаем инициализацию...');
-    // Добавляем небольшую задержку для гарантии корректной инициализации
-    setTimeout(() => {
-      // Сначала проверяем, есть ли данные офисов на странице в виде data-атрибутов
-      let offices = [];
-      const officeCards = document.querySelectorAll('.office-card');
-      let dataFound = false;
-      
-      if (officeCards && officeCards.length > 0) {
-        console.log('Найдены карточки офисов на странице:', officeCards.length);
-        
-        // Собираем данные офисов из карточек
-        officeCards.forEach(card => {
-          if (card.dataset.coordinates) {
-            const coordinates = card.dataset.coordinates.split(',').map(coord => parseFloat(coord.trim()));
-            if (coordinates.length === 2) {
-              const city = card.dataset.city || '';
-              const addressElem = card.querySelector('h3 + div.text-brand-gray');
-              const address = addressElem ? addressElem.textContent.trim() : '';
-              
-              const divElements = card.querySelectorAll('div.text-brand-gray');
-              const typeElem = divElements.length > 1 ? divElements[1] : null;
-              const phoneElem = divElements.length > 2 ? divElements[2] : null;
-              const emailElem = divElements.length > 3 ? divElements[3] : null;
-              
-              offices.push({
-                city: city,
-                address: address,
-                type: typeElem ? typeElem.textContent.trim() : '',
-                phone: phoneElem ? phoneElem.textContent.trim() : '',
-                email: emailElem ? emailElem.textContent.trim() : '',
-                coordinates: coordinates
-              });
-            }
-          }
-        });
-        
-        if (offices.length > 0) {
-          console.log('Собраны данные офисов из карточек:', offices.length);
-          initMap(offices, BASE_PATH);
-          dataFound = true;
+    
+    // Функция для ожидания загрузки API Яндекс.Карт
+    function waitForYandexMaps() {
+      return new Promise((resolve) => {
+        if (typeof ymaps !== 'undefined') {
+          resolve();
+          return;
         }
-      }
-      
-      // Если не нашли данные в карточках, проверяем наличие скрытых данных офисов
-      if (!dataFound && window.officesData && window.officesData.length > 0) {
-        console.log('Использую предварительно загруженные данные офисов:', window.officesData.length);
-        initMap(window.officesData, BASE_PATH);
-        dataFound = true;
-      }
-      
-      // Если данные не найдены ни в DOM, ни в глобальной переменной, показываем карту без маркеров
-      if (!dataFound) {
-        // Проверяем, есть ли дефолтный офис в DOM
-        const defaultOfficeCity = document.querySelector('.map-info-panel .font-bold.text-2xl.text-brand-gray');
-        if (defaultOfficeCity) {
-          console.log('Найдены данные для дефолтного офиса в DOM');
-          
-          const defaultOfficeAddress = document.querySelector('.map-info-panel div:nth-of-type(2)');
-          const defaultOfficeType = document.querySelector('.map-info-panel div:nth-of-type(3)');
-          const defaultOfficePhone = document.querySelector('.map-info-panel div:nth-of-type(4)');
-          const defaultOfficeEmail = document.querySelector('.map-info-panel div:nth-of-type(5)');
-          
-          // Координаты для Красноярска (или может быть в другом месте, если указано)
-          let defaultCoordinates = [56.010563, 92.852572]; // Красноярск 
-          
-          // Пробуем найти координаты в ближайших атрибутах
-          const mapInfoPanel = document.querySelector('.map-info-panel');
-          if (mapInfoPanel && mapInfoPanel.dataset.coordinates) {
-            const coordStr = mapInfoPanel.dataset.coordinates;
-            const coords = coordStr.split(',').map(coord => parseFloat(coord.trim()));
-            if (coords.length === 2) {
-              defaultCoordinates = coords;
-            }
+        
+        const checkInterval = setInterval(() => {
+          if (typeof ymaps !== 'undefined') {
+            clearInterval(checkInterval);
+            resolve();
           }
-          
-          const defaultOffice = {
-            city: defaultOfficeCity.textContent,
-            address: defaultOfficeAddress ? defaultOfficeAddress.textContent : '',
-            type: defaultOfficeType ? defaultOfficeType.textContent : '',
-            phone: defaultOfficePhone ? defaultOfficePhone.textContent : '',
-            email: defaultOfficeEmail ? defaultOfficeEmail.textContent : '',
-            coordinates: defaultCoordinates
-          };
-          
-          initMap([defaultOffice], BASE_PATH);
-        } else {
-          console.log('Данные не найдены на странице, инициализируем карту без маркеров');
-          initMap([], BASE_PATH);
-        }
-      }
-    }, 100);
+        }, 100);
+        
+        // Таймаут через 10 секунд
+        setTimeout(() => {
+          clearInterval(checkInterval);
+          resolve();
+        }, 10000);
+      });
+    }
+    
+    // Ждем загрузки API и инициализируем карту
+    waitForYandexMaps().then(async () => {
+      console.log('Инициализируем карту с API');
+      await initMap(BASE_PATH);
+    });
   }
 
   // Определяем текущую страницу и инициализируем соответствующий функционал

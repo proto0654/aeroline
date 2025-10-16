@@ -398,6 +398,337 @@ class ApiService {
             throw error;
         }
     }
+
+    // ========== МЕТОДЫ ДЛЯ РАБОТЫ С КАЛЬКУЛЯТОРОМ ==========
+
+    // Получение всех адресов для калькулятора
+    async getBillingAddresses() {
+        try {
+            const response = await fetch(`${this.baseUrl}/billingAddresses`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении адресов:', error);
+            throw error;
+        }
+    }
+
+    // Получение видов перевозок
+    async getTransportTypes() {
+        try {
+            const response = await fetch(`${this.baseUrl}/transportTypes`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении видов перевозок:', error);
+            throw error;
+        }
+    }
+
+    // Получение тарифной сетки
+    async getTariffGrids(transportTypeId = null) {
+        try {
+            const url = transportTypeId 
+                ? `${this.baseUrl}/tariffGrids?transportType_id=${transportTypeId}`
+                : `${this.baseUrl}/tariffGrids`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении тарифной сетки:', error);
+            throw error;
+        }
+    }
+
+    // Получение тарифных зон
+    async getTariffZones(transportTypeId = null) {
+        try {
+            const url = transportTypeId 
+                ? `${this.baseUrl}/tariffZones?transportType_id=${transportTypeId}`
+                : `${this.baseUrl}/tariffZones`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении тарифных зон:', error);
+            throw error;
+        }
+    }
+
+    // Получение параметров забора/доставки
+    async getTakeDelivers(transportTypeId = null, addressId = null) {
+        try {
+            let url = `${this.baseUrl}/takeDelivers`;
+            const params = [];
+            if (transportTypeId) params.push(`transportType_id=${transportTypeId}`);
+            if (addressId) params.push(`billingAddress_id=${addressId}`);
+            if (params.length > 0) url += `?${params.join('&')}`;
+            
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении параметров забора/доставки:', error);
+            throw error;
+        }
+    }
+
+    // Получение видов упаковки
+    async getBoxings() {
+        try {
+            const response = await fetch(`${this.baseUrl}/boxings`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении видов упаковки:', error);
+            throw error;
+        }
+    }
+
+    // Получение единиц измерения
+    async getUnits() {
+        try {
+            const response = await fetch(`${this.baseUrl}/units`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении единиц измерения:', error);
+            throw error;
+        }
+    }
+
+    // Получение регионов
+    async getRegions() {
+        try {
+            const response = await fetch(`${this.baseUrl}/regions`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении регионов:', error);
+            throw error;
+        }
+    }
+
+    // Получение опций груза
+    async getCargoOptions() {
+        try {
+            const response = await fetch(`${this.baseUrl}/cargoOptions`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении опций груза:', error);
+            throw error;
+        }
+    }
+
+    // ========== МЕТОДЫ ДЛЯ РАБОТЫ С НАСЕЛЕННЫМИ ПУНКТАМИ ==========
+
+    // Получение всех населенных пунктов
+    async getLocalities() {
+        try {
+            const response = await fetch(`${this.baseUrl}/localities`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении населенных пунктов:', error);
+            throw error;
+        }
+    }
+
+    // Получение населенного пункта по ID
+    async getLocalityById(id) {
+        try {
+            const response = await fetch(`${this.baseUrl}/localities/${id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении населенного пункта:', error);
+            throw error;
+        }
+    }
+
+    // Получение населенных пунктов по региону
+    async getLocalitiesByRegion(regionId) {
+        try {
+            const response = await fetch(`${this.baseUrl}/localities?region_id=${regionId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении населенных пунктов по региону:', error);
+            throw error;
+        }
+    }
+
+    // Получение адресов с отношениями (населенные пункты и регионы)
+    async getBillingAddressesWithRelations() {
+        try {
+            const response = await fetch(`${this.baseUrl}/billingAddresses`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const billingAddresses = await response.json();
+            
+            // Загружаем localities и regions для обогащения
+            const { localities, regions } = await this._loadAllLocalitiesWithRegions();
+            
+            // Обогащаем адреса данными localities и regions
+            const enrichedAddresses = billingAddresses.map(address => {
+                const locality = localities.find(l => l.id === address.locality_id);
+                const region = locality?.region || null;
+                
+                return {
+                    ...address,
+                    locality: locality || null,
+                    region: region
+                };
+            });
+            
+            return enrichedAddresses;
+        } catch (error) {
+            console.error('Ошибка при получении адресов с отношениями:', error);
+            throw error;
+        }
+    }
+
+    // Получение населенных пунктов с отношениями (регионы)
+    async getLocalitiesWithRelations() {
+        try {
+            const { localities } = await this._loadAllLocalitiesWithRegions();
+            return localities;
+        } catch (error) {
+            console.error('Ошибка при получении населенных пунктов с отношениями:', error);
+            throw error;
+        }
+    }
+
+    // Кэш для загруженных данных
+    _localitiesCache = null;
+    _regionsCache = null;
+
+    // Загрузка всех населенных пунктов с регионами
+    async _loadAllLocalitiesWithRegions() {
+        if (this._localitiesCache && this._regionsCache) {
+            return { localities: this._localitiesCache, regions: this._regionsCache };
+        }
+
+        try {
+            // Загружаем все населенные пункты и регионы параллельно
+            const [localitiesResponse, regionsResponse] = await Promise.all([
+                fetch(`${this.baseUrl}/localities`),
+                fetch(`${this.baseUrl}/regions`)
+            ]);
+
+            if (!localitiesResponse.ok || !regionsResponse.ok) {
+                throw new Error(`HTTP error! localities: ${localitiesResponse.status}, regions: ${regionsResponse.status}`);
+            }
+
+            const localities = await localitiesResponse.json();
+            const regions = await regionsResponse.json();
+
+            // Обогащаем населенные пункты данными регионов
+            const enrichedLocalities = localities.map(locality => {
+                const region = regions.find(r => r.id === locality.region_id);
+                return {
+                    ...locality,
+                    region: region || null
+                };
+            });
+
+            // Кэшируем данные
+            this._localitiesCache = enrichedLocalities;
+            this._regionsCache = regions;
+
+            return { localities: enrichedLocalities, regions };
+        } catch (error) {
+            console.error('Ошибка при загрузке всех данных:', error);
+            throw error;
+        }
+    }
+
+    // Комплексный поиск населенных пунктов (по городу, региону и федеральному округу)
+    async searchLocalities(query) {
+        try {
+            const { localities, regions } = await this._loadAllLocalitiesWithRegions();
+            
+            const queryLower = query.toLowerCase();
+            const results = [];
+
+            localities.forEach(locality => {
+                const cityName = locality.name || '';
+                const regionName = locality.region?.name || '';
+                const federalDistrict = locality.region?.federalDistrict || '';
+                
+                const cityLower = cityName.toLowerCase();
+                const regionLower = regionName.toLowerCase();
+                const federalLower = federalDistrict.toLowerCase();
+
+                // Проверяем совпадения
+                const cityExact = cityLower === queryLower;
+                const cityStart = cityLower.startsWith(queryLower);
+                const cityInclude = cityLower.includes(queryLower);
+                const regionMatch = regionLower.includes(queryLower);
+                const federalMatch = federalLower.includes(queryLower);
+
+                if (cityExact || cityStart || cityInclude || regionMatch || federalMatch) {
+                    results.push({
+                        ...locality,
+                        matchType: cityExact ? 'city_exact' : 
+                                  cityStart ? 'city_start' : 
+                                  cityInclude ? 'city_include' : 
+                                  regionMatch ? 'region' : 'federal'
+                    });
+                }
+            });
+
+            // Сортируем по приоритету
+            return results.sort((a, b) => {
+                const priorityOrder = {
+                    'city_exact': 1,
+                    'city_start': 2,
+                    'city_include': 3,
+                    'region': 4,
+                    'federal': 5
+                };
+
+                const aPriority = priorityOrder[a.matchType] || 6;
+                const bPriority = priorityOrder[b.matchType] || 6;
+
+                if (aPriority !== bPriority) {
+                    return aPriority - bPriority;
+                }
+
+                // Если приоритет одинаковый, сортируем по порядку в базе данных (по id)
+                return (a.id || 0) - (b.id || 0);
+            });
+        } catch (error) {
+            console.error('Ошибка при поиске населенных пунктов:', error);
+            throw error;
+        }
+    }
 }
 
 // Создаем экземпляр сервиса

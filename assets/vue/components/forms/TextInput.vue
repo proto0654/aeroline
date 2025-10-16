@@ -1,11 +1,11 @@
 <template>
   <div>
-    <label v-if="label" :for="inputId" class="">
+    <label v-if="label" :for="inputId" class="block text-brand-gray font-medium mb-2">
       {{ label }}
     </label>
 
     <div class="relative text-input-vue">
-      <input class="vue-form-field w-full bg-white focus-visible:outline-gray-200 focus-visible:outline-[1px]"
+      <input class="vue-form-field w-full bg-white focus-visible:outline-none"
         :id="inputId" v-model="inputValue" :type="type" :placeholder="placeholder" :disabled="disabled"
         :required="required" v-bind="$attrs" @blur="handleBlur" :class="[
           errorMessage ? 'border-red-500' : '',
@@ -96,7 +96,31 @@ watch(inputValue, (newValue) => {
 
 <style scoped>
 .vue-form-field {
-  /* padding-right: 2.5rem; */
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.75rem 1rem; /* px-4 py-3 */
+  font-size: inherit;
+  background-color: white;
+  color: #6b7280; /* text-body-secondary */
+  font-family: inherit;
+  height: auto;
+  min-height: 3rem;
+  transition: border-color 0.2s ease-in-out;
+}
 
+.vue-form-field:focus {
+  outline: none;
+  border-color: #008dd2; /* brand-blue */
+  box-shadow: 0 0 0 2px rgba(0, 141, 210, 0.1);
+}
+
+.vue-form-field::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+
+.vue-form-field:disabled {
+  background-color: #f3f4f6; /* gray-100 */
+  cursor: not-allowed;
+  color: #9ca3af; /* gray-400 */
 }
 </style>

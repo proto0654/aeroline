@@ -5,9 +5,12 @@
         <div class="flex xl:flex-row flex-col items-start gap-2 mb-4 items-center xl:items-start">
             <!-- Поле "Откуда" -->
             <div class="w-full">
-                <AutocompleteInput name="direction.from" placeholder="Откуда" :items="offices" v-model="from"
+                <AutocompleteInput name="direction.from" placeholder="Откуда" 
+                    :items="localities" 
+                    v-model="from"
                     @itemSelected="onFromItemSelected" :emitFullItem="true" :showResetButton="true"
-                    :onlyCities="onlyCities" ref="fromAutocompleteRef" />
+                    :useApiSearch="true" :apiSearchFunction="searchLocalitiesApi"
+                    ref="fromAutocompleteRef" />
 
                 <!-- Популярные города для "Откуда" -->
                 <div
@@ -25,9 +28,12 @@
 
             <!-- Поле "Куда" -->
             <div class="w-full">
-                <AutocompleteInput name="direction.to" placeholder="Куда" :items="offices" v-model="to"
+                <AutocompleteInput name="direction.to" placeholder="Куда" 
+                    :items="localities" 
+                    v-model="to"
                     @itemSelected="onToItemSelected" :emitFullItem="true" :showResetButton="true"
-                    :onlyCities="onlyCities" ref="toAutocompleteRef" />
+                    :useApiSearch="true" :apiSearchFunction="searchLocalitiesApi"
+                    ref="toAutocompleteRef" />
 
                 <!-- Популярные города для "Куда" -->
                 <div
@@ -49,11 +55,17 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 import AutocompleteInput from '../../forms/AutocompleteInput.vue';
+import apiService from '../../../services/apiService.js';
+import { formatLocalityName, formatSelectedLocalityName } from '../../../utils/localityFormatter.js';
 
 const props = defineProps({
-    offices: {
+    billingAddresses: {
         type: Array,
         required: true
+    },
+    localities: {
+        type: Array,
+        default: () => []
     },
     modelValue: {
         type: Object,
@@ -67,10 +79,6 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
-    onlyCities: {
-        type: Boolean,
-        default: false
-    }
 });
 
 const emit = defineEmits(['update:modelValue', 'calculate']);
@@ -86,119 +94,208 @@ const toOffice = ref(null);
 const fromAutocompleteRef = ref(null);
 const toAutocompleteRef = ref(null);
 
-// Популярные города для быстрого выбора  
-const quickSelectCities = [
-    'Новосибирск',
-    'Красноярск',
-    'Иркутск',
-    'Абакан',
-    'Томск'
-];
+// Популярные города для быстрого выбора - берем первые 7 уникальных городов из localities
+const quickSelectCities = computed(() => {
+    if (!props.localities || !Array.isArray(props.localities)) {
+        return [];
+    }
+    
+    return props.localities
+        .map(locality => locality.name)
+        .filter(city => city && city.trim() !== '')
+        .slice(0, 7);
+});
 
 // Методы для установки городов
 const setFromCity = (city) => {
-    from.value = city;
-    fromOffice.value = props.offices.find(o => o.city === city) || null; // Находим первый офис для данного города
+    try {
+        const locality = props.localities.find(l => l.name === city);
+        if (locality) {
+            from.value = formatSelectedLocalityName(locality);
+            fromOffice.value = locality;
+            // Эмитим обновленные данные
+            emit('update:modelValue', { 
+                from: from.value, 
+                to: to.value,
+                fromAddress: locality,
+                toAddress: toOffice.value,
+                fromLocalityId: locality.id,
+                toLocalityId: toOffice.value?.id
+            });
+        }
+    } catch (error) {
+        console.error('Ошибка в setFromCity:', error);
+    }
 };
 
 const setToCity = (city) => {
-    to.value = city;
-    toOffice.value = props.offices.find(o => o.city === city) || null; // Находим первый офис для данного города
+    try {
+        const locality = props.localities.find(l => l.name === city);
+        if (locality) {
+            to.value = formatSelectedLocalityName(locality);
+            toOffice.value = locality;
+            // Эмитим обновленные данные
+            emit('update:modelValue', { 
+                from: from.value, 
+                to: to.value,
+                fromAddress: fromOffice.value,
+                toAddress: toOffice.value,
+                fromLocalityId: fromOffice.value?.id,
+                toLocalityId: locality.id
+            });
+        }
+    } catch (error) {
+        console.error('Ошибка в setToCity:', error);
+    }
+};
+
+// Функция для API поиска населенных пунктов
+const searchLocalitiesApi = async (query) => {
+    try {
+        return await apiService.searchLocalities(query);
+    } catch (error) {
+        console.error('Ошибка при поиске населенных пунктов:', error);
+        return [];
+    }
 };
 
 // Обработчики событий выбора элемента (теперь получаем полный объект)
 const onFromItemSelected = (item) => {
-    // Если onlyCities - сохраняем только город, иначе полную строку
-    from.value = props.onlyCities ? item.city : item.city + (item.address ? ', ' + item.address : '');
+    from.value = formatSelectedLocalityName(item);
     fromOffice.value = item;
+    emit('update:modelValue', { 
+        from: from.value, 
+        to: to.value,
+        fromAddress: fromOffice.value,
+        toAddress: toOffice.value,
+        fromLocalityId: item.id,
+        toLocalityId: toOffice.value?.id
+    });
 };
 
 const onToItemSelected = (item) => {
-    // Если onlyCities - сохраняем только город, иначе полную строку
-    to.value = props.onlyCities ? item.city : item.city + (item.address ? ', ' + item.address : '');
+    to.value = formatSelectedLocalityName(item);
     toOffice.value = item;
+    emit('update:modelValue', { 
+        from: from.value, 
+        to: to.value,
+        fromAddress: fromOffice.value,
+        toAddress: toOffice.value,
+        fromLocalityId: fromOffice.value?.id,
+        toLocalityId: item.id
+    });
 };
 
 // Метод для смены направлений местами
 const swapDirections = () => {
     const tempFrom = from.value;
     const tempTo = to.value;
-    from.value = tempTo;
-    to.value = tempFrom;
-
     const tempFromOffice = fromOffice.value;
     const tempToOffice = toOffice.value;
+
+    from.value = tempTo;
+    to.value = tempFrom;
     fromOffice.value = tempToOffice;
     toOffice.value = tempFromOffice;
+
+    // Обновляем значения в AutocompleteInput
+    if (fromAutocompleteRef.value) fromAutocompleteRef.value.setInputValue(from.value);
+    if (toAutocompleteRef.value) toAutocompleteRef.value.setInputValue(to.value);
+
+    // Эмитим обновленные данные с locality_id
+    emit('update:modelValue', { 
+        from: from.value, 
+        to: to.value,
+        fromAddress: fromOffice.value,
+        toAddress: toOffice.value,
+        fromLocalityId: fromOffice.value?.id,
+        toLocalityId: toOffice.value?.id
+    });
 };
 
 // Метод для обработки кнопки "Рассчитать"
 const handleCalculate = () => {
     if (fromOffice.value && toOffice.value) {
-        window.location.href = `./calculator.html?from=${encodeURIComponent(fromOffice.value.id)}&to=${encodeURIComponent(toOffice.value.id)}`;
+        // Создаем параметры URL
+        const params = new URLSearchParams();
+        
+        // Передаем ID населенных пунктов
+        params.set('from', fromOffice.value.id);
+        params.set('to', toOffice.value.id);
+        
+        window.location.href = `./calculator.html?${params.toString()}`;
     } else {
         alert('Пожалуйста, выберите корректные пункты отправки и назначения');
         emit('calculate', { from: from.value, to: to.value });
     }
 };
 
-// Helper to find office by string value (city or city, address)
-const findOfficeByValue = (value) => {
-    if (!value) return null;
+// Helper to find locality by string value (city with region info)
+const findAddressByValue = (value) => {
+    if (!value || !props.localities || !Array.isArray(props.localities)) return null;
+    
     // Try to find by exact match of formatted string
-    let foundOffice = props.offices.find(o => (o.city + (o.address ? ', ' + o.address : '')) === value);
-    if (foundOffice) return foundOffice;
+    let foundLocality = props.localities.find(locality => {
+        const formattedName = formatLocalityName(locality);
+        return formattedName === value;
+    });
+    if (foundLocality) return foundLocality;
 
-    // If not found by full string, try to find by city only (for quick selects or just city input)
-    foundOffice = props.offices.find(o => o.city === value);
-    return foundOffice || null;
+    // If not found by full string, try to find by city name only
+    foundLocality = props.localities.find(locality => (locality.name || locality.locality || locality.city) === value);
+    return foundLocality || null;
 };
 
 // Watch for local changes and emit to parent
 watch([from, to], ([newFrom, newTo]) => {
-    emit('update:modelValue', { from: newFrom, to: newTo });
+    emit('update:modelValue', { 
+        from: newFrom, 
+        to: newTo,
+        fromAddress: fromOffice.value,
+        toAddress: toOffice.value,
+        fromLocalityId: fromOffice.value?.id,
+        toLocalityId: toOffice.value?.id
+    });
 });
 
 // Watch for parent changes and update local state
 watch(() => props.modelValue, (newValue) => {
-    // Если onlyCities=true, показываем только город, иначе - полную строку
-    if (props.onlyCities) {
-        // При onlyCities находим офис и показываем только город
-        const fromOfficeFound = findOfficeByValue(newValue.from);
-        const toOfficeFound = findOfficeByValue(newValue.to);
-        from.value = fromOfficeFound ? fromOfficeFound.city : (newValue.from || '');
-        to.value = toOfficeFound ? toOfficeFound.city : (newValue.to || '');
-        fromOffice.value = fromOfficeFound;
-        toOffice.value = toOfficeFound;
-    } else {
-        // При обычном режиме показываем полную строку
-        from.value = newValue.from || '';
-        to.value = newValue.to || '';
-        fromOffice.value = findOfficeByValue(newValue.from);
-        toOffice.value = findOfficeByValue(newValue.to);
+    // Проверяем, есть ли изменения в from/to, чтобы не перезаписывать данные без необходимости
+    const fromChanged = newValue.from !== from.value;
+    const toChanged = newValue.to !== to.value;
+    
+    if (!fromChanged && !toChanged) {
+        return;
+    }
+    
+    // Показываем полную строку с городом и регионом
+    from.value = newValue.from || '';
+    to.value = newValue.to || '';
+    
+    // Ищем соответствующие localities
+    fromOffice.value = newValue.fromAddress || findAddressByValue(newValue.from);
+    toOffice.value = newValue.toAddress || findAddressByValue(newValue.to);
+    
+    // Обновляем locality_id если они есть в newValue
+    if (newValue.fromLocalityId) {
+        fromOffice.value = props.localities.find(loc => loc.id === newValue.fromLocalityId) || fromOffice.value;
+    }
+    if (newValue.toLocalityId) {
+        toOffice.value = props.localities.find(loc => loc.id === newValue.toLocalityId) || toOffice.value;
     }
 }, { deep: true });
 
 // Инициализация fromOffice и toOffice при монтировании, если modelValue уже имеет значения
 import { onMounted } from 'vue';
 onMounted(() => {
+    if (props.modelValue.from) {
+        fromOffice.value = findAddressByValue(props.modelValue.from);
+    }
     if (props.modelValue.to) {
-        toOffice.value = findOfficeByValue(props.modelValue.to);
+        toOffice.value = findAddressByValue(props.modelValue.to);
     }
 
-    // Проверка GET-параметров при загрузке компонента
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromId = urlParams.get('from');
-    const toId = urlParams.get('to');
-
-    if (fromId && fromAutocompleteRef.value) {
-        // Используем новый метод selectItemById
-        fromAutocompleteRef.value.selectItemById(fromId);
-    }
-
-    if (toId && toAutocompleteRef.value) {
-        // Используем новый метод selectItemById
-        toAutocompleteRef.value.selectItemById(toId);
-    }
+    // GET-параметры обрабатываются в родительском компоненте (CalculatorPage.vue)
+    // Здесь мы только инициализируем fromOffice и toOffice если они уже есть в modelValue
 });
 </script>

@@ -1,0 +1,39 @@
+/* Мобильные tooltips - растягивание по ширине viewport */
+@media (max-width: 767px) {
+    .mobile-tooltip-center[data-tip]:before {
+        position: fixed !important;
+        left: 20px !important;
+        right: 20px !important;
+        transform: none !important;
+        top: auto !important;
+        bottom: 20px !important;
+        z-index: 9999 !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 1.25rem !important;
+        height: 120px !important;
+        max-height: 120px !important;
+        display: flex !important;
+        align-items: center !important;
+        overflow-y: auto !important;
+    }
+    
+    .mobile-tooltip-center[data-tip]:after {
+        position: fixed !important;
+        bottom: calc(20px + 80px + 1.25rem) !important;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(-150%) scaleY(-1) !important;
+        transform-origin: top !important;
+        top: auto !important;
+        right: auto !important;
+        border-top: 8px solid #374151 !important;
+        border-left: 8px solid transparent !important;
+        border-right: 8px solid transparent !important;
+        border-bottom: none !important;
+        background: transparent !important;
+        width: 0 !important;
+        height: 0 !important;
+        z-index: 10000 !important;
+        content: "" !important;
+    }
+}

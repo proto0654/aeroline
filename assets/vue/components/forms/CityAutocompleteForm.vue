@@ -13,7 +13,8 @@
 
         <!-- Основная форма -->
         <div v-else class="relative w-full md:max-w-xs">
-            <AutocompleteInput name="cityFilter" placeholder="Выберите город" :items="offices" :only-cities="true"
+            <AutocompleteInput name="cityFilter" placeholder="Выберите город" 
+                :items="localities.length > 0 ? localities : offices" 
                 v-model="selectedCity" @itemSelected="onCityItemSelected" :show-reset-button="true" />
         </div>
     </div>
@@ -32,6 +33,10 @@ const props = defineProps({
         type: Array,
         default: () => []
     },
+    localities: {
+        type: Array,
+        default: () => []
+    },
     loading: {
         type: Boolean,
         default: false
@@ -47,7 +52,9 @@ const emit = defineEmits(['citySelected', 'filterReset']);
 const selectedCity = ref('');
 
 const onCityItemSelected = (item) => {
-    emit('citySelected', item.city);
+    // Для localities используем name, для старых данных - city
+    const cityName = item.name || item.city;
+    emit('citySelected', cityName);
 };
 
 const resetFilter = () => {
