@@ -740,7 +740,7 @@ function calculateTariffCost(typeTransportation) {
         const payableWeight = Math.max(volumetricWeightTotal, actualWeightTotal);
         
         details.push({
-            name: `Место ${index + 1}:`,
+            name: `Место ${index + 1}${quantity > 1 ? ` (×${quantity})` : ''}:`,
             cost: 0,
             isSubHeader: true
         });

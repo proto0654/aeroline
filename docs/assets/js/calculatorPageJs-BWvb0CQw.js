@@ -2329,7 +2329,7 @@ const _sfc_main = {
         const actualWeightTotal = weight * quantity;
         const payableWeight = Math.max(volumetricWeightTotal, actualWeightTotal);
         details.push({
-          name: `Место ${index2 + 1}:`,
+          name: `Место ${index2 + 1}${quantity > 1 ? ` (×${quantity})` : ""}:`,
           cost: 0,
           isSubHeader: true
         });
