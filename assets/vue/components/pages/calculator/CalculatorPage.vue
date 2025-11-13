@@ -257,48 +257,15 @@ function getAllTariffsWithStatus() {
     }
     const { direction, cargo, departure, destination } = formData;
     
-    // Минимальные учитываемые значения для расчета
-    const minimalValues = calculatorConfig.value.minimalValues?.cargo?.package || {
-        length: 10, width: 10, height: 5, weight: 0.1, quantity: 1
-    };
-
-    // Process each package, applying minimal values for missing fields
-    const processedPackages = (cargo.packages && cargo.packages.length > 0)
-        ? cargo.packages.map(pkg => {
-            const hasWeight = parseFloat(pkg.weight) > 0;
-            const hasDimensions = parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0;
-            const hasQuantity = parseInt(pkg.quantity) > 0;
-            
-            return {
-                ...pkg,
-                weight: hasWeight ? parseFloat(pkg.weight) : minimalValues.weight,
-                length: hasDimensions ? parseFloat(pkg.length) : minimalValues.length,
-                width: hasDimensions ? parseFloat(pkg.width) : minimalValues.width,
-                height: hasDimensions ? parseFloat(pkg.height) : minimalValues.height,
-                quantity: hasQuantity ? parseInt(pkg.quantity) : minimalValues.quantity,
-                // Флаги для отображения в UI
-                usesMinimalWeight: !hasWeight,
-                usesMinimalDimensions: !hasDimensions,
-                usesMinimalQuantity: !hasQuantity
-            };
-        })
-        : [{
-            weight: minimalValues.weight,
-            length: minimalValues.length,
-            width: minimalValues.width,
-            height: minimalValues.height,
-            quantity: minimalValues.quantity,
-            description: 'Посылка',
-            declaredValue: '',
-            packagingItems: [],
-            selfMarking: false,
-            dangerousGoods: false,
-            tempControl: false,
-            id: Date.now(),
-            usesMinimalWeight: true,
-            usesMinimalDimensions: true,
-            usesMinimalQuantity: true
-        }];
+    // Используем реальные значения из формы без применения минимальных значений
+    const processedPackages = cargo.packages.map(pkg => ({
+        ...pkg,
+        weight: parseFloat(pkg.weight) || 0,
+        length: parseFloat(pkg.length) || 0,
+        width: parseFloat(pkg.width) || 0,
+        height: parseFloat(pkg.height) || 0,
+        quantity: parseInt(pkg.quantity) || 1
+    }));
 
     const cargoData = { packages: processedPackages };
     const defaultDeliveryMode = calculatorConfig.value.defaultValues?.delivery?.mode || 'terminal';
@@ -415,65 +382,10 @@ function getAllTariffsWithStatus() {
         };
     });
     
-    // Всегда добавляем общий тариф как альтернативу
-    const defaultTariff = getDefaultTariff();
-    const defaultTariffCost = calculateDefaultTariffCost(defaultTariff, cargoData, distanceKm);
-    
-    if (defaultTariffCost) {
-        defaultTariff.cost = defaultTariffCost.totalCost;
-        defaultTariff.deliveryInfo = {
-            days: defaultTariffCost.deliveryDays,
-            description: `${defaultTariffCost.deliveryDays} дней`
-        };
-        defaultTariff.isAvailable = true;
-    }
-    // Добавляем общий тариф в начало списка
-    result.unshift(defaultTariff);
     
     return result;
 }
 
-// Функция для получения общего тарифа по умолчанию
-function getDefaultTariff() {
-    // Выбираем самый универсальный тариф из API (Cargo-Базовый или Cargo-Стандарт)
-    const defaultTariffConfig = calculatorConfig.value.tariffs?.find(t => t.id === 'cargo-basic') || 
-                               calculatorConfig.value.tariffs?.find(t => t.id === 'cargo-region') ||
-                               calculatorConfig.value.tariffs?.[0];
-    
-    if (defaultTariffConfig) {
-        return {
-            id: 'default',
-            name: defaultTariffConfig.name,
-            fullName: defaultTariffConfig.name,
-            description: defaultTariffConfig.description || 'Тариф для данного направления',
-            transportationCoefficient: defaultTariffConfig.baseRatePerKg || 5000,
-            isAvailable: true, // Общий тариф всегда доступен
-            cost: null, // Будет рассчитан отдельно
-            reason: null,
-            deliveryInfo: {
-                days: defaultTariffConfig.deliveryTime?.baseDays || 5,
-                description: defaultTariffConfig.deliveryTime?.description || '5-7 дней'
-            },
-            minCost: defaultTariffConfig.minCost || 500
-        };
-    }
-    
-    // Fallback если нет конфигурации
-    return {
-        id: 'default',
-        name: 'Общий тариф',
-        fullName: 'Общий тариф',
-        description: 'Тариф для данного направления',
-        transportationCoefficient: 5000,
-        isAvailable: true, // Общий тариф всегда доступен
-        cost: null,
-        reason: null,
-        deliveryInfo: {
-            days: 5,
-            description: '5-7 дней'
-        }
-    };
-}
 
 // Функция для проверки ограничений тарифа
 function checkTariffConstraints(transportType, cargoData, direction, distanceKm) {
@@ -535,45 +447,6 @@ function checkTariffConstraints(transportType, cargoData, direction, distanceKm)
     return { isAvailable: true, reason: null };
 }
 
-// Функция для расчета стоимости общего тарифа
-function calculateDefaultTariffCost(defaultTariff, cargoData, distanceKm) {
-    if (!cargoData.packages || cargoData.packages.length === 0) {
-        return null;
-    }
-
-    const totalWeight = cargoData.packages.reduce((sum, pkg) => sum + (pkg.weight * pkg.quantity), 0);
-    const totalVolume = cargoData.packages.reduce((sum, pkg) => {
-        const volume = (pkg.length * pkg.width * pkg.height) / 1000000; // см³ в м³
-        return sum + (volume * pkg.quantity);
-    }, 0);
-
-    // Проверяем, что у нас есть валидные данные
-    if (totalWeight <= 0 && totalVolume <= 0) {
-        return null;
-    }
-
-    // Базовая стоимость по весу и объему
-    const coefficient = defaultTariff.transportationCoefficient || 5000;
-    const weightCost = totalWeight * coefficient;
-    const volumeCost = totalVolume * (coefficient * 100);
-    const minCost = defaultTariff.minCost || 500;
-    
-    const baseCost = Math.max(weightCost, volumeCost, minCost);
-
-    // Коэффициент расстояния (более консервативный)
-    const distanceCoefficient = distanceKm ? Math.max(1, Math.min(distanceKm / 200, 3)) : 1;
-    const totalCost = baseCost * distanceCoefficient;
-
-    // Время доставки
-    const deliveryDays = Math.max(1, Math.ceil((distanceKm || 100) / 500) + 2);
-
-    return {
-        totalCost: Math.round(totalCost),
-        deliveryDays: deliveryDays,
-        baseCost: Math.round(baseCost),
-        distanceCoefficient: distanceCoefficient
-    };
-}
 
 // Функция для расчета стоимости конкретного тарифа по новым формулам ТЗ
 function calculateTariffCost(typeTransportation) {
@@ -653,7 +526,7 @@ function calculateTariffCost(typeTransportation) {
     let hasAnyTempControl = false;
     let additionalCosts = 0;
 
-    // 6. Расчет по формулам ТЗ для каждого места
+    // 6. Расчет платного веса по формулам ТЗ для каждого места
     packages.forEach((pkg, index) => {
         const length = parseFloat(pkg.length) || 0;
         const width = parseFloat(pkg.width) || 0;
@@ -664,18 +537,22 @@ function calculateTariffCost(typeTransportation) {
 
         // Формулы из ТЗ:
         // V = L * W * H (в см³)
-        const volume = (length * width * height) / 1000000; // переводим в м³
+        const volumeCm3 = length * width * height;
+        const volume = volumeCm3 / 1000000; // переводим в м³
         
-        // Wv = V / transportationCoefficient
-        const volumetricWeight = volume / typeTransportation.transportationCoefficient;
+        // Объемный вес одного места = Объем / transportationCoefficient
+        const volumetricWeightPerPlace = volumeCm3 / typeTransportation.transportationCoefficient;
         
-        // Wf = count * weight
-        const actualWeight = weight * quantity;
+        // Объемный вес всего = Количество × Объемный вес одного места
+        const volumetricWeightTotal = volumetricWeightPerPlace * quantity;
         
-        // W = max(Wv, Wf)
-        const calculatedWeight = Math.max(volumetricWeight, actualWeight);
+        // Фактический вес всего = Количество × Вес одного места
+        const actualWeightTotal = weight * quantity;
+        
+        // Платный вес места = MAX(Объемный вес всего, Фактический вес всего)
+        const payableWeight = Math.max(volumetricWeightTotal, actualWeightTotal);
 
-        totalWeight += calculatedWeight;
+        totalWeight += payableWeight;
         totalVolume += volume * quantity;
         totalPackagesCount += quantity;
         maxDeclaredValue = Math.max(maxDeclaredValue, declaredValue);
@@ -704,10 +581,12 @@ function calculateTariffCost(typeTransportation) {
             dimensions: `${length}×${width}×${height} см`,
             singleWeight: weight,
             singleVolume: volume,
-            volumetricWeight: volumetricWeight,
-            calculatedWeight: calculatedWeight,
+            volumetricWeightPerPlace: volumetricWeightPerPlace,
+            volumetricWeightTotal: volumetricWeightTotal,
+            actualWeightTotal: actualWeightTotal,
+            payableWeight: payableWeight,
             quantity: quantity,
-            totalWeight: calculatedWeight,
+            totalWeight: payableWeight,
             totalVolume: volume * quantity,
             dangerousGoods: pkg.dangerousGoods,
             tempControl: pkg.tempControl,
@@ -716,104 +595,416 @@ function calculateTariffCost(typeTransportation) {
         packageDetails.push(packageInfo);
     });
 
-    // 7. Расчет стоимости по тарифной сетке
-    let baseCost = 0;
-    const totalCalculatedWeight = totalWeight;
+    // 7. Расчет стоимости по трем компонентам согласно ТЗ
+    const totalPayableWeight = totalWeight; // Общий платный вес (ПВ)
+    
+    // Вспомогательная функция для расчета стоимости по тарифной сетке
+    function calculateCostByTariffGrid(tariffGridArray, payableWeight) {
+        if (!tariffGridArray || tariffGridArray.length === 0) {
+            return 0;
+        }
 
-    // Найти подходящий диапазон в тарифной сетке
-    const applicableTariff = relevantTarifGrid.find(tg => 
-        totalCalculatedWeight >= tg.unitFrom && totalCalculatedWeight <= tg.unitTo
-    );
+        // Найти подходящий диапазон в тарифной сетке
+        const applicableTariff = tariffGridArray.find(tg => 
+            payableWeight >= tg.unitFrom && payableWeight <= tg.unitTo
+        );
 
-    if (applicableTariff) {
-        // Формула: startingPrice + ((W - unitFrom) / step) * stepPrice
-        const steps = Math.ceil((totalCalculatedWeight - applicableTariff.unitFrom) / applicableTariff.step);
-        baseCost = applicableTariff.startingPrice + (steps * applicableTariff.stepPrice);
-    } else {
-        // Если не найден подходящий диапазон, используем последний доступный
-        const lastTariff = relevantTarifGrid[relevantTarifGrid.length - 1];
-        if (lastTariff) {
-            const steps = Math.ceil((totalCalculatedWeight - lastTariff.unitFrom) / lastTariff.step);
-            baseCost = lastTariff.startingPrice + (steps * lastTariff.stepPrice);
+        if (applicableTariff) {
+            // Формула из ТЗ: ((ПВ - unitFrom) / step) × stepPrice + startingPrice
+            const steps = Math.ceil((payableWeight - applicableTariff.unitFrom) / applicableTariff.step);
+            return applicableTariff.startingPrice + (steps * applicableTariff.stepPrice);
+        } else {
+            // Если не найден подходящий диапазон, используем последний доступный
+            const lastTariff = tariffGridArray[tariffGridArray.length - 1];
+            if (lastTariff) {
+                const steps = Math.ceil((payableWeight - lastTariff.unitFrom) / lastTariff.step);
+                return lastTariff.startingPrice + (steps * lastTariff.stepPrice);
+            }
+        }
+        return 0;
+    }
+
+    // 7.1. Расчет стоимости перевозки
+    let transportationCost = calculateCostByTariffGrid(relevantTarifGrid, totalPayableWeight);
+    
+    // Применяем коэффициент зоны к перевозке
+    if (tariffZone.coefficient) {
+        transportationCost *= tariffZone.coefficient;
+    }
+
+    // 7.2. Расчет стоимости забора (если не терминал)
+    let pickupCost = 0;
+    const isPickupAtTerminal = departure.deliveryMode === 'terminal';
+    
+    if (!isPickupAtTerminal && takeDeliverFrom) {
+        // По ТЗ: для забора используется numberZone "D" или tariffZone из takeDeliver
+        const pickupZone = takeDeliverFrom.tariffZone || 'D';
+        const pickupTariffGrid = tariffGrids.value.filter(tg => 
+            tg.transportType_id === typeTransportation.id && 
+            tg.numberZone === pickupZone.toString()
+        );
+        
+        if (pickupTariffGrid.length > 0) {
+            pickupCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
+            // Добавляем surcharge из takeDeliver
+            if (takeDeliverFrom.surcharge) {
+                pickupCost += takeDeliverFrom.surcharge;
+            }
+            // Применяем коэффициент забора
+            if (takeDeliverFrom.coefficientSurcharge) {
+                pickupCost *= takeDeliverFrom.coefficientSurcharge;
+            }
         }
     }
 
-    // 8. Применение коэффициентов
-    let totalMultiplier = 1;
-
-    // Коэффициент зоны
-    if (tariffZone.coefficient) {
-        totalMultiplier *= tariffZone.coefficient;
+    // 7.3. Расчет стоимости доставки (если не терминал)
+    let deliveryCost = 0;
+    const isDeliveryAtTerminal = destination.deliveryMode === 'terminal';
+    
+    if (!isDeliveryAtTerminal && takeDeliverTo) {
+        // По ТЗ: для доставки используется numberZone "H" или tariffZone из takeDeliver
+        const deliveryZone = takeDeliverTo.tariffZone || 'H';
+        const deliveryTariffGrid = tariffGrids.value.filter(tg => 
+            tg.transportType_id === typeTransportation.id && 
+            tg.numberZone === deliveryZone.toString()
+        );
+        
+        if (deliveryTariffGrid.length > 0) {
+            deliveryCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
+            // Добавляем surcharge из takeDeliver
+            if (takeDeliverTo.surcharge) {
+                deliveryCost += takeDeliverTo.surcharge;
+            }
+            // Применяем коэффициент доставки
+            if (takeDeliverTo.coefficientSurcharge) {
+                deliveryCost *= takeDeliverTo.coefficientSurcharge;
+            }
+        }
     }
 
-    // Коэффициенты забора/доставки
-    if (takeDeliverFrom?.coefficientSurcharge) {
-        totalMultiplier *= takeDeliverFrom.coefficientSurcharge;
-    }
-    if (takeDeliverTo?.coefficientSurcharge) {
-        totalMultiplier *= takeDeliverTo.coefficientSurcharge;
-    }
-
-    // Надбавки
-    if (takeDeliverFrom?.surcharge) {
-        additionalCosts += takeDeliverFrom.surcharge;
-    }
-    if (takeDeliverTo?.surcharge) {
-        additionalCosts += takeDeliverTo.surcharge;
-    }
-
-    // Коэффициенты за опасный груз и температурный режим
+    // 8. Коэффициенты за опасный груз и температурный режим (применяются ко всем компонентам)
+    let dangerousGoodsMultiplier = 1;
+    let tempControlMultiplier = 1;
+    
     if (hasAnyDangerousGoods) {
-        totalMultiplier *= 1.4; // Примерный коэффициент
+        dangerousGoodsMultiplier = 1.4; // Примерный коэффициент
     }
     if (hasAnyTempControl) {
-        totalMultiplier *= 1.25; // Примерный коэффициент
+        tempControlMultiplier = 1.25; // Примерный коэффициент
     }
+    
+    const totalMultiplier = dangerousGoodsMultiplier * tempControlMultiplier;
+    
+    // Применяем коэффициенты ко всем компонентам
+    transportationCost *= totalMultiplier;
+    pickupCost *= totalMultiplier;
+    deliveryCost *= totalMultiplier;
 
-    // 9. Расчет итоговой стоимости
-    const adjustedBaseCost = baseCost * totalMultiplier;
-    const finalCost = adjustedBaseCost + additionalCosts;
+    // 9. Расчет итоговой стоимости согласно ТЗ
+    // По ТЗ: Общая стоимость = (Перевозка + Забор + Доставка) × (1 + Процент НДС)
+    const totalWithoutVAT = transportationCost + pickupCost + deliveryCost + additionalCosts;
+    
+    // Применение НДС (по умолчанию 5% согласно примеру в ТЗ)
+    const vatRate = 0.05; // 5% НДС
+    const vatAmount = totalWithoutVAT * vatRate;
+    const finalCost = totalWithoutVAT + vatAmount;
 
-    // 10. Формирование детализации
+    // 10. Формирование детализации согласно ТЗ
     details.push({ name: 'РАСЧЕТ ПО ТЗ', cost: 0, isHeader: true });
-            details.push({
+    details.push({
         name: `Объем: ${totalVolume.toFixed(3)} м³`,
         cost: 0
-            });
-                details.push({
-        name: `Объемный вес: ${(totalVolume / typeTransportation.transportationCoefficient).toFixed(2)} кг`,
+    });
+    details.push({
+        name: `Платный вес (ПВ): ${totalPayableWeight.toFixed(2)} кг`,
         cost: 0
-                });
-                details.push({
-        name: `Фактический вес: ${(totalWeight / totalPackagesCount).toFixed(2)} кг`,
+    });
+    details.push({
+        name: `Тарифная зона перевозки: ${tariffZone.tariffZone}`,
         cost: 0
-                });
-                details.push({
-        name: `Расчетный вес: ${totalCalculatedWeight.toFixed(2)} кг`,
-        cost: 0
-                });
-                details.push({
-        name: `Тарифная зона: ${tariffZone.tariffZone}`,
-        cost: 0
-                });
-                details.push({
-        name: `Базовая стоимость: ${baseCost.toFixed(2)} ₽`,
-        cost: baseCost
+    });
+    
+    // Формулы расчета для каждого места
+    details.push({ name: 'ФОРМУЛЫ РАСЧЕТА', cost: 0, isHeader: true });
+    
+    packages.forEach((pkg, index) => {
+        const length = parseFloat(pkg.length) || 0;
+        const width = parseFloat(pkg.width) || 0;
+        const height = parseFloat(pkg.height) || 0;
+        const weight = parseFloat(pkg.weight) || 0;
+        const quantity = parseInt(pkg.quantity) || 1;
+        const volumeCm3 = length * width * height;
+        const volumetricWeightPerPlace = volumeCm3 / typeTransportation.transportationCoefficient;
+        const volumetricWeightTotal = volumetricWeightPerPlace * quantity;
+        const actualWeightTotal = weight * quantity;
+        const payableWeight = Math.max(volumetricWeightTotal, actualWeightTotal);
+        
+        details.push({
+            name: `Место ${index + 1}:`,
+            cost: 0,
+            isSubHeader: true
         });
+        
+        // Формула объема
+        details.push({
+            name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
+            cost: 0,
+            isDetail: true
+        });
+        
+        // Формула объемного веса одного места
+        details.push({
+            name: `Объемный вес 1 места = ${volumeCm3.toFixed(2)} (объем, см³) / ${typeTransportation.transportationCoefficient} (коэффициент перевозки из тарифа "${typeTransportation.name}") = ${volumetricWeightPerPlace.toFixed(2)} кг`,
+            cost: 0,
+            isDetail: true
+        });
+        
+        // Формула объемного веса всего
+        details.push({
+            name: `Объемный вес всего = ${volumetricWeightPerPlace.toFixed(2)} (объемный вес 1 места) × ${quantity} (количество мест из формы) = ${volumetricWeightTotal.toFixed(2)} кг`,
+            cost: 0,
+            isDetail: true
+        });
+        
+        // Формула фактического веса
+        details.push({
+            name: `Фактический вес всего = ${weight.toFixed(2)} (вес 1 места, кг из формы) × ${quantity} (количество мест из формы) = ${actualWeightTotal.toFixed(2)} кг`,
+            cost: 0,
+            isDetail: true
+        });
+        
+        // Формула платного веса
+        details.push({
+            name: `Платный вес места ${index + 1} = MAX(${volumetricWeightTotal.toFixed(2)} (объемный вес всего), ${actualWeightTotal.toFixed(2)} (фактический вес всего)) = ${payableWeight.toFixed(2)} кг`,
+            cost: 0,
+            isDetail: true
+        });
+    });
+    
+    // Формула расчета стоимости перевозки
+    const transportationBaseCost = calculateCostByTariffGrid(relevantTarifGrid, totalPayableWeight);
+    const applicableTransportationTariff = relevantTarifGrid.find(tg => 
+        totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
+    ) || relevantTarifGrid[relevantTarifGrid.length - 1];
+    
+    if (applicableTransportationTariff) {
+        const steps = Math.ceil((totalPayableWeight - applicableTransportationTariff.unitFrom) / applicableTransportationTariff.step);
+        details.push({
+            name: 'ФОРМУЛА СТОИМОСТИ ПЕРЕВОЗКИ',
+            cost: 0,
+            isSubHeader: true
+        });
+        details.push({
+            name: `Шаги = CEIL((${totalPayableWeight.toFixed(2)} (ПВ, кг) - ${applicableTransportationTariff.unitFrom} (unitFrom из тарифной сетки зоны ${tariffZone.tariffZone})) / ${applicableTransportationTariff.step} (step из тарифной сетки)) = ${steps}`,
+            cost: 0,
+            isDetail: true
+        });
+        details.push({
+            name: `Базовая стоимость = ${applicableTransportationTariff.startingPrice} (startingPrice из тарифной сетки) + ${steps} (шаги) × ${applicableTransportationTariff.stepPrice} (stepPrice из тарифной сетки) = ${transportationBaseCost.toFixed(2)} ₽`,
+            cost: 0,
+            isDetail: true
+        });
+        
+        if (tariffZone.coefficient && tariffZone.coefficient !== 1) {
+            details.push({
+                name: `Стоимость с коэффициентом зоны = ${transportationBaseCost.toFixed(2)} (базовая стоимость) × ${tariffZone.coefficient} (коэффициент зоны ${tariffZone.tariffZone} из tariffZones) = ${(transportationBaseCost * tariffZone.coefficient).toFixed(2)} ₽`,
+                cost: 0,
+                isDetail: true
+            });
+        }
+        
+        if (totalMultiplier !== 1) {
+            details.push({
+                name: `Стоимость с коэффициентами = ${(transportationBaseCost * (tariffZone.coefficient || 1)).toFixed(2)} (стоимость перевозки) × ${totalMultiplier.toFixed(2)} (коэффициент ${hasAnyDangerousGoods ? 'опасного груза 1.4' : '1'} × ${hasAnyTempControl ? 'температурного режима 1.25' : '1'}) = ${transportationCost.toFixed(2)} ₽`,
+                cost: 0,
+                isDetail: true
+            });
+        }
+    }
+    
+    // Формула расчета стоимости забора
+    if (pickupCost > 0 && !isPickupAtTerminal && takeDeliverFrom) {
+        const pickupZone = takeDeliverFrom.tariffZone || 'D';
+        const pickupTariffGrid = tariffGrids.value.filter(tg => 
+            tg.transportType_id === typeTransportation.id && 
+            tg.numberZone === pickupZone.toString()
+        );
+        const pickupBaseCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
+        const applicablePickupTariff = pickupTariffGrid.find(tg => 
+            totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
+        ) || pickupTariffGrid[pickupTariffGrid.length - 1];
+        
+        if (applicablePickupTariff) {
+            const pickupSteps = Math.ceil((totalPayableWeight - applicablePickupTariff.unitFrom) / applicablePickupTariff.step);
+            details.push({
+                name: 'ФОРМУЛА СТОИМОСТИ ЗАБОРА',
+                cost: 0,
+                isSubHeader: true
+            });
+            details.push({
+                name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone}) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicablePickupTariff.unitFrom} (unitFrom)) / ${applicablePickupTariff.step} (step)) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
+                cost: 0,
+                isDetail: true
+            });
+            
+            if (takeDeliverFrom.surcharge) {
+                details.push({
+                    name: `Стоимость с надбавкой = ${pickupBaseCost.toFixed(2)} (базовая стоимость) + ${takeDeliverFrom.surcharge} (surcharge из takeDeliver для адреса отправки) = ${(pickupBaseCost + takeDeliverFrom.surcharge).toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+            
+            if (takeDeliverFrom.coefficientSurcharge && takeDeliverFrom.coefficientSurcharge !== 1) {
+                details.push({
+                    name: `Стоимость с коэффициентом = ${(pickupBaseCost + (takeDeliverFrom.surcharge || 0)).toFixed(2)} (стоимость с надбавкой) × ${takeDeliverFrom.coefficientSurcharge} (coefficientSurcharge из takeDeliver) = ${((pickupBaseCost + (takeDeliverFrom.surcharge || 0)) * takeDeliverFrom.coefficientSurcharge).toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+            
+            if (totalMultiplier !== 1) {
+                details.push({
+                    name: `Итоговая стоимость забора = ${((pickupBaseCost + (takeDeliverFrom.surcharge || 0)) * (takeDeliverFrom.coefficientSurcharge || 1)).toFixed(2)} (стоимость забора) × ${totalMultiplier.toFixed(2)} (коэффициенты опасного груза/температурного режима) = ${pickupCost.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+        }
+    }
+    
+    // Формула расчета стоимости доставки
+    if (deliveryCost > 0 && !isDeliveryAtTerminal && takeDeliverTo) {
+        const deliveryZone = takeDeliverTo.tariffZone || 'H';
+        const deliveryTariffGrid = tariffGrids.value.filter(tg => 
+            tg.transportType_id === typeTransportation.id && 
+            tg.numberZone === deliveryZone.toString()
+        );
+        const deliveryBaseCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
+        const applicableDeliveryTariff = deliveryTariffGrid.find(tg => 
+            totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
+        ) || deliveryTariffGrid[deliveryTariffGrid.length - 1];
+        
+        if (applicableDeliveryTariff) {
+            const deliverySteps = Math.ceil((totalPayableWeight - applicableDeliveryTariff.unitFrom) / applicableDeliveryTariff.step);
+            details.push({
+                name: 'ФОРМУЛА СТОИМОСТИ ДОСТАВКИ',
+                cost: 0,
+                isSubHeader: true
+            });
+            details.push({
+                name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone}) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicableDeliveryTariff.unitFrom} (unitFrom)) / ${applicableDeliveryTariff.step} (step)) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
+                cost: 0,
+                isDetail: true
+            });
+            
+            if (takeDeliverTo.surcharge) {
+                details.push({
+                    name: `Стоимость с надбавкой = ${deliveryBaseCost.toFixed(2)} (базовая стоимость) + ${takeDeliverTo.surcharge} (surcharge из takeDeliver для адреса назначения) = ${(deliveryBaseCost + takeDeliverTo.surcharge).toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+            
+            if (takeDeliverTo.coefficientSurcharge && takeDeliverTo.coefficientSurcharge !== 1) {
+                details.push({
+                    name: `Стоимость с коэффициентом = ${(deliveryBaseCost + (takeDeliverTo.surcharge || 0)).toFixed(2)} (стоимость с надбавкой) × ${takeDeliverTo.coefficientSurcharge} (coefficientSurcharge из takeDeliver) = ${((deliveryBaseCost + (takeDeliverTo.surcharge || 0)) * takeDeliverTo.coefficientSurcharge).toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+            
+            if (totalMultiplier !== 1) {
+                details.push({
+                    name: `Итоговая стоимость доставки = ${((deliveryBaseCost + (takeDeliverTo.surcharge || 0)) * (takeDeliverTo.coefficientSurcharge || 1)).toFixed(2)} (стоимость доставки) × ${totalMultiplier.toFixed(2)} (коэффициенты опасного груза/температурного режима) = ${deliveryCost.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+        }
+    }
+    
+    // Итоговая формула
+    details.push({
+        name: 'ИТОГОВАЯ ФОРМУЛА',
+        cost: 0,
+        isSubHeader: true
+    });
+    
+    const formulaParts = [];
+    formulaParts.push(`${transportationCost.toFixed(2)} (стоимость перевозки)`);
+    if (pickupCost > 0) {
+        formulaParts.push(`${pickupCost.toFixed(2)} (стоимость забора)`);
+    }
+    if (deliveryCost > 0) {
+        formulaParts.push(`${deliveryCost.toFixed(2)} (стоимость доставки)`);
+    }
+    if (additionalCosts > 0) {
+        formulaParts.push(`${additionalCosts.toFixed(2)} (дополнительные услуги - упаковка)`);
+    }
+    
+    details.push({
+        name: `Стоимость без НДС = ${formulaParts.join(' + ')} = ${totalWithoutVAT.toFixed(2)} ₽`,
+        cost: 0,
+        isDetail: true
+    });
+    
+    details.push({
+        name: `НДС = ${totalWithoutVAT.toFixed(2)} (стоимость без НДС) × ${vatRate} (ставка НДС 5%) = ${vatAmount.toFixed(2)} ₽`,
+        cost: 0,
+        isDetail: true
+    });
+    
+    details.push({
+        name: `ИТОГО = ${totalWithoutVAT.toFixed(2)} (стоимость без НДС) + ${vatAmount.toFixed(2)} (НДС) = ${finalCost.toFixed(2)} ₽`,
+        cost: 0,
+        isDetail: true
+    });
+    
+    // Краткая сводка для быстрого просмотра
+    details.push({ name: 'КРАТКАЯ СВОДКА', cost: 0, isHeader: true });
+    details.push({
+        name: `Стоимость перевозки: ${transportationCost.toFixed(2)} ₽`,
+        cost: transportationCost
+    });
+    
+    if (pickupCost > 0) {
+        details.push({
+            name: `Стоимость забора: ${pickupCost.toFixed(2)} ₽`,
+            cost: pickupCost
+        });
+    }
+    
+    if (deliveryCost > 0) {
+        details.push({
+            name: `Стоимость доставки: ${deliveryCost.toFixed(2)} ₽`,
+            cost: deliveryCost
+        });
+    }
 
     if (totalMultiplier !== 1) {
-                    details.push({
-            name: `Коэффициенты: ${totalMultiplier.toFixed(2)}`,
-            cost: adjustedBaseCost - baseCost
+        details.push({
+            name: `Коэффициенты (опасный груз/температурный режим): ${totalMultiplier.toFixed(2)}`,
+            cost: 0
         });
     }
     
     if (additionalCosts > 0) {
-                    details.push({
-            name: `Дополнительные надбавки: ${additionalCosts.toFixed(2)} ₽`,
+        details.push({
+            name: `Дополнительные услуги (упаковка): ${additionalCosts.toFixed(2)} ₽`,
             cost: additionalCosts
         });
     }
+    
+    details.push({
+        name: `Стоимость без НДС: ${totalWithoutVAT.toFixed(2)} ₽`,
+        cost: totalWithoutVAT
+    });
+    
+    details.push({
+        name: `НДС (5%): ${vatAmount.toFixed(2)} ₽`,
+        cost: vatAmount
+    });
 
     // 11. Информация о доставке
     const deliveryInfo = {
@@ -827,8 +1018,12 @@ function calculateTariffCost(typeTransportation) {
         details: details,
         packageDetails: packageDetails,
         summary: {
-            baseCost: adjustedBaseCost,
+            transportationCost: transportationCost,
+            pickupCost: pickupCost,
+            deliveryCost: deliveryCost,
             additionalServices: additionalCosts,
+            totalWithoutVAT: totalWithoutVAT,
+            vatAmount: vatAmount,
             distance: 0,
             multiplier: totalMultiplier
         },
@@ -971,13 +1166,32 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
 }
 
 function isFormDataValid() {
-    const { direction } = formData;
+    const { direction, cargo } = formData;
 
     // Проверяем основные поля - города отправления и назначения
     if (!direction.from || !direction.to) return false;
     
     // Проверяем наличие locality_id для корректного расчета
     if (!direction.fromLocalityId || !direction.toLocalityId) return false;
+
+    // Проверяем обязательные поля груза согласно ТЗ
+    if (!cargo.packages || cargo.packages.length === 0) return false;
+    
+    // Проверяем каждое место на наличие обязательных полей
+    for (const pkg of cargo.packages) {
+        const length = parseFloat(pkg.length);
+        const width = parseFloat(pkg.width);
+        const height = parseFloat(pkg.height);
+        const weight = parseFloat(pkg.weight);
+        const quantity = parseInt(pkg.quantity);
+        
+        // Проверяем обязательные поля согласно ТЗ
+        if (!length || length <= 0) return false;
+        if (!width || width <= 0) return false;
+        if (!height || height <= 0) return false;
+        if (!weight || weight <= 0) return false;
+        if (!quantity || quantity <= 0) return false;
+    }
 
     return true;
 }
@@ -1063,6 +1277,46 @@ const calculationResult = computed(() => {
             calculation: null
         };
     }
+    
+    // Проверяем обязательные поля груза
+    if (!isFormDataValid()) {
+        const missingFields = [];
+        const { cargo } = formData;
+        
+        if (!cargo.packages || cargo.packages.length === 0) {
+            missingFields.push('параметры груза (места)');
+        } else {
+            cargo.packages.forEach((pkg, index) => {
+                const placeNum = index + 1;
+                if (!parseFloat(pkg.length) || parseFloat(pkg.length) <= 0) {
+                    missingFields.push(`длина места ${placeNum}`);
+                }
+                if (!parseFloat(pkg.width) || parseFloat(pkg.width) <= 0) {
+                    missingFields.push(`ширина места ${placeNum}`);
+                }
+                if (!parseFloat(pkg.height) || parseFloat(pkg.height) <= 0) {
+                    missingFields.push(`высота места ${placeNum}`);
+                }
+                if (!parseFloat(pkg.weight) || parseFloat(pkg.weight) <= 0) {
+                    missingFields.push(`вес места ${placeNum}`);
+                }
+                if (!parseInt(pkg.quantity) || parseInt(pkg.quantity) <= 0) {
+                    missingFields.push(`количество места ${placeNum}`);
+                }
+            });
+        }
+        
+        return {
+            isValid: false,
+            message: missingFields.length > 0 
+                ? `Для расчета необходимо заполнить обязательные поля: ${missingFields.join(', ')}`
+                : 'Для расчета необходимо заполнить все обязательные поля груза',
+            allTariffs: [],
+            selectedTariff: null,
+            calculation: null
+        };
+    }
+    
     const allTariffs = getAllTariffsWithStatus();
     // Считаем стоимость только для доступных тарифов
     const tariffCalculations = allTariffs.map(tariff => {

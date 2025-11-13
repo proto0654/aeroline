@@ -3,8 +3,9 @@
         <h2 class="text-h4 font-bold mb-4">Стоимость перевозки</h2>
 
         <div v-if="!result || !result.isValid" class="text-gray-500">
-            <p>Заполните все обязательные поля, чтобы увидеть стоимость перевозки.</p>
-            <div class="mt-3 text-sm text-gray-400">
+            <p v-if="result && result.message" class="font-medium text-gray-700 mb-2">{{ result.message }}</p>
+            <p v-else>Заполните все обязательные поля, чтобы увидеть стоимость перевозки.</p>
+            <div v-if="!result || !result.message" class="mt-3 text-sm text-gray-400">
                 <p>Необходимо указать:</p>
                 <ul class="list-disc list-inside mt-1 space-y-1">
                     <li>Города отправления и назначения</li>
@@ -60,27 +61,6 @@
                 </div>
             </div>
 
-            <!-- Информация о минимальных значениях -->
-            <div v-if="displayMessages.length > 0" class="mb-4">
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <div class="flex items-start gap-3">
-                        <div class="flex-shrink-0">
-                            <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-medium text-blue-800 mb-2">Использованы минимальные значения</h4>
-                            <ul class="space-y-1 text-sm text-blue-700">
-                                <li v-for="(message, index) in displayMessages" :key="index" class="flex items-start gap-2">
-                                    <span class="text-blue-500 mt-0.5">•</span>
-                                    <span>{{ message }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Основной тариф -->
             <div v-if="result.selectedTariff" class="border-b pb-4 mb-4">
@@ -170,7 +150,7 @@
                                 detail.isDetailCost ? 'text-gray-600 text-xs pl-4' : '',
                                 detail.cost < 0 ? 'text-green-600' : '']">
                                 <span>{{ detail.name }}</span>
-                                <span v-if="!detail.isHeader && !detail.isSubHeader && !detail.isDetail">
+                                <span v-if="!detail.isHeader && !detail.isSubHeader && !detail.isDetail && detail.cost !== 0">
                                     {{ detail.cost < 0 ? '' : '+' }}{{ formatCurrency(detail.cost) }} </span>
                             </div>
                             <!-- Добавляем детали времени доставки -->
@@ -192,18 +172,30 @@
             <!-- Итоговая стоимость -->
             <div v-if="result.selectedTariff" class="border-t pt-4">
                 <div v-if="result.selectedTariff.summary" class="text-sm space-y-1 mb-3">
-                    <div class="flex justify-between text-gray-600">
-                        <span>Тарифная стоимость:</span>
-                        <span>{{ formatCurrency(result.selectedTariff.summary.baseCost) }}</span>
+                    <div v-if="result.selectedTariff.summary.transportationCost" class="flex justify-between text-gray-600">
+                        <span>Стоимость перевозки:</span>
+                        <span>{{ formatCurrency(result.selectedTariff.summary.transportationCost) }}</span>
                     </div>
-                    <div v-if="result.selectedTariff.summary.additionalServices !== 0"
+                    <div v-if="result.selectedTariff.summary.pickupCost > 0" class="flex justify-between text-gray-600">
+                        <span>Стоимость забора:</span>
+                        <span>{{ formatCurrency(result.selectedTariff.summary.pickupCost) }}</span>
+                    </div>
+                    <div v-if="result.selectedTariff.summary.deliveryCost > 0" class="flex justify-between text-gray-600">
+                        <span>Стоимость доставки:</span>
+                        <span>{{ formatCurrency(result.selectedTariff.summary.deliveryCost) }}</span>
+                    </div>
+                    <div v-if="result.selectedTariff.summary.additionalServices > 0"
                         class="flex justify-between text-gray-600">
                         <span>Дополнительные услуги:</span>
                         <span>{{ formatCurrency(result.selectedTariff.summary.additionalServices) }}</span>
                     </div>
-                    <div v-if="result.selectedTariff.summary.distance > 0" class="flex justify-between text-gray-600">
-                        <span>Стоимость расстояния:</span>
-                        <span>{{ formatCurrency(result.selectedTariff.summary.distance) }}</span>
+                    <div v-if="result.selectedTariff.summary.totalWithoutVAT" class="flex justify-between text-gray-600 border-t pt-1">
+                        <span>Стоимость без НДС:</span>
+                        <span>{{ formatCurrency(result.selectedTariff.summary.totalWithoutVAT) }}</span>
+                    </div>
+                    <div v-if="result.selectedTariff.summary.vatAmount" class="flex justify-between text-gray-600">
+                        <span>НДС (5%):</span>
+                        <span>{{ formatCurrency(result.selectedTariff.summary.vatAmount) }}</span>
                     </div>
                 </div>
 
@@ -273,10 +265,6 @@ const cargoInfo = computed(() => {
     // console.log('DEBUG: result.selectedTariff:', props.result?.selectedTariff);
     // console.log('DEBUG: result.selectedTariff.packageDetails:', props.result?.selectedTariff?.packageDetails);
 
-    const minimalValues = props.calculatorConfig.minimalValues?.cargo?.package || {
-        length: 10, width: 10, height: 5, weight: 0.1, quantity: 1
-    };
-
     // Если есть packageDetails в выбранном тарифе — используем их (они всегда соответствуют расчету)
     if (props.result && props.result.selectedTariff && props.result.selectedTariff.packageDetails && props.result.selectedTariff.packageDetails.length > 0) {
         const details = props.result.selectedTariff.packageDetails;
@@ -295,15 +283,13 @@ const cargoInfo = computed(() => {
         };
     }
 
-    // Иначе — используем данные из формы, применяя минимальные значения для отсутствующих полей
+    // Иначе — используем данные из формы без применения минимальных значений
     if (!props.formData.cargo || !props.formData.cargo.packages || props.formData.cargo.packages.length === 0) {
-        // console.log('DEBUG: Using minimal cargoInfo (form data is empty or no packages).');
-        const quantity = minimalValues.quantity;
         return {
-            count: formatNumber(quantity),
-            countLabel: quantity === 1 ? 'место' : 'мест',
-            weight: formatWeight(minimalValues.weight * quantity),
-            volume: formatVolume((minimalValues.length * minimalValues.width * minimalValues.height) / 1000000 * quantity)
+            count: '0',
+            countLabel: 'мест',
+            weight: '0.00',
+            volume: '0.000'
         };
     }
 
@@ -313,18 +299,15 @@ const cargoInfo = computed(() => {
     let totalCount = 0;
     let countLabel = 'мест';
 
-    // Process each package from formData, applying minimal values if values are missing
-    const processedPackages = cargo.packages.map(pkg => {
-        const useMinimalDimensions = !(parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0);
-        return {
-            ...pkg,
-            weight: (parseFloat(pkg.weight) > 0) ? parseFloat(pkg.weight) : minimalValues.weight,
-            length: useMinimalDimensions ? minimalValues.length : parseFloat(pkg.length),
-            width: useMinimalDimensions ? minimalValues.width : parseFloat(pkg.width),
-            height: useMinimalDimensions ? minimalValues.height : parseFloat(pkg.height),
-            quantity: parseInt(pkg.quantity) > 0 ? parseInt(pkg.quantity) : minimalValues.quantity
-        };
-    });
+    // Используем реальные значения из формы без применения минимальных значений
+    const processedPackages = cargo.packages.map(pkg => ({
+        ...pkg,
+        weight: parseFloat(pkg.weight) || 0,
+        length: parseFloat(pkg.length) || 0,
+        width: parseFloat(pkg.width) || 0,
+        height: parseFloat(pkg.height) || 0,
+        quantity: parseInt(pkg.quantity) || 1
+    }));
 
     if (cargo.mode === 'individual') {
         totalCount = processedPackages.reduce((sum, pkg) => sum + (pkg.quantity || 1), 0);
@@ -383,46 +366,6 @@ function formatVolume(value) {
     return new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(value);
 }
 
-// Вычисляем сообщения о минимальных значениях
-const displayMessages = computed(() => {
-    const messages = [];
-    const { formData, calculatorConfig } = props;
-
-    // Получаем минимальные значения из конфигурации
-    const minimalValues = calculatorConfig.minimalValues?.cargo?.package || {
-        length: 10, width: 10, height: 5, weight: 0.1, quantity: 1
-    };
-
-    // Проверяем, используются ли минимальные значения
-    if (formData.cargo && formData.cargo.packages && formData.cargo.packages.length > 0) {
-        const firstPackage = formData.cargo.packages[0];
-        
-        // Проверяем вес
-        const hasWeight = parseFloat(firstPackage.weight) > 0;
-        if (!hasWeight) {
-            messages.push(`Вес не указан. Используется минимальное значение: ${minimalValues.weight} кг`);
-        }
-        
-        // Проверяем габариты
-        const hasDimensions = parseFloat(firstPackage.length) > 0 && 
-                             parseFloat(firstPackage.width) > 0 && 
-                             parseFloat(firstPackage.height) > 0;
-        if (!hasDimensions) {
-            messages.push(`Габариты не указаны. Используются минимальные значения: ${minimalValues.length}×${minimalValues.width}×${minimalValues.height} см`);
-        }
-        
-        // Проверяем количество
-        const hasQuantity = parseInt(firstPackage.quantity) > 0;
-        if (!hasQuantity) {
-            messages.push(`Количество не указано. Используется минимальное значение: ${minimalValues.quantity} шт`);
-        }
-    } else {
-        // Если нет посылок вообще, используем минимальные значения
-        messages.push(`Параметры груза не указаны. Используются минимальные значения: вес ${minimalValues.weight} кг, габариты ${minimalValues.length}×${minimalValues.width}×${minimalValues.height} см, количество ${minimalValues.quantity} шт`);
-    }
-
-    return messages;
-});
 
 // Функция для получения базовой стоимости до применения коэффициентов
 function getBaseCostBeforeMultipliers() {

@@ -1,6 +1,10 @@
 {
+  "CURRENT_STATUS.md": {
+    "file": "assets/CURRENT_STATUS-Ccui_sYn.md",
+    "src": "CURRENT_STATUS.md"
+  },
   "PROJECT_CONTEXT.md": {
-    "file": "assets/PROJECT_CONTEXT-Cpk33--L.md",
+    "file": "assets/PROJECT_CONTEXT-CPMuRpzi.md",
     "src": "PROJECT_CONTEXT.md"
   },
   "README.md": {
@@ -425,7 +429,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-CV2jXQD7.js",
+    "file": "assets/js/mainJs-61OQIpGh.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -434,7 +438,7 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-DUoDNPGa.css"
+      "assets/css/mainJs-Zl2YoZvs.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
@@ -452,7 +456,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-D1esXqNr.js",
+    "file": "assets/js/homePageJs-oPiOzmzr.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -468,7 +472,8 @@
       "assets/css/homePageJs-Dx2n7P6X.css"
     ],
     "assets": [
-      "assets/PROJECT_CONTEXT-Cpk33--L.md",
+      "assets/CURRENT_STATUS-Ccui_sYn.md",
+      "assets/PROJECT_CONTEXT-CPMuRpzi.md",
       "assets/README-B0GV557I.md",
       "bulk-order..html",
       "calculator..html",
@@ -476,6 +481,7 @@
       "cooperation..html",
       "assets/copy-assets-CDK2vOol.js",
       "assets/deploy-OIoQImof.cjs",
+      "assets/fix-calculator-tariff-calculation.plan-m33zXl6w.md",
       "helper..html",
       "index..html",
       "news..html",
@@ -494,9 +500,13 @@
       "service-acts..html",
       "services..html",
       "assets/tailwind.config-oiuvnReP.js",
+      "assets/data/tmp_takeDelivers-Cp5c1QMp.json",
+      "assets/data/tmp_tariffGrids-BnN3NrYZ.json",
+      "assets/data/tmp_tariffZones-ah0AUcSE.json",
       "user-create..html",
       "vacancies..html",
       "assets/vite.config-Cayqcurc.js",
+      "assets/ТЗ на калькулятор-BfZfuS1N.docx",
       "assets/img/Logotype_aerline_light-BjokHjWg.png"
     ]
   },
@@ -526,7 +536,7 @@
     ]
   },
   "assets/vue/entrypoints/calculator-page.js": {
-    "file": "assets/js/calculatorPageJs-CYPCjOPQ.js",
+    "file": "assets/js/calculatorPageJs-DnGbFYuK.js",
     "name": "calculatorPageJs",
     "src": "assets/vue/entrypoints/calculator-page.js",
     "isEntry": true,
@@ -541,7 +551,7 @@
       "_select-arrow-He2ejS2L.js"
     ],
     "css": [
-      "assets/css/calculatorPageJs-86mMPeBx.css"
+      "assets/css/calculatorPageJs-BtMZyQzl.css"
     ]
   },
   "assets/vue/entrypoints/lk-datepicker.js": {
@@ -587,7 +597,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-C0yunWw1.js",
+    "file": "assets/js/contacts-B2MuSrhb.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -631,12 +641,16 @@
     "file": "assets/deploy-OIoQImof.cjs",
     "src": "deploy.cjs"
   },
+  "fix-calculator-tariff-calculation.plan.md": {
+    "file": "assets/fix-calculator-tariff-calculation.plan-m33zXl6w.md",
+    "src": "fix-calculator-tariff-calculation.plan.md"
+  },
   "helper.html": {
     "file": "helper..html",
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-YXDFVZmD.js",
+    "file": "assets/js/main-maVlryNc.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -701,7 +715,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-CUmEx33D.js",
+    "file": "assets/js/orderList-DTV1gAie.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -741,7 +755,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-BcIavDB2.js",
+    "file": "assets/js/orderTracking-BMGPkbtd.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -788,7 +802,7 @@
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-CJRr3m8T.js",
+    "file": "assets/js/payments-Ds9c1ni_.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -840,7 +854,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-BLv_yD4-.js",
+    "file": "assets/js/profile-Bhw68o0h.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -880,7 +894,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-CdAwZUZW.js",
+    "file": "assets/js/sendersReceivers-CMsTfNNn.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -916,7 +930,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-Dm0fG5F6.js",
+    "file": "assets/js/serviceActs-CSnkvv8n.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -953,7 +967,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-CirfPgZp.js",
+    "file": "assets/js/services-Cl93AnPv.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -999,12 +1013,24 @@
     "file": "assets/tailwind.config-oiuvnReP.js",
     "src": "tailwind.config.js"
   },
+  "tmp_takeDelivers.json": {
+    "file": "assets/data/tmp_takeDelivers-Cp5c1QMp.json",
+    "src": "tmp_takeDelivers.json"
+  },
+  "tmp_tariffGrids.json": {
+    "file": "assets/data/tmp_tariffGrids-BnN3NrYZ.json",
+    "src": "tmp_tariffGrids.json"
+  },
+  "tmp_tariffZones.json": {
+    "file": "assets/data/tmp_tariffZones-ah0AUcSE.json",
+    "src": "tmp_tariffZones.json"
+  },
   "user-create.html": {
     "file": "user-create..html",
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-cDKV8dzI.js",
+    "file": "assets/js/vacancies-YBHjzSH1.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,
@@ -1038,5 +1064,9 @@
   "vite.config.js": {
     "file": "assets/vite.config-Cayqcurc.js",
     "src": "vite.config.js"
+  },
+  "ТЗ на калькулятор.docx": {
+    "file": "assets/ТЗ на калькулятор-BfZfuS1N.docx",
+    "src": "ТЗ на калькулятор.docx"
   }
 }

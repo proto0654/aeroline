@@ -139,9 +139,10 @@ export function initHomePage() {
           classes: searchButton.className,
         });
 
-        searchButton.addEventListener("click", function (e) {
+        // Функция для обработки поиска
+        const handleTrackingSearch = (e) => {
           e.preventDefault();
-          console.log('Клик по кнопке "Поиск" для отслеживания');
+          console.log('Поиск заказа для отслеживания');
 
           const trackingInput =
             trackingFormContainer.querySelector('input[type="text"]');
@@ -159,13 +160,25 @@ export function initHomePage() {
 
           // Проверяем валидность поля
           if (trackingInput.validity.valid) {
-            console.log("Отслеживание номера:", trackingInput.value);
-            alert(`Отслеживание номера: ${trackingInput.value}`);
+            const orderNumber = trackingInput.value.trim();
+            console.log("Отслеживание номера:", orderNumber);
+            
+            // Перенаправляем на страницу отслеживания с номером заказа в GET параметре
+            window.location.href = `order-tracking.html?orderNumber=${encodeURIComponent(orderNumber)}`;
           } else {
             // Активируем встроенную валидацию браузера
             trackingInput.reportValidity();
           }
-        });
+        };
+
+        // Обработчик для кнопки поиска
+        searchButton.addEventListener("click", handleTrackingSearch);
+
+        // Обработчик для формы (для работы с Enter)
+        const form = trackingFormContainer.querySelector('form');
+        if (form) {
+          form.addEventListener("submit", handleTrackingSearch);
+        }
       } else {
         console.warn(
           'Не найдена кнопка "Поиск" в контейнере формы отслеживания'
