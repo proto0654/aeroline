@@ -823,14 +823,29 @@ function calculateTariffCost(typeTransportation) {
         const pickupZone = takeDeliverFrom.tariffZone || 'D';
         
         // Ищем тарифную сетку по зоне из takeDeliver
+        // ВАЖНО: используем поле NumberZone из тарифной сетки и сравниваем с tariffZone из takeDeliver
         const pickupTariffGrid = tariffGrids.value.filter(tg => {
             const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
             if (!transportTypeMatch) return false;
-            // Гибкое сравнение numberZone - должно соответствовать зоне из takeDeliver
-            const tgNumberZone = tg.NumberZone;
-            return tgNumberZone === pickupZone || 
-                   String(tgNumberZone) === String(pickupZone) ||
-                   Number(tgNumberZone) === Number(pickupZone);
+            
+            // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
+            const tgNumberZone = tg.NumberZone; // Поле NumberZone из тарифной сетки
+            const expectedZone = pickupZone; // Зона из takeDeliver.tariffZone
+            
+            // Прямое сравнение (для одинаковых типов)
+            if (tgNumberZone === expectedZone) return true;
+            
+            // Сравнение как строки (для буквенных зон A, B, C, D, H и числовых "1", "2" и т.д.)
+            if (String(tgNumberZone).toUpperCase() === String(expectedZone).toUpperCase()) return true;
+            
+            // Сравнение как числа (только если оба валидные числа)
+            const tgZoneNum = Number(tgNumberZone);
+            const expectedZoneNum = Number(expectedZone);
+            if (!isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum) {
+                return true;
+            }
+            
+            return false;
         });
         
         if (pickupTariffGrid.length > 0) {
@@ -890,13 +905,27 @@ function calculateTariffCost(typeTransportation) {
                 finalPickupCost: pickupCost
             });
         } else {
-            console.warn('Тарифная сетка для забора не найдена:', {
+            // ВАЛИДАЦИЯ: зона из takeDeliver не найдена в тарифной сетке
+            const availableZones = [...new Set(tariffGrids.value
+                .filter(tg => String(tg.transportType_id) === String(typeTransportation.id))
+                .map(tg => String(tg.NumberZone)))];
+            
+            console.error('❌ ОШИБКА: Тарифная сетка для забора не найдена!', {
                 transportType: typeTransportation.name,
                 transportTypeId: typeTransportation.id,
                 pickupZone: pickupZone,
+                pickupZoneSource: 'takeDeliver.tariffZone',
                 fromAddressId: fromAddress.id,
                 takeDeliverFrom: takeDeliverFrom,
-                availableZones: [...new Set(tariffGrids.value.filter(tg => String(tg.transportType_id) === String(typeTransportation.id)).map(tg => String(tg.NumberZone)))]
+                availableZones: availableZones,
+                message: `Зона "${pickupZone}" из takeDeliver не найдена в тарифной сетке. Доступные зоны: ${availableZones.join(', ')}`
+            });
+            
+            // Добавляем предупреждение в детализацию
+            details.push({
+                name: `⚠️ ВНИМАНИЕ: Тарифная сетка для зоны забора "${pickupZone}" не найдена. Доступные зоны: ${availableZones.join(', ')}`,
+                cost: 0,
+                isDetail: true
             });
         }
     } else if (!isPickupAtTerminal && !takeDeliverFrom) {
@@ -923,14 +952,29 @@ function calculateTariffCost(typeTransportation) {
         const deliveryZone = takeDeliverTo.tariffZone || 'H';
         
         // Ищем тарифную сетку по зоне из takeDeliver
+        // ВАЖНО: используем поле NumberZone из тарифной сетки и сравниваем с tariffZone из takeDeliver
         const deliveryTariffGrid = tariffGrids.value.filter(tg => {
             const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
             if (!transportTypeMatch) return false;
-            // Гибкое сравнение numberZone - должно соответствовать зоне из takeDeliver
-            const tgNumberZone = tg.NumberZone;
-            return tgNumberZone === deliveryZone || 
-                   String(tgNumberZone) === String(deliveryZone) ||
-                   Number(tgNumberZone) === Number(deliveryZone);
+            
+            // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
+            const tgNumberZone = tg.NumberZone; // Поле NumberZone из тарифной сетки
+            const expectedZone = deliveryZone; // Зона из takeDeliver.tariffZone
+            
+            // Прямое сравнение (для одинаковых типов)
+            if (tgNumberZone === expectedZone) return true;
+            
+            // Сравнение как строки (для буквенных зон A, B, C, D, H и числовых "1", "2" и т.д.)
+            if (String(tgNumberZone).toUpperCase() === String(expectedZone).toUpperCase()) return true;
+            
+            // Сравнение как числа (только если оба валидные числа)
+            const tgZoneNum = Number(tgNumberZone);
+            const expectedZoneNum = Number(expectedZone);
+            if (!isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum) {
+                return true;
+            }
+            
+            return false;
         });
         
         if (deliveryTariffGrid.length > 0) {
@@ -990,13 +1034,27 @@ function calculateTariffCost(typeTransportation) {
                 finalDeliveryCost: deliveryCost
             });
         } else {
-            console.warn('Тарифная сетка для доставки не найдена:', {
+            // ВАЛИДАЦИЯ: зона из takeDeliver не найдена в тарифной сетке
+            const availableZones = [...new Set(tariffGrids.value
+                .filter(tg => String(tg.transportType_id) === String(typeTransportation.id))
+                .map(tg => String(tg.NumberZone)))];
+            
+            console.error('❌ ОШИБКА: Тарифная сетка для доставки не найдена!', {
                 transportType: typeTransportation.name,
                 transportTypeId: typeTransportation.id,
                 deliveryZone: deliveryZone,
+                deliveryZoneSource: 'takeDeliver.tariffZone',
                 toAddressId: toAddress.id,
                 takeDeliverTo: takeDeliverTo,
-                availableZones: [...new Set(tariffGrids.value.filter(tg => String(tg.transportType_id) === String(typeTransportation.id)).map(tg => String(tg.NumberZone)))]
+                availableZones: availableZones,
+                message: `Зона "${deliveryZone}" из takeDeliver не найдена в тарифной сетке. Доступные зоны: ${availableZones.join(', ')}`
+            });
+            
+            // Добавляем предупреждение в детализацию
+            details.push({
+                name: `⚠️ ВНИМАНИЕ: Тарифная сетка для зоны доставки "${deliveryZone}" не найдена. Доступные зоны: ${availableZones.join(', ')}`,
+                cost: 0,
+                isDetail: true
             });
         }
     } else if (!isDeliveryAtTerminal && !takeDeliverTo) {
@@ -1082,6 +1140,88 @@ function calculateTariffCost(typeTransportation) {
 
     const totalLoadingUnloadingCost = loadingUnloadingCostPickup + loadingUnloadingCostDelivery;
 
+    // 7.5. Валидация зон - проверка на одинаковые зоны
+    // По ТЗ: зоны для перевозки, забора и доставки должны быть разными
+    const transportationZoneValue = tariffZone.tariffZone;
+    const pickupZoneValue = takeDeliverFrom?.tariffZone || null;
+    const deliveryZoneValue = takeDeliverTo?.tariffZone || null;
+    
+    // Проверяем совпадение зон
+    const zoneWarnings = [];
+    if (pickupZoneValue && String(pickupZoneValue) === String(transportationZoneValue)) {
+        zoneWarnings.push({
+            type: 'pickup',
+            message: `⚠️ ВНИМАНИЕ: Зона забора "${pickupZoneValue}" совпадает с зоной перевозки "${transportationZoneValue}". По ТЗ зона забора должна быть буквенной (например, "D"), а не числовой.`
+        });
+        console.warn('⚠️ ВНИМАНИЕ: Зона забора совпадает с зоной перевозки:', {
+            pickupZone: pickupZoneValue,
+            transportationZone: transportationZoneValue,
+            message: 'По ТЗ зона забора должна быть буквенной (например, "D"), а не числовой'
+        });
+    }
+    
+    if (deliveryZoneValue && String(deliveryZoneValue) === String(transportationZoneValue)) {
+        zoneWarnings.push({
+            type: 'delivery',
+            message: `⚠️ ВНИМАНИЕ: Зона доставки "${deliveryZoneValue}" совпадает с зоной перевозки "${transportationZoneValue}". По ТЗ зона доставки должна быть буквенной (например, "H"), а не числовой.`
+        });
+        console.warn('⚠️ ВНИМАНИЕ: Зона доставки совпадает с зоной перевозки:', {
+            deliveryZone: deliveryZoneValue,
+            transportationZone: transportationZoneValue,
+            message: 'По ТЗ зона доставки должна быть буквенной (например, "H"), а не числовой'
+        });
+    }
+    
+    if (pickupZoneValue && deliveryZoneValue && String(pickupZoneValue) === String(deliveryZoneValue)) {
+        zoneWarnings.push({
+            type: 'pickup_delivery',
+            message: `⚠️ ВНИМАНИЕ: Зона забора "${pickupZoneValue}" совпадает с зоной доставки "${deliveryZoneValue}". По ТЗ зоны забора и доставки должны быть разными.`
+        });
+        console.warn('⚠️ ВНИМАНИЕ: Зона забора совпадает с зоной доставки:', {
+            pickupZone: pickupZoneValue,
+            deliveryZone: deliveryZoneValue,
+            message: 'По ТЗ зоны забора и доставки должны быть разными'
+        });
+    }
+    
+    // Проверяем, используются ли одинаковые тарифы
+    if (pickupCost > 0 && deliveryCost > 0 && transportationCost > 0) {
+        const pickupBaseCost = pickupCost / (takeDeliverFrom?.coefficientSurcharge || 1) - (takeDeliverFrom?.surcharge || 0);
+        const deliveryBaseCost = deliveryCost / (takeDeliverTo?.coefficientSurcharge || 1) - (takeDeliverTo?.surcharge || 0);
+        const transportationBaseCostValue = transportationBaseCost;
+        
+        // Проверяем, если базовые стоимости одинаковые (с небольшой погрешностью)
+        const costDifference = Math.abs(pickupBaseCost - transportationBaseCostValue);
+        if (costDifference < 0.01 && String(pickupZoneValue) === String(transportationZoneValue)) {
+            zoneWarnings.push({
+                type: 'tariff',
+                message: `⚠️ ВНИМАНИЕ: Используются одинаковые тарифы для забора и перевозки (зона "${pickupZoneValue}"). По ТЗ должны быть разные зоны и разные тарифы.`
+            });
+            console.warn('⚠️ ВНИМАНИЕ: Используются одинаковые тарифы для забора и перевозки:', {
+                pickupZone: pickupZoneValue,
+                transportationZone: transportationZoneValue,
+                pickupBaseCost: pickupBaseCost,
+                transportationBaseCost: transportationBaseCostValue,
+                message: 'По ТЗ должны быть разные зоны и разные тарифы'
+            });
+        }
+        
+        const deliveryCostDifference = Math.abs(deliveryBaseCost - transportationBaseCostValue);
+        if (deliveryCostDifference < 0.01 && String(deliveryZoneValue) === String(transportationZoneValue)) {
+            zoneWarnings.push({
+                type: 'tariff',
+                message: `⚠️ ВНИМАНИЕ: Используются одинаковые тарифы для доставки и перевозки (зона "${deliveryZoneValue}"). По ТЗ должны быть разные зоны и разные тарифы.`
+            });
+            console.warn('⚠️ ВНИМАНИЕ: Используются одинаковые тарифы для доставки и перевозки:', {
+                deliveryZone: deliveryZoneValue,
+                transportationZone: transportationZoneValue,
+                deliveryBaseCost: deliveryBaseCost,
+                transportationBaseCost: transportationBaseCostValue,
+                message: 'По ТЗ должны быть разные зоны и разные тарифы'
+            });
+        }
+    }
+
     // 8. Коэффициенты за опасный груз и температурный режим (применяются ко всем компонентам)
     let dangerousGoodsMultiplier = 1;
     let tempControlMultiplier = 1;
@@ -1163,6 +1303,19 @@ function calculateTariffCost(typeTransportation) {
 
     // 10. Формирование детализации согласно ТЗ
     details.push({ name: 'РАСЧЕТ ПО ТЗ', cost: 0, isHeader: true });
+    
+    // Добавляем предупреждения о зонах в детализацию (если есть)
+    if (zoneWarnings && zoneWarnings.length > 0) {
+        details.push({ name: '⚠️ ПРЕДУПРЕЖДЕНИЯ О ЗОНАХ', cost: 0, isSubHeader: true });
+        zoneWarnings.forEach(warning => {
+            details.push({
+                name: warning.message,
+                cost: 0,
+                isDetail: true
+            });
+        });
+    }
+    
     details.push({
         name: `Объем: ${totalVolume.toFixed(3)} м³`,
         cost: 0
@@ -1286,11 +1439,24 @@ function calculateTariffCost(typeTransportation) {
         const pickupTariffGrid = tariffGrids.value.filter(tg => {
             const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
             if (!transportTypeMatch) return false;
-            // Гибкое сравнение numberZone
-            const tgNumberZone = tg.NumberZone;
-            return tgNumberZone === pickupZone || 
-                   String(tgNumberZone) === String(pickupZone) ||
-                   Number(tgNumberZone) === Number(pickupZone);
+            // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
+            const tgNumberZone = tg.NumberZone; // Поле NumberZone из тарифной сетки
+            const expectedZone = pickupZone; // Зона из takeDeliver.tariffZone
+            
+            // Прямое сравнение (для одинаковых типов)
+            if (tgNumberZone === expectedZone) return true;
+            
+            // Сравнение как строки (для буквенных зон A, B, C, D, H и числовых "1", "2" и т.д.)
+            if (String(tgNumberZone).toUpperCase() === String(expectedZone).toUpperCase()) return true;
+            
+            // Сравнение как числа (только если оба валидные числа)
+            const tgZoneNum = Number(tgNumberZone);
+            const expectedZoneNum = Number(expectedZone);
+            if (!isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum) {
+                return true;
+            }
+            
+            return false;
         });
         const pickupBaseCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
         const applicablePickupTariff = pickupTariffGrid.find(tg => 
@@ -1381,11 +1547,24 @@ function calculateTariffCost(typeTransportation) {
         const deliveryTariffGrid = tariffGrids.value.filter(tg => {
             const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
             if (!transportTypeMatch) return false;
-            // Гибкое сравнение numberZone
-            const tgNumberZone = tg.NumberZone;
-            return tgNumberZone === deliveryZone || 
-                   String(tgNumberZone) === String(deliveryZone) ||
-                   Number(tgNumberZone) === Number(deliveryZone);
+            // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
+            const tgNumberZone = tg.NumberZone; // Поле NumberZone из тарифной сетки
+            const expectedZone = deliveryZone; // Зона из takeDeliver.tariffZone
+            
+            // Прямое сравнение (для одинаковых типов)
+            if (tgNumberZone === expectedZone) return true;
+            
+            // Сравнение как строки (для буквенных зон A, B, C, D, H и числовых "1", "2" и т.д.)
+            if (String(tgNumberZone).toUpperCase() === String(expectedZone).toUpperCase()) return true;
+            
+            // Сравнение как числа (только если оба валидные числа)
+            const tgZoneNum = Number(tgNumberZone);
+            const expectedZoneNum = Number(expectedZone);
+            if (!isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum) {
+                return true;
+            }
+            
+            return false;
         });
         const deliveryBaseCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
         const applicableDeliveryTariff = deliveryTariffGrid.find(tg => 
