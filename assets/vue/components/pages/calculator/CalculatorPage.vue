@@ -763,12 +763,53 @@ function calculateTariffCost(typeTransportation) {
     }
 
     // 7.1. Расчет стоимости перевозки
-    let transportationCost = calculateCostByTariffGrid(relevantTarifGrid, totalPayableWeight);
+    // По ТЗ: для перевозки используется зона из tariffZones.tariffZone (зона перевозки между городами)
+    const transportationBaseCost = calculateCostByTariffGrid(relevantTarifGrid, totalPayableWeight);
+    let transportationCost = transportationBaseCost;
+    
+    // Детальное логирование для отладки
+    console.log('Расчет стоимости перевозки:', {
+        fromLocalityId: direction.fromLocalityId,
+        toLocalityId: direction.toLocalityId,
+        transportTypeId: typeTransportation.id,
+        transportationZone: tariffZone.tariffZone,
+        transportationZoneSource: 'tariffZones.tariffZone',
+        tariffZone: {
+            id: tariffZone.id,
+            takeLocality_id: tariffZone.takeLocality_id,
+            deliverLocality_id: tariffZone.deliverLocality_id,
+            tariffZone: tariffZone.tariffZone,
+            coefficient: tariffZone.coefficient
+        },
+        relevantTariffGrid: relevantTarifGrid.map(tg => ({
+            NumberZone: tg.NumberZone,
+            unitFrom: tg.unitFrom,
+            unitTo: tg.unitTo,
+            startingPrice: tg.startingPrice,
+            step: tg.step,
+            stepPrice: tg.stepPrice
+        })),
+        totalPayableWeight: totalPayableWeight,
+        transportationBaseCost: transportationBaseCost
+    });
     
     // Применяем коэффициент зоны к перевозке
-    if (tariffZone.coefficient) {
+    if (tariffZone.coefficient && tariffZone.coefficient !== 1) {
         transportationCost *= tariffZone.coefficient;
+        console.log('Применен коэффициент зоны перевозки:', {
+            baseCost: transportationBaseCost,
+            coefficient: tariffZone.coefficient,
+            costAfterCoefficient: transportationCost
+        });
+    } else {
+        console.log('Коэффициент зоны перевозки не применяется (coefficient =', tariffZone.coefficient || 1, ')');
     }
+    
+    console.log('Итоговая стоимость перевозки (до применения коэффициентов опасного груза/температурного режима):', {
+        baseCost: transportationBaseCost,
+        coefficient: tariffZone.coefficient || 1,
+        costAfterCoefficient: transportationCost
+    });
 
     // 7.2. Расчет стоимости забора (если не терминал)
     // По ТЗ: для забора используется зона из takeDeliver.tariffZone (например, "D")
@@ -793,22 +834,69 @@ function calculateTariffCost(typeTransportation) {
         });
         
         if (pickupTariffGrid.length > 0) {
-            pickupCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
+            const pickupBaseCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
+            pickupCost = pickupBaseCost;
+            
+            // Детальное логирование для отладки
+            console.log('Расчет стоимости забора:', {
+                fromAddressId: fromAddress.id,
+                transportTypeId: typeTransportation.id,
+                pickupZone: pickupZone,
+                pickupZoneSource: 'takeDeliver.tariffZone',
+                takeDeliverFrom: {
+                    id: takeDeliverFrom.id,
+                    billingAddress_id: takeDeliverFrom.billingAddress_id,
+                    tariffZone: takeDeliverFrom.tariffZone,
+                    surcharge: takeDeliverFrom.surcharge,
+                    coefficientSurcharge: takeDeliverFrom.coefficientSurcharge
+                },
+                pickupTariffGrid: pickupTariffGrid.map(tg => ({
+                    NumberZone: tg.NumberZone,
+                    unitFrom: tg.unitFrom,
+                    unitTo: tg.unitTo,
+                    startingPrice: tg.startingPrice,
+                    step: tg.step,
+                    stepPrice: tg.stepPrice
+                })),
+                totalPayableWeight: totalPayableWeight,
+                pickupBaseCost: pickupBaseCost
+            });
+            
             // Добавляем surcharge из takeDeliver
             if (takeDeliverFrom.surcharge) {
                 pickupCost += takeDeliverFrom.surcharge;
+                console.log('Применена надбавка surcharge:', {
+                    baseCost: pickupBaseCost,
+                    surcharge: takeDeliverFrom.surcharge,
+                    costAfterSurcharge: pickupCost
+                });
             }
+            
             // Применяем коэффициент забора из takeDeliver
-            if (takeDeliverFrom.coefficientSurcharge) {
+            if (takeDeliverFrom.coefficientSurcharge && takeDeliverFrom.coefficientSurcharge !== 1) {
+                const costBeforeCoefficient = pickupCost;
                 pickupCost *= takeDeliverFrom.coefficientSurcharge;
+                console.log('Применен коэффициент coefficientSurcharge:', {
+                    costBeforeCoefficient: costBeforeCoefficient,
+                    coefficientSurcharge: takeDeliverFrom.coefficientSurcharge,
+                    costAfterCoefficient: pickupCost
+                });
             }
+            
+            console.log('Итоговая стоимость забора:', {
+                baseCost: pickupBaseCost,
+                surcharge: takeDeliverFrom.surcharge || 0,
+                coefficientSurcharge: takeDeliverFrom.coefficientSurcharge || 1,
+                finalPickupCost: pickupCost
+            });
         } else {
             console.warn('Тарифная сетка для забора не найдена:', {
                 transportType: typeTransportation.name,
                 transportTypeId: typeTransportation.id,
                 pickupZone: pickupZone,
                 fromAddressId: fromAddress.id,
-                takeDeliverFrom: takeDeliverFrom
+                takeDeliverFrom: takeDeliverFrom,
+                availableZones: [...new Set(tariffGrids.value.filter(tg => String(tg.transportType_id) === String(typeTransportation.id)).map(tg => String(tg.NumberZone)))]
             });
         }
     } else if (!isPickupAtTerminal && !takeDeliverFrom) {
@@ -846,22 +934,69 @@ function calculateTariffCost(typeTransportation) {
         });
         
         if (deliveryTariffGrid.length > 0) {
-            deliveryCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
+            const deliveryBaseCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
+            deliveryCost = deliveryBaseCost;
+            
+            // Детальное логирование для отладки
+            console.log('Расчет стоимости доставки:', {
+                toAddressId: toAddress.id,
+                transportTypeId: typeTransportation.id,
+                deliveryZone: deliveryZone,
+                deliveryZoneSource: 'takeDeliver.tariffZone',
+                takeDeliverTo: {
+                    id: takeDeliverTo.id,
+                    billingAddress_id: takeDeliverTo.billingAddress_id,
+                    tariffZone: takeDeliverTo.tariffZone,
+                    surcharge: takeDeliverTo.surcharge,
+                    coefficientSurcharge: takeDeliverTo.coefficientSurcharge
+                },
+                deliveryTariffGrid: deliveryTariffGrid.map(tg => ({
+                    NumberZone: tg.NumberZone,
+                    unitFrom: tg.unitFrom,
+                    unitTo: tg.unitTo,
+                    startingPrice: tg.startingPrice,
+                    step: tg.step,
+                    stepPrice: tg.stepPrice
+                })),
+                totalPayableWeight: totalPayableWeight,
+                deliveryBaseCost: deliveryBaseCost
+            });
+            
             // Добавляем surcharge из takeDeliver
             if (takeDeliverTo.surcharge) {
                 deliveryCost += takeDeliverTo.surcharge;
+                console.log('Применена надбавка surcharge:', {
+                    baseCost: deliveryBaseCost,
+                    surcharge: takeDeliverTo.surcharge,
+                    costAfterSurcharge: deliveryCost
+                });
             }
+            
             // Применяем коэффициент доставки из takeDeliver
-            if (takeDeliverTo.coefficientSurcharge) {
+            if (takeDeliverTo.coefficientSurcharge && takeDeliverTo.coefficientSurcharge !== 1) {
+                const costBeforeCoefficient = deliveryCost;
                 deliveryCost *= takeDeliverTo.coefficientSurcharge;
+                console.log('Применен коэффициент coefficientSurcharge:', {
+                    costBeforeCoefficient: costBeforeCoefficient,
+                    coefficientSurcharge: takeDeliverTo.coefficientSurcharge,
+                    costAfterCoefficient: deliveryCost
+                });
             }
+            
+            console.log('Итоговая стоимость доставки:', {
+                baseCost: deliveryBaseCost,
+                surcharge: takeDeliverTo.surcharge || 0,
+                coefficientSurcharge: takeDeliverTo.coefficientSurcharge || 1,
+                finalDeliveryCost: deliveryCost
+            });
         } else {
             console.warn('Тарифная сетка для доставки не найдена:', {
                 transportType: typeTransportation.name,
                 transportTypeId: typeTransportation.id,
                 deliveryZone: deliveryZone,
                 toAddressId: toAddress.id,
-                takeDeliverTo: takeDeliverTo
+                takeDeliverTo: takeDeliverTo,
+                availableZones: [...new Set(tariffGrids.value.filter(tg => String(tg.transportType_id) === String(typeTransportation.id)).map(tg => String(tg.NumberZone)))]
             });
         }
     } else if (!isDeliveryAtTerminal && !takeDeliverTo) {
@@ -960,19 +1095,71 @@ function calculateTariffCost(typeTransportation) {
     
     const totalMultiplier = dangerousGoodsMultiplier * tempControlMultiplier;
     
+    // Логирование перед применением коэффициентов опасного груза/температурного режима
+    console.log('Применение коэффициентов опасного груза/температурного режима:', {
+        hasAnyDangerousGoods: hasAnyDangerousGoods,
+        dangerousGoodsMultiplier: dangerousGoodsMultiplier,
+        hasAnyTempControl: hasAnyTempControl,
+        tempControlMultiplier: tempControlMultiplier,
+        totalMultiplier: totalMultiplier,
+        costsBeforeMultiplier: {
+            transportationCost: transportationCost,
+            pickupCost: pickupCost,
+            deliveryCost: deliveryCost
+        }
+    });
+    
     // Применяем коэффициенты ко всем компонентам
+    const transportationCostBeforeMultiplier = transportationCost;
+    const pickupCostBeforeMultiplier = pickupCost;
+    const deliveryCostBeforeMultiplier = deliveryCost;
+    
     transportationCost *= totalMultiplier;
     pickupCost *= totalMultiplier;
     deliveryCost *= totalMultiplier;
+    
+    if (totalMultiplier !== 1) {
+        console.log('Применены коэффициенты опасного груза/температурного режима:', {
+            transportationCost: `${transportationCostBeforeMultiplier} × ${totalMultiplier} = ${transportationCost}`,
+            pickupCost: `${pickupCostBeforeMultiplier} × ${totalMultiplier} = ${pickupCost}`,
+            deliveryCost: `${deliveryCostBeforeMultiplier} × ${totalMultiplier} = ${deliveryCost}`
+        });
+    } else {
+        console.log('Коэффициенты опасного груза/температурного режима не применяются (оба равны 1)');
+    }
 
     // 9. Расчет итоговой стоимости согласно ТЗ
     // По ТЗ: Общая стоимость = (Перевозка + Забор + Доставка + Погрузо-разгрузочные работы) × (1 + Процент НДС)
     const totalWithoutVAT = transportationCost + pickupCost + deliveryCost + additionalCosts + totalLoadingUnloadingCost;
     
+    // Детальное логирование итоговой стоимости
+    console.log('Итоговая стоимость без НДС:', {
+        transportationCost: transportationCost,
+        pickupCost: pickupCost,
+        deliveryCost: deliveryCost,
+        additionalCosts: additionalCosts,
+        totalLoadingUnloadingCost: totalLoadingUnloadingCost,
+        totalWithoutVAT: totalWithoutVAT,
+        breakdown: {
+            'Перевозка': transportationCost,
+            'Забор': pickupCost,
+            'Доставка': deliveryCost,
+            'Дополнительные услуги': additionalCosts,
+            'Погрузо-разгрузочные работы': totalLoadingUnloadingCost
+        }
+    });
+    
     // Применение НДС (по умолчанию 5% согласно примеру в ТЗ)
     const vatRate = 0.05; // 5% НДС
     const vatAmount = totalWithoutVAT * vatRate;
     const finalCost = totalWithoutVAT + vatAmount;
+    
+    console.log('Расчет НДС и итоговой стоимости:', {
+        totalWithoutVAT: totalWithoutVAT,
+        vatRate: vatRate,
+        vatAmount: vatAmount,
+        finalCost: finalCost
+    });
 
     // 10. Формирование детализации согласно ТЗ
     details.push({ name: 'РАСЧЕТ ПО ТЗ', cost: 0, isHeader: true });
@@ -1047,7 +1234,7 @@ function calculateTariffCost(typeTransportation) {
     });
     
     // Формула расчета стоимости перевозки
-    const transportationBaseCost = calculateCostByTariffGrid(relevantTarifGrid, totalPayableWeight);
+    // Используем уже рассчитанную transportationBaseCost из секции расчета
     const applicableTransportationTariff = relevantTarifGrid.find(tg => 
         totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
     ) || relevantTarifGrid[relevantTarifGrid.length - 1];
@@ -1059,8 +1246,14 @@ function calculateTariffCost(typeTransportation) {
             cost: 0,
             isSubHeader: true
         });
+        const transportationStepsCalculation = (totalPayableWeight - applicableTransportationTariff.unitFrom) / applicableTransportationTariff.step;
         details.push({
-            name: `Шаги = CEIL((${totalPayableWeight.toFixed(2)} (ПВ, кг) - ${applicableTransportationTariff.unitFrom} (unitFrom из тарифной сетки зоны ${tariffZone.tariffZone})) / ${applicableTransportationTariff.step} (step из тарифной сетки)) = ${steps}`,
+            name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ, кг) - ${applicableTransportationTariff.unitFrom} (unitFrom из тарифной сетки зоны ${tariffZone.tariffZone})) / ${applicableTransportationTariff.step} (step из тарифной сетки) = ${transportationStepsCalculation.toFixed(2)}`,
+            cost: 0,
+            isDetail: true
+        });
+        details.push({
+            name: `Количество шагов = округление вверх до целого числа = ${steps}`,
             cost: 0,
             isDetail: true
         });
@@ -1111,31 +1304,70 @@ function calculateTariffCost(typeTransportation) {
                 cost: 0,
                 isSubHeader: true
             });
+            const pickupStepsCalculation = (totalPayableWeight - applicablePickupTariff.unitFrom) / applicablePickupTariff.step;
             details.push({
-                name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicablePickupTariff.unitFrom} (unitFrom)) / ${applicablePickupTariff.step} (step)) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
+                name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${applicablePickupTariff.unitFrom} (unitFrom из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки)) / ${applicablePickupTariff.step} (step) = ${pickupStepsCalculation.toFixed(2)}`,
+                cost: 0,
+                isDetail: true
+            });
+            details.push({
+                name: `Количество шагов = округление вверх до целого числа = ${pickupSteps}`,
+                cost: 0,
+                isDetail: true
+            });
+            details.push({
+                name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки) + ${pickupSteps} (шаги) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
                 cost: 0,
                 isDetail: true
             });
             
+            // Показываем применение surcharge, если он есть
+            let pickupCostAfterSurcharge = pickupBaseCost;
             if (takeDeliverFrom.surcharge) {
+                pickupCostAfterSurcharge = pickupBaseCost + takeDeliverFrom.surcharge;
                 details.push({
-                    name: `Стоимость с надбавкой = ${pickupBaseCost.toFixed(2)} (базовая стоимость) + ${takeDeliverFrom.surcharge} (surcharge из takeDeliver для адреса отправки) = ${(pickupBaseCost + takeDeliverFrom.surcharge).toFixed(2)} ₽`,
+                    name: `Стоимость с надбавкой = ${pickupBaseCost.toFixed(2)} (базовая стоимость) + ${takeDeliverFrom.surcharge} (surcharge из takeDeliver для адреса отправки) = ${pickupCostAfterSurcharge.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            } else {
+                // Показываем, что надбавка не применялась
+                details.push({
+                    name: `Надбавка surcharge не применяется (surcharge = 0 или отсутствует в takeDeliver для адреса отправки)`,
                     cost: 0,
                     isDetail: true
                 });
             }
             
+            // Показываем применение coefficientSurcharge, если он есть и не равен 1
+            let pickupCostAfterCoefficient = pickupCostAfterSurcharge;
             if (takeDeliverFrom.coefficientSurcharge && takeDeliverFrom.coefficientSurcharge !== 1) {
+                pickupCostAfterCoefficient = pickupCostAfterSurcharge * takeDeliverFrom.coefficientSurcharge;
                 details.push({
-                    name: `Стоимость с коэффициентом = ${(pickupBaseCost + (takeDeliverFrom.surcharge || 0)).toFixed(2)} (стоимость с надбавкой) × ${takeDeliverFrom.coefficientSurcharge} (coefficientSurcharge из takeDeliver) = ${((pickupBaseCost + (takeDeliverFrom.surcharge || 0)) * takeDeliverFrom.coefficientSurcharge).toFixed(2)} ₽`,
+                    name: `Стоимость с коэффициентом = ${pickupCostAfterSurcharge.toFixed(2)} (стоимость ${takeDeliverFrom.surcharge ? 'с надбавкой' : 'базовая'}) × ${takeDeliverFrom.coefficientSurcharge} (coefficientSurcharge из takeDeliver для адреса отправки) = ${pickupCostAfterCoefficient.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            } else {
+                // Показываем, что коэффициент не применялся или равен 1
+                details.push({
+                    name: `Коэффициент coefficientSurcharge не применяется (coefficientSurcharge = ${takeDeliverFrom.coefficientSurcharge || 1} в takeDeliver для адреса отправки)`,
                     cost: 0,
                     isDetail: true
                 });
             }
             
+            // Показываем применение коэффициентов опасного груза/температурного режима
             if (totalMultiplier !== 1) {
                 details.push({
-                    name: `Итоговая стоимость забора = ${((pickupBaseCost + (takeDeliverFrom.surcharge || 0)) * (takeDeliverFrom.coefficientSurcharge || 1)).toFixed(2)} (стоимость забора) × ${totalMultiplier.toFixed(2)} (коэффициенты опасного груза/температурного режима) = ${pickupCost.toFixed(2)} ₽`,
+                    name: `Итоговая стоимость забора = ${pickupCostAfterCoefficient.toFixed(2)} (стоимость забора) × ${totalMultiplier.toFixed(2)} (коэффициенты ${hasAnyDangerousGoods ? 'опасного груза 1.4' : '1'} × ${hasAnyTempControl ? 'температурного режима 1.25' : '1'}) = ${pickupCost.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            } else {
+                // Показываем итоговую стоимость без дополнительных коэффициентов
+                details.push({
+                    name: `Итоговая стоимость забора = ${pickupCostAfterCoefficient.toFixed(2)} ₽ (коэффициенты опасного груза/температурного режима не применяются)`,
                     cost: 0,
                     isDetail: true
                 });
@@ -1167,31 +1399,70 @@ function calculateTariffCost(typeTransportation) {
                 cost: 0,
                 isSubHeader: true
             });
+            const deliveryStepsCalculation = (totalPayableWeight - applicableDeliveryTariff.unitFrom) / applicableDeliveryTariff.step;
             details.push({
-                name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicableDeliveryTariff.unitFrom} (unitFrom)) / ${applicableDeliveryTariff.step} (step)) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
+                name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${applicableDeliveryTariff.unitFrom} (unitFrom из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения)) / ${applicableDeliveryTariff.step} (step) = ${deliveryStepsCalculation.toFixed(2)}`,
+                cost: 0,
+                isDetail: true
+            });
+            details.push({
+                name: `Количество шагов = округление вверх до целого числа = ${deliverySteps}`,
+                cost: 0,
+                isDetail: true
+            });
+            details.push({
+                name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения) + ${deliverySteps} (шаги) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
                 cost: 0,
                 isDetail: true
             });
             
+            // Показываем применение surcharge, если он есть
+            let deliveryCostAfterSurcharge = deliveryBaseCost;
             if (takeDeliverTo.surcharge) {
+                deliveryCostAfterSurcharge = deliveryBaseCost + takeDeliverTo.surcharge;
                 details.push({
-                    name: `Стоимость с надбавкой = ${deliveryBaseCost.toFixed(2)} (базовая стоимость) + ${takeDeliverTo.surcharge} (surcharge из takeDeliver для адреса назначения) = ${(deliveryBaseCost + takeDeliverTo.surcharge).toFixed(2)} ₽`,
+                    name: `Стоимость с надбавкой = ${deliveryBaseCost.toFixed(2)} (базовая стоимость) + ${takeDeliverTo.surcharge} (surcharge из takeDeliver для адреса назначения) = ${deliveryCostAfterSurcharge.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            } else {
+                // Показываем, что надбавка не применялась
+                details.push({
+                    name: `Надбавка surcharge не применяется (surcharge = 0 или отсутствует в takeDeliver для адреса назначения)`,
                     cost: 0,
                     isDetail: true
                 });
             }
             
+            // Показываем применение coefficientSurcharge, если он есть и не равен 1
+            let deliveryCostAfterCoefficient = deliveryCostAfterSurcharge;
             if (takeDeliverTo.coefficientSurcharge && takeDeliverTo.coefficientSurcharge !== 1) {
+                deliveryCostAfterCoefficient = deliveryCostAfterSurcharge * takeDeliverTo.coefficientSurcharge;
                 details.push({
-                    name: `Стоимость с коэффициентом = ${(deliveryBaseCost + (takeDeliverTo.surcharge || 0)).toFixed(2)} (стоимость с надбавкой) × ${takeDeliverTo.coefficientSurcharge} (coefficientSurcharge из takeDeliver) = ${((deliveryBaseCost + (takeDeliverTo.surcharge || 0)) * takeDeliverTo.coefficientSurcharge).toFixed(2)} ₽`,
+                    name: `Стоимость с коэффициентом = ${deliveryCostAfterSurcharge.toFixed(2)} (стоимость ${takeDeliverTo.surcharge ? 'с надбавкой' : 'базовая'}) × ${takeDeliverTo.coefficientSurcharge} (coefficientSurcharge из takeDeliver для адреса назначения) = ${deliveryCostAfterCoefficient.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            } else {
+                // Показываем, что коэффициент не применялся или равен 1
+                details.push({
+                    name: `Коэффициент coefficientSurcharge не применяется (coefficientSurcharge = ${takeDeliverTo.coefficientSurcharge || 1} в takeDeliver для адреса назначения)`,
                     cost: 0,
                     isDetail: true
                 });
             }
             
+            // Показываем применение коэффициентов опасного груза/температурного режима
             if (totalMultiplier !== 1) {
                 details.push({
-                    name: `Итоговая стоимость доставки = ${((deliveryBaseCost + (takeDeliverTo.surcharge || 0)) * (takeDeliverTo.coefficientSurcharge || 1)).toFixed(2)} (стоимость доставки) × ${totalMultiplier.toFixed(2)} (коэффициенты опасного груза/температурного режима) = ${deliveryCost.toFixed(2)} ₽`,
+                    name: `Итоговая стоимость доставки = ${deliveryCostAfterCoefficient.toFixed(2)} (стоимость доставки) × ${totalMultiplier.toFixed(2)} (коэффициенты ${hasAnyDangerousGoods ? 'опасного груза 1.4' : '1'} × ${hasAnyTempControl ? 'температурного режима 1.25' : '1'}) = ${deliveryCost.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            } else {
+                // Показываем итоговую стоимость без дополнительных коэффициентов
+                details.push({
+                    name: `Итоговая стоимость доставки = ${deliveryCostAfterCoefficient.toFixed(2)} ₽ (коэффициенты опасного груза/температурного режима не применяются)`,
                     cost: 0,
                     isDetail: true
                 });
@@ -1354,20 +1625,40 @@ function calculateTariffCost(typeTransportation) {
     // Краткая сводка для быстрого просмотра
     details.push({ name: 'КРАТКАЯ СВОДКА', cost: 0, isHeader: true });
     details.push({
-        name: `Стоимость перевозки: ${transportationCost.toFixed(2)} ₽`,
+        name: `Стоимость перевозки: ${transportationCost.toFixed(2)} ₽ (зона ${tariffZone.tariffZone} из tariffZones)`,
         cost: transportationCost
     });
     
     if (pickupCost > 0) {
+        const pickupZone = takeDeliverFrom?.tariffZone || 'D';
+        const pickupInfo = [`Стоимость забора: ${pickupCost.toFixed(2)} ₽ (зона ${pickupZone} из takeDeliver)`];
+        if (takeDeliverFrom) {
+            if (takeDeliverFrom.surcharge) {
+                pickupInfo.push(`(включая surcharge ${takeDeliverFrom.surcharge} ₽)`);
+            }
+            if (takeDeliverFrom.coefficientSurcharge && takeDeliverFrom.coefficientSurcharge !== 1) {
+                pickupInfo.push(`(коэффициент ${takeDeliverFrom.coefficientSurcharge})`);
+            }
+        }
         details.push({
-            name: `Стоимость забора: ${pickupCost.toFixed(2)} ₽`,
+            name: pickupInfo.join(', '),
             cost: pickupCost
         });
     }
     
     if (deliveryCost > 0) {
+        const deliveryZone = takeDeliverTo?.tariffZone || 'H';
+        const deliveryInfo = [`Стоимость доставки: ${deliveryCost.toFixed(2)} ₽ (зона ${deliveryZone} из takeDeliver)`];
+        if (takeDeliverTo) {
+            if (takeDeliverTo.surcharge) {
+                deliveryInfo.push(`(включая surcharge ${takeDeliverTo.surcharge} ₽)`);
+            }
+            if (takeDeliverTo.coefficientSurcharge && takeDeliverTo.coefficientSurcharge !== 1) {
+                deliveryInfo.push(`(коэффициент ${takeDeliverTo.coefficientSurcharge})`);
+            }
+        }
         details.push({
-            name: `Стоимость доставки: ${deliveryCost.toFixed(2)} ₽`,
+            name: deliveryInfo.join(', '),
             cost: deliveryCost
         });
     }

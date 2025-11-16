@@ -1,14 +1,14 @@
 {
   "CURRENT_STATUS.md": {
-    "file": "assets/CURRENT_STATUS-Cr4hAMYU.md",
+    "file": "assets/CURRENT_STATUS-B0SiDSsJ.md",
     "src": "CURRENT_STATUS.md"
   },
   "PROJECT_CONTEXT.md": {
-    "file": "assets/PROJECT_CONTEXT-Cb2OF8r7.md",
+    "file": "assets/PROJECT_CONTEXT-CCTYHSwF.md",
     "src": "PROJECT_CONTEXT.md"
   },
   "README.md": {
-    "file": "assets/README-CDY2C-sA.md",
+    "file": "assets/README-4Xnv7xOz.md",
     "src": "README.md"
   },
   "_AutocompleteInput-BPJffv1B.css": {
@@ -489,7 +489,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-CscvXqaU.js",
+    "file": "assets/js/homePageJs-CdxoATtc.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -505,9 +505,9 @@
       "assets/css/homePageJs-Dx2n7P6X.css"
     ],
     "assets": [
-      "assets/CURRENT_STATUS-Cr4hAMYU.md",
-      "assets/PROJECT_CONTEXT-Cb2OF8r7.md",
-      "assets/README-CDY2C-sA.md",
+      "assets/CURRENT_STATUS-B0SiDSsJ.md",
+      "assets/PROJECT_CONTEXT-CCTYHSwF.md",
+      "assets/README-4Xnv7xOz.md",
       "bulk-order..html",
       "calculator..html",
       "contacts..html",
@@ -570,7 +570,7 @@
     ]
   },
   "assets/vue/entrypoints/calculator-page.js": {
-    "file": "assets/js/calculatorPageJs-Bh5CpTPW.js",
+    "file": "assets/js/calculatorPageJs-gDiONZye.js",
     "name": "calculatorPageJs",
     "src": "assets/vue/entrypoints/calculator-page.js",
     "isEntry": true,
@@ -686,7 +686,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-B_TwAeK3.js",
+    "file": "assets/js/main-Df_4fiEy.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
