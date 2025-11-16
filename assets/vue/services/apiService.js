@@ -729,6 +729,138 @@ class ApiService {
             throw error;
         }
     }
+
+    // ========== МЕТОДЫ ДЛЯ ПОИСКА АДРЕСОВ ==========
+
+    // Поиск улиц по городу
+    async searchStreets(city, query = '') {
+        try {
+            const billingAddresses = await this.getBillingAddressesWithRelations();
+            
+            // Фильтруем адреса по городу
+            const cityAddresses = billingAddresses.filter(addr => {
+                const localityName = addr.locality?.name || '';
+                return localityName === city;
+            });
+
+            // Извлекаем уникальные улицы
+            const streetsMap = new Map();
+            cityAddresses.forEach(addr => {
+                const street = addr.street || '';
+                if (street && !streetsMap.has(street)) {
+                    streetsMap.set(street, {
+                        name: street,
+                        id: `street-${street}`,
+                        city: city
+                    });
+                }
+            });
+
+            let streets = Array.from(streetsMap.values());
+
+            // Если есть запрос, фильтруем улицы
+            if (query && query.trim()) {
+                const queryLower = query.toLowerCase().trim();
+                streets = streets.filter(street => {
+                    const streetLower = street.name.toLowerCase();
+                    return streetLower.includes(queryLower) || streetLower.startsWith(queryLower);
+                });
+            }
+
+            // Сортируем по алфавиту
+            return streets.sort((a, b) => a.name.localeCompare(b.name));
+        } catch (error) {
+            console.error('Ошибка при поиске улиц:', error);
+            throw error;
+        }
+    }
+
+    // Поиск домов по улице и городу
+    async searchHouses(city, street, query = '') {
+        try {
+            const billingAddresses = await this.getBillingAddressesWithRelations();
+            
+            // Фильтруем адреса по городу и улице
+            const streetAddresses = billingAddresses.filter(addr => {
+                const localityName = addr.locality?.name || '';
+                const addrStreet = addr.street || '';
+                return localityName === city && addrStreet === street;
+            });
+
+            // Извлекаем уникальные дома
+            const housesMap = new Map();
+            streetAddresses.forEach(addr => {
+                const houseNumber = addr.houseNumber || '';
+                if (houseNumber && !housesMap.has(houseNumber)) {
+                    housesMap.set(houseNumber, {
+                        name: houseNumber,
+                        id: `house-${houseNumber}`,
+                        street: street,
+                        city: city
+                    });
+                }
+            });
+
+            let houses = Array.from(housesMap.values());
+
+            // Если есть запрос, фильтруем дома
+            if (query && query.trim()) {
+                const queryLower = query.toLowerCase().trim();
+                houses = houses.filter(house => {
+                    const houseLower = house.name.toLowerCase();
+                    return houseLower.includes(queryLower) || houseLower.startsWith(queryLower);
+                });
+            }
+
+            // Сортируем по алфавиту/числу
+            return houses.sort((a, b) => {
+                // Пытаемся сравнить как числа, если не получается - как строки
+                const aNum = parseInt(a.name);
+                const bNum = parseInt(b.name);
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return aNum - bNum;
+                }
+                return a.name.localeCompare(b.name);
+            });
+        } catch (error) {
+            console.error('Ошибка при поиске домов:', error);
+            throw error;
+        }
+    }
+
+    // Поиск квартир/офисов по дому, улице и городу
+    async searchApartments(city, street, house, query = '') {
+        try {
+            const billingAddresses = await this.getBillingAddressesWithRelations();
+            
+            // Фильтруем адреса по городу, улице и дому
+            const houseAddresses = billingAddresses.filter(addr => {
+                const localityName = addr.locality?.name || '';
+                const addrStreet = addr.street || '';
+                const addrHouse = addr.houseNumber || '';
+                return localityName === city && addrStreet === street && addrHouse === house;
+            });
+
+            // Извлекаем уникальные квартиры/офисы (если есть поле office/apartment)
+            // Поскольку в billingAddresses может не быть поля квартиры, возвращаем пустой массив
+            // или можно использовать другие поля, если они есть
+            const apartments = [];
+
+            // Если есть запрос, фильтруем квартиры
+            if (query && query.trim()) {
+                const queryLower = query.toLowerCase().trim();
+                return apartments.filter(apt => {
+                    const aptLower = apt.name.toLowerCase();
+                    return aptLower.includes(queryLower) || aptLower.startsWith(queryLower);
+                });
+            }
+
+            return apartments;
+        } catch (error) {
+            console.error('Ошибка при поиске квартир:', error);
+            throw error;
+        }
+    }
 }
 
 // Создаем экземпляр сервиса

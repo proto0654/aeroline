@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-start relative">
-    <div class="flex items-center h-6 mt-1">
+  <div class="flex items-center relative">
+    <div class="flex items-center h-6">
       <input :id="inputId" type="checkbox" v-model="inputValue" :disabled="disabled" :required="required"
         v-bind="$attrs" @blur="handleBlur" />
     </div>

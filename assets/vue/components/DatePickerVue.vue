@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="w-full">
         <date-picker v-model:value="selectedDate" v-model:open="isOpen" type="date" placeholder="Выберите дату"
             format="DD.MM.YYYY" :lang="locale" @change="handleChange" @close="handleClose"></date-picker>
     </div>
@@ -97,8 +97,8 @@ defineExpose({
   background-color: white;
   color: #6b7280; /* text-body-secondary */
   font-family: inherit;
-  height: auto !important;
-  min-height: 3rem;
+  height: 3rem !important;
+  width: 100% !important;
 }
 
 .mx-input:focus {

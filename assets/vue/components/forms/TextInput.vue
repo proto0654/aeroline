@@ -103,8 +103,8 @@ watch(inputValue, (newValue) => {
   background-color: white;
   color: #6b7280; /* text-body-secondary */
   font-family: inherit;
-  height: auto;
-  min-height: 3rem;
+  height: 3rem;
+  width: 100%;
   transition: border-color 0.2s ease-in-out;
 }
 

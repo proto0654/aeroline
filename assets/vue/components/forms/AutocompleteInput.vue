@@ -179,6 +179,31 @@ watch(inputValue, (newValue) => {
     }
 });
 
+// Watch для очистки результатов API поиска при изменении функции поиска
+// Важно: computed ref сам по себе не изменяется, но его значение (функция) может измениться
+// Поэтому мы сравниваем функции по ссылке, но также очищаем результаты при изменении
+watch(() => props.apiSearchFunction, (newFunction, oldFunction) => {
+    // Если функция поиска изменилась (новая ссылка), очищаем результаты и выбранный элемент
+    if (newFunction !== oldFunction && oldFunction !== null && newFunction !== null) {
+        apiSearchResults.value = [];
+        selectedItem.value = null;
+        isDropdownVisible.value = false;
+        
+        // Также очищаем значение ввода, если оно было установлено из результатов поиска
+        // Это помогает при смене города - поле улицы/дома очищается
+        if (inputValue.value && !props.items.find(item => {
+            if (props.itemFormatter) {
+                return props.itemFormatter(item) === inputValue.value;
+            }
+            const cityName = item.name || item.locality || item.city;
+            return cityName === inputValue.value;
+        })) {
+            // Значение не найдено в текущих items - возможно, это результат старого поиска
+            // Оставляем значение, так как оно может быть введено пользователем
+        }
+    }
+}, { flush: 'post' });
+
 // Computed
 const filteredItems = computed(() => {
     const query = inputValue.value?.toLowerCase().trim() || '';
@@ -327,14 +352,17 @@ const getItemKey = (item, index) => {
 
 // API поиск
 const performApiSearch = async (query) => {
-    if (!props.apiSearchFunction || !query) {
+    if (!props.apiSearchFunction) {
         apiSearchResults.value = [];
         return;
     }
 
+    // Пустой запрос разрешен - это означает показать все опции
+    const searchQuery = query || '';
+
     isApiSearching.value = true;
     try {
-        const results = await props.apiSearchFunction(query);
+        const results = await props.apiSearchFunction(searchQuery);
         apiSearchResults.value = results || [];
     } catch (error) {
         console.error('Ошибка API поиска:', error);
@@ -363,20 +391,26 @@ const onInput = () => {
     // При ручном вводе сбрасываем выбранный объект
     selectedItem.value = null;
 
-    if (!value) {
-        isDropdownVisible.value = false;
-        apiSearchResults.value = [];
-        return;
-    }
-
     // Если используется API поиск, выполняем поиск через API
     if (props.useApiSearch && props.apiSearchFunction) {
-        debouncedApiSearch(value);
+        if (value) {
+            // Есть текст - выполняем поиск с задержкой
+            debouncedApiSearch(value);
+        } else {
+            // Пустое поле - показываем все опции (поиск с пустым запросом)
+            performApiSearch('');
+        }
         isDropdownVisible.value = true;
         return;
     }
 
     // Локальный поиск
+    if (!value) {
+        // Пустое поле - показываем все опции
+        isDropdownVisible.value = true;
+        return;
+    }
+
     if (filteredItems.value.length === 0) {
         isDropdownVisible.value = false;
         return;
@@ -387,8 +421,32 @@ const onInput = () => {
 
 const onFocus = () => {
     const value = inputValue.value?.trim() || '';
-    if (!value) return;
+    
+    // Если используется API поиск, показываем все опции при фокусе
+    if (props.useApiSearch && props.apiSearchFunction) {
+        if (!value) {
+            // Пустое поле - загружаем все опции
+            performApiSearch('');
+        } else {
+            // Есть значение - показываем результаты поиска если они есть
+            if (apiSearchResults.value.length > 0) {
+                isDropdownVisible.value = true;
+                return;
+            }
+            // Если результатов нет, выполняем поиск
+            performApiSearch(value);
+        }
+        isDropdownVisible.value = true;
+        return;
+    }
 
+    // Локальный поиск - показываем все опции при фокусе на пустое поле
+    if (!value) {
+        isDropdownVisible.value = true;
+        return;
+    }
+
+    // Есть значение - показываем отфильтрованные результаты
     if (filteredItems.value.length > 0) {
         isDropdownVisible.value = true;
     }
@@ -412,6 +470,19 @@ const onToggleClick = (e) => {
 
 const showAllSuggestions = () => {
     currentIndex.value = -1;
+    
+    // Если используется API поиск, загружаем все опции
+    if (props.useApiSearch && props.apiSearchFunction) {
+        const value = inputValue.value?.trim() || '';
+        if (value) {
+            // Есть текст - выполняем поиск с этим текстом
+            performApiSearch(value);
+        } else {
+            // Пустое поле - загружаем все опции
+            performApiSearch('');
+        }
+    }
+    
     isDropdownVisible.value = true;
 };
 
@@ -538,8 +609,8 @@ onUnmounted(() => {
   background-color: white;
   color: #6b7280; /* text-body-secondary */
   font-family: inherit;
-  height: auto;
-  min-height: 3rem;
+  height: 3rem;
+  width: 100%;
   transition: border-color 0.2s ease-in-out;
 }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="title-wrapper mb-6">
-        <h1 class="animated-title text-center text-h2 mb-2">Калькулятор стоимости пересылки</h1>
+        <h1 class="text-h3 mb-2 px-3 xl:px-0">Калькулятор стоимости перевозки</h1>
     </div>
 
     <div class="flex flex-col flex-1 lg:flex-row gap-8 min-w-0">
@@ -285,8 +285,12 @@ function getAllTariffsWithStatus() {
         let toCoords = null;
         
         // Ищем адреса по locality_id
-        const fromAddress = billingAddresses.value.find(addr => addr.locality_id === direction.fromLocalityId);
-        const toAddress = billingAddresses.value.find(addr => addr.locality_id === direction.toLocalityId);
+        // Приводим ID к строкам для надежного сравнения
+        const fromLocalityIdForCoords = String(direction.fromLocalityId);
+        const toLocalityIdForCoords = String(direction.toLocalityId);
+        
+        const fromAddress = billingAddresses.value.find(addr => String(addr.locality_id) === fromLocalityIdForCoords);
+        const toAddress = billingAddresses.value.find(addr => String(addr.locality_id) === toLocalityIdForCoords);
         
         if (fromAddress && fromAddress.coordinates) {
             fromCoords = fromAddress.coordinates;
@@ -338,10 +342,15 @@ function getAllTariffsWithStatus() {
             reason = 'Не выбраны города отправления и назначения';
         } else {
             // Проверяем наличие тарифной зоны
+            // Приводим ID к строкам для надежного сравнения
+            const fromLocalityIdStr = String(direction.fromLocalityId);
+            const toLocalityIdStr = String(direction.toLocalityId);
+            const transportTypeIdStr = String(transportType.id);
+            
             const tariffZone = tariffZones.value.find(tz => 
-                tz.takeLocality_id === direction.fromLocalityId && 
-                tz.deliverLocality_id === direction.toLocalityId &&
-                tz.transportType_id === transportType.id
+                String(tz.takeLocality_id) === fromLocalityIdStr && 
+                String(tz.deliverLocality_id) === toLocalityIdStr &&
+                String(tz.transportType_id) === transportTypeIdStr
             );
             
             if (!tariffZone) {
@@ -355,10 +364,16 @@ function getAllTariffsWithStatus() {
                 }, 0);
                 
                 // Находим максимальный вес в тарифной сетке для данного типа перевозки
-                const relevantTariffGrid = tariffGrids.value.filter(tg => 
-                    tg.transportType_id === transportType.id && 
-                    tg.numberZone === tariffZone.tariffZone.toString()
-                );
+                const tariffZoneValue = tariffZone.tariffZone;
+                const relevantTariffGrid = tariffGrids.value.filter(tg => {
+                    const transportTypeMatch = String(tg.transportType_id) === String(transportType.id);
+                    if (!transportTypeMatch) return false;
+                    // Гибкое сравнение NumberZone
+                    const tgNumberZone = tg.NumberZone;
+                    return tgNumberZone === tariffZoneValue || 
+                           String(tgNumberZone) === String(tariffZoneValue) ||
+                           Number(tgNumberZone) === Number(tariffZoneValue);
+                });
                 
                 if (relevantTariffGrid.length > 0) {
                     const maxWeight = Math.max(...relevantTariffGrid.map(tg => tg.unitTo));
@@ -453,42 +468,165 @@ function calculateTariffCost(typeTransportation) {
     const { cargo, departure, destination, extraOptions, direction } = formData;
 
     // 1. Найти адреса отправления и назначения
-    const fromAddress = billingAddresses.value.find(addr => addr.locality_id === direction.fromLocalityId);
-    const toAddress = billingAddresses.value.find(addr => addr.locality_id === direction.toLocalityId);
+    // Приводим ID к строкам для надежного сравнения
+    const fromLocalityIdForSearch = String(direction.fromLocalityId);
+    const toLocalityIdForSearch = String(direction.toLocalityId);
+    
+    const fromAddress = billingAddresses.value.find(addr => String(addr.locality_id) === fromLocalityIdForSearch);
+    const toAddress = billingAddresses.value.find(addr => String(addr.locality_id) === toLocalityIdForSearch);
     
     if (!fromAddress || !toAddress) {
+        console.warn('Адреса не найдены:', {
+            fromLocalityId: direction.fromLocalityId,
+            toLocalityId: direction.toLocalityId,
+            fromAddress: fromAddress ? 'found' : 'not found',
+            toAddress: toAddress ? 'found' : 'not found',
+            availableLocalityIds: billingAddresses.value.map(addr => addr.locality_id).slice(0, 10)
+        });
         return null;
     }
 
     // 2. Найти тарифную зону для данного направления
+    // Приводим ID к строкам для надежного сравнения
+    const fromLocalityIdStr = String(direction.fromLocalityId);
+    const toLocalityIdStr = String(direction.toLocalityId);
+    const transportTypeIdStr = String(typeTransportation.id);
+    
     const tariffZone = tariffZones.value.find(tz => 
-        tz.takeLocality_id === direction.fromLocalityId && 
-        tz.deliverLocality_id === direction.toLocalityId &&
-        tz.transportType_id === typeTransportation.id
+        String(tz.takeLocality_id) === fromLocalityIdStr && 
+        String(tz.deliverLocality_id) === toLocalityIdStr &&
+        String(tz.transportType_id) === transportTypeIdStr
     );
 
     if (!tariffZone) {
+        const allZonesForTransportType = tariffZones.value.filter(tz => String(tz.transportType_id) === transportTypeIdStr);
+        console.warn('Тарифная зона не найдена:', {
+            transportType: typeTransportation.name,
+            transportTypeId: typeTransportation.id,
+            transportTypeIdStr: transportTypeIdStr,
+            fromLocalityId: direction.fromLocalityId,
+            toLocalityId: direction.toLocalityId,
+            totalTariffZones: tariffZones.value.length,
+            zonesForTransportType: allZonesForTransportType.length,
+            availableZones: allZonesForTransportType.map(tz => ({
+                takeLocality_id: tz.takeLocality_id,
+                takeLocality_idType: typeof tz.takeLocality_id,
+                deliverLocality_id: tz.deliverLocality_id,
+                deliverLocality_idType: typeof tz.deliverLocality_id,
+                transportType_id: tz.transportType_id,
+                transportType_idType: typeof tz.transportType_id
+            }))
+        });
         return null;
     }
 
     // 3. Найти параметры забора/доставки
+    // По ТЗ: для забора/доставки используется зона из takeDeliver.tariffZone
+    // Ищем запись в takeDelivers по billingAddress_id и transportType_id
     const takeDeliverFrom = takeDelivers.value.find(td => 
-        td.billingAddress_id === fromAddress.id && 
-        td.transportType_id === typeTransportation.id
+        String(td.billingAddress_id) === String(fromAddress.id) && 
+        String(td.transportType_id) === String(typeTransportation.id)
     );
     
     const takeDeliverTo = takeDelivers.value.find(td => 
-        td.billingAddress_id === toAddress.id && 
-        td.transportType_id === typeTransportation.id
+        String(td.billingAddress_id) === String(toAddress.id) && 
+        String(td.transportType_id) === String(typeTransportation.id)
     );
+    
+    // Логирование для отладки (будет использовано позже в расчете забора/доставки)
 
     // 4. Найти тарифную сетку для данного вида перевозки и зоны
-    const relevantTarifGrid = tariffGrids.value.filter(tg => 
-        tg.transportType_id === typeTransportation.id && 
-        tg.numberZone === tariffZone.tariffZone.toString()
-    );
+    // Гибкое сравнение: numberZone может быть как числом, так и строкой в базе
+    const tariffZoneValue = tariffZone.tariffZone;
+    
+    // Проверяем, что tariffGrids загружены
+    if (!tariffGrids.value || tariffGrids.value.length === 0) {
+        console.warn('Тарифные сетки не загружены');
+        return null;
+    }
+    
+    const relevantTarifGrid = tariffGrids.value.filter(tg => {
+        // Сравниваем transportType_id - приводим оба к числу для надежности
+        const tgTransportTypeId = Number(tg.transportType_id);
+        const expectedTransportTypeId = Number(typeTransportation.id);
+        if (tgTransportTypeId !== expectedTransportTypeId) return false;
+        
+        // Гибкое сравнение NumberZone: может быть числом или строкой
+        const tgNumberZone = tg.NumberZone;
+        const expectedZone = tariffZoneValue;
+        
+        // Прямое сравнение (для одинаковых типов)
+        if (tgNumberZone === expectedZone) return true;
+        
+        // Сравнение как строки
+        if (String(tgNumberZone) === String(expectedZone)) return true;
+        
+        // Сравнение как числа (если оба валидные числа)
+        const tgZoneNum = Number(tgNumberZone);
+        const expectedZoneNum = Number(expectedZone);
+        if (!isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum) {
+            return true;
+        }
+        
+        return false;
+    });
 
     if (relevantTarifGrid.length === 0) {
+        // Детальная диагностика
+        const expectedTransportTypeIdNum = Number(typeTransportation.id);
+        const expectedZoneNum = Number(tariffZoneValue);
+        
+        const allGridsForTransportType = tariffGrids.value.filter(tg => Number(tg.transportType_id) === expectedTransportTypeIdNum);
+        const matchingZones = allGridsForTransportType.filter(tg => {
+            const tgNumberZone = tg.NumberZone;
+            const expectedZone = tariffZoneValue;
+            
+            // Прямое сравнение
+            if (tgNumberZone === expectedZone) return true;
+            
+            // Сравнение как строки
+            if (String(tgNumberZone) === String(expectedZone)) return true;
+            
+            // Сравнение как числа
+            const tgZoneNum = Number(tgNumberZone);
+            const expectedZoneNum = Number(expectedZone);
+            if (!isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum) {
+                return true;
+            }
+            
+            return false;
+        });
+        
+        console.warn('Тарифная сетка не найдена:', {
+            transportType: typeTransportation.name,
+            transportTypeId: typeTransportation.id,
+            expectedTransportTypeIdNum: expectedTransportTypeIdNum,
+            tariffZone: tariffZone.tariffZone,
+            tariffZoneValue: tariffZoneValue,
+            expectedZoneNum: expectedZoneNum,
+            tariffZoneType: typeof tariffZone.tariffZone,
+            totalTariffGrids: tariffGrids.value.length,
+            totalGridsForTransportType: allGridsForTransportType.length,
+            matchingZonesCount: matchingZones.length,
+            sampleGrids: allGridsForTransportType.slice(0, 10).map(tg => {
+                const tgZoneNum = Number(tg.NumberZone);
+                const isZoneMatch = !isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum;
+                return {
+                    transportType_id: tg.transportType_id,
+                    transportType_idType: typeof tg.transportType_id,
+                    transportType_idNum: Number(tg.transportType_id),
+                    NumberZone: tg.NumberZone,
+                    NumberZoneType: typeof tg.NumberZone,
+                    NumberZoneNum: tgZoneNum,
+                    expectedZoneNum: expectedZoneNum,
+                    isNaN_tgZone: isNaN(tgZoneNum),
+                    isNaN_expected: isNaN(expectedZoneNum),
+                    matchesTransportType: Number(tg.transportType_id) === expectedTransportTypeIdNum,
+                    matchesZone: isZoneMatch
+                };
+            }),
+            uniqueZones: [...new Set(allGridsForTransportType.map(tg => String(tg.NumberZone)))].slice(0, 10)
+        });
         return null;
     }
 
@@ -633,16 +771,26 @@ function calculateTariffCost(typeTransportation) {
     }
 
     // 7.2. Расчет стоимости забора (если не терминал)
+    // По ТЗ: для забора используется зона из takeDeliver.tariffZone (например, "D")
+    // Зона перевозки (tariffZone.tariffZone) используется ТОЛЬКО для перевозки между городами
     let pickupCost = 0;
     const isPickupAtTerminal = departure.deliveryMode === 'terminal';
     
     if (!isPickupAtTerminal && takeDeliverFrom) {
-        // По ТЗ: для забора используется numberZone "D" или tariffZone из takeDeliver
+        // ВАЖНО: Используем зону из takeDeliver, НЕ зону перевозки
+        // Если tariffZone отсутствует в takeDeliver, используем значение по умолчанию "D"
         const pickupZone = takeDeliverFrom.tariffZone || 'D';
-        const pickupTariffGrid = tariffGrids.value.filter(tg => 
-            tg.transportType_id === typeTransportation.id && 
-            tg.numberZone === pickupZone.toString()
-        );
+        
+        // Ищем тарифную сетку по зоне из takeDeliver
+        const pickupTariffGrid = tariffGrids.value.filter(tg => {
+            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            if (!transportTypeMatch) return false;
+            // Гибкое сравнение numberZone - должно соответствовать зоне из takeDeliver
+            const tgNumberZone = tg.NumberZone;
+            return tgNumberZone === pickupZone || 
+                   String(tgNumberZone) === String(pickupZone) ||
+                   Number(tgNumberZone) === Number(pickupZone);
+        });
         
         if (pickupTariffGrid.length > 0) {
             pickupCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
@@ -650,24 +798,52 @@ function calculateTariffCost(typeTransportation) {
             if (takeDeliverFrom.surcharge) {
                 pickupCost += takeDeliverFrom.surcharge;
             }
-            // Применяем коэффициент забора
+            // Применяем коэффициент забора из takeDeliver
             if (takeDeliverFrom.coefficientSurcharge) {
                 pickupCost *= takeDeliverFrom.coefficientSurcharge;
             }
+        } else {
+            console.warn('Тарифная сетка для забора не найдена:', {
+                transportType: typeTransportation.name,
+                transportTypeId: typeTransportation.id,
+                pickupZone: pickupZone,
+                fromAddressId: fromAddress.id,
+                takeDeliverFrom: takeDeliverFrom
+            });
         }
+    } else if (!isPickupAtTerminal && !takeDeliverFrom) {
+        console.warn('Данные takeDeliver для забора не найдены:', {
+            fromAddressId: fromAddress.id,
+            transportTypeId: typeTransportation.id,
+            availableTakeDelivers: takeDelivers.value.filter(td => String(td.transportType_id) === String(typeTransportation.id)).map(td => ({
+                billingAddress_id: td.billingAddress_id,
+                transportType_id: td.transportType_id,
+                tariffZone: td.tariffZone
+            }))
+        });
     }
 
     // 7.3. Расчет стоимости доставки (если не терминал)
+    // По ТЗ: для доставки используется зона из takeDeliver.tariffZone (например, "H")
+    // Зона перевозки (tariffZone.tariffZone) используется ТОЛЬКО для перевозки между городами
     let deliveryCost = 0;
     const isDeliveryAtTerminal = destination.deliveryMode === 'terminal';
     
     if (!isDeliveryAtTerminal && takeDeliverTo) {
-        // По ТЗ: для доставки используется numberZone "H" или tariffZone из takeDeliver
+        // ВАЖНО: Используем зону из takeDeliver, НЕ зону перевозки
+        // Если tariffZone отсутствует в takeDeliver, используем значение по умолчанию "H"
         const deliveryZone = takeDeliverTo.tariffZone || 'H';
-        const deliveryTariffGrid = tariffGrids.value.filter(tg => 
-            tg.transportType_id === typeTransportation.id && 
-            tg.numberZone === deliveryZone.toString()
-        );
+        
+        // Ищем тарифную сетку по зоне из takeDeliver
+        const deliveryTariffGrid = tariffGrids.value.filter(tg => {
+            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            if (!transportTypeMatch) return false;
+            // Гибкое сравнение numberZone - должно соответствовать зоне из takeDeliver
+            const tgNumberZone = tg.NumberZone;
+            return tgNumberZone === deliveryZone || 
+                   String(tgNumberZone) === String(deliveryZone) ||
+                   Number(tgNumberZone) === Number(deliveryZone);
+        });
         
         if (deliveryTariffGrid.length > 0) {
             deliveryCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
@@ -675,12 +851,101 @@ function calculateTariffCost(typeTransportation) {
             if (takeDeliverTo.surcharge) {
                 deliveryCost += takeDeliverTo.surcharge;
             }
-            // Применяем коэффициент доставки
+            // Применяем коэффициент доставки из takeDeliver
             if (takeDeliverTo.coefficientSurcharge) {
                 deliveryCost *= takeDeliverTo.coefficientSurcharge;
             }
+        } else {
+            console.warn('Тарифная сетка для доставки не найдена:', {
+                transportType: typeTransportation.name,
+                transportTypeId: typeTransportation.id,
+                deliveryZone: deliveryZone,
+                toAddressId: toAddress.id,
+                takeDeliverTo: takeDeliverTo
+            });
+        }
+    } else if (!isDeliveryAtTerminal && !takeDeliverTo) {
+        console.warn('Данные takeDeliver для доставки не найдены:', {
+            toAddressId: toAddress.id,
+            transportTypeId: typeTransportation.id,
+            availableTakeDelivers: takeDelivers.value.filter(td => String(td.transportType_id) === String(typeTransportation.id)).map(td => ({
+                billingAddress_id: td.billingAddress_id,
+                transportType_id: td.transportType_id,
+                tariffZone: td.tariffZone
+            }))
+        });
+    }
+
+    // 7.4. Расчет стоимости погрузо-разгрузочных работ
+    function calculateLoadingUnloadingCost(localityId, locationData, payableWeight, volume) {
+        if (!locationData || typeof locationData !== 'object' || !locationData.loadingUnloading) {
+            return 0;
+        }
+
+        // Найти локацию по ID
+        // Приводим ID к строкам для надежного сравнения
+        const locality = localities.value.find(loc => String(loc.id) === String(localityId));
+        if (!locality || !locality.loadingUnloadingRates) {
+            return 0;
+        }
+
+        const rates = locality.loadingUnloadingRates;
+        const floor = parseInt(locationData.floor) || 0;
+        const noElevator = locationData.noElevator || false;
+        
+        let cost = 0;
+
+        // 1. Стоимость за этаж (если указан этаж)
+        if (floor > 0) {
+            const ratePerFloor = noElevator 
+                ? (rates.perFloorWithoutElevator || 0)
+                : (rates.perFloorWithElevator || 0);
+            cost += floor * ratePerFloor;
+        }
+
+        // 2. Стоимость за вес (если указан коэффициент веса)
+        if (rates.weightCoefficient && payableWeight > 0) {
+            cost += payableWeight * rates.weightCoefficient;
+        }
+
+        // 3. Стоимость за объем (если указан коэффициент объема)
+        if (rates.volumeCoefficient && volume > 0) {
+            cost += volume * rates.volumeCoefficient;
+        }
+        
+        return cost;
+    }
+
+    // Расчет стоимости погрузки для пункта отправки
+    let loadingUnloadingCostPickup = 0;
+    if (!isPickupAtTerminal && departure.location && typeof departure.location === 'object') {
+        loadingUnloadingCostPickup = calculateLoadingUnloadingCost(
+            direction.fromLocalityId,
+            departure.location,
+            totalPayableWeight,
+            totalVolume
+        );
+    }
+
+    // Расчет стоимости погрузки для пункта назначения
+    let loadingUnloadingCostDelivery = 0;
+    if (!isDeliveryAtTerminal && destination.location && typeof destination.location === 'object') {
+        loadingUnloadingCostDelivery = calculateLoadingUnloadingCost(
+            direction.toLocalityId,
+            destination.location,
+            totalPayableWeight,
+            totalVolume
+        );
+        
+        // Учет стоимости разбора упаковки (если указано)
+        // TODO: Добавить расценку для разбора упаковки в структуру локалей или использовать фиксированную стоимость
+        if (destination.location.unpacking) {
+            // Пока используем фиксированную стоимость или можно добавить в расценки локалей
+            // loadingUnloadingCostDelivery += unpackingCost;
         }
     }
+
+    const totalLoadingUnloadingCost = loadingUnloadingCostPickup + loadingUnloadingCostDelivery;
 
     // 8. Коэффициенты за опасный груз и температурный режим (применяются ко всем компонентам)
     let dangerousGoodsMultiplier = 1;
@@ -701,8 +966,8 @@ function calculateTariffCost(typeTransportation) {
     deliveryCost *= totalMultiplier;
 
     // 9. Расчет итоговой стоимости согласно ТЗ
-    // По ТЗ: Общая стоимость = (Перевозка + Забор + Доставка) × (1 + Процент НДС)
-    const totalWithoutVAT = transportationCost + pickupCost + deliveryCost + additionalCosts;
+    // По ТЗ: Общая стоимость = (Перевозка + Забор + Доставка + Погрузо-разгрузочные работы) × (1 + Процент НДС)
+    const totalWithoutVAT = transportationCost + pickupCost + deliveryCost + additionalCosts + totalLoadingUnloadingCost;
     
     // Применение НДС (по умолчанию 5% согласно примеру в ТЗ)
     const vatRate = 0.05; // 5% НДС
@@ -825,10 +1090,15 @@ function calculateTariffCost(typeTransportation) {
     // Формула расчета стоимости забора
     if (pickupCost > 0 && !isPickupAtTerminal && takeDeliverFrom) {
         const pickupZone = takeDeliverFrom.tariffZone || 'D';
-        const pickupTariffGrid = tariffGrids.value.filter(tg => 
-            tg.transportType_id === typeTransportation.id && 
-            tg.numberZone === pickupZone.toString()
-        );
+        const pickupTariffGrid = tariffGrids.value.filter(tg => {
+            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            if (!transportTypeMatch) return false;
+            // Гибкое сравнение numberZone
+            const tgNumberZone = tg.NumberZone;
+            return tgNumberZone === pickupZone || 
+                   String(tgNumberZone) === String(pickupZone) ||
+                   Number(tgNumberZone) === Number(pickupZone);
+        });
         const pickupBaseCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
         const applicablePickupTariff = pickupTariffGrid.find(tg => 
             totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
@@ -842,7 +1112,7 @@ function calculateTariffCost(typeTransportation) {
                 isSubHeader: true
             });
             details.push({
-                name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone}) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicablePickupTariff.unitFrom} (unitFrom)) / ${applicablePickupTariff.step} (step)) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
+                name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicablePickupTariff.unitFrom} (unitFrom)) / ${applicablePickupTariff.step} (step)) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
                 cost: 0,
                 isDetail: true
             });
@@ -876,10 +1146,15 @@ function calculateTariffCost(typeTransportation) {
     // Формула расчета стоимости доставки
     if (deliveryCost > 0 && !isDeliveryAtTerminal && takeDeliverTo) {
         const deliveryZone = takeDeliverTo.tariffZone || 'H';
-        const deliveryTariffGrid = tariffGrids.value.filter(tg => 
-            tg.transportType_id === typeTransportation.id && 
-            tg.numberZone === deliveryZone.toString()
-        );
+        const deliveryTariffGrid = tariffGrids.value.filter(tg => {
+            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            if (!transportTypeMatch) return false;
+            // Гибкое сравнение numberZone
+            const tgNumberZone = tg.NumberZone;
+            return tgNumberZone === deliveryZone || 
+                   String(tgNumberZone) === String(deliveryZone) ||
+                   Number(tgNumberZone) === Number(deliveryZone);
+        });
         const deliveryBaseCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
         const applicableDeliveryTariff = deliveryTariffGrid.find(tg => 
             totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
@@ -893,7 +1168,7 @@ function calculateTariffCost(typeTransportation) {
                 isSubHeader: true
             });
             details.push({
-                name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone}) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicableDeliveryTariff.unitFrom} (unitFrom)) / ${applicableDeliveryTariff.step} (step)) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
+                name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения) + CEIL((${totalPayableWeight.toFixed(2)} (ПВ) - ${applicableDeliveryTariff.unitFrom} (unitFrom)) / ${applicableDeliveryTariff.step} (step)) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
                 cost: 0,
                 isDetail: true
             });
@@ -924,6 +1199,118 @@ function calculateTariffCost(typeTransportation) {
         }
     }
     
+    // Формула расчета стоимости погрузо-разгрузочных работ
+    if (totalLoadingUnloadingCost > 0) {
+        details.push({
+            name: 'ФОРМУЛА СТОИМОСТИ ПОГРУЗО-РАЗГРУЗОЧНЫХ РАБОТ',
+            cost: 0,
+            isSubHeader: true
+        });
+
+        // Детализация для пункта отправки
+        if (loadingUnloadingCostPickup > 0 && departure.location && typeof departure.location === 'object') {
+            const fromLocality = localities.value.find(loc => String(loc.id) === String(direction.fromLocalityId));
+            const floor = parseInt(departure.location.floor) || 0;
+            const noElevator = departure.location.noElevator || false;
+            const rates = fromLocality?.loadingUnloadingRates;
+            
+            const formulaParts = [];
+            let calculatedCost = 0;
+
+            // Этаж
+            if (floor > 0) {
+                const ratePerFloor = noElevator 
+                    ? (rates?.perFloorWithoutElevator || 0)
+                    : (rates?.perFloorWithElevator || 0);
+                if (ratePerFloor > 0) {
+                    const floorCost = floor * ratePerFloor;
+                    calculatedCost += floorCost;
+                    formulaParts.push(`${floor} (этаж) × ${ratePerFloor.toFixed(2)} (цена за этаж ${noElevator ? 'без лифта' : 'с лифтом'}) = ${floorCost.toFixed(2)}`);
+                }
+            }
+
+            // Вес
+            if (rates?.weightCoefficient && totalPayableWeight > 0) {
+                const weightCost = totalPayableWeight * rates.weightCoefficient;
+                calculatedCost += weightCost;
+                formulaParts.push(`${totalPayableWeight.toFixed(2)} (платный вес, кг) × ${rates.weightCoefficient.toFixed(2)} (коэффициент веса) = ${weightCost.toFixed(2)}`);
+            }
+
+            // Объем
+            if (rates?.volumeCoefficient && totalVolume > 0) {
+                const volumeCost = totalVolume * rates.volumeCoefficient;
+                calculatedCost += volumeCost;
+                formulaParts.push(`${totalVolume.toFixed(3)} (объем, м³) × ${rates.volumeCoefficient.toFixed(2)} (коэффициент объема) = ${volumeCost.toFixed(2)}`);
+            }
+
+            if (formulaParts.length > 0) {
+                details.push({
+                    name: `Стоимость погрузки (пункт отправки, "${fromLocality?.name || ''}") = ${formulaParts.join(' + ')} = ${loadingUnloadingCostPickup.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+        }
+
+        // Детализация для пункта назначения
+        if (loadingUnloadingCostDelivery > 0 && destination.location && typeof destination.location === 'object') {
+            const toLocality = localities.value.find(loc => String(loc.id) === String(direction.toLocalityId));
+            const floor = parseInt(destination.location.floor) || 0;
+            const noElevator = destination.location.noElevator || false;
+            const rates = toLocality?.loadingUnloadingRates;
+            
+            const formulaParts = [];
+            let calculatedCost = 0;
+
+            // Этаж
+            if (floor > 0) {
+                const ratePerFloor = noElevator 
+                    ? (rates?.perFloorWithoutElevator || 0)
+                    : (rates?.perFloorWithElevator || 0);
+                if (ratePerFloor > 0) {
+                    const floorCost = floor * ratePerFloor;
+                    calculatedCost += floorCost;
+                    formulaParts.push(`${floor} (этаж) × ${ratePerFloor.toFixed(2)} (цена за этаж ${noElevator ? 'без лифта' : 'с лифтом'}) = ${floorCost.toFixed(2)}`);
+                }
+            }
+
+            // Вес
+            if (rates?.weightCoefficient && totalPayableWeight > 0) {
+                const weightCost = totalPayableWeight * rates.weightCoefficient;
+                calculatedCost += weightCost;
+                formulaParts.push(`${totalPayableWeight.toFixed(2)} (платный вес, кг) × ${rates.weightCoefficient.toFixed(2)} (коэффициент веса) = ${weightCost.toFixed(2)}`);
+            }
+
+            // Объем
+            if (rates?.volumeCoefficient && totalVolume > 0) {
+                const volumeCost = totalVolume * rates.volumeCoefficient;
+                calculatedCost += volumeCost;
+                formulaParts.push(`${totalVolume.toFixed(3)} (объем, м³) × ${rates.volumeCoefficient.toFixed(2)} (коэффициент объема) = ${volumeCost.toFixed(2)}`);
+            }
+
+            if (formulaParts.length > 0) {
+                details.push({
+                    name: `Стоимость разгрузки (пункт назначения, "${toLocality?.name || ''}") = ${formulaParts.join(' + ')} = ${loadingUnloadingCostDelivery.toFixed(2)} ₽`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+
+            // TODO: Добавить расчет стоимости разбора упаковки, если указано
+            if (destination.location.unpacking) {
+                // details.push({...});
+            }
+        }
+
+        if (loadingUnloadingCostPickup > 0 && loadingUnloadingCostDelivery > 0) {
+            details.push({
+                name: `Итого погрузо-разгрузочные работы = ${loadingUnloadingCostPickup.toFixed(2)} (погрузка) + ${loadingUnloadingCostDelivery.toFixed(2)} (разгрузка) = ${totalLoadingUnloadingCost.toFixed(2)} ₽`,
+                cost: 0,
+                isDetail: true
+            });
+        }
+    }
+    
     // Итоговая формула
     details.push({
         name: 'ИТОГОВАЯ ФОРМУЛА',
@@ -941,6 +1328,9 @@ function calculateTariffCost(typeTransportation) {
     }
     if (additionalCosts > 0) {
         formulaParts.push(`${additionalCosts.toFixed(2)} (дополнительные услуги - упаковка)`);
+    }
+    if (totalLoadingUnloadingCost > 0) {
+        formulaParts.push(`${totalLoadingUnloadingCost.toFixed(2)} (погрузо-разгрузочные работы)`);
     }
     
     details.push({
@@ -995,6 +1385,13 @@ function calculateTariffCost(typeTransportation) {
             cost: additionalCosts
         });
     }
+
+    if (totalLoadingUnloadingCost > 0) {
+        details.push({
+            name: `Погрузо-разгрузочные работы: ${totalLoadingUnloadingCost.toFixed(2)} ₽`,
+            cost: totalLoadingUnloadingCost
+        });
+    }
     
     details.push({
         name: `Стоимость без НДС: ${totalWithoutVAT.toFixed(2)} ₽`,
@@ -1022,6 +1419,7 @@ function calculateTariffCost(typeTransportation) {
             pickupCost: pickupCost,
             deliveryCost: deliveryCost,
             additionalServices: additionalCosts,
+            loadingUnloadingCost: totalLoadingUnloadingCost,
             totalWithoutVAT: totalWithoutVAT,
             vatAmount: vatAmount,
             distance: 0,
@@ -1418,7 +1816,7 @@ function setAddressesFromParams() {
     }
     
     if (toId) {
-        const locality = localities.value.find(loc => loc.id == toId);
+        const locality = localities.value.find(loc => String(loc.id) === String(toId));
         if (locality) {
             formData.direction.toAddress = locality;
             formData.direction.to = formatSelectedLocalityName(locality);
