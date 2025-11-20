@@ -3,26 +3,42 @@
         <h1 class="text-h3 mb-2 px-3 xl:px-0">Калькулятор стоимости перевозки</h1>
     </div>
 
-    <div class="flex flex-col flex-1 lg:flex-row gap-8 min-w-0">
+    <!-- Форма направлений - всегда видна -->
+    <div class="bg-brand-light p-5 rounded-lg mb-6">
+        <DirectionForm 
+            :billingAddresses="billingAddresses" 
+            v-model="formData.direction"
+            @cityNotFound="handleCityNotFound"
+            @cityFound="handleCityFound" />
+    </div>
+
+    <!-- Калькулятор (показывается только если выбраны оба доступных города) -->
+    <div v-if="showCalculator" class="flex flex-col flex-1 lg:flex-row gap-8 min-w-0">
         <!-- Левая колонка: Формы ввода -->
         <div
             class="flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0">
-            <div class="bg-brand-light p-5 rounded-lg">
-                <DirectionForm :billingAddresses="billingAddresses" :localities="localities" v-model="formData.direction" />
-            </div>
-
             <!-- Пункты доставки -->
-            <div v-if="formData.direction.from || formData.direction.to" class="bg-brand-light p-5 rounded-lg">
+            <div class="bg-brand-light p-5 rounded-lg">
                 <h2 class="text-h4 font-bold mb-4">Пункты доставки</h2>
                 <div class="flex flex-col gap-6">
                     <DeliveryPointForm v-if="formData.direction.from" title="Пункт отправки" terminal-label="Сдать на терминале"
                         address-label="Забрать по адресу" name-prefix="departure" :city="formData.direction.from"
-                        :billingAddresses="billingAddresses" v-model="formData.departure" 
-                        @update:modelValue="(value) => { console.log('CalculatorPage: Обновление departure', value); formData.departure = value; }" />
+                        :locality="formData.direction.fromAddress" 
+                        :localities="[]" :billingAddresses="billingAddresses" :terminals="terminals" 
+                        :takeDelivers="takeDelivers" :transportTypes="transportTypes"
+                        v-model="formData.departure" 
+                        @update:modelValue="(value) => { console.log('CalculatorPage: Обновление departure', value); formData.departure = value; }"
+                        @addressNotFound="handleAddressNotFound"
+                        @addressFound="handleAddressFound" />
                     <DeliveryPointForm v-if="formData.direction.to" title="Пункт назначения" terminal-label="Получить на терминале"
                         address-label="Доставить по адресу" name-prefix="destination" :city="formData.direction.to"
-                        :billingAddresses="billingAddresses" v-model="formData.destination" 
-                        @update:modelValue="(value) => { console.log('CalculatorPage: Обновление destination', value); formData.destination = value; }" />
+                        :locality="formData.direction.toAddress" 
+                        :localities="[]" :billingAddresses="billingAddresses" :terminals="terminals" 
+                        :takeDelivers="takeDelivers" :transportTypes="transportTypes"
+                        v-model="formData.destination" 
+                        @update:modelValue="(value) => { console.log('CalculatorPage: Обновление destination', value); formData.destination = value; }"
+                        @addressNotFound="handleAddressNotFound"
+                        @addressFound="handleAddressFound" />
                     <ExtraOptionsForm v-model="formData.extraOptions" />
                 </div>
             </div>
@@ -40,6 +56,20 @@
             <!-- Кнопка "Рассчитать" удалена - расчет происходит автоматически -->
         </div>
     </div>
+
+    <!-- Сообщение и форма запроса (показывается если города не выбраны или недоступны) -->
+    <div v-else class="bg-brand-light p-5 rounded-lg">
+        <p class="text-gray-600 mb-4">Выберите направление выше.</p>
+        <p class="text-gray-600 mb-6">Если вашего направления нет в списке, заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.</p>
+        <ManagerRequestForm
+            :prefill-region="managerRequestData.region"
+            :prefill-locality="managerRequestData.locality"
+            :prefill-street="managerRequestData.street"
+            :regions="availableRegions"
+            :localities="availableCities"
+            @cancel="handleManagerRequestCancel"
+            @submit="handleManagerRequestSubmit" />
+    </div>
 </template>
 
 <script setup>
@@ -49,11 +79,13 @@ import CargoParamsForm from './CargoParamsForm.vue';
 import DeliveryPointForm from './DeliveryPointForm.vue';
 import ExtraOptionsForm from './ExtraOptionsForm.vue';
 import CalculationResult from './CalculationResult.vue';
+import ManagerRequestForm from './ManagerRequestForm.vue';
 import apiService from '../../../services/apiService.js';
 import { formatSelectedLocalityName } from '../../../utils/localityFormatter.js';
 
 // Новые данные из API
 const billingAddresses = ref([]);
+const terminals = ref([]);
 const localities = ref([]);
 const transportTypes = ref([]);
 const tariffGrids = ref([]);
@@ -66,6 +98,117 @@ const cargoOptions = ref([]);
 
 // Конфигурация калькулятора (оставляем для совместимости)
 const calculatorConfig = ref({});
+
+// Состояние для отслеживания недоступных направлений
+const invalidFromCity = ref(null);
+const invalidToCity = ref(null);
+const invalidFromAddress = ref(null);
+const invalidToAddress = ref(null);
+
+// Данные для формы запроса к менеджеру
+const managerRequestData = computed(() => {
+    // Используем данные из выбранных городов или invalid состояний
+    const fromCity = formData.direction.fromAddress || invalidFromCity.value;
+    const toCity = formData.direction.toAddress || invalidToCity.value;
+    
+    // Приоритет: адрес > город отправки > город назначения
+    if (invalidFromAddress.value) {
+        return {
+            region: invalidFromAddress.value.region || '',
+            locality: invalidFromAddress.value.city || '',
+            street: invalidFromAddress.value.street || ''
+        };
+    }
+    if (invalidToAddress.value) {
+        return {
+            region: invalidToAddress.value.region || '',
+            locality: invalidToAddress.value.city || '',
+            street: invalidToAddress.value.street || ''
+        };
+    }
+    if (fromCity) {
+        return {
+            region: fromCity.region || '',
+            locality: fromCity.name || fromCity.city || '',
+            street: ''
+        };
+    }
+    if (toCity) {
+        return {
+            region: toCity.region || '',
+            locality: toCity.name || toCity.city || '',
+            street: ''
+        };
+    }
+    return {
+        region: '',
+        locality: '',
+        street: ''
+    };
+});
+
+// Извлекаем уникальные города из billingAddresses для формы запроса
+const availableCities = computed(() => {
+    const citiesMap = new Map();
+    billingAddresses.value.forEach(addr => {
+        const city = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        const region = typeof addr.region === 'string' ? addr.region : (addr.region?.name || '');
+        if (city && city.trim() !== '') {
+            if (!citiesMap.has(city)) {
+                citiesMap.set(city, {
+                    name: city,
+                    region: region || ''
+                });
+            }
+        }
+    });
+    return Array.from(citiesMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+});
+
+// Извлекаем уникальные регионы из billingAddresses для формы запроса
+const availableRegions = computed(() => {
+    const regionsSet = new Set();
+    billingAddresses.value.forEach(addr => {
+        const region = typeof addr.region === 'string' ? addr.region : (addr.region?.name || '');
+        if (region && region.trim() !== '') {
+            regionsSet.add(region);
+        }
+    });
+    return Array.from(regionsSet).sort();
+});
+
+// Показывать ли калькулятор (только если выбраны оба доступных города)
+const showCalculator = computed(() => {
+    // Извлекаем названия городов из fromAddress и toAddress
+    const fromCityName = formData.direction.fromAddress 
+        ? (typeof formData.direction.fromAddress === 'string' 
+            ? formData.direction.fromAddress 
+            : (formData.direction.fromAddress.name || ''))
+        : formData.direction.from;
+    
+    const toCityName = formData.direction.toAddress 
+        ? (typeof formData.direction.toAddress === 'string' 
+            ? formData.direction.toAddress 
+            : (formData.direction.toAddress.name || ''))
+        : formData.direction.to;
+    
+    // Проверяем что оба города выбраны и есть в billingAddresses
+    if (!fromCityName || !toCityName) {
+        return false;
+    }
+    
+    const fromExists = billingAddresses.value.some(addr => {
+        const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        return addrCity === fromCityName;
+    });
+    
+    const toExists = billingAddresses.value.some(addr => {
+        const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        return addrCity === toCityName;
+    });
+    
+    return fromExists && toExists;
+});
 
 const formData = reactive({
     direction: {
@@ -280,23 +423,33 @@ function getAllTariffsWithStatus() {
         date: destination.date || ''
     };
     let distanceKm = null;
-    if (billingAddresses.value && direction.fromLocalityId && direction.toLocalityId) {
+    if (billingAddresses.value && direction.fromAddress && direction.toAddress) {
         let fromCoords = null;
         let toCoords = null;
         
-        // Ищем адреса по locality_id
-        // Приводим ID к строкам для надежного сравнения
-        const fromLocalityIdForCoords = String(direction.fromLocalityId);
-        const toLocalityIdForCoords = String(direction.toLocalityId);
+        // Извлекаем названия городов из fromAddress и toAddress
+        const fromCityName = typeof direction.fromAddress === 'string' 
+            ? direction.fromAddress 
+            : (direction.fromAddress.name || '');
+        const toCityName = typeof direction.toAddress === 'string' 
+            ? direction.toAddress 
+            : (direction.toAddress.name || '');
         
-        const fromAddress = billingAddresses.value.find(addr => String(addr.locality_id) === fromLocalityIdForCoords);
-        const toAddress = billingAddresses.value.find(addr => String(addr.locality_id) === toLocalityIdForCoords);
+        // Ищем адреса по названию города
+        const fromAddressForCoords = billingAddresses.value.find(addr => {
+            const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+            return addrLocalityName === fromCityName;
+        });
+        const toAddressForCoords = billingAddresses.value.find(addr => {
+            const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+            return addrLocalityName === toCityName;
+        });
         
-        if (fromAddress && fromAddress.coordinates) {
-            fromCoords = fromAddress.coordinates;
+        if (fromAddressForCoords && fromAddressForCoords.coordinates) {
+            fromCoords = fromAddressForCoords.coordinates;
         }
-        if (toAddress && toAddress.coordinates) {
-            toCoords = toAddress.coordinates;
+        if (toAddressForCoords && toAddressForCoords.coordinates) {
+            toCoords = toAddressForCoords.coordinates;
         }
         
         if (fromCoords && toCoords) {
@@ -337,55 +490,14 @@ function getAllTariffsWithStatus() {
         // Определяем причину недоступности
         let reason = 'Нет данных для расчета';
         
-        // Проверяем наличие адресов
-        if (!direction.fromLocalityId || !direction.toLocalityId) {
+        // Проверяем наличие адресов (используем fromAddress/toAddress вместо fromLocalityId/toLocalityId)
+        if (!direction.fromAddress || !direction.toAddress) {
             reason = 'Не выбраны города отправления и назначения';
         } else {
-            // Проверяем наличие тарифной зоны
-            // Приводим ID к строкам для надежного сравнения
-            const fromLocalityIdStr = String(direction.fromLocalityId);
-            const toLocalityIdStr = String(direction.toLocalityId);
-            const transportTypeIdStr = String(transportType.id);
-            
-            const tariffZone = tariffZones.value.find(tz => 
-                String(tz.takeLocality_id) === fromLocalityIdStr && 
-                String(tz.deliverLocality_id) === toLocalityIdStr &&
-                String(tz.transportType_id) === transportTypeIdStr
-            );
-            
-            if (!tariffZone) {
-                reason = 'Нет тарифной зоны для данного направления';
-            } else {
-                // Проверяем вес груза
-                const totalWeight = processedPackages.reduce((sum, pkg) => {
-                    const weight = parseFloat(pkg.weight) || 0;
-                    const quantity = parseInt(pkg.quantity) || 1;
-                    return sum + (weight * quantity);
-                }, 0);
-                
-                // Находим максимальный вес в тарифной сетке для данного типа перевозки
-                const tariffZoneValue = tariffZone.tariffZone;
-                const relevantTariffGrid = tariffGrids.value.filter(tg => {
-                    const transportTypeMatch = String(tg.transportType_id) === String(transportType.id);
-                    if (!transportTypeMatch) return false;
-                    // Гибкое сравнение NumberZone
-                    const tgNumberZone = tg.NumberZone;
-                    return tgNumberZone === tariffZoneValue || 
-                           String(tgNumberZone) === String(tariffZoneValue) ||
-                           Number(tgNumberZone) === Number(tariffZoneValue);
-                });
-                
-                if (relevantTariffGrid.length > 0) {
-                    const maxWeight = Math.max(...relevantTariffGrid.map(tg => tg.unitTo));
-                    if (totalWeight > maxWeight) {
-                        reason = `Превышен максимальный вес для данного тарифа (${maxWeight} кг)`;
-                    } else {
-                        reason = 'Нет данных для расчета';
-                    }
-                } else {
-                    reason = 'Нет тарифной сетки для данного направления';
-                }
-            }
+            // calculateTariffCost уже проверил все необходимые данные
+            // Если он вернул null, значит проблема в поиске takeDeliver или tariffZone
+            // Детальная причина будет в логах calculateTariffCost
+            reason = 'Нет данных для расчета. Проверьте консоль браузера для деталей.';
         }
         
         return {
@@ -467,71 +579,385 @@ function checkTariffConstraints(transportType, cargoData, direction, distanceKm)
 function calculateTariffCost(typeTransportation) {
     const { cargo, departure, destination, extraOptions, direction } = formData;
 
-    // 1. Найти адреса отправления и назначения
-    // Приводим ID к строкам для надежного сравнения
-    const fromLocalityIdForSearch = String(direction.fromLocalityId);
-    const toLocalityIdForSearch = String(direction.toLocalityId);
+    // Определяем режим доставки
+    const isPickupAtTerminal = departure.deliveryMode === 'terminal';
+    const isDeliveryAtTerminal = destination.deliveryMode === 'terminal';
     
-    const fromAddress = billingAddresses.value.find(addr => String(addr.locality_id) === fromLocalityIdForSearch);
-    const toAddress = billingAddresses.value.find(addr => String(addr.locality_id) === toLocalityIdForSearch);
+    console.log('calculateTariffCost: Начало расчета', {
+        typeTransportation: typeTransportation.name,
+        isPickupAtTerminal,
+        isDeliveryAtTerminal,
+        departure: {
+            deliveryMode: departure.deliveryMode,
+            location: departure.location,
+            locationType: typeof departure.location,
+            locationKeys: departure.location && typeof departure.location === 'object' ? Object.keys(departure.location) : null,
+            uidBillingAddress: departure.location?.uidBillingAddress
+        },
+        destination: {
+            deliveryMode: destination.deliveryMode,
+            location: destination.location,
+            locationType: typeof destination.location,
+            locationKeys: destination.location && typeof destination.location === 'object' ? Object.keys(destination.location) : null,
+            uidBillingAddress: destination.location?.uidBillingAddress
+        }
+    });
     
-    if (!fromAddress || !toAddress) {
-        console.warn('Адреса не найдены:', {
-            fromLocalityId: direction.fromLocalityId,
-            toLocalityId: direction.toLocalityId,
+    const transportTypeUid = typeTransportation.uid;
+    
+    // 1. Найти takeDeliver записи для забора и доставки
+    let takeDeliverFrom = null;
+    let takeDeliverTo = null;
+    let fromAddress = null;
+    let toAddress = null;
+    
+    // Для забора
+    if (isPickupAtTerminal) {
+        // Терминал: используем direction.fromAddress для определения города, затем находим billingAddress
+        const terminalFrom = departure.location && typeof departure.location === 'object' ? departure.location : null;
+        
+        console.log('Поиск takeDeliverFrom для терминала:', {
+            isPickupAtTerminal,
+            terminalFrom,
+            terminalFromKeys: terminalFrom ? Object.keys(terminalFrom) : null,
+            uidBillingAddress: terminalFrom?.uidBillingAddress,
+            directionFromAddress: direction.fromAddress
+        });
+        
+        // Сначала пытаемся использовать uidBillingAddress из терминала напрямую
+        if (terminalFrom && terminalFrom.uidBillingAddress) {
+            // Находим billingAddress по uidBillingAddress из терминала
+            fromAddress = billingAddresses.value.find(addr => 
+                String(addr.uid) === String(terminalFrom.uidBillingAddress)
+            );
+            
+            if (fromAddress) {
+                takeDeliverFrom = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(terminalFrom.uidBillingAddress) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                console.log('takeDeliverFrom найден через uidBillingAddress:', takeDeliverFrom ? {
+                    uid: takeDeliverFrom.uid,
+                    uidBillingAddress: takeDeliverFrom.uidBillingAddress,
+                    tariffZone: takeDeliverFrom.tariffZone
+                } : 'не найден');
+            }
+        }
+        
+        // Если не нашли через uidBillingAddress, используем direction.fromAddress
+        if (!takeDeliverFrom && direction.fromAddress) {
+            const fromCityName = typeof direction.fromAddress === 'string' 
+                ? direction.fromAddress 
+                : (direction.fromAddress.name || '');
+            
+            console.log('Поиск fromAddress для терминала через direction.fromAddress:', {
+                fromCityName,
+                directionFromAddress: direction.fromAddress
+            });
+            
+            // Находим billingAddress по названию города
+            fromAddress = billingAddresses.value.find(addr => {
+                const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                return addrLocalityName === fromCityName;
+            });
+            
+            if (fromAddress) {
+                const fromAddressUid = fromAddress.uid;
+                takeDeliverFrom = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(fromAddressUid) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                console.log('takeDeliverFrom найден через direction.fromAddress:', takeDeliverFrom ? {
+                    uid: takeDeliverFrom.uid,
+                    uidBillingAddress: takeDeliverFrom.uidBillingAddress,
+                    tariffZone: takeDeliverFrom.tariffZone
+                } : 'не найден');
+            }
+        }
+        
+        if (!takeDeliverFrom) {
+            console.warn('takeDeliverFrom не найден для терминала:', {
+                terminalFrom,
+                hasUidBillingAddress: terminalFrom?.uidBillingAddress,
+                directionFromAddress: direction.fromAddress,
+                fromAddress: fromAddress ? 'found' : 'not found'
+            });
+        }
+    } else {
+        // Адрес: терминалы находятся в той же таблице billingAddresses, просто у них не заполнена улица
+        // Используем тот же billingAddress, что и для терминала в этом городе (через uidBillingAddress из terminals)
+        if (direction.fromAddress) {
+            const fromCityName = typeof direction.fromAddress === 'string' 
+                ? direction.fromAddress 
+                : (direction.fromAddress.name || '');
+            
+            console.log('Поиск fromAddress для адреса:', {
+                fromCityName,
+                directionFromAddress: direction.fromAddress,
+                billingAddressesCount: billingAddresses.value.length
+            });
+            
+            // Находим billingAddress через терминал для этого города (терминалы в той же таблице billingAddresses)
+            const terminalsInCity = terminals.value.filter(t => {
+                const termCityName = typeof t.locality === 'string' ? t.locality : (t.locality?.name || '');
+                return termCityName === fromCityName;
+            });
+            
+            if (terminalsInCity.length > 0 && terminalsInCity[0].uidBillingAddress) {
+                // Используем billingAddress из терминала (терминалы в той же таблице billingAddresses)
+                fromAddress = billingAddresses.value.find(addr => 
+                    String(addr.uid) === String(terminalsInCity[0].uidBillingAddress)
+                );
+                
+                console.log('fromAddress найден через терминал:', fromAddress ? {
+                    uid: fromAddress.uid,
+                    locality: fromAddress.locality,
+                    terminalUidBillingAddress: terminalsInCity[0].uidBillingAddress
+                } : 'не найден');
+            }
+            
+            // Если не нашли через терминал, используем стандартный поиск по названию города
+            if (!fromAddress) {
+                fromAddress = billingAddresses.value.find(addr => {
+                    const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                    return addrLocalityName === fromCityName;
+                });
+                
+                console.log('fromAddress найден по названию города:', fromAddress ? {
+                    uid: fromAddress.uid,
+                    locality: fromAddress.locality
+                } : 'не найден');
+            }
+            
+            if (fromAddress) {
+                const fromAddressUid = fromAddress.uid;
+                takeDeliverFrom = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(fromAddressUid) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                console.log('takeDeliverFrom найден:', takeDeliverFrom ? {
+                    uid: takeDeliverFrom.uid,
+                    uidBillingAddress: takeDeliverFrom.uidBillingAddress,
+                    tariffZone: takeDeliverFrom.tariffZone
+                } : 'не найден');
+            }
+        } else {
+            console.warn('direction.fromAddress отсутствует');
+        }
+    }
+    
+    // Для доставки
+    if (isDeliveryAtTerminal) {
+        // Терминал: используем direction.toAddress для определения города, затем находим billingAddress
+        const terminalTo = destination.location && typeof destination.location === 'object' ? destination.location : null;
+        
+        console.log('Поиск takeDeliverTo для терминала:', {
+            isDeliveryAtTerminal,
+            terminalTo,
+            terminalToKeys: terminalTo ? Object.keys(terminalTo) : null,
+            uidBillingAddress: terminalTo?.uidBillingAddress,
+            directionToAddress: direction.toAddress
+        });
+        
+        // Сначала пытаемся использовать uidBillingAddress из терминала напрямую
+        if (terminalTo && terminalTo.uidBillingAddress) {
+            // Находим billingAddress по uidBillingAddress из терминала
+            toAddress = billingAddresses.value.find(addr => 
+                String(addr.uid) === String(terminalTo.uidBillingAddress)
+            );
+            
+            if (toAddress) {
+                takeDeliverTo = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(terminalTo.uidBillingAddress) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                console.log('takeDeliverTo найден через uidBillingAddress:', takeDeliverTo ? {
+                    uid: takeDeliverTo.uid,
+                    uidBillingAddress: takeDeliverTo.uidBillingAddress,
+                    tariffZone: takeDeliverTo.tariffZone
+                } : 'не найден');
+            }
+        }
+        
+        // Если не нашли через uidBillingAddress, используем direction.toAddress
+        if (!takeDeliverTo && direction.toAddress) {
+            const toCityName = typeof direction.toAddress === 'string' 
+                ? direction.toAddress 
+                : (direction.toAddress.name || '');
+            
+            console.log('Поиск toAddress для терминала через direction.toAddress:', {
+                toCityName,
+                directionToAddress: direction.toAddress
+            });
+            
+            // Находим billingAddress по названию города
+            toAddress = billingAddresses.value.find(addr => {
+                const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                return addrLocalityName === toCityName;
+            });
+            
+            if (toAddress) {
+                const toAddressUid = toAddress.uid;
+                takeDeliverTo = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(toAddressUid) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                console.log('takeDeliverTo найден через direction.toAddress:', takeDeliverTo ? {
+                    uid: takeDeliverTo.uid,
+                    uidBillingAddress: takeDeliverTo.uidBillingAddress,
+                    tariffZone: takeDeliverTo.tariffZone
+                } : 'не найден');
+            }
+        }
+        
+        if (!takeDeliverTo) {
+            console.warn('takeDeliverTo не найден для терминала:', {
+                terminalTo,
+                hasUidBillingAddress: terminalTo?.uidBillingAddress,
+                directionToAddress: direction.toAddress,
+                toAddress: toAddress ? 'found' : 'not found'
+            });
+        }
+    } else {
+        // Адрес: терминалы находятся в той же таблице billingAddresses, просто у них не заполнена улица
+        // Используем тот же billingAddress, что и для терминала в этом городе (через uidBillingAddress из terminals)
+        if (direction.toAddress) {
+            const toCityName = typeof direction.toAddress === 'string' 
+                ? direction.toAddress 
+                : (direction.toAddress.name || '');
+            
+            console.log('Поиск toAddress для адреса:', {
+                toCityName,
+                directionToAddress: direction.toAddress,
+                billingAddressesCount: billingAddresses.value.length
+            });
+            
+            // Находим billingAddress через терминал для этого города (терминалы в той же таблице billingAddresses)
+            const terminalsInCity = terminals.value.filter(t => {
+                const termCityName = typeof t.locality === 'string' ? t.locality : (t.locality?.name || '');
+                return termCityName === toCityName;
+            });
+            
+            if (terminalsInCity.length > 0 && terminalsInCity[0].uidBillingAddress) {
+                // Используем billingAddress из терминала (терминалы в той же таблице billingAddresses)
+                toAddress = billingAddresses.value.find(addr => 
+                    String(addr.uid) === String(terminalsInCity[0].uidBillingAddress)
+                );
+                
+                console.log('toAddress найден через терминал:', toAddress ? {
+                    uid: toAddress.uid,
+                    locality: toAddress.locality,
+                    terminalUidBillingAddress: terminalsInCity[0].uidBillingAddress
+                } : 'не найден');
+            }
+            
+            // Если не нашли через терминал, используем стандартный поиск по названию города
+            if (!toAddress) {
+                toAddress = billingAddresses.value.find(addr => {
+                    const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                    return addrLocalityName === toCityName;
+                });
+                
+                console.log('toAddress найден по названию города:', toAddress ? {
+                    uid: toAddress.uid,
+                    locality: toAddress.locality
+                } : 'не найден');
+            }
+            
+            if (toAddress) {
+                const toAddressUid = toAddress.uid;
+                takeDeliverTo = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(toAddressUid) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                console.log('takeDeliverTo найден:', takeDeliverTo ? {
+                    uid: takeDeliverTo.uid,
+                    uidBillingAddress: takeDeliverTo.uidBillingAddress,
+                    tariffZone: takeDeliverTo.tariffZone
+                } : 'не найден');
+            }
+        } else {
+            console.warn('direction.toAddress отсутствует');
+        }
+    }
+    
+    // Проверяем, что найдены необходимые данные
+    if (!takeDeliverFrom || !takeDeliverTo) {
+        console.warn('takeDeliver записи не найдены:', {
+            isPickupAtTerminal,
+            isDeliveryAtTerminal,
+            takeDeliverFrom: takeDeliverFrom ? 'found' : 'not found',
+            takeDeliverTo: takeDeliverTo ? 'found' : 'not found',
             fromAddress: fromAddress ? 'found' : 'not found',
-            toAddress: toAddress ? 'found' : 'not found',
-            availableLocalityIds: billingAddresses.value.map(addr => addr.locality_id).slice(0, 10)
+            toAddress: toAddress ? 'found' : 'not found'
         });
         return null;
     }
 
     // 2. Найти тарифную зону для данного направления
-    // Приводим ID к строкам для надежного сравнения
-    const fromLocalityIdStr = String(direction.fromLocalityId);
-    const toLocalityIdStr = String(direction.toLocalityId);
-    const transportTypeIdStr = String(typeTransportation.id);
+    // В tariffZones поля uidTakeLocality и uidDeliverLocality содержат uid из takeDelivers
+    let takeDeliverFromUid = takeDeliverFrom.uid;
+    let takeDeliverToUid = takeDeliverTo.uid;
     
-    const tariffZone = tariffZones.value.find(tz => 
-        String(tz.takeLocality_id) === fromLocalityIdStr && 
-        String(tz.deliverLocality_id) === toLocalityIdStr &&
-        String(tz.transportType_id) === transportTypeIdStr
+    if (!takeDeliverFromUid || !takeDeliverToUid || !transportTypeUid) {
+        console.warn('UID не найдены:', {
+            takeDeliverFromUid,
+            takeDeliverToUid,
+            transportTypeUid,
+            takeDeliverFrom: takeDeliverFrom,
+            takeDeliverTo: takeDeliverTo,
+            typeTransportation: typeTransportation
+        });
+        return null;
+    }
+    
+    console.log('Поиск тарифной зоны:', {
+        takeDeliverFromUid,
+        takeDeliverToUid,
+        transportTypeUid,
+        totalTariffZones: tariffZones.value.length,
+        sampleZones: tariffZones.value.slice(0, 3).map(tz => ({
+            uidTakeLocality: tz.uidTakeLocality,
+            uidDeliverLocality: tz.uidDeliverLocality,
+            uidTypeTransportation: tz.uidTypeTransportation
+        }))
+    });
+    
+    let tariffZone = tariffZones.value.find(tz => 
+        String(tz.uidTakeLocality) === String(takeDeliverFromUid) && 
+        String(tz.uidDeliverLocality) === String(takeDeliverToUid) &&
+        String(tz.uidTypeTransportation) === String(transportTypeUid)
     );
 
     if (!tariffZone) {
-        const allZonesForTransportType = tariffZones.value.filter(tz => String(tz.transportType_id) === transportTypeIdStr);
+        const allZonesForTransportType = tariffZones.value.filter(tz => String(tz.uidTypeTransportation) === String(transportTypeUid));
         console.warn('Тарифная зона не найдена:', {
             transportType: typeTransportation.name,
             transportTypeId: typeTransportation.id,
-            transportTypeIdStr: transportTypeIdStr,
-            fromLocalityId: direction.fromLocalityId,
-            toLocalityId: direction.toLocalityId,
+            transportTypeUid: transportTypeUid,
+            takeDeliverFromUid: takeDeliverFromUid,
+            takeDeliverToUid: takeDeliverToUid,
             totalTariffZones: tariffZones.value.length,
             zonesForTransportType: allZonesForTransportType.length,
             availableZones: allZonesForTransportType.map(tz => ({
-                takeLocality_id: tz.takeLocality_id,
-                takeLocality_idType: typeof tz.takeLocality_id,
-                deliverLocality_id: tz.deliverLocality_id,
-                deliverLocality_idType: typeof tz.deliverLocality_id,
-                transportType_id: tz.transportType_id,
-                transportType_idType: typeof tz.transportType_id
+                uidTakeLocality: tz.uidTakeLocality,
+                uidDeliverLocality: tz.uidDeliverLocality,
+                uidTypeTransportation: tz.uidTypeTransportation,
+                matchesTake: String(tz.uidTakeLocality) === String(takeDeliverFromUid),
+                matchesDeliver: String(tz.uidDeliverLocality) === String(takeDeliverToUid),
+                matchesTransport: String(tz.uidTypeTransportation) === String(transportTypeUid)
             }))
         });
         return null;
     }
 
-    // 3. Найти параметры забора/доставки
-    // По ТЗ: для забора/доставки используется зона из takeDeliver.tariffZone
-    // Ищем запись в takeDelivers по billingAddress_id и transportType_id
-    const takeDeliverFrom = takeDelivers.value.find(td => 
-        String(td.billingAddress_id) === String(fromAddress.id) && 
-        String(td.transportType_id) === String(typeTransportation.id)
-    );
-    
-    const takeDeliverTo = takeDelivers.value.find(td => 
-        String(td.billingAddress_id) === String(toAddress.id) && 
-        String(td.transportType_id) === String(typeTransportation.id)
-    );
+    console.log('Тарифная зона найдена:', {
+        uid: tariffZone.uid,
+        tariffZone: tariffZone.tariffZone,
+        uidTakeLocality: tariffZone.uidTakeLocality,
+        uidDeliverLocality: tariffZone.uidDeliverLocality,
+        coefficient: tariffZone.coefficient
+    });
     
     // Логирование для отладки (будет использовано позже в расчете забора/доставки)
 
@@ -546,10 +972,8 @@ function calculateTariffCost(typeTransportation) {
     }
     
     const relevantTarifGrid = tariffGrids.value.filter(tg => {
-        // Сравниваем transportType_id - приводим оба к числу для надежности
-        const tgTransportTypeId = Number(tg.transportType_id);
-        const expectedTransportTypeId = Number(typeTransportation.id);
-        if (tgTransportTypeId !== expectedTransportTypeId) return false;
+        const transportTypeUid = typeTransportation.uid;
+        if (String(tg.transportType_uid) !== String(transportTypeUid)) return false;
         
         // Гибкое сравнение NumberZone: может быть числом или строкой
         const tgNumberZone = tg.NumberZone;
@@ -573,10 +997,12 @@ function calculateTariffCost(typeTransportation) {
 
     if (relevantTarifGrid.length === 0) {
         // Детальная диагностика
-        const expectedTransportTypeIdNum = Number(typeTransportation.id);
+        const transportTypeUid = typeTransportation.uid;
         const expectedZoneNum = Number(tariffZoneValue);
         
-        const allGridsForTransportType = tariffGrids.value.filter(tg => Number(tg.transportType_id) === expectedTransportTypeIdNum);
+        const allGridsForTransportType = tariffGrids.value.filter(tg => {
+            return String(tg.transportType_uid) === String(transportTypeUid);
+        });
         const matchingZones = allGridsForTransportType.filter(tg => {
             const tgNumberZone = tg.NumberZone;
             const expectedZone = tariffZoneValue;
@@ -600,7 +1026,7 @@ function calculateTariffCost(typeTransportation) {
         console.warn('Тарифная сетка не найдена:', {
             transportType: typeTransportation.name,
             transportTypeId: typeTransportation.id,
-            expectedTransportTypeIdNum: expectedTransportTypeIdNum,
+            transportTypeUid: transportTypeUid,
             tariffZone: tariffZone.tariffZone,
             tariffZoneValue: tariffZoneValue,
             expectedZoneNum: expectedZoneNum,
@@ -612,16 +1038,15 @@ function calculateTariffCost(typeTransportation) {
                 const tgZoneNum = Number(tg.NumberZone);
                 const isZoneMatch = !isNaN(tgZoneNum) && !isNaN(expectedZoneNum) && tgZoneNum === expectedZoneNum;
                 return {
-                    transportType_id: tg.transportType_id,
-                    transportType_idType: typeof tg.transportType_id,
-                    transportType_idNum: Number(tg.transportType_id),
+                    transportType_uid: tg.transportType_uid,
+                    transportType_uidType: typeof tg.transportType_uid,
                     NumberZone: tg.NumberZone,
                     NumberZoneType: typeof tg.NumberZone,
                     NumberZoneNum: tgZoneNum,
                     expectedZoneNum: expectedZoneNum,
                     isNaN_tgZone: isNaN(tgZoneNum),
                     isNaN_expected: isNaN(expectedZoneNum),
-                    matchesTransportType: Number(tg.transportType_id) === expectedTransportTypeIdNum,
+                    matchesTransportType: String(tg.transportType_uid) === String(transportTypeUid),
                     matchesZone: isZoneMatch
                 };
             }),
@@ -775,11 +1200,13 @@ function calculateTariffCost(typeTransportation) {
         transportationZone: tariffZone.tariffZone,
         transportationZoneSource: 'tariffZones.tariffZone',
         tariffZone: {
-            id: tariffZone.id,
-            takeLocality_id: tariffZone.takeLocality_id,
-            deliverLocality_id: tariffZone.deliverLocality_id,
+            uid: tariffZone.uid || null,
+            uidTakeLocality: tariffZone.uidTakeLocality,
+            uidDeliverLocality: tariffZone.uidDeliverLocality,
             tariffZone: tariffZone.tariffZone,
-            coefficient: tariffZone.coefficient
+            coefficient: tariffZone.coefficient,
+            minTermDays: tariffZone.minTermDays,
+            maxTermDays: tariffZone.maxTermDays
         },
         relevantTariffGrid: relevantTarifGrid.map(tg => ({
             NumberZone: tg.NumberZone,
@@ -814,8 +1241,8 @@ function calculateTariffCost(typeTransportation) {
     // 7.2. Расчет стоимости забора (если не терминал)
     // По ТЗ: для забора используется зона из takeDeliver.tariffZone (например, "D")
     // Зона перевозки (tariffZone.tariffZone) используется ТОЛЬКО для перевозки между городами
+    // Если выбран терминал - забор не считается
     let pickupCost = 0;
-    const isPickupAtTerminal = departure.deliveryMode === 'terminal';
     
     if (!isPickupAtTerminal && takeDeliverFrom) {
         // ВАЖНО: Используем зону из takeDeliver, НЕ зону перевозки
@@ -825,7 +1252,7 @@ function calculateTariffCost(typeTransportation) {
         // Ищем тарифную сетку по зоне из takeDeliver
         // ВАЖНО: используем поле NumberZone из тарифной сетки и сравниваем с tariffZone из takeDeliver
         const pickupTariffGrid = tariffGrids.value.filter(tg => {
-            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            const transportTypeMatch = String(tg.transportType_uid) === String(transportTypeUid);
             if (!transportTypeMatch) return false;
             
             // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
@@ -854,13 +1281,15 @@ function calculateTariffCost(typeTransportation) {
             
             // Детальное логирование для отладки
             console.log('Расчет стоимости забора:', {
-                fromAddressId: fromAddress.id,
+                fromAddressUid: fromAddress?.uid || 'N/A',
+                fromAddressUid: fromAddress?.uid || 'N/A',
+                isPickupAtTerminal,
                 transportTypeId: typeTransportation.id,
                 pickupZone: pickupZone,
                 pickupZoneSource: 'takeDeliver.tariffZone',
                 takeDeliverFrom: {
                     id: takeDeliverFrom.id,
-                    billingAddress_id: takeDeliverFrom.billingAddress_id,
+                    uidBillingAddress: takeDeliverFrom.uidBillingAddress,
                     tariffZone: takeDeliverFrom.tariffZone,
                     surcharge: takeDeliverFrom.surcharge,
                     coefficientSurcharge: takeDeliverFrom.coefficientSurcharge
@@ -907,7 +1336,7 @@ function calculateTariffCost(typeTransportation) {
         } else {
             // ВАЛИДАЦИЯ: зона из takeDeliver не найдена в тарифной сетке
             const availableZones = [...new Set(tariffGrids.value
-                .filter(tg => String(tg.transportType_id) === String(typeTransportation.id))
+                .filter(tg => String(tg.transportType_uid) === String(transportTypeUid))
                 .map(tg => String(tg.NumberZone)))];
             
             console.error('❌ ОШИБКА: Тарифная сетка для забора не найдена!', {
@@ -915,7 +1344,8 @@ function calculateTariffCost(typeTransportation) {
                 transportTypeId: typeTransportation.id,
                 pickupZone: pickupZone,
                 pickupZoneSource: 'takeDeliver.tariffZone',
-                fromAddressId: fromAddress.id,
+                fromAddressUid: fromAddress?.uid || 'N/A',
+                isPickupAtTerminal,
                 takeDeliverFrom: takeDeliverFrom,
                 availableZones: availableZones,
                 message: `Зона "${pickupZone}" из takeDeliver не найдена в тарифной сетке. Доступные зоны: ${availableZones.join(', ')}`
@@ -930,11 +1360,12 @@ function calculateTariffCost(typeTransportation) {
         }
     } else if (!isPickupAtTerminal && !takeDeliverFrom) {
         console.warn('Данные takeDeliver для забора не найдены:', {
-            fromAddressId: fromAddress.id,
+            fromAddressUid: fromAddress?.uid || 'N/A',
+            isPickupAtTerminal,
             transportTypeId: typeTransportation.id,
-            availableTakeDelivers: takeDelivers.value.filter(td => String(td.transportType_id) === String(typeTransportation.id)).map(td => ({
-                billingAddress_id: td.billingAddress_id,
-                transportType_id: td.transportType_id,
+            availableTakeDelivers: takeDelivers.value.filter(td => String(td.uidTypeTransportation) === String(typeTransportation.uid)).map(td => ({
+                uidBillingAddress: td.uidBillingAddress,
+                uidTypeTransportation: td.uidTypeTransportation,
                 tariffZone: td.tariffZone
             }))
         });
@@ -943,8 +1374,8 @@ function calculateTariffCost(typeTransportation) {
     // 7.3. Расчет стоимости доставки (если не терминал)
     // По ТЗ: для доставки используется зона из takeDeliver.tariffZone (например, "H")
     // Зона перевозки (tariffZone.tariffZone) используется ТОЛЬКО для перевозки между городами
+    // Если выбран терминал - доставка не считается
     let deliveryCost = 0;
-    const isDeliveryAtTerminal = destination.deliveryMode === 'terminal';
     
     if (!isDeliveryAtTerminal && takeDeliverTo) {
         // ВАЖНО: Используем зону из takeDeliver, НЕ зону перевозки
@@ -954,7 +1385,7 @@ function calculateTariffCost(typeTransportation) {
         // Ищем тарифную сетку по зоне из takeDeliver
         // ВАЖНО: используем поле NumberZone из тарифной сетки и сравниваем с tariffZone из takeDeliver
         const deliveryTariffGrid = tariffGrids.value.filter(tg => {
-            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            const transportTypeMatch = String(tg.transportType_uid) === String(transportTypeUid);
             if (!transportTypeMatch) return false;
             
             // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
@@ -983,13 +1414,15 @@ function calculateTariffCost(typeTransportation) {
             
             // Детальное логирование для отладки
             console.log('Расчет стоимости доставки:', {
-                toAddressId: toAddress.id,
+                toAddressUid: toAddress?.uid || 'N/A',
+                toAddressUid: toAddress?.uid || 'N/A',
+                isDeliveryAtTerminal,
                 transportTypeId: typeTransportation.id,
                 deliveryZone: deliveryZone,
                 deliveryZoneSource: 'takeDeliver.tariffZone',
                 takeDeliverTo: {
                     id: takeDeliverTo.id,
-                    billingAddress_id: takeDeliverTo.billingAddress_id,
+                    uidBillingAddress: takeDeliverTo.uidBillingAddress,
                     tariffZone: takeDeliverTo.tariffZone,
                     surcharge: takeDeliverTo.surcharge,
                     coefficientSurcharge: takeDeliverTo.coefficientSurcharge
@@ -1036,7 +1469,7 @@ function calculateTariffCost(typeTransportation) {
         } else {
             // ВАЛИДАЦИЯ: зона из takeDeliver не найдена в тарифной сетке
             const availableZones = [...new Set(tariffGrids.value
-                .filter(tg => String(tg.transportType_id) === String(typeTransportation.id))
+                .filter(tg => String(tg.transportType_uid) === String(transportTypeUid))
                 .map(tg => String(tg.NumberZone)))];
             
             console.error('❌ ОШИБКА: Тарифная сетка для доставки не найдена!', {
@@ -1044,7 +1477,8 @@ function calculateTariffCost(typeTransportation) {
                 transportTypeId: typeTransportation.id,
                 deliveryZone: deliveryZone,
                 deliveryZoneSource: 'takeDeliver.tariffZone',
-                toAddressId: toAddress.id,
+                toAddressUid: toAddress?.uid || 'N/A',
+                isDeliveryAtTerminal,
                 takeDeliverTo: takeDeliverTo,
                 availableZones: availableZones,
                 message: `Зона "${deliveryZone}" из takeDeliver не найдена в тарифной сетке. Доступные зоны: ${availableZones.join(', ')}`
@@ -1059,11 +1493,12 @@ function calculateTariffCost(typeTransportation) {
         }
     } else if (!isDeliveryAtTerminal && !takeDeliverTo) {
         console.warn('Данные takeDeliver для доставки не найдены:', {
-            toAddressId: toAddress.id,
+            toAddressUid: toAddress?.uid || 'N/A',
+            isDeliveryAtTerminal,
             transportTypeId: typeTransportation.id,
-            availableTakeDelivers: takeDelivers.value.filter(td => String(td.transportType_id) === String(typeTransportation.id)).map(td => ({
-                billingAddress_id: td.billingAddress_id,
-                transportType_id: td.transportType_id,
+            availableTakeDelivers: takeDelivers.value.filter(td => String(td.uidTypeTransportation) === String(typeTransportation.uid)).map(td => ({
+                uidBillingAddress: td.uidBillingAddress,
+                uidTypeTransportation: td.uidTypeTransportation,
                 tariffZone: td.tariffZone
             }))
         });
@@ -1437,7 +1872,8 @@ function calculateTariffCost(typeTransportation) {
     if (pickupCost > 0 && !isPickupAtTerminal && takeDeliverFrom) {
         const pickupZone = takeDeliverFrom.tariffZone || 'D';
         const pickupTariffGrid = tariffGrids.value.filter(tg => {
-            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            const transportTypeUid = typeTransportation.uid;
+            const transportTypeMatch = String(tg.transportType_uid) === String(transportTypeUid);
             if (!transportTypeMatch) return false;
             // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
             const tgNumberZone = tg.NumberZone; // Поле NumberZone из тарифной сетки
@@ -1545,7 +1981,8 @@ function calculateTariffCost(typeTransportation) {
     if (deliveryCost > 0 && !isDeliveryAtTerminal && takeDeliverTo) {
         const deliveryZone = takeDeliverTo.tariffZone || 'H';
         const deliveryTariffGrid = tariffGrids.value.filter(tg => {
-            const transportTypeMatch = String(tg.transportType_id) === String(typeTransportation.id);
+            const transportTypeUid = typeTransportation.uid;
+            const transportTypeMatch = String(tg.transportType_uid) === String(transportTypeUid);
             if (!transportTypeMatch) return false;
             // Гибкое сравнение NumberZone - должно соответствовать зоне из takeDeliver
             const tgNumberZone = tg.NumberZone; // Поле NumberZone из тарифной сетки
@@ -1935,9 +2372,13 @@ async function fetchData() {
         
         const cargoOptionsData = await apiService.getCargoOptions();
         console.log('cargoOptions загружены:', cargoOptionsData?.length || 0);
+        
+        const terminalsData = await apiService.getTerminals();
+        console.log('terminals загружены:', terminalsData?.length || 0);
 
         // Сохраняем данные
         billingAddresses.value = billingAddressesData || [];
+        terminals.value = terminalsData || [];
         localities.value = localitiesData || [];
         transportTypes.value = transportTypesData || [];
         tariffGrids.value = tariffGridsData || [];
@@ -2039,8 +2480,8 @@ function isFormDataValid() {
     // Проверяем основные поля - города отправления и назначения
     if (!direction.from || !direction.to) return false;
     
-    // Проверяем наличие locality_id для корректного расчета
-    if (!direction.fromLocalityId || !direction.toLocalityId) return false;
+    // Проверяем наличие адресов для корректного расчета (используем fromAddress/toAddress вместо fromLocalityId/toLocalityId)
+    if (!direction.fromAddress || !direction.toAddress) return false;
 
     // Проверяем обязательные поля груза согласно ТЗ
     if (!cargo.packages || cargo.packages.length === 0) return false;
@@ -2136,7 +2577,17 @@ function calculateCost() {
 
 // Reactive calculation result
 const calculationResult = computed(() => {
+    console.log('calculationResult: Начало вычисления', {
+        hasTransportTypes: !!transportTypes.value,
+        from: formData.direction.from,
+        to: formData.direction.to,
+        fromAddress: formData.direction.fromAddress,
+        toAddress: formData.direction.toAddress,
+        showCalculator: showCalculator.value
+    });
+    
     if (!transportTypes.value || !formData.direction.from || !formData.direction.to) {
+        console.log('calculationResult: Не заполнены города или нет типов транспорта');
         return {
             isValid: false,
             message: 'Заполните города отправления и назначения',
@@ -2147,7 +2598,13 @@ const calculationResult = computed(() => {
     }
     
     // Проверяем обязательные поля груза
-    if (!isFormDataValid()) {
+    const isValid = isFormDataValid();
+    console.log('calculationResult: Проверка валидности формы', {
+        isValid,
+        cargoPackages: formData.cargo?.packages?.length || 0
+    });
+    
+    if (!isValid) {
         const missingFields = [];
         const { cargo } = formData;
         
@@ -2185,11 +2642,24 @@ const calculationResult = computed(() => {
         };
     }
     
+    console.log('calculationResult: Вызов getAllTariffsWithStatus');
     const allTariffs = getAllTariffsWithStatus();
+    console.log('calculationResult: Получено тарифов', {
+        total: allTariffs.length,
+        available: allTariffs.filter(t => t.isAvailable).length,
+        unavailable: allTariffs.filter(t => !t.isAvailable).length
+    });
+    
     // Считаем стоимость только для доступных тарифов
     const tariffCalculations = allTariffs.map(tariff => {
         if (tariff.isAvailable) {
+            console.log('calculationResult: Расчет стоимости для тарифа', tariff.name);
             const calculation = calculateTariffCost(tariff);
+            console.log('calculationResult: Результат расчета', {
+                tariff: tariff.name,
+                hasCalculation: !!calculation,
+                totalCost: calculation?.totalCost || null
+            });
             return {
                 ...tariff,
                 cost: calculation ? calculation.totalCost : null,
@@ -2268,6 +2738,89 @@ function printResult() {
 
 function selectTariff(tariffUid) {
     formData.selectedTariff = tariffUid;
+}
+
+// Обработчики событий валидации направлений
+function handleCityNotFound(data) {
+    console.log('City not found:', data);
+    if (data.type === 'from') {
+        invalidFromCity.value = {
+            city: data.city,
+            locality: data.locality,
+            region: data.region
+        };
+        // Очищаем валидные данные направления
+        formData.direction.from = '';
+        formData.direction.fromAddress = null;
+        formData.direction.fromLocalityId = null;
+    } else if (data.type === 'to') {
+        invalidToCity.value = {
+            city: data.city,
+            locality: data.locality,
+            region: data.region
+        };
+        // Очищаем валидные данные направления
+        formData.direction.to = '';
+        formData.direction.toAddress = null;
+        formData.direction.toLocalityId = null;
+    }
+}
+
+function handleCityFound(data) {
+    console.log('City found:', data);
+    // Очищаем invalid состояние для найденного города
+    if (data.type === 'from') {
+        invalidFromCity.value = null;
+    } else if (data.type === 'to') {
+        invalidToCity.value = null;
+    }
+}
+
+function handleAddressNotFound(data) {
+    console.log('Address not found:', data);
+    if (data.type === 'departure') {
+        invalidFromAddress.value = {
+            city: data.city,
+            street: data.street,
+            locality: data.locality,
+            region: data.region
+        };
+    } else if (data.type === 'destination') {
+        invalidToAddress.value = {
+            city: data.city,
+            street: data.street,
+            locality: data.locality,
+            region: data.region
+        };
+    }
+}
+
+function handleAddressFound(data) {
+    console.log('Address found:', data);
+    // Очищаем invalid состояние для найденного адреса
+    if (data.type === 'departure') {
+        invalidFromAddress.value = null;
+    } else if (data.type === 'destination') {
+        invalidToAddress.value = null;
+    }
+}
+
+// Обработчики формы запроса к менеджеру
+function handleManagerRequestCancel() {
+    // Очищаем все недоступные направления
+    invalidFromCity.value = null;
+    invalidToCity.value = null;
+    invalidFromAddress.value = null;
+    invalidToAddress.value = null;
+}
+
+function handleManagerRequestSubmit(formData) {
+    console.log('Manager request submitted:', formData);
+    // TODO: Отправить данные на сервер
+    // Пока просто логируем
+    alert('Запрос отправлен! Наш менеджер свяжется с вами в ближайшее время.');
+    // Очищаем форму после отправки
+    handleManagerRequestCancel();
 }
 
 // Функция для установки адресов из GET-параметров

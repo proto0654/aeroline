@@ -349,6 +349,7 @@ export async function initMap(basePath) {
       
       const apiData = await response.json();
       // Конвертируем данные API в формат, ожидаемый картой
+      // В новой структуре billingAddresses содержит поле locality как строку
       offices = apiData.map(addr => ({
         city: addr.locality || addr.city || '',
         address: addr.street ? `${addr.street} ${addr.houseNumber || ''}`.trim() : (addr.address || ''),

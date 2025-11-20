@@ -44,8 +44,26 @@
 
             <!-- Режим адреса -->
             <template v-if="deliveryMode === 'address'">
-                <!-- Улица -->
-                <div class="md:col-span-2">
+                <!-- Форма запроса улицы (если нет доступных улиц) -->
+                <div v-if="!hasAvailableStreets" class="md:col-span-2 mb-4">
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p class="text-sm text-yellow-800 mb-4">
+                            Для выбранного города нет доступных улиц в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.
+                        </p>
+                        <ManagerRequestForm
+                            :compact="true"
+                            :show-street-field="true"
+                            :prefill-region="currentRegion"
+                            :prefill-locality="currentCityName"
+                            :prefill-street="state.address.street"
+                            :regions="availableRegions"
+                            :localities="availableCities"
+                            @submit="handleStreetRequestSubmit" />
+                    </div>
+                </div>
+
+                <!-- Поле ввода улицы (всегда видно, если есть доступные улицы) -->
+                <div v-if="hasAvailableStreets" class="md:col-span-2">
                     <AutocompleteInput 
                         ref="streetInputRef"
                         :name="`${namePrefix}_street`" 
@@ -63,6 +81,24 @@
                         @update:modelValue="onStreetInputChange"
                         :showResetButton="true"
                         @reset="onStreetReset" />
+                    
+                    <!-- Форма запроса улицы (показывается динамически, если введенная улица не найдена) -->
+                    <div v-if="streetNotFound && state.address.street && state.address.street.trim()" class="mt-4">
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <p class="text-sm text-yellow-800 mb-4">
+                                Введенная улица не найдена в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.
+                            </p>
+                            <ManagerRequestForm
+                                :compact="true"
+                                :show-street-field="true"
+                                :prefill-region="currentRegion"
+                                :prefill-locality="currentCityName"
+                                :prefill-street="state.address.street"
+                                :regions="availableRegions"
+                                :localities="availableCities"
+                                @submit="handleStreetRequestSubmit" />
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Дом, Строение, Офис/кв. -->
@@ -176,22 +212,35 @@ import SelectInput from '../../forms/SelectInput.vue';
 import CheckboxInput from '../../forms/CheckboxInput.vue';
 import TextareaInput from '../../forms/TextareaInput.vue';
 import { formatPVZName, formatPVZHTML, getPVZKey } from '../../../utils/pvzFormatter.js';
+import { formatSelectedLocalityName } from '../../../utils/localityFormatter.js';
 import apiService from '../../../services/apiService.js';
+import ManagerRequestForm from './ManagerRequestForm.vue';
 
 const props = defineProps({
     title: { type: String, required: true },
     terminalLabel: { type: String, required: true },
     addressLabel: { type: String, required: true },
     city: { type: String, required: true },
+    locality: { type: Object, default: null }, // Объект locality для точного сравнения
+    localities: { type: Array, default: () => [] }, // Массив всех localities для поиска по ID
     billingAddresses: { type: Array, required: true },
+    terminals: { type: Array, default: () => [] },
+    takeDelivers: { type: Array, default: () => [] },
+    transportTypes: { type: Array, default: () => [] },
     modelValue: { type: Object, required: true },
     namePrefix: { type: String, required: true } // e.g., 'departure' or 'destination'
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'addressNotFound', 'addressFound']);
 
 // Флаг для предотвращения циклических обновлений
 let isUpdatingFromParent = false;
+
+// Таймер для отложенной валидации при вводе улицы
+let streetValidationTimer = null;
+
+// Состояние для отслеживания, что введенная улица не найдена
+const streetNotFound = ref(false);
 
 // Refs для полей ввода
 const terminalInputRef = ref(null);
@@ -234,7 +283,12 @@ const location = computed({
     get() {
         // Используется только для режима терминала
         if (deliveryMode.value === 'terminal') {
-            return state.value.terminal.displayText || state.value.terminal.searchText || '';
+            // Если есть выбранный терминал, возвращаем его отформатированное имя
+            if (state.value.terminal.selectedPVZ) {
+                return state.value.terminal.displayText || formatPVZName(state.value.terminal.selectedPVZ);
+            }
+            // Иначе возвращаем текст поиска
+            return state.value.terminal.searchText || '';
         }
         return '';
     },
@@ -243,13 +297,59 @@ const location = computed({
         
         // Используется только для режима терминала
         if (deliveryMode.value === 'terminal') {
-            state.value.terminal.searchText = newValue;
-            // Если пользователь вводит текст, сбрасываем выбранный ПВЗ
-            if (newValue && !state.value.terminal.selectedPVZ) {
-                state.value.terminal.selectedPVZ = null;
-                state.value.terminal.displayText = '';
+            // Если новое значение - это объект терминала (из AutocompleteInput при выборе)
+            if (newValue && typeof newValue === 'object' && (newValue.uidBillingAddress || newValue.uid)) {
+                console.log('DeliveryPointForm: location set получил объект терминала', newValue);
+                state.value.terminal.selectedPVZ = newValue;
+                state.value.terminal.displayText = formatPVZName(newValue);
+                state.value.terminal.searchText = '';
+                emitCurrentState();
+                return;
             }
-            emitCurrentState();
+            
+            // Если новое значение - это строка (пользователь вводит текст или выбрал из списка)
+            if (typeof newValue === 'string') {
+                // Пытаемся найти терминал по строке в списке доступных терминалов
+                // Проверяем по representation (основное поле терминала) и по отформатированному имени
+                const foundTerminal = terminalOptions.value.find(term => {
+                    const termRepresentation = term.representation || '';
+                    const termFormatted = formatPVZName(term);
+                    // Сравниваем нормализованные значения (без учета регистра и пробелов)
+                    const normalizedNewValue = newValue.trim().toLowerCase();
+                    const normalizedRepresentation = termRepresentation.trim().toLowerCase();
+                    const normalizedFormatted = termFormatted.trim().toLowerCase();
+                    return normalizedRepresentation === normalizedNewValue || 
+                           normalizedFormatted === normalizedNewValue ||
+                           termRepresentation === newValue ||
+                           termFormatted === newValue;
+                });
+                
+                if (foundTerminal) {
+                    console.log('DeliveryPointForm: Найден терминал по строке', {
+                        searchValue: newValue,
+                        foundTerminal,
+                        representation: foundTerminal.representation,
+                        uidBillingAddress: foundTerminal.uidBillingAddress
+                    });
+                    state.value.terminal.selectedPVZ = foundTerminal;
+                    state.value.terminal.displayText = foundTerminal.representation || formatPVZName(foundTerminal);
+                    state.value.terminal.searchText = '';
+                    emitCurrentState();
+                    return;
+                }
+                
+                // Если терминал не найден, это текст поиска пользователя
+                const isFormattedTerminal = state.value.terminal.selectedPVZ && 
+                    (state.value.terminal.selectedPVZ.representation === newValue || 
+                     formatPVZName(state.value.terminal.selectedPVZ) === newValue);
+                
+                if (!isFormattedTerminal) {
+                    // Это новый текст поиска, а не форматированное значение
+                    state.value.terminal.searchText = newValue;
+                    state.value.terminal.selectedPVZ = null;
+                    state.value.terminal.displayText = '';
+                }
+            }
         }
     }
 });
@@ -316,13 +416,24 @@ function initializeState() {
     
     // Инициализируем состояние в зависимости от типа location
     if (modelValue.location && typeof modelValue.location === 'object') {
-        // Проверяем, это ПВЗ объект или объект адреса
-        if (modelValue.location.street && modelValue.location.phone && !modelValue.location.house) {
-            // Это ПВЗ объект - инициализируем терминал
+        // Проверяем, это терминал или объект адреса
+        // Терминал имеет uidBillingAddress или uid, но не имеет house
+        if ((modelValue.location.uidBillingAddress || modelValue.location.uid) && !modelValue.location.house) {
+            // Это терминал - инициализируем терминал
             state.value.terminal.selectedPVZ = modelValue.location;
             state.value.terminal.displayText = formatPVZName(modelValue.location);
             state.value.terminal.searchText = '';
-            console.log('DeliveryPointForm: Инициализирован ПВЗ', state.value.terminal);
+            console.log('DeliveryPointForm: Инициализирован терминал', {
+                terminal: state.value.terminal,
+                location: modelValue.location,
+                hasUidBillingAddress: !!modelValue.location.uidBillingAddress
+            });
+        } else if (modelValue.location.street && modelValue.location.phone && !modelValue.location.house) {
+            // Это старый формат ПВЗ - инициализируем терминал
+            state.value.terminal.selectedPVZ = modelValue.location;
+            state.value.terminal.displayText = formatPVZName(modelValue.location);
+            state.value.terminal.searchText = '';
+            console.log('DeliveryPointForm: Инициализирован ПВЗ (старый формат)', state.value.terminal);
         } else if (modelValue.location.street !== undefined || modelValue.location.house !== undefined) {
             // Это объект адреса - инициализируем поля адреса
             state.value.address.street = modelValue.location.street || '';
@@ -357,20 +468,177 @@ function initializeState() {
 
 // Filter terminals based on the selected city
 const terminalOptions = computed(() => {
-    if (!props.city) return [];
+    if (!props.city || !props.terminals || props.terminals.length === 0) return [];
     
-    const filtered = props.billingAddresses.filter(addr => {
-        // Check if locality object exists and name matches
-        if (addr.locality && typeof addr.locality === 'object') {
-            return addr.locality.name === props.city;
-        }
-        // Fallback for old structure
-        return addr.locality === props.city;
+    // Используем объект locality если он передан, иначе извлекаем название из строки
+    let cityName = null;
+    let localityObj = props.locality;
+    
+    // Если locality не передан, но есть localities массив, пробуем найти по city строке
+    if (!localityObj && props.localities && props.localities.length > 0) {
+        // Пробуем найти locality по отформатированному имени
+        const cityNameFromString = extractCityNameFromFormattedString(props.city);
+        localityObj = props.localities.find(loc => {
+            const formattedName = formatSelectedLocalityName(loc);
+            const extractedFromFormatted = extractCityNameFromFormattedString(formattedName);
+            return extractedFromFormatted === cityNameFromString || loc.name === cityNameFromString;
+        });
+    }
+    
+    if (localityObj && localityObj.name) {
+        // Используем точное имя из объекта locality
+        cityName = localityObj.name;
+    } else {
+        // Извлекаем название города из отформатированной строки
+        cityName = extractCityNameFromFormattedString(props.city);
+    }
+    
+    // Фильтруем терминалы по городу (поле locality содержит только название города)
+    // Используем нормализацию для сравнения (без учета регистра и пробелов)
+    const normalizedCityName = cityName ? cityName.toLowerCase().trim() : '';
+    
+    const filtered = props.terminals.filter(terminal => {
+        if (!terminal.locality) return false;
+        const normalizedTerminalLocality = terminal.locality.toLowerCase().trim();
+        return normalizedTerminalLocality === normalizedCityName;
     });
     
+    // Дополнительная проверка: если не нашли точное совпадение, пробуем частичное
+    let filteredWithPartial = filtered;
+    if (filtered.length === 0 && normalizedCityName) {
+        filteredWithPartial = props.terminals.filter(terminal => {
+            if (!terminal.locality) return false;
+            const normalizedTerminalLocality = terminal.locality.toLowerCase().trim();
+            // Проверяем, начинается ли название терминала с названия города или наоборот
+            return normalizedTerminalLocality.includes(normalizedCityName) || 
+                   normalizedCityName.includes(normalizedTerminalLocality);
+        });
+    }
     
-    return filtered;
+    console.log('Фильтрация терминалов:', {
+        city: props.city,
+        locality: localityObj,
+        localityName: localityObj?.name,
+        cityName: cityName,
+        normalizedCityName: normalizedCityName,
+        terminalsCount: props.terminals.length,
+        filteredCount: filtered.length,
+        filteredWithPartialCount: filteredWithPartial.length,
+        allTerminalLocalities: [...new Set(props.terminals.map(t => t.locality).filter(Boolean))].slice(0, 10),
+        sampleTerminals: props.terminals.slice(0, 5).map(t => ({ 
+            locality: t.locality, 
+            normalizedLocality: t.locality?.toLowerCase().trim(),
+            representation: t.representation 
+        })),
+        filteredTerminals: filteredWithPartial.slice(0, 3).map(t => ({ 
+            locality: t.locality, 
+            representation: t.representation 
+        }))
+    });
+    
+    return filteredWithPartial;
 });
+
+// Проверка доступности улиц для выбранного города
+const hasAvailableStreets = computed(() => {
+    if (!props.city || !props.billingAddresses || props.billingAddresses.length === 0) {
+        return false;
+    }
+    
+    const cityName = props.locality?.name || extractCityNameFromFormattedString(props.city);
+    if (!cityName) return false;
+    
+    return props.billingAddresses.some(addr => {
+        const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        return addrCity === cityName && addr.street && addr.street.trim() !== '';
+    });
+});
+
+// Извлекаем уникальные города из billingAddresses для формы запроса
+const availableCities = computed(() => {
+    const citiesMap = new Map();
+    props.billingAddresses.forEach(addr => {
+        const city = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        const region = typeof addr.region === 'string' ? addr.region : (addr.region?.name || '');
+        if (city && city.trim() !== '') {
+            if (!citiesMap.has(city)) {
+                citiesMap.set(city, {
+                    name: city,
+                    region: region || ''
+                });
+            }
+        }
+    });
+    return Array.from(citiesMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+});
+
+// Извлекаем уникальные регионы из billingAddresses для формы запроса
+const availableRegions = computed(() => {
+    const regionsSet = new Set();
+    if (!props.billingAddresses || !Array.isArray(props.billingAddresses)) {
+        return [];
+    }
+    props.billingAddresses.forEach(addr => {
+        if (!addr) return;
+        const region = typeof addr.region === 'string' ? addr.region : (addr.region?.name || '');
+        if (region && typeof region === 'string' && region.trim() !== '') {
+            regionsSet.add(region);
+        }
+    });
+    return Array.from(regionsSet).sort();
+});
+
+// Текущий регион и город для предзаполнения формы
+const currentCityName = computed(() => {
+    return props.locality?.name || extractCityNameFromFormattedString(props.city);
+});
+
+const currentRegion = computed(() => {
+    if (props.locality?.region) {
+        return typeof props.locality.region === 'string' ? props.locality.region : (props.locality.region?.name || '');
+    }
+    
+    // Ищем регион в billingAddresses для текущего города
+    const cityName = currentCityName.value;
+    if (!cityName) return '';
+    
+    const address = props.billingAddresses.find(addr => {
+        const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        return addrCity === cityName;
+    });
+    
+    if (!address) return '';
+    return typeof address.region === 'string' ? address.region : (address.region?.name || '');
+});
+
+// Обработчик отправки формы запроса улицы
+function handleStreetRequestSubmit(formData) {
+    console.log('Street request submitted:', formData);
+    // TODO: Отправить данные на сервер
+    alert('Запрос на добавление улицы отправлен! Наш менеджер свяжется с вами в ближайшее время.');
+}
+
+// Вспомогательная функция для извлечения названия города из отформатированной строки
+function extractCityNameFromFormattedString(formattedCity) {
+    if (!formattedCity) return '';
+    
+    let cityName = formattedCity.trim();
+    
+    // Убираем информацию в скобках (регион и федеральный округ)
+    if (cityName.includes('(')) {
+        cityName = cityName.split('(')[0].trim();
+    }
+    
+    // Убираем информацию после запятой (если есть)
+    if (cityName.includes(',')) {
+        cityName = cityName.split(',')[0].trim();
+    }
+    
+    // Убираем префиксы типа "г. ", "пос. " и т.д.
+    cityName = cityName.replace(/^(г\.|пос\.|ст\.|с\.|д\.|х\.|аул|кишл\.)\s*/i, '').trim();
+    
+    return cityName;
+}
 
 // Проверка наличия терминалов в городе
 const hasTerminals = computed(() => {
@@ -457,6 +725,41 @@ const searchHousesFunction = computed(() => {
     };
 });
 
+// Проверка наличия адреса в billingAddresses и takeDelivers
+function validateAddress(cityName, streetName) {
+    if (!cityName || !streetName || !props.billingAddresses || props.billingAddresses.length === 0) {
+        return { valid: false, billingAddress: null };
+    }
+    
+    // Ищем улицу в billingAddresses (сравниваем только street, игнорируем houseNumber)
+    const normalizedStreetName = streetName.toLowerCase().trim();
+    const billingAddress = props.billingAddresses.find(addr => {
+        const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        const addrStreet = (addr.street || '').toLowerCase().trim();
+        return addrCity === cityName && addrStreet === normalizedStreetName;
+    });
+    
+    if (!billingAddress) {
+        return { valid: false, billingAddress: null };
+    }
+    
+    // Проверяем наличие записи в takeDelivers для найденного billingAddress
+    // Нужно проверить хотя бы для одного типа перевозки
+    if (!props.takeDelivers || props.takeDelivers.length === 0) {
+        return { valid: false, billingAddress };
+    }
+    
+    const hasTakeDeliver = props.takeDelivers.some(td => {
+        return td.uidBillingAddress === billingAddress.uid;
+    });
+    
+    if (!hasTakeDeliver) {
+        return { valid: false, billingAddress };
+    }
+    
+    return { valid: true, billingAddress };
+}
+
 // Обработчики выбора улицы
 function onStreetSelected(item) {
     if (isUpdatingFromParent) return;
@@ -464,6 +767,9 @@ function onStreetSelected(item) {
     // Сохраняем выбранную улицу
     const streetName = item.name || item.street || '';
     state.value.address.street = streetName;
+    
+    // При выборе из списка улица всегда найдена
+    streetNotFound.value = false;
     
     // Очищаем зависимые поля
     state.value.address.house = '';
@@ -473,6 +779,29 @@ function onStreetSelected(item) {
     // Очищаем поле дома в автокомплите
     if (houseInputRef.value && houseInputRef.value.setInputValue) {
         houseInputRef.value.setInputValue('');
+    }
+    
+    // Валидация адреса
+    if (deliveryMode.value === 'address' && props.city && streetName) {
+        // Получаем название города
+        const cityName = props.locality?.name || extractCityNameFromFormattedString(props.city);
+        const validation = validateAddress(cityName, streetName);
+        
+        if (!validation.valid) {
+            // Адрес не найден - эмитим событие
+            const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
+            emit('addressNotFound', {
+                type: props.namePrefix, // 'departure' or 'destination'
+                city: cityName,
+                street: streetName,
+                locality: localityObj,
+                region: localityObj?.region || ''
+            });
+            return; // Не продолжаем обработку
+        } else {
+            // Адрес найден - эмитим событие для очистки invalid состояния
+            emit('addressFound', { type: props.namePrefix });
+        }
     }
     
     emitCurrentState();
@@ -493,7 +822,49 @@ function onStreetInputChange(value) {
         if (houseInputRef.value && houseInputRef.value.setInputValue) {
             houseInputRef.value.setInputValue('');
         }
+        
+        // Очищаем таймер валидации и invalid состояние
+        if (streetValidationTimer) {
+            clearTimeout(streetValidationTimer);
+            streetValidationTimer = null;
+        }
+        streetNotFound.value = false; // Сбрасываем флаг "улица не найдена"
+        emit('addressFound', { type: props.namePrefix }); // Очищаем invalid при очистке поля
+        
+        emitCurrentState();
+        return;
     }
+    
+    // Отложенная валидация при вводе (через 1 секунду после последнего изменения)
+    if (streetValidationTimer) {
+        clearTimeout(streetValidationTimer);
+    }
+    
+    streetValidationTimer = setTimeout(() => {
+        // Валидация адреса при вводе
+        if (deliveryMode.value === 'address' && props.city && value && value.trim()) {
+            const cityName = props.locality?.name || extractCityNameFromFormattedString(props.city);
+            const validation = validateAddress(cityName, value.trim());
+            
+            if (!validation.valid) {
+                // Адрес не найден - устанавливаем флаг и эмитим событие
+                streetNotFound.value = true;
+                const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
+                emit('addressNotFound', {
+                    type: props.namePrefix,
+                    city: cityName,
+                    street: value.trim(),
+                    locality: localityObj,
+                    region: localityObj?.region || ''
+                });
+            } else {
+                // Адрес найден - сбрасываем флаг и эмитим событие для очистки invalid состояния
+                streetNotFound.value = false;
+                emit('addressFound', { type: props.namePrefix });
+            }
+        }
+        streetValidationTimer = null;
+    }, 1000); // Задержка 1 секунда
     
     emitCurrentState();
 }
@@ -505,6 +876,7 @@ function onStreetReset() {
     state.value.address.house = '';
     state.value.address.building = '';
     state.value.address.office = '';
+    streetNotFound.value = false; // Сбрасываем флаг при очистке поля
     
     if (houseInputRef.value && houseInputRef.value.setInputValue) {
         houseInputRef.value.setInputValue('');
@@ -602,12 +974,33 @@ watch(() => state.value.address.loadingUnloading, (newValue) => {
 function onTerminalSelected(address) {
     if (isUpdatingFromParent) return;
     
-    // Сохраняем выбранный ПВЗ в состоянии терминала
+    console.log('DeliveryPointForm: onTerminalSelected вызван', {
+        address,
+        addressType: typeof address,
+        addressKeys: address && typeof address === 'object' ? Object.keys(address) : null,
+        hasUidBillingAddress: address?.uidBillingAddress,
+        uidBillingAddress: address?.uidBillingAddress,
+        fullAddress: address
+    });
+    
+    // Проверяем, что это действительно объект терминала
+    if (!address || typeof address !== 'object') {
+        console.warn('DeliveryPointForm: onTerminalSelected получил не объект:', address);
+        return;
+    }
+    
+    // Сохраняем выбранный терминал в состоянии терминала
     state.value.terminal.selectedPVZ = address;
     state.value.terminal.displayText = formatPVZName(address);
     state.value.terminal.searchText = '';
     
-    console.log('DeliveryPointForm: Выбран ПВЗ', state.value.terminal);
+    console.log('DeliveryPointForm: Выбран терминал', {
+        terminal: state.value.terminal,
+        selectedPVZ: state.value.terminal.selectedPVZ,
+        hasUidBillingAddress: !!state.value.terminal.selectedPVZ?.uidBillingAddress,
+        uidBillingAddress: state.value.terminal.selectedPVZ?.uidBillingAddress,
+        fullSelectedPVZ: state.value.terminal.selectedPVZ
+    });
     
     // Отправляем обновленное состояние
     emitCurrentState();
@@ -641,6 +1034,9 @@ watch(() => props.city, (newCity, oldCity) => {
     
     // Если город не изменился, ничего не делаем
     if (newCity === oldCity) return;
+    
+    // Сбрасываем флаг "улица не найдена" при смене города
+    streetNotFound.value = false;
     
     console.log('DeliveryPointForm: Изменение города', { newCity, oldCity, deliveryMode: deliveryMode.value });
     
@@ -826,12 +1222,19 @@ watch(() => props.modelValue, (newValue) => {
     deliveryMode.value = newDeliveryMode;
     date.value = newValue.date || '';
 
-    // Если передан полный объект location (ПВЗ), обновляем состояние терминала
-    if (newValue.location && typeof newValue.location === 'object' && newValue.location.street && newValue.location.phone) {
+    // Если передан полный объект location (терминал), обновляем состояние терминала
+    // Проверяем наличие uidBillingAddress или uid - это признаки терминала из API
+    if (newValue.location && typeof newValue.location === 'object' && 
+        (newValue.location.uidBillingAddress || newValue.location.uid || 
+         (newValue.location.street && newValue.location.phone))) {
         state.value.terminal.selectedPVZ = newValue.location;
         state.value.terminal.displayText = formatPVZName(newValue.location);
         state.value.terminal.searchText = '';
-        console.log('DeliveryPointForm: Обновлен ПВЗ', state.value.terminal);
+        console.log('DeliveryPointForm: Обновлен терминал', {
+            terminal: state.value.terminal,
+            location: newValue.location,
+            hasUidBillingAddress: !!newValue.location.uidBillingAddress
+        });
     } else if (typeof newValue.location === 'object' && newValue.location !== null) {
         // Если это объект адреса (новая структура)
         if (newValue.location.street !== undefined || newValue.location.house !== undefined) {

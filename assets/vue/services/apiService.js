@@ -430,10 +430,10 @@ class ApiService {
     }
 
     // Получение тарифной сетки
-    async getTariffGrids(transportTypeId = null) {
+    async getTariffGrids(transportTypeUid = null) {
         try {
-            const url = transportTypeId 
-                ? `${this.baseUrl}/tariffGrids?transportType_id=${transportTypeId}`
+            const url = transportTypeUid 
+                ? `${this.baseUrl}/tariffGrids?transportType_uid=${encodeURIComponent(transportTypeUid)}`
                 : `${this.baseUrl}/tariffGrids`;
             const response = await fetch(url);
             if (!response.ok) {
@@ -446,11 +446,29 @@ class ApiService {
         }
     }
 
-    // Получение тарифных зон
-    async getTariffZones(transportTypeId = null) {
+    // Получение терминалов
+    async getTerminals(localityName = null) {
         try {
-            const url = transportTypeId 
-                ? `${this.baseUrl}/tariffZones?transportType_id=${transportTypeId}`
+            let url = `${this.baseUrl}/terminals`;
+            if (localityName) {
+                url += `?locality=${encodeURIComponent(localityName)}`;
+            }
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении терминалов:', error);
+            throw error;
+        }
+    }
+
+    // Получение тарифных зон
+    async getTariffZones(transportTypeUid = null) {
+        try {
+            const url = transportTypeUid 
+                ? `${this.baseUrl}/tariffZones?uidTypeTransportation=${encodeURIComponent(transportTypeUid)}`
                 : `${this.baseUrl}/tariffZones`;
             const response = await fetch(url);
             if (!response.ok) {
@@ -464,12 +482,12 @@ class ApiService {
     }
 
     // Получение параметров забора/доставки
-    async getTakeDelivers(transportTypeId = null, addressId = null) {
+    async getTakeDelivers(transportTypeUid = null, addressUid = null) {
         try {
             let url = `${this.baseUrl}/takeDelivers`;
             const params = [];
-            if (transportTypeId) params.push(`transportType_id=${transportTypeId}`);
-            if (addressId) params.push(`billingAddress_id=${addressId}`);
+            if (transportTypeUid) params.push(`uidTypeTransportation=${encodeURIComponent(transportTypeUid)}`);
+            if (addressUid) params.push(`uidBillingAddress=${encodeURIComponent(addressUid)}`);
             if (params.length > 0) url += `?${params.join('&')}`;
             
             const response = await fetch(url);
@@ -596,13 +614,21 @@ class ApiService {
             const { localities, regions } = await this._loadAllLocalitiesWithRegions();
             
             // Обогащаем адреса данными localities и regions
+            // В новой структуре address.locality - это строка (название города)
             const enrichedAddresses = billingAddresses.map(address => {
-                const locality = localities.find(l => l.id === address.locality_id);
-                const region = locality?.region || null;
+                let localityObj = null;
+                
+                // Ищем объект locality по названию (locality - строка)
+                if (typeof address.locality === 'string') {
+                    localityObj = localities.find(l => l.name === address.locality);
+                }
+                
+                const region = localityObj?.region || null;
                 
                 return {
                     ...address,
-                    locality: locality || null,
+                    locality: localityObj || address.locality || null, // Сохраняем объект или строку
+                    localityName: localityObj?.name || address.locality || '', // Для удобства добавляем имя
                     region: region
                 };
             });
@@ -737,10 +763,36 @@ class ApiService {
         try {
             const billingAddresses = await this.getBillingAddressesWithRelations();
             
+            // Извлекаем название города из отформатированной строки (если нужно)
+            const cityName = this.extractCityNameFromFormattedString(city);
+            
             // Фильтруем адреса по городу
+            // В новой структуре locality может быть строкой или объектом
             const cityAddresses = billingAddresses.filter(addr => {
-                const localityName = addr.locality?.name || '';
-                return localityName === city;
+                // Используем localityName если есть, иначе проверяем locality
+                const localityName = addr.localityName || 
+                    (typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || ''));
+                // Сравниваем нормализованные значения (без учета регистра)
+                const normalizedLocalityName = localityName.toLowerCase().trim();
+                const normalizedCityName = cityName.toLowerCase().trim();
+                const normalizedCity = city.toLowerCase().trim();
+                return normalizedLocalityName === normalizedCityName || 
+                       normalizedLocalityName === normalizedCity ||
+                       localityName === cityName || 
+                       localityName === city;
+            });
+
+            console.log('Поиск улиц:', {
+                city: city,
+                cityName: cityName,
+                totalAddresses: billingAddresses.length,
+                cityAddressesCount: cityAddresses.length,
+                sampleAddresses: cityAddresses.slice(0, 3).map(addr => ({
+                    locality: addr.locality,
+                    localityName: addr.localityName,
+                    street: addr.street,
+                    localityType: typeof addr.locality
+                }))
             });
 
             // Извлекаем уникальные улицы
@@ -780,11 +832,38 @@ class ApiService {
         try {
             const billingAddresses = await this.getBillingAddressesWithRelations();
             
+            // Извлекаем название города из отформатированной строки (если нужно)
+            const cityName = this.extractCityNameFromFormattedString(city);
+            
             // Фильтруем адреса по городу и улице
+            // В новой структуре locality может быть строкой или объектом
             const streetAddresses = billingAddresses.filter(addr => {
-                const localityName = addr.locality?.name || '';
+                // Используем localityName если есть, иначе проверяем locality
+                const localityName = addr.localityName || 
+                    (typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || ''));
                 const addrStreet = addr.street || '';
-                return localityName === city && addrStreet === street;
+                // Сравниваем нормализованные значения (без учета регистра)
+                const normalizedLocalityName = localityName.toLowerCase().trim();
+                const normalizedCityName = cityName.toLowerCase().trim();
+                const normalizedCity = city.toLowerCase().trim();
+                return (normalizedLocalityName === normalizedCityName || 
+                        normalizedLocalityName === normalizedCity ||
+                        localityName === cityName || 
+                        localityName === city) && addrStreet === street;
+            });
+
+            console.log('Поиск домов:', {
+                city: city,
+                cityName: cityName,
+                street: street,
+                totalAddresses: billingAddresses.length,
+                streetAddressesCount: streetAddresses.length,
+                sampleAddresses: streetAddresses.slice(0, 3).map(addr => ({
+                    locality: addr.locality,
+                    localityName: addr.localityName,
+                    street: addr.street,
+                    houseNumber: addr.houseNumber
+                }))
             });
 
             // Извлекаем уникальные дома
@@ -860,6 +939,28 @@ class ApiService {
             console.error('Ошибка при поиске квартир:', error);
             throw error;
         }
+    }
+
+    // Вспомогательная функция для извлечения названия города из отформатированной строки
+    extractCityNameFromFormattedString(formattedCity) {
+        if (!formattedCity) return '';
+        
+        let cityName = formattedCity.trim();
+        
+        // Убираем информацию в скобках (регион и федеральный округ)
+        if (cityName.includes('(')) {
+            cityName = cityName.split('(')[0].trim();
+        }
+        
+        // Убираем информацию после запятой (если есть)
+        if (cityName.includes(',')) {
+            cityName = cityName.split(',')[0].trim();
+        }
+        
+        // Убираем префиксы типа "г. ", "пос. " и т.д.
+        cityName = cityName.replace(/^(г\.|пос\.|ст\.|с\.|д\.|х\.|аул|кишл\.)\s*/i, '').trim();
+        
+        return cityName;
     }
 }
 
