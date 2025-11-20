@@ -12,7 +12,7 @@
     "src": "README.md"
   },
   "TEST_CASES.md": {
-    "file": "assets/TEST_CASES-DqvL5bMd.md",
+    "file": "assets/TEST_CASES-StXA3PHp.md",
     "src": "TEST_CASES.md"
   },
   "_AutocompleteInput-BPJffv1B.css": {
@@ -492,7 +492,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-BjtB18Gv.js",
+    "file": "assets/js/homePageJs-YeITOxLg.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -511,7 +511,7 @@
       "assets/CURRENT_STATUS-CoH40KTF.md",
       "assets/PROJECT_CONTEXT-CzFBR-9s.md",
       "assets/README-CCBTbm1Z.md",
-      "assets/TEST_CASES-DqvL5bMd.md",
+      "assets/TEST_CASES-StXA3PHp.md",
       "bulk-order..html",
       "calculator..html",
       "contacts..html",
@@ -570,7 +570,7 @@
     ]
   },
   "assets/vue/entrypoints/calculator-page.js": {
-    "file": "assets/js/calculatorPageJs-C3ubLIHc.js",
+    "file": "assets/js/calculatorPageJs-BZIA4KC5.js",
     "name": "calculatorPageJs",
     "src": "assets/vue/entrypoints/calculator-page.js",
     "isEntry": true,
@@ -682,7 +682,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-DQRMyQ-l.js",
+    "file": "assets/js/main-BhN9O3cM.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,

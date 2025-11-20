@@ -7,7 +7,7 @@ import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js
 const __vite_glob_0_0 = "" + new URL("../CURRENT_STATUS-CoH40KTF.md", import.meta.url).href;
 const __vite_glob_0_1 = "" + new URL("../PROJECT_CONTEXT-CzFBR-9s.md", import.meta.url).href;
 const __vite_glob_0_2 = "" + new URL("../README-CCBTbm1Z.md", import.meta.url).href;
-const __vite_glob_0_3 = "" + new URL("../TEST_CASES-DqvL5bMd.md", import.meta.url).href;
+const __vite_glob_0_3 = "" + new URL("../TEST_CASES-StXA3PHp.md", import.meta.url).href;
 const __vite_glob_0_4 = "" + new URL("../../bulk-order..html", import.meta.url).href;
 const __vite_glob_0_5 = "" + new URL("../../calculator..html", import.meta.url).href;
 const __vite_glob_0_6 = "" + new URL("../../contacts..html", import.meta.url).href;

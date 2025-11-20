@@ -3759,20 +3759,55 @@ const _sfc_main = {
         if (!tariffGridArray || tariffGridArray.length === 0) {
           return 0;
         }
-        const applicableTariff = tariffGridArray.find(
-          (tg) => payableWeight >= tg.unitFrom && payableWeight <= tg.unitTo
-        );
+        const sortedTariffGrid = [...tariffGridArray].sort((a, b) => {
+          const aFrom = parseFloat(a.unitFrom) || 0;
+          const bFrom = parseFloat(b.unitFrom) || 0;
+          return aFrom - bFrom;
+        });
+        const applicableTariff = sortedTariffGrid.find((tg) => {
+          const unitFrom = parseFloat(tg.unitFrom) || 0;
+          const unitTo = parseFloat(tg.unitTo) || Infinity;
+          return payableWeight >= unitFrom && payableWeight <= unitTo;
+        });
         if (applicableTariff) {
-          const steps = Math.ceil((payableWeight - applicableTariff.unitFrom) / applicableTariff.step);
-          return applicableTariff.startingPrice + steps * applicableTariff.stepPrice;
+          const unitFrom = parseFloat(applicableTariff.unitFrom) || 0;
+          const step = parseFloat(applicableTariff.step) || 1;
+          const stepPrice = parseFloat(applicableTariff.stepPrice) || 0;
+          const startingPrice = parseFloat(applicableTariff.startingPrice) || 0;
+          const steps = payableWeight > unitFrom ? Math.ceil((payableWeight - unitFrom) / step) : 0;
+          return startingPrice + steps * stepPrice;
         } else {
-          const lastTariff = tariffGridArray[tariffGridArray.length - 1];
-          if (lastTariff) {
-            const steps = Math.ceil((payableWeight - lastTariff.unitFrom) / lastTariff.step);
-            return lastTariff.startingPrice + steps * lastTariff.stepPrice;
+          const firstTariff = sortedTariffGrid[0];
+          const lastTariff = sortedTariffGrid[sortedTariffGrid.length - 1];
+          if (!firstTariff) {
+            return 0;
           }
+          const firstUnitFrom = parseFloat(firstTariff.unitFrom) || 0;
+          const lastUnitTo = parseFloat(lastTariff.unitTo) || Infinity;
+          if (payableWeight < firstUnitFrom) {
+            console.warn("Платный вес меньше минимального unitFrom, используем минимальную стоимость:", {
+              payableWeight,
+              firstUnitFrom,
+              startingPrice: firstTariff.startingPrice
+            });
+            return parseFloat(firstTariff.startingPrice) || 0;
+          }
+          if (payableWeight > lastUnitTo) {
+            const unitFrom = parseFloat(lastTariff.unitFrom) || 0;
+            const step = parseFloat(lastTariff.step) || 1;
+            const stepPrice = parseFloat(lastTariff.stepPrice) || 0;
+            const startingPrice = parseFloat(lastTariff.startingPrice) || 0;
+            const steps = Math.ceil((payableWeight - unitFrom) / step);
+            return startingPrice + steps * stepPrice;
+          }
+          console.warn("Не удалось найти подходящий тариф, используем минимальную стоимость:", {
+            payableWeight,
+            firstUnitFrom,
+            lastUnitTo,
+            startingPrice: firstTariff.startingPrice
+          });
+          return parseFloat(firstTariff.startingPrice) || 0;
         }
-        return 0;
       }
       const transportationBaseCost = calculateCostByTariffGrid(relevantTarifGrid, totalPayableWeight);
       let transportationCost = transportationBaseCost;
@@ -4256,32 +4291,77 @@ const _sfc_main = {
           isDetail: true
         });
       });
-      const applicableTransportationTariff = relevantTarifGrid.find(
-        (tg) => totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
-      ) || relevantTarifGrid[relevantTarifGrid.length - 1];
+      const sortedRelevantTariffGrid = [...relevantTarifGrid].sort((a, b) => {
+        const aFrom = parseFloat(a.unitFrom) || 0;
+        const bFrom = parseFloat(b.unitFrom) || 0;
+        return aFrom - bFrom;
+      });
+      let applicableTransportationTariff = sortedRelevantTariffGrid.find((tg) => {
+        const unitFrom = parseFloat(tg.unitFrom) || 0;
+        const unitTo = parseFloat(tg.unitTo) || Infinity;
+        return totalPayableWeight >= unitFrom && totalPayableWeight <= unitTo;
+      });
+      if (!applicableTransportationTariff && sortedRelevantTariffGrid.length > 0) {
+        const firstTariff = sortedRelevantTariffGrid[0];
+        const firstUnitFrom = parseFloat(firstTariff.unitFrom) || 0;
+        if (totalPayableWeight < firstUnitFrom) {
+          applicableTransportationTariff = firstTariff;
+        } else {
+          applicableTransportationTariff = sortedRelevantTariffGrid[sortedRelevantTariffGrid.length - 1];
+        }
+      }
       if (applicableTransportationTariff) {
-        const steps = Math.ceil((totalPayableWeight - applicableTransportationTariff.unitFrom) / applicableTransportationTariff.step);
+        const unitFrom = parseFloat(applicableTransportationTariff.unitFrom) || 0;
+        const step = parseFloat(applicableTransportationTariff.step) || 1;
+        let steps = 0;
+        if (step > 0 && totalPayableWeight > unitFrom) {
+          steps = Math.ceil((totalPayableWeight - unitFrom) / step);
+        }
         details.push({
           name: "ФОРМУЛА СТОИМОСТИ ПЕРЕВОЗКИ",
           cost: 0,
           isSubHeader: true
         });
-        const transportationStepsCalculation = (totalPayableWeight - applicableTransportationTariff.unitFrom) / applicableTransportationTariff.step;
-        details.push({
-          name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ, кг) - ${applicableTransportationTariff.unitFrom} (unitFrom из тарифной сетки зоны ${tariffZone.tariffZone})) / ${applicableTransportationTariff.step} (step из тарифной сетки) = ${transportationStepsCalculation.toFixed(2)}`,
-          cost: 0,
-          isDetail: true
-        });
-        details.push({
-          name: `Количество шагов = округление вверх до целого числа = ${steps}`,
-          cost: 0,
-          isDetail: true
-        });
-        details.push({
-          name: `Базовая стоимость = ${applicableTransportationTariff.startingPrice} (startingPrice из тарифной сетки) + ${steps} (шаги) × ${applicableTransportationTariff.stepPrice} (stepPrice из тарифной сетки) = ${transportationBaseCost.toFixed(2)} ₽`,
-          cost: 0,
-          isDetail: true
-        });
+        if (step > 0 && totalPayableWeight > unitFrom) {
+          const transportationStepsCalculation = (totalPayableWeight - unitFrom) / step;
+          details.push({
+            name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ, кг) - ${unitFrom} (unitFrom из тарифной сетки зоны ${tariffZone.tariffZone})) / ${step} (step из тарифной сетки) = ${transportationStepsCalculation.toFixed(2)}`,
+            cost: 0,
+            isDetail: true
+          });
+          details.push({
+            name: `Количество шагов = округление вверх до целого числа = ${steps}`,
+            cost: 0,
+            isDetail: true
+          });
+          details.push({
+            name: `Базовая стоимость = ${applicableTransportationTariff.startingPrice} (startingPrice из тарифной сетки) + ${steps} (шаги) × ${applicableTransportationTariff.stepPrice} (stepPrice из тарифной сетки) = ${transportationBaseCost.toFixed(2)} ₽`,
+            cost: 0,
+            isDetail: true
+          });
+        } else if (step === 0) {
+          details.push({
+            name: `Тарифная сетка имеет фиксированную цену (step = 0) для зоны ${tariffZone.tariffZone}.`,
+            cost: 0,
+            isDetail: true
+          });
+          details.push({
+            name: `Базовая стоимость = ${applicableTransportationTariff.startingPrice} (startingPrice из тарифной сетки, фиксированная цена) = ${transportationBaseCost.toFixed(2)} ₽`,
+            cost: 0,
+            isDetail: true
+          });
+        } else {
+          details.push({
+            name: `Платный вес (${totalPayableWeight.toFixed(2)} кг) равен минимальному весу (${unitFrom} кг) для зоны ${tariffZone.tariffZone}. Используется минимальная стоимость (startingPrice).`,
+            cost: 0,
+            isDetail: true
+          });
+          details.push({
+            name: `Базовая стоимость = ${applicableTransportationTariff.startingPrice} (startingPrice из тарифной сетки, шаги не применяются, так как ПВ = unitFrom) = ${transportationBaseCost.toFixed(2)} ₽`,
+            cost: 0,
+            isDetail: true
+          });
+        }
         if (tariffZone.coefficient && tariffZone.coefficient !== 1) {
           details.push({
             name: `Стоимость с коэффициентом зоны = ${transportationBaseCost.toFixed(2)} (базовая стоимость) × ${tariffZone.coefficient} (коэффициент зоны ${tariffZone.tariffZone} из tariffZones) = ${(transportationBaseCost * tariffZone.coefficient).toFixed(2)} ₽`,
@@ -4315,32 +4395,72 @@ const _sfc_main = {
           return false;
         });
         const pickupBaseCost = calculateCostByTariffGrid(pickupTariffGrid, totalPayableWeight);
-        const applicablePickupTariff = pickupTariffGrid.find(
-          (tg) => totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
-        ) || pickupTariffGrid[pickupTariffGrid.length - 1];
+        const sortedPickupTariffGrid = [...pickupTariffGrid].sort((a, b) => {
+          const aFrom = parseFloat(a.unitFrom) || 0;
+          const bFrom = parseFloat(b.unitFrom) || 0;
+          return aFrom - bFrom;
+        });
+        let applicablePickupTariff = sortedPickupTariffGrid.find((tg) => {
+          const unitFrom = parseFloat(tg.unitFrom) || 0;
+          const unitTo = parseFloat(tg.unitTo) || Infinity;
+          return totalPayableWeight >= unitFrom && totalPayableWeight <= unitTo;
+        });
+        if (!applicablePickupTariff && sortedPickupTariffGrid.length > 0) {
+          const firstTariff = sortedPickupTariffGrid[0];
+          const firstUnitFrom = parseFloat(firstTariff.unitFrom) || 0;
+          if (totalPayableWeight < firstUnitFrom) {
+            applicablePickupTariff = firstTariff;
+          } else {
+            applicablePickupTariff = sortedPickupTariffGrid[sortedPickupTariffGrid.length - 1];
+          }
+        }
         if (applicablePickupTariff) {
-          const pickupSteps = Math.ceil((totalPayableWeight - applicablePickupTariff.unitFrom) / applicablePickupTariff.step);
+          const unitFrom = parseFloat(applicablePickupTariff.unitFrom) || 0;
+          const step = parseFloat(applicablePickupTariff.step) || 1;
+          const pickupSteps = totalPayableWeight > unitFrom ? Math.ceil((totalPayableWeight - unitFrom) / step) : 0;
           details.push({
             name: "ФОРМУЛА СТОИМОСТИ ЗАБОРА",
             cost: 0,
             isSubHeader: true
           });
-          const pickupStepsCalculation = (totalPayableWeight - applicablePickupTariff.unitFrom) / applicablePickupTariff.step;
-          details.push({
-            name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${applicablePickupTariff.unitFrom} (unitFrom из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки)) / ${applicablePickupTariff.step} (step) = ${pickupStepsCalculation.toFixed(2)}`,
-            cost: 0,
-            isDetail: true
-          });
-          details.push({
-            name: `Количество шагов = округление вверх до целого числа = ${pickupSteps}`,
-            cost: 0,
-            isDetail: true
-          });
-          details.push({
-            name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки) + ${pickupSteps} (шаги) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
-            cost: 0,
-            isDetail: true
-          });
+          if (step > 0 && totalPayableWeight > unitFrom) {
+            const pickupStepsCalculation = (totalPayableWeight - unitFrom) / step;
+            details.push({
+              name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${unitFrom} (unitFrom из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки)) / ${step} (step) = ${pickupStepsCalculation.toFixed(2)}`,
+              cost: 0,
+              isDetail: true
+            });
+            details.push({
+              name: `Количество шагов = округление вверх до целого числа = ${pickupSteps}`,
+              cost: 0,
+              isDetail: true
+            });
+          } else if (step === 0) {
+            details.push({
+              name: `Тарифная сетка имеет фиксированную цену (step = 0) для зоны ${pickupZone}.`,
+              cost: 0,
+              isDetail: true
+            });
+          } else {
+            details.push({
+              name: `Платный вес (${totalPayableWeight.toFixed(2)} кг) равен минимальному весу (${unitFrom} кг) для зоны ${pickupZone}. Используется минимальная стоимость (startingPrice).`,
+              cost: 0,
+              isDetail: true
+            });
+          }
+          if (pickupSteps > 0) {
+            details.push({
+              name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки) + ${pickupSteps} (шаги) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
+              cost: 0,
+              isDetail: true
+            });
+          } else {
+            details.push({
+              name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки, шаги не применяются, так как ПВ ≤ unitFrom) = ${pickupBaseCost.toFixed(2)} ₽`,
+              cost: 0,
+              isDetail: true
+            });
+          }
           let pickupCostAfterSurcharge = pickupBaseCost;
           if (takeDeliverFrom.surcharge) {
             pickupCostAfterSurcharge = pickupBaseCost + takeDeliverFrom.surcharge;
@@ -4404,32 +4524,74 @@ const _sfc_main = {
           return false;
         });
         const deliveryBaseCost = calculateCostByTariffGrid(deliveryTariffGrid, totalPayableWeight);
-        const applicableDeliveryTariff = deliveryTariffGrid.find(
-          (tg) => totalPayableWeight >= tg.unitFrom && totalPayableWeight <= tg.unitTo
-        ) || deliveryTariffGrid[deliveryTariffGrid.length - 1];
+        const sortedDeliveryTariffGrid = [...deliveryTariffGrid].sort((a, b) => {
+          const aFrom = parseFloat(a.unitFrom) || 0;
+          const bFrom = parseFloat(b.unitFrom) || 0;
+          return aFrom - bFrom;
+        });
+        let applicableDeliveryTariff = sortedDeliveryTariffGrid.find((tg) => {
+          const unitFrom = parseFloat(tg.unitFrom) || 0;
+          const unitTo = parseFloat(tg.unitTo) || Infinity;
+          return totalPayableWeight >= unitFrom && totalPayableWeight <= unitTo;
+        });
+        if (!applicableDeliveryTariff && sortedDeliveryTariffGrid.length > 0) {
+          const firstTariff = sortedDeliveryTariffGrid[0];
+          const firstUnitFrom = parseFloat(firstTariff.unitFrom) || 0;
+          if (totalPayableWeight < firstUnitFrom) {
+            applicableDeliveryTariff = firstTariff;
+          } else {
+            applicableDeliveryTariff = sortedDeliveryTariffGrid[sortedDeliveryTariffGrid.length - 1];
+          }
+        }
         if (applicableDeliveryTariff) {
-          const deliverySteps = Math.ceil((totalPayableWeight - applicableDeliveryTariff.unitFrom) / applicableDeliveryTariff.step);
+          const unitFrom = parseFloat(applicableDeliveryTariff.unitFrom) || 0;
+          const step = parseFloat(applicableDeliveryTariff.step) || 1;
+          const deliverySteps = totalPayableWeight > unitFrom ? Math.ceil((totalPayableWeight - unitFrom) / step) : 0;
           details.push({
             name: "ФОРМУЛА СТОИМОСТИ ДОСТАВКИ",
             cost: 0,
             isSubHeader: true
           });
-          const deliveryStepsCalculation = (totalPayableWeight - applicableDeliveryTariff.unitFrom) / applicableDeliveryTariff.step;
-          details.push({
-            name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${applicableDeliveryTariff.unitFrom} (unitFrom из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения)) / ${applicableDeliveryTariff.step} (step) = ${deliveryStepsCalculation.toFixed(2)}`,
-            cost: 0,
-            isDetail: true
-          });
-          details.push({
-            name: `Количество шагов = округление вверх до целого числа = ${deliverySteps}`,
-            cost: 0,
-            isDetail: true
-          });
-          details.push({
-            name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения) + ${deliverySteps} (шаги) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
-            cost: 0,
-            isDetail: true
-          });
+          if (step > 0 && totalPayableWeight > unitFrom) {
+            const deliveryStepsCalculation = (totalPayableWeight - unitFrom) / step;
+            details.push({
+              name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${unitFrom} (unitFrom из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения)) / ${step} (step) = ${deliveryStepsCalculation.toFixed(2)}`,
+              cost: 0,
+              isDetail: true
+            });
+            details.push({
+              name: `Количество шагов = округление вверх до целого числа = ${deliverySteps}`,
+              cost: 0,
+              isDetail: true
+            });
+            details.push({
+              name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения) + ${deliverySteps} (шаги) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
+              cost: 0,
+              isDetail: true
+            });
+          } else if (step === 0) {
+            details.push({
+              name: `Тарифная сетка имеет фиксированную цену (step = 0) для зоны ${deliveryZone}.`,
+              cost: 0,
+              isDetail: true
+            });
+            details.push({
+              name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения, фиксированная цена) = ${deliveryBaseCost.toFixed(2)} ₽`,
+              cost: 0,
+              isDetail: true
+            });
+          } else {
+            details.push({
+              name: `Платный вес (${totalPayableWeight.toFixed(2)} кг) равен минимальному весу (${unitFrom} кг) для зоны ${deliveryZone}. Используется минимальная стоимость (startingPrice).`,
+              cost: 0,
+              isDetail: true
+            });
+            details.push({
+              name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения, шаги не применяются, так как ПВ = unitFrom) = ${deliveryBaseCost.toFixed(2)} ₽`,
+              cost: 0,
+              isDetail: true
+            });
+          }
           let deliveryCostAfterSurcharge = deliveryBaseCost;
           if (takeDeliverTo.surcharge) {
             deliveryCostAfterSurcharge = deliveryBaseCost + takeDeliverTo.surcharge;
