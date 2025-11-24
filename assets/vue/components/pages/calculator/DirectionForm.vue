@@ -10,6 +10,7 @@
                     v-model="from"
                     @itemSelected="onFromItemSelected" 
                     @reset="onFromReset"
+                    @update:modelValue="onFromInputChange"
                     :emitFullItem="true" :showResetButton="true"
                     :useApiSearch="true" :apiSearchFunction="searchCitiesApi"
                     :itemFormatter="formatCityName"
@@ -37,6 +38,7 @@
                     v-model="to"
                     @itemSelected="onToItemSelected" 
                     @reset="onToReset"
+                    @update:modelValue="onToInputChange"
                     :emitFullItem="true" :showResetButton="true"
                     :useApiSearch="true" :apiSearchFunction="searchCitiesApi"
                     :itemFormatter="formatCityName"
@@ -97,6 +99,10 @@ const toOffice = ref(null);
 // Refs для доступа к методам AutocompleteInput
 const fromAutocompleteRef = ref(null);
 const toAutocompleteRef = ref(null);
+
+// Таймеры для отложенной валидации при вводе городов
+let fromValidationTimer = null;
+let toValidationTimer = null;
 
 // Извлекаем уникальные города из billingAddresses
 const availableCities = computed(() => {
@@ -250,10 +256,29 @@ function checkCityInBillingAddresses(cityName) {
         return false;
     }
     
+    // Извлекаем название города из отформатированной строки (если есть регион)
+    const normalizedCityName = extractCityNameFromString(cityName);
+    
     return props.billingAddresses.some(addr => {
         const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
-        return addrCity === cityName;
+        // Сравниваем нормализованные значения (без учета регистра)
+        return addrCity.toLowerCase().trim() === normalizedCityName.toLowerCase().trim() ||
+               addrCity === normalizedCityName;
     });
+}
+
+// Вспомогательная функция для извлечения названия города из строки
+function extractCityNameFromString(formattedCity) {
+    if (!formattedCity) return '';
+    
+    let cityName = formattedCity.trim();
+    
+    // Убираем информацию после запятой (регион)
+    if (cityName.includes(',')) {
+        cityName = cityName.split(',')[0].trim();
+    }
+    
+    return cityName;
 }
 
 // Обработчики событий выбора элемента (теперь получаем объект города из billingAddresses)
@@ -289,10 +314,135 @@ const onToItemSelected = (item) => {
     emit('cityFound', { type: 'to' });
 };
 
+// Флаг для предотвращения циклических обновлений при валидации
+let isUpdatingFromInput = false;
+let isUpdatingToInput = false;
+let isUserTypingFrom = false;
+let isUserTypingTo = false;
+
+// Обработчики изменения ввода городов (для валидации)
+const onFromInputChange = (value) => {
+    // Помечаем, что пользователь вводит значение
+    isUserTypingFrom = true;
+    
+    // Обновляем локальное значение
+    from.value = value || '';
+    
+    // Если пользователь очистил поле, очищаем состояние
+    if (!value || !value.trim()) {
+        fromOffice.value = null;
+        if (fromValidationTimer) {
+            clearTimeout(fromValidationTimer);
+            fromValidationTimer = null;
+        }
+        emit('cityFound', { type: 'from' }); // Очищаем invalid состояние
+        isUserTypingFrom = false;
+        return;
+    }
+    
+    // Если значение совпадает с выбранным городом, не валидируем
+    if (fromOffice.value) {
+        const formattedName = formatCityName(fromOffice.value);
+        if (formattedName === value) {
+            isUserTypingFrom = false;
+            return; // Это выбранный город, не нужно валидировать
+        }
+    }
+    
+    // Отложенная валидация при вводе (через 1 секунду после последнего изменения)
+    if (fromValidationTimer) {
+        clearTimeout(fromValidationTimer);
+    }
+    
+    fromValidationTimer = setTimeout(() => {
+        const cityName = extractCityNameFromString(value);
+        const isValid = checkCityInBillingAddresses(cityName);
+        
+        if (!isValid && cityName.trim()) {
+            // Город не найден - эмитим событие
+            const cityObj = availableCities.value.find(c => 
+                c.name.toLowerCase() === cityName.toLowerCase()
+            );
+            emit('cityNotFound', {
+                type: 'from',
+                city: cityName,
+                locality: cityObj || null,
+                region: cityObj?.region || ''
+            });
+        } else if (isValid) {
+            // Город найден - эмитим событие для очистки invalid состояния
+            emit('cityFound', { type: 'from' });
+        }
+        fromValidationTimer = null;
+        isUserTypingFrom = false;
+    }, 1000); // Задержка 1 секунда
+};
+
+const onToInputChange = (value) => {
+    // Помечаем, что пользователь вводит значение
+    isUserTypingTo = true;
+    
+    // Обновляем локальное значение
+    to.value = value || '';
+    
+    // Если пользователь очистил поле, очищаем состояние
+    if (!value || !value.trim()) {
+        toOffice.value = null;
+        if (toValidationTimer) {
+            clearTimeout(toValidationTimer);
+            toValidationTimer = null;
+        }
+        emit('cityFound', { type: 'to' }); // Очищаем invalid состояние
+        isUserTypingTo = false;
+        return;
+    }
+    
+    // Если значение совпадает с выбранным городом, не валидируем
+    if (toOffice.value) {
+        const formattedName = formatCityName(toOffice.value);
+        if (formattedName === value) {
+            isUserTypingTo = false;
+            return; // Это выбранный город, не нужно валидировать
+        }
+    }
+    
+    // Отложенная валидация при вводе (через 1 секунду после последнего изменения)
+    if (toValidationTimer) {
+        clearTimeout(toValidationTimer);
+    }
+    
+    toValidationTimer = setTimeout(() => {
+        const cityName = extractCityNameFromString(value);
+        const isValid = checkCityInBillingAddresses(cityName);
+        
+        if (!isValid && cityName.trim()) {
+            // Город не найден - эмитим событие
+            const cityObj = availableCities.value.find(c => 
+                c.name.toLowerCase() === cityName.toLowerCase()
+            );
+            emit('cityNotFound', {
+                type: 'to',
+                city: cityName,
+                locality: cityObj || null,
+                region: cityObj?.region || ''
+            });
+        } else if (isValid) {
+            // Город найден - эмитим событие для очистки invalid состояния
+            emit('cityFound', { type: 'to' });
+        }
+        toValidationTimer = null;
+        isUserTypingTo = false;
+    }, 1000); // Задержка 1 секунда
+};
+
 // Обработчики сброса городов
 const onFromReset = () => {
     from.value = '';
     fromOffice.value = null;
+    if (fromValidationTimer) {
+        clearTimeout(fromValidationTimer);
+        fromValidationTimer = null;
+    }
     emit('update:modelValue', { 
         from: '', 
         to: to.value,
@@ -307,6 +457,10 @@ const onFromReset = () => {
 const onToReset = () => {
     to.value = '';
     toOffice.value = null;
+    if (toValidationTimer) {
+        clearTimeout(toValidationTimer);
+        toValidationTimer = null;
+    }
     emit('update:modelValue', { 
         from: from.value, 
         to: '',
@@ -413,6 +567,11 @@ watch([from, to], ([newFrom, newTo]) => {
 
 // Watch for parent changes and update local state
 watch(() => props.modelValue, (newValue) => {
+    // Не обновляем значение, если пользователь сейчас вводит текст
+    if (isUserTypingFrom || isUserTypingTo) {
+        return;
+    }
+    
     // Проверяем, есть ли изменения в from/to, чтобы не перезаписывать данные без необходимости
     const fromChanged = newValue.from !== from.value;
     const toChanged = newValue.to !== to.value;
@@ -421,9 +580,22 @@ watch(() => props.modelValue, (newValue) => {
         return;
     }
     
-    // Показываем полную строку с городом и регионом
-    from.value = newValue.from || '';
-    to.value = newValue.to || '';
+    // Устанавливаем флаги, чтобы предотвратить циклические обновления
+    if (fromChanged) {
+        isUpdatingFromInput = true;
+        from.value = newValue.from || '';
+        nextTick(() => {
+            isUpdatingFromInput = false;
+        });
+    }
+    
+    if (toChanged) {
+        isUpdatingToInput = true;
+        to.value = newValue.to || '';
+        nextTick(() => {
+            isUpdatingToInput = false;
+        });
+    }
     
     // Ищем соответствующие города из billingAddresses
     fromOffice.value = newValue.fromAddress || findCityByValue(newValue.from);

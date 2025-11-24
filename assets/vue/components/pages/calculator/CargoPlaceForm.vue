@@ -10,7 +10,29 @@
                 display-prefix="Высота" display-suffix="см" :show-formatted-when-blurred="true" />
         </div>
         <!-- 2-й ряд: объём -->
-        <div class="bg-gray-200 rounded-lg p-4 text-gray-500 text-lg">Объём, куб.м: {{ calculatedVolume }}</div>
+        <div class="flex flex-col gap-2">
+            <!-- Прямой ввод объема (доступен только для quantity === 1) -->
+            <div v-if="quantity === 1" class="flex items-center gap-2">
+                <CalculatorTextInput 
+                    :name="`pkg_${id}_volume`" 
+                    placeholder="Объём, куб.м" 
+                    v-model="volume" 
+                    type="number"
+                    class="flex-1"
+                    display-prefix="Объём" 
+                    display-suffix="куб.м" 
+                    :show-formatted-when-blurred="true" />
+                <span class="text-sm text-gray-500 whitespace-nowrap">или укажите габариты выше</span>
+            </div>
+            <!-- Отображаемый объем (вычисляемый или введенный) -->
+            <div class="bg-gray-200 rounded-lg p-4 text-gray-500 text-lg">
+                Объём, куб.м: {{ calculatedVolume }}
+            </div>
+            <!-- Сообщение для одинаковых мест -->
+            <div v-if="quantity > 1" class="text-sm text-gray-500 italic">
+                Для одинаковых мест объем рассчитывается только из габаритов
+            </div>
+        </div>
         
         <!-- 3-й ряд: вес и счетчик одинаковых мест -->
         <div class="flex items-center gap-4">
@@ -121,6 +143,7 @@ const id = ref(props.modelValue.id || Date.now());
 const length = ref(props.modelValue.length || '');
 const width = ref(props.modelValue.width || '');
 const height = ref(props.modelValue.height || '');
+const volume = ref(props.modelValue.volume || '');
 const weight = ref(props.modelValue.weight || '');
 const description = ref(props.modelValue.description || '');
 const declaredValue = ref(props.modelValue.declaredValue !== undefined ? props.modelValue.declaredValue : '');
@@ -160,6 +183,8 @@ watch(() => props.modelValue, (newValue) => {
     if (length.value !== newValue.length) length.value = newValue.length || '';
     if (width.value !== newValue.width) width.value = newValue.width || '';
     if (height.value !== newValue.height) height.value = newValue.height || '';
+    const newVolume = newValue.volume !== undefined ? newValue.volume : '';
+    if (volume.value !== newVolume) volume.value = newVolume;
     if (weight.value !== newValue.weight) weight.value = newValue.weight || '';
     if (description.value !== newValue.description) description.value = newValue.description || '';
 
@@ -180,12 +205,13 @@ watch(() => props.modelValue, (newValue) => {
 }, { immediate: true, deep: true });
 
 // Отслеживаем изменения локального состояния и передаем их родителю
-watch([length, width, height, weight, description, declaredValue, packagingItems, selfMarking, dangerousGoods, tempControl, quantity], () => {
+watch([length, width, height, volume, weight, description, declaredValue, packagingItems, selfMarking, dangerousGoods, tempControl, quantity], () => {
     emit('update:modelValue', {
         id: id.value,
         length: length.value,
         width: width.value,
         height: height.value,
+        volume: volume.value,
         weight: weight.value,
         description: description.value,
         declaredValue: declaredValue.value,
@@ -198,9 +224,29 @@ watch([length, width, height, weight, description, declaredValue, packagingItems
 });
 
 const calculatedVolume = computed(() => {
-    if (length.value && width.value && height.value) {
-        return ((length.value * width.value * height.value) / 1000000).toFixed(3);
+    // Если есть прямой ввод объема и quantity === 1, используем его (игнорируем габариты)
+    // Проверяем, что volume задан и не пустой
+    const volumeStr = volume.value !== null && volume.value !== undefined && volume.value !== '' 
+        ? String(volume.value).trim() 
+        : '';
+    
+    if (volumeStr && quantity.value === 1) {
+        const vol = parseFloat(volumeStr);
+        if (!isNaN(vol) && vol >= 0) { // Разрешаем 0 тоже
+            return vol.toFixed(3);
+        }
     }
+    
+    // Иначе вычисляем из габаритов (только если volume не задан или quantity > 1)
+    if (length.value && width.value && height.value) {
+        const l = parseFloat(length.value) || 0;
+        const w = parseFloat(width.value) || 0;
+        const h = parseFloat(height.value) || 0;
+        if (l > 0 && w > 0 && h > 0) {
+            return ((l * w * h) / 1000000).toFixed(3);
+        }
+    }
+    
     return '0.000';
 });
 </script>

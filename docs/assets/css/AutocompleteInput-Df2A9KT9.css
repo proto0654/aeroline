@@ -1,0 +1,64 @@
+
+.vue-form-field[data-v-2e53d060] {
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.75rem 1rem; /* px-4 py-3 */
+  font-size: inherit;
+  background-color: white;
+  color: #6b7280; /* text-body-secondary */
+  font-family: inherit;
+  height: 3rem;
+  width: 100%;
+  transition: border-color 0.2s ease-in-out;
+}
+.vue-form-field[data-v-2e53d060]:focus {
+  outline: none;
+  border-color: #008dd2; /* brand-blue */
+  box-shadow: 0 0 0 2px rgba(0, 141, 210, 0.1);
+}
+.vue-form-field[data-v-2e53d060]::-moz-placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+.vue-form-field[data-v-2e53d060]::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+.vue-form-field[data-v-2e53d060]:disabled {
+  background-color: #f3f4f6; /* gray-100 */
+  cursor: not-allowed;
+  color: #9ca3af; /* gray-400 */
+}
+.base-form-error[data-v-2e53d060] {
+    color: #ef4444;
+    /* red-500 */
+    font-size: 0.875rem;
+    /* text-sm */
+    margin-top: 0.25rem;
+    /* mt-1 */
+}
+
+/* Skeleton loader с переливающимся голубым градиентом */
+.skeleton-loader[data-v-2e53d060] {
+    height: 20px;
+    width: 100%;
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        #e0f2fe 0%,
+        #bae6fd 20%,
+        #7dd3fc 40%,
+        #38bdf8 50%,
+        #7dd3fc 60%,
+        #bae6fd 80%,
+        #e0f2fe 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer-2e53d060 1.5s ease-in-out infinite;
+}
+@keyframes shimmer-2e53d060 {
+0% {
+        background-position: -200% 0;
+}
+100% {
+        background-position: 200% 0;
+}
+}

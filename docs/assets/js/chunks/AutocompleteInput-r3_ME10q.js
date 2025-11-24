@@ -74,16 +74,20 @@ const _hoisted_5 = {
   alt: "",
   class: "absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-10"
 };
-const _hoisted_6 = ["data-office-id", "onClick", "innerHTML"];
-const _hoisted_7 = {
+const _hoisted_6 = {
+  key: 0,
+  class: "px-4 py-2"
+};
+const _hoisted_7 = ["data-office-id", "onClick", "innerHTML"];
+const _hoisted_8 = {
   key: 2,
   class: "text-brand-red absolute right-8 top-1/2 -translate-y-1/2 text-lg font-bold pointer-events-none"
 };
-const _hoisted_8 = {
+const _hoisted_9 = {
   key: 1,
   class: "text-red-500 text-sm mt-1"
 };
-const _hoisted_9 = {
+const _hoisted_10 = {
   key: 2,
   class: "mt-1 text-sm text-gray-500"
 };
@@ -563,24 +567,26 @@ const _sfc_main = {
             class: normalizeClass(["absolute w-full bg-white border border-gray-200 rounded-md shadow-md mt-1 max-h-60 overflow-y-auto z-20", { "hidden": !isDropdownVisible.value }]),
             style: { "max-height": "200px", "overflow-y": "auto", "overscroll-behavior": "contain" }
           }, [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(filteredItems.value, (item, index) => {
+            isApiSearching.value && __props.useApiSearch ? (openBlock(), createElementBlock("li", _hoisted_6, _cache[3] || (_cache[3] = [
+              createBaseVNode("div", { class: "skeleton-loader" }, null, -1)
+            ]))) : (openBlock(true), createElementBlock(Fragment, { key: 1 }, renderList(filteredItems.value, (item, index) => {
               return openBlock(), createElementBlock("li", {
                 key: getItemKey(item, index),
                 class: normalizeClass(["px-4 py-2 hover:bg-blue-100 cursor-pointer", { "bg-blue-100": currentIndex.value === index }]),
                 "data-office-id": item.id,
                 onClick: ($event) => selectItem(item),
                 innerHTML: formatItemHTML(item)
-              }, null, 10, _hoisted_6);
+              }, null, 10, _hoisted_7);
             }), 128))
           ], 2),
-          __props.required ? (openBlock(), createElementBlock("span", _hoisted_7, "*")) : createCommentVNode("", true)
+          __props.required ? (openBlock(), createElementBlock("span", _hoisted_8, "*")) : createCommentVNode("", true)
         ]),
-        unref(errorMessage) ? (openBlock(), createElementBlock("p", _hoisted_8, toDisplayString(unref(errorMessage)), 1)) : __props.hint ? (openBlock(), createElementBlock("p", _hoisted_9, toDisplayString(__props.hint), 1)) : createCommentVNode("", true)
+        unref(errorMessage) ? (openBlock(), createElementBlock("p", _hoisted_9, toDisplayString(unref(errorMessage)), 1)) : __props.hint ? (openBlock(), createElementBlock("p", _hoisted_10, toDisplayString(__props.hint), 1)) : createCommentVNode("", true)
       ]);
     };
   }
 };
-const AutocompleteInput = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-5a1d40aa"]]);
+const AutocompleteInput = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-2e53d060"]]);
 export {
   AutocompleteInput as A,
   formatSelectedLocalityName as f

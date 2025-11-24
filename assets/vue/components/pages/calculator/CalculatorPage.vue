@@ -12,8 +12,8 @@
             @cityFound="handleCityFound" />
     </div>
 
-    <!-- Калькулятор (показывается только если выбраны оба доступных города) -->
-    <div v-if="showCalculator" class="flex flex-col flex-1 lg:flex-row gap-8 min-w-0">
+    <!-- Калькулятор (скрывается только если введенный город не найден в базе) -->
+    <div v-if="!invalidFromCity && !invalidToCity" class="flex flex-col flex-1 lg:flex-row gap-8 min-w-0">
         <!-- Левая колонка: Формы ввода -->
         <div
             class="flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0">
@@ -50,25 +50,30 @@
         </div>
 
         <!-- Правая колонка: Результаты расчета -->
-        <div class="h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none">
+        <div class="h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none lg:sticky lg:top-4">
             <CalculationResult :result="calculationResult" :form-data="formData" :calculator-config="calculatorConfig"
                 @print="printResult" @selectTariff="selectTariff" />
             <!-- Кнопка "Рассчитать" удалена - расчет происходит автоматически -->
         </div>
     </div>
 
-    <!-- Сообщение и форма запроса (показывается если города не выбраны или недоступны) -->
-    <div v-else class="bg-brand-light p-5 rounded-lg">
-        <p class="text-gray-600 mb-4">Выберите направление выше.</p>
-        <p class="text-gray-600 mb-6">Если вашего направления нет в списке, заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.</p>
-        <ManagerRequestForm
-            :prefill-region="managerRequestData.region"
-            :prefill-locality="managerRequestData.locality"
-            :prefill-street="managerRequestData.street"
-            :regions="availableRegions"
-            :localities="availableCities"
-            @cancel="handleManagerRequestCancel"
-            @submit="handleManagerRequestSubmit" />
+    <!-- Форма запроса направления (показывается динамически, если введенный город не найден) -->
+    <div v-if="(invalidFromCity || invalidToCity) && (formData.direction.from?.trim() || formData.direction.to?.trim())" class="bg-brand-light p-5 rounded-lg mt-6">
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <p class="text-sm text-yellow-800 mb-4">
+                <span v-if="invalidFromCity">Выбранный город отправки не найден в системе.</span>
+                <span v-if="invalidToCity">Выбранный город назначения не найден в системе.</span>
+                Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.
+            </p>
+            <ManagerRequestForm
+                :prefill-region="managerRequestData.region"
+                :prefill-locality="managerRequestData.locality"
+                :prefill-street="managerRequestData.street"
+                :regions="availableRegions"
+                :localities="availableCities"
+                @cancel="handleManagerRequestCancel"
+                @submit="handleManagerRequestSubmit" />
+        </div>
     </div>
 </template>
 
@@ -179,6 +184,11 @@ const availableRegions = computed(() => {
 
 // Показывать ли калькулятор (только если выбраны оба доступных города)
 const showCalculator = computed(() => {
+    // Если есть невалидные города, не показываем калькулятор
+    if (invalidFromCity.value || invalidToCity.value) {
+        return false;
+    }
+    
     // Извлекаем названия городов из fromAddress и toAddress
     const fromCityName = formData.direction.fromAddress 
         ? (typeof formData.direction.fromAddress === 'string' 
@@ -298,9 +308,25 @@ function checkTariffAvailability(tariff, cargoData, direction, distanceKm, depar
 
     cargoData.packages.forEach(pkg => {
         const weight = parseFloat(pkg.weight) || 0;
-        const volume = (parseFloat(pkg.length) * parseFloat(pkg.width) * parseFloat(pkg.height)) / 1000000 || 0;
-        const declaredValue = parseFloat(pkg.declaredValue) || 0;
         const quantity = parseInt(pkg.quantity) || 1;
+        const declaredValue = parseFloat(pkg.declaredValue) || 0;
+        
+        // Определяем объем: если есть прямое значение volume и quantity === 1, используем его
+        // Иначе вычисляем из габаритов
+        let volume = 0;
+        const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
+            ? String(pkg.volume).trim() 
+            : '';
+        if (volumeStr && quantity === 1) {
+            const vol = parseFloat(volumeStr);
+            if (!isNaN(vol) && vol >= 0) { // Разрешаем 0 тоже
+                volume = vol;
+            } else {
+                volume = (parseFloat(pkg.length) * parseFloat(pkg.width) * parseFloat(pkg.height)) / 1000000 || 0;
+            }
+        } else {
+            volume = (parseFloat(pkg.length) * parseFloat(pkg.width) * parseFloat(pkg.height)) / 1000000 || 0;
+        }
 
         totalWeight += weight * quantity;
         totalVolume += volume * quantity;
@@ -527,8 +553,24 @@ function checkTariffConstraints(transportType, cargoData, direction, distanceKm)
     const constraints = tariffConfig.availability;
     const totalWeight = cargoData.packages.reduce((sum, pkg) => sum + (pkg.weight * pkg.quantity), 0);
     const totalVolume = cargoData.packages.reduce((sum, pkg) => {
-        const volume = (pkg.length * pkg.width * pkg.height) / 1000000; // см³ в м³
-        return sum + (volume * pkg.quantity);
+        const quantity = parseInt(pkg.quantity) || 1;
+        // Определяем объем: если есть прямое значение volume и quantity === 1, используем его
+        // Иначе вычисляем из габаритов
+        let volume = 0;
+        const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
+            ? String(pkg.volume).trim() 
+            : '';
+        if (volumeStr && quantity === 1) {
+            const vol = parseFloat(volumeStr);
+            if (!isNaN(vol) && vol >= 0) { // Разрешаем 0 тоже
+                volume = vol;
+            } else {
+                volume = (pkg.length * pkg.width * pkg.height) / 1000000; // см³ в м³
+            }
+        } else {
+            volume = (pkg.length * pkg.width * pkg.height) / 1000000; // см³ в м³
+        }
+        return sum + (volume * quantity);
     }, 0);
     
     // Проверка веса
@@ -684,48 +726,69 @@ function calculateTariffCost(typeTransportation) {
             });
         }
     } else {
-        // Адрес: терминалы находятся в той же таблице billingAddresses, просто у них не заполнена улица
-        // Используем тот же billingAddress, что и для терминала в этом городе (через uidBillingAddress из terminals)
+        // Адрес: ищем billingAddress с учетом конкретной улицы или адреса для всего города
         if (direction.fromAddress) {
             const fromCityName = typeof direction.fromAddress === 'string' 
                 ? direction.fromAddress 
                 : (direction.fromAddress.name || '');
             
+            // Получаем улицу из departure.location, если это адрес
+            const streetFromLocation = departure.location && typeof departure.location === 'object' 
+                ? (departure.location.street || '') 
+                : '';
+            
             console.log('Поиск fromAddress для адреса:', {
                 fromCityName,
+                streetFromLocation,
                 directionFromAddress: direction.fromAddress,
                 billingAddressesCount: billingAddresses.value.length
             });
             
-            // Находим billingAddress через терминал для этого города (терминалы в той же таблице billingAddresses)
-            const terminalsInCity = terminals.value.filter(t => {
-                const termCityName = typeof t.locality === 'string' ? t.locality : (t.locality?.name || '');
-                return termCityName === fromCityName;
-            });
+            // Определяем, была ли указана конкретная улица
+            const hasSpecificStreet = streetFromLocation && streetFromLocation.trim();
             
-            if (terminalsInCity.length > 0 && terminalsInCity[0].uidBillingAddress) {
-                // Используем billingAddress из терминала (терминалы в той же таблице billingAddresses)
-                fromAddress = billingAddresses.value.find(addr => 
-                    String(addr.uid) === String(terminalsInCity[0].uidBillingAddress)
-                );
-                
-                console.log('fromAddress найден через терминал:', fromAddress ? {
-                    uid: fromAddress.uid,
-                    locality: fromAddress.locality,
-                    terminalUidBillingAddress: terminalsInCity[0].uidBillingAddress
-                } : 'не найден');
-            }
-            
-            // Если не нашли через терминал, используем стандартный поиск по названию города
-            if (!fromAddress) {
+            // Сначала ищем адрес с конкретной улицей (если указана)
+            if (hasSpecificStreet) {
                 fromAddress = billingAddresses.value.find(addr => {
                     const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
-                    return addrLocalityName === fromCityName;
+                    const addrStreet = addr.street || '';
+                    return addrLocalityName === fromCityName && addrStreet === streetFromLocation.trim();
                 });
                 
-                console.log('fromAddress найден по названию города:', fromAddress ? {
+                console.log('fromAddress найден с конкретной улицей:', fromAddress ? {
                     uid: fromAddress.uid,
-                    locality: fromAddress.locality
+                    locality: fromAddress.locality,
+                    street: fromAddress.street
+                } : 'не найден');
+                
+                // Если не нашли адрес с конкретной улицей, ищем адрес без улицы (для всего города) как fallback
+                if (!fromAddress) {
+                    fromAddress = billingAddresses.value.find(addr => {
+                        const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                        const addrStreet = addr.street || '';
+                        // Ищем адрес без улицы (street пустой или null) для того же города
+                        return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === '');
+                    });
+                    
+                    console.log('fromAddress найден без улицы (fallback после поиска конкретной улицы):', fromAddress ? {
+                        uid: fromAddress.uid,
+                        locality: fromAddress.locality,
+                        street: fromAddress.street
+                    } : 'не найден');
+                }
+            } else {
+                // Если улица не указана, ищем адрес без улицы (для всего города)
+                fromAddress = billingAddresses.value.find(addr => {
+                    const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                    const addrStreet = addr.street || '';
+                    // Ищем адрес без улицы (street пустой или null) для того же города
+                    return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === '');
+                });
+                
+                console.log('fromAddress найден без улицы (для всего города):', fromAddress ? {
+                    uid: fromAddress.uid,
+                    locality: fromAddress.locality,
+                    street: fromAddress.street
                 } : 'не найден');
             }
             
@@ -819,48 +882,69 @@ function calculateTariffCost(typeTransportation) {
             });
         }
     } else {
-        // Адрес: терминалы находятся в той же таблице billingAddresses, просто у них не заполнена улица
-        // Используем тот же billingAddress, что и для терминала в этом городе (через uidBillingAddress из terminals)
+        // Адрес: ищем billingAddress с учетом конкретной улицы или адреса для всего города
         if (direction.toAddress) {
             const toCityName = typeof direction.toAddress === 'string' 
                 ? direction.toAddress 
                 : (direction.toAddress.name || '');
             
+            // Получаем улицу из destination.location, если это адрес
+            const streetFromLocation = destination.location && typeof destination.location === 'object' 
+                ? (destination.location.street || '') 
+                : '';
+            
             console.log('Поиск toAddress для адреса:', {
                 toCityName,
+                streetFromLocation,
                 directionToAddress: direction.toAddress,
                 billingAddressesCount: billingAddresses.value.length
             });
             
-            // Находим billingAddress через терминал для этого города (терминалы в той же таблице billingAddresses)
-            const terminalsInCity = terminals.value.filter(t => {
-                const termCityName = typeof t.locality === 'string' ? t.locality : (t.locality?.name || '');
-                return termCityName === toCityName;
-            });
+            // Определяем, была ли указана конкретная улица
+            const hasSpecificStreet = streetFromLocation && streetFromLocation.trim();
             
-            if (terminalsInCity.length > 0 && terminalsInCity[0].uidBillingAddress) {
-                // Используем billingAddress из терминала (терминалы в той же таблице billingAddresses)
-                toAddress = billingAddresses.value.find(addr => 
-                    String(addr.uid) === String(terminalsInCity[0].uidBillingAddress)
-                );
-                
-                console.log('toAddress найден через терминал:', toAddress ? {
-                    uid: toAddress.uid,
-                    locality: toAddress.locality,
-                    terminalUidBillingAddress: terminalsInCity[0].uidBillingAddress
-                } : 'не найден');
-            }
-            
-            // Если не нашли через терминал, используем стандартный поиск по названию города
-            if (!toAddress) {
+            // Сначала ищем адрес с конкретной улицей (если указана)
+            if (hasSpecificStreet) {
                 toAddress = billingAddresses.value.find(addr => {
                     const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
-                    return addrLocalityName === toCityName;
+                    const addrStreet = addr.street || '';
+                    return addrLocalityName === toCityName && addrStreet === streetFromLocation.trim();
                 });
                 
-                console.log('toAddress найден по названию города:', toAddress ? {
+                console.log('toAddress найден с конкретной улицей:', toAddress ? {
                     uid: toAddress.uid,
-                    locality: toAddress.locality
+                    locality: toAddress.locality,
+                    street: toAddress.street
+                } : 'не найден');
+                
+                // Если не нашли адрес с конкретной улицей, ищем адрес без улицы (для всего города) как fallback
+                if (!toAddress) {
+                    toAddress = billingAddresses.value.find(addr => {
+                        const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                        const addrStreet = addr.street || '';
+                        // Ищем адрес без улицы (street пустой или null) для того же города
+                        return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === '');
+                    });
+                    
+                    console.log('toAddress найден без улицы (fallback после поиска конкретной улицы):', toAddress ? {
+                        uid: toAddress.uid,
+                        locality: toAddress.locality,
+                        street: toAddress.street
+                    } : 'не найден');
+                }
+            } else {
+                // Если улица не указана, ищем адрес без улицы (для всего города)
+                toAddress = billingAddresses.value.find(addr => {
+                    const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                    const addrStreet = addr.street || '';
+                    // Ищем адрес без улицы (street пустой или null) для того же города
+                    return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === '');
+                });
+                
+                console.log('toAddress найден без улицы (для всего города):', toAddress ? {
+                    uid: toAddress.uid,
+                    locality: toAddress.locality,
+                    street: toAddress.street
                 } : 'не найден');
             }
             
@@ -1098,10 +1182,33 @@ function calculateTariffCost(typeTransportation) {
         const quantity = parseInt(pkg.quantity) || 1;
         const declaredValue = parseFloat(pkg.declaredValue) || 0;
 
-        // Формулы из ТЗ:
-        // V = L * W * H (в см³)
-        const volumeCm3 = length * width * height;
-        const volume = volumeCm3 / 1000000; // переводим в м³
+        // Определяем объем: если есть прямое значение volume и quantity === 1, используем его
+        // Иначе вычисляем из габаритов
+        let volume = 0;
+        let volumeCm3 = 0;
+        
+        // Проверяем, что volume задан и не пустой
+        const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
+            ? String(pkg.volume).trim() 
+            : '';
+        if (volumeStr && quantity === 1) {
+            // Прямой ввод объема (только для quantity === 1)
+            const vol = parseFloat(volumeStr);
+            if (!isNaN(vol) && vol >= 0) { // Разрешаем 0 тоже
+                volume = vol;
+                volumeCm3 = volume * 1000000; // переводим м³ в см³ для расчета объемного веса
+            } else {
+                // Если объем невалидный, вычисляем из габаритов
+                volumeCm3 = length * width * height;
+                volume = volumeCm3 / 1000000; // переводим в м³
+            }
+        } else {
+            // Вычисляем из габаритов
+            // Формулы из ТЗ:
+            // V = L * W * H (в см³)
+            volumeCm3 = length * width * height;
+            volume = volumeCm3 / 1000000; // переводим в м³
+        }
         
         // Объемный вес одного места = Объем / transportationCoefficient
         const volumetricWeightPerPlace = volumeCm3 / typeTransportation.transportationCoefficient;
@@ -1827,7 +1934,27 @@ function calculateTariffCost(typeTransportation) {
         const height = parseFloat(pkg.height) || 0;
         const weight = parseFloat(pkg.weight) || 0;
         const quantity = parseInt(pkg.quantity) || 1;
-        const volumeCm3 = length * width * height;
+        
+        // Определяем объем: если есть прямое значение volume и quantity === 1, используем его
+        // Иначе вычисляем из габаритов (та же логика, что и в основном расчете)
+        let volumeCm3 = 0;
+        const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
+            ? String(pkg.volume).trim() 
+            : '';
+        if (volumeStr && quantity === 1) {
+            // Прямой ввод объема (только для quantity === 1)
+            const volume = parseFloat(volumeStr);
+            if (!isNaN(volume) && volume >= 0) { // Разрешаем 0 тоже
+                volumeCm3 = volume * 1000000; // переводим м³ в см³ для расчета объемного веса
+            } else {
+                // Если объем невалидный, вычисляем из габаритов
+                volumeCm3 = length * width * height;
+            }
+        } else {
+            // Вычисляем из габаритов
+            volumeCm3 = length * width * height;
+        }
+        
         const volumetricWeightPerPlace = volumeCm3 / typeTransportation.transportationCoefficient;
         const volumetricWeightTotal = volumetricWeightPerPlace * quantity;
         const actualWeightTotal = weight * quantity;
@@ -1839,12 +1966,35 @@ function calculateTariffCost(typeTransportation) {
             isSubHeader: true
         });
         
-        // Формула объема
-        details.push({
-            name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
-            cost: 0,
-            isDetail: true
-        });
+        // Формула объема - показываем разную информацию в зависимости от способа ввода
+        const volumeStrForFormula = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
+            ? String(pkg.volume).trim() 
+            : '';
+        if (volumeStrForFormula && quantity === 1) {
+            const volume = parseFloat(volumeStrForFormula);
+            if (!isNaN(volume) && volume >= 0) { // Разрешаем 0 тоже
+                // Прямой ввод объема
+                details.push({
+                    name: `V = ${volume.toFixed(3)} (объем, м³ из формы) × 1000000 = ${volumeCm3.toFixed(2)} см³`,
+                    cost: 0,
+                    isDetail: true
+                });
+            } else {
+                // Вычисление из габаритов (если объем невалидный)
+                details.push({
+                    name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+        } else {
+            // Вычисление из габаритов
+            details.push({
+                name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
+                cost: 0,
+                isDetail: true
+            });
+        }
         
         // Формула объемного веса одного места
         details.push({
@@ -1901,8 +2051,8 @@ function calculateTariffCost(typeTransportation) {
                 applicableTransportationTariff = sortedRelevantTariffGrid[sortedRelevantTariffGrid.length - 1];
             }
         }
-        
-        if (applicableTransportationTariff) {
+    
+    if (applicableTransportationTariff) {
             const unitFrom = parseFloat(applicableTransportationTariff.unitFrom) || 0;
             const step = parseFloat(applicableTransportationTariff.step) || 1;
             
@@ -1921,21 +2071,21 @@ function calculateTariffCost(typeTransportation) {
         if (step > 0 && totalPayableWeight > unitFrom) {
             // Показываем расчет шагов только если ПВ > unitFrom и step > 0
             const transportationStepsCalculation = (totalPayableWeight - unitFrom) / step;
-            details.push({
+        details.push({
                 name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ, кг) - ${unitFrom} (unitFrom из тарифной сетки зоны ${tariffZone.tariffZone})) / ${step} (step из тарифной сетки) = ${transportationStepsCalculation.toFixed(2)}`,
-                cost: 0,
-                isDetail: true
-            });
-            details.push({
-                name: `Количество шагов = округление вверх до целого числа = ${steps}`,
-                cost: 0,
-                isDetail: true
-            });
-            details.push({
-                name: `Базовая стоимость = ${applicableTransportationTariff.startingPrice} (startingPrice из тарифной сетки) + ${steps} (шаги) × ${applicableTransportationTariff.stepPrice} (stepPrice из тарифной сетки) = ${transportationBaseCost.toFixed(2)} ₽`,
-                cost: 0,
-                isDetail: true
-            });
+            cost: 0,
+            isDetail: true
+        });
+        details.push({
+            name: `Количество шагов = округление вверх до целого числа = ${steps}`,
+            cost: 0,
+            isDetail: true
+        });
+        details.push({
+            name: `Базовая стоимость = ${applicableTransportationTariff.startingPrice} (startingPrice из тарифной сетки) + ${steps} (шаги) × ${applicableTransportationTariff.stepPrice} (stepPrice из тарифной сетки) = ${transportationBaseCost.toFixed(2)} ₽`,
+            cost: 0,
+            isDetail: true
+        });
         } else if (step === 0) {
             // Если step = 0, это фиксированная цена
             details.push({
@@ -2051,16 +2201,16 @@ function calculateTariffCost(typeTransportation) {
             if (step > 0 && totalPayableWeight > unitFrom) {
                 // Показываем расчет шагов только если ПВ > unitFrom и step > 0
                 const pickupStepsCalculation = (totalPayableWeight - unitFrom) / step;
-                details.push({
+            details.push({
                     name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${unitFrom} (unitFrom из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки)) / ${step} (step) = ${pickupStepsCalculation.toFixed(2)}`,
-                    cost: 0,
-                    isDetail: true
-                });
-                details.push({
-                    name: `Количество шагов = округление вверх до целого числа = ${pickupSteps}`,
-                    cost: 0,
-                    isDetail: true
-                });
+                cost: 0,
+                isDetail: true
+            });
+            details.push({
+                name: `Количество шагов = округление вверх до целого числа = ${pickupSteps}`,
+                cost: 0,
+                isDetail: true
+            });
             } else if (step === 0) {
                 // Если step = 0, это фиксированная цена
                 details.push({
@@ -2077,11 +2227,11 @@ function calculateTariffCost(typeTransportation) {
                 });
             }
             if (pickupSteps > 0) {
-                details.push({
-                    name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки) + ${pickupSteps} (шаги) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
-                    cost: 0,
-                    isDetail: true
-                });
+            details.push({
+                name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки) + ${pickupSteps} (шаги) × ${applicablePickupTariff.stepPrice} (stepPrice) = ${pickupBaseCost.toFixed(2)} ₽`,
+                cost: 0,
+                isDetail: true
+            });
             } else {
                 details.push({
                     name: `Базовая стоимость забора = ${applicablePickupTariff.startingPrice} (startingPrice из тарифной сетки зоны ${pickupZone} из takeDeliver для адреса отправки, шаги не применяются, так как ПВ ≤ unitFrom) = ${pickupBaseCost.toFixed(2)} ₽`,
@@ -2216,21 +2366,21 @@ function calculateTariffCost(typeTransportation) {
             if (step > 0 && totalPayableWeight > unitFrom) {
                 // Показываем расчет шагов только если ПВ > unitFrom и step > 0
                 const deliveryStepsCalculation = (totalPayableWeight - unitFrom) / step;
-                details.push({
+            details.push({
                     name: `Расчет шагов: (${totalPayableWeight.toFixed(2)} (ПВ) - ${unitFrom} (unitFrom из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения)) / ${step} (step) = ${deliveryStepsCalculation.toFixed(2)}`,
-                    cost: 0,
-                    isDetail: true
-                });
-                details.push({
-                    name: `Количество шагов = округление вверх до целого числа = ${deliverySteps}`,
-                    cost: 0,
-                    isDetail: true
-                });
-                details.push({
-                    name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения) + ${deliverySteps} (шаги) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
-                    cost: 0,
-                    isDetail: true
-                });
+                cost: 0,
+                isDetail: true
+            });
+            details.push({
+                name: `Количество шагов = округление вверх до целого числа = ${deliverySteps}`,
+                cost: 0,
+                isDetail: true
+            });
+            details.push({
+                name: `Базовая стоимость доставки = ${applicableDeliveryTariff.startingPrice} (startingPrice из тарифной сетки зоны ${deliveryZone} из takeDeliver для адреса назначения) + ${deliverySteps} (шаги) × ${applicableDeliveryTariff.stepPrice} (stepPrice) = ${deliveryBaseCost.toFixed(2)} ₽`,
+                cost: 0,
+                isDetail: true
+            });
             } else if (step === 0) {
                 // Если step = 0, это фиксированная цена
                 details.push({
@@ -2974,8 +3124,8 @@ function handleCityNotFound(data) {
             locality: data.locality,
             region: data.region
         };
-        // Очищаем валидные данные направления
-        formData.direction.from = '';
+        // НЕ очищаем введенное значение - оставляем его в поле, как для улицы
+        // Только очищаем fromAddress, так как город не найден в базе
         formData.direction.fromAddress = null;
         formData.direction.fromLocalityId = null;
     } else if (data.type === 'to') {
@@ -2984,8 +3134,8 @@ function handleCityNotFound(data) {
             locality: data.locality,
             region: data.region
         };
-        // Очищаем валидные данные направления
-        formData.direction.to = '';
+        // НЕ очищаем введенное значение - оставляем его в поле, как для улицы
+        // Только очищаем toAddress, так как город не найден в базе
         formData.direction.toAddress = null;
         formData.direction.toLocalityId = null;
     }

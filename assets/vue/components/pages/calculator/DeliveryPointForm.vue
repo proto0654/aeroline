@@ -44,8 +44,8 @@
 
             <!-- Режим адреса -->
             <template v-if="deliveryMode === 'address'">
-                <!-- Форма запроса улицы (если нет доступных улиц) -->
-                <div v-if="!hasAvailableStreets" class="md:col-span-2 mb-4">
+                <!-- Форма запроса улицы (если нет ни доступных улиц, ни записи для всего города) -->
+                <div v-if="!hasAvailableStreets && !hasCityWideCoverage" class="md:col-span-2 mb-4">
                     <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                         <p class="text-sm text-yellow-800 mb-4">
                             Для выбранного города нет доступных улиц в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.
@@ -62,9 +62,11 @@
                     </div>
                 </div>
 
-                <!-- Поле ввода улицы (всегда видно, если есть доступные улицы) -->
-                <div v-if="hasAvailableStreets" class="md:col-span-2">
+                <!-- Поле ввода улицы (показывается если есть доступные улицы ИЛИ есть запись для всего города) -->
+                <div v-if="hasAvailableStreets || hasCityWideCoverage" class="md:col-span-2">
+                    <!-- Автокомплит с выпадающим списком (если есть доступные улицы) -->
                     <AutocompleteInput 
+                        v-if="hasAvailableStreets"
                         ref="streetInputRef"
                         :name="`${namePrefix}_street`" 
                         label="Улица" 
@@ -82,8 +84,18 @@
                         :showResetButton="true"
                         @reset="onStreetReset" />
                     
-                    <!-- Форма запроса улицы (показывается динамически, если введенная улица не найдена) -->
-                    <div v-if="streetNotFound && state.address.street && state.address.street.trim()" class="mt-4">
+                    <!-- Обычное текстовое поле (если нет доступных улиц, но есть запись для всего города) -->
+                    <TextInput 
+                        v-else-if="hasCityWideCoverage"
+                        :name="`${namePrefix}_street`" 
+                        label="Улица" 
+                        placeholder="Укажите улицу"
+                        :disabled="!city" 
+                        v-model="state.address.street" 
+                        @update:modelValue="onStreetInputChange" />
+                    
+                    <!-- Форма запроса улицы (показывается динамически, если введенная улица не найдена и нет записи для всего города) -->
+                    <div v-if="streetNotFound && state.address.street && state.address.street.trim() && !hasCityWideCoverage" class="mt-4">
                         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                             <p class="text-sm text-yellow-800 mb-4">
                                 Введенная улица не найдена в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.
@@ -554,6 +566,36 @@ const hasAvailableStreets = computed(() => {
     });
 });
 
+// Проверка наличия записи для всего города (адрес без улицы с takeDeliver)
+const hasCityWideCoverage = computed(() => {
+    if (!props.city || !props.billingAddresses || props.billingAddresses.length === 0) {
+        return false;
+    }
+    
+    const cityName = props.locality?.name || extractCityNameFromFormattedString(props.city);
+    if (!cityName) return false;
+    
+    // Ищем адрес без улицы для выбранного города
+    const cityWideAddress = props.billingAddresses.find(addr => {
+        const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        const addrStreet = addr.street || '';
+        return addrCity === cityName && (!addrStreet || addrStreet.trim() === '');
+    });
+    
+    if (!cityWideAddress) {
+        return false;
+    }
+    
+    // Проверяем наличие записи в takeDelivers для найденного адреса
+    if (!props.takeDelivers || props.takeDelivers.length === 0) {
+        return false;
+    }
+    
+    return props.takeDelivers.some(td => {
+        return String(td.uidBillingAddress) === String(cityWideAddress.uid);
+    });
+});
+
 // Извлекаем уникальные города из billingAddresses для формы запроса
 const availableCities = computed(() => {
     const citiesMap = new Map();
@@ -728,7 +770,7 @@ const searchHousesFunction = computed(() => {
 // Проверка наличия адреса в billingAddresses и takeDelivers
 function validateAddress(cityName, streetName) {
     if (!cityName || !streetName || !props.billingAddresses || props.billingAddresses.length === 0) {
-        return { valid: false, billingAddress: null };
+        return { valid: false, billingAddress: null, isCityWide: false };
     }
     
     // Ищем улицу в billingAddresses (сравниваем только street, игнорируем houseNumber)
@@ -739,25 +781,48 @@ function validateAddress(cityName, streetName) {
         return addrCity === cityName && addrStreet === normalizedStreetName;
     });
     
-    if (!billingAddress) {
-        return { valid: false, billingAddress: null };
+    // Если конкретная улица найдена, проверяем наличие takeDeliver
+    if (billingAddress) {
+        // Проверяем наличие записи в takeDelivers для найденного billingAddress
+        if (!props.takeDelivers || props.takeDelivers.length === 0) {
+            return { valid: false, billingAddress, isCityWide: false };
+        }
+        
+        const hasTakeDeliver = props.takeDelivers.some(td => {
+            return String(td.uidBillingAddress) === String(billingAddress.uid);
+        });
+        
+        if (!hasTakeDeliver) {
+            return { valid: false, billingAddress, isCityWide: false };
+        }
+        
+        return { valid: true, billingAddress, isCityWide: false };
     }
     
-    // Проверяем наличие записи в takeDelivers для найденного billingAddress
-    // Нужно проверить хотя бы для одного типа перевозки
-    if (!props.takeDelivers || props.takeDelivers.length === 0) {
-        return { valid: false, billingAddress };
-    }
-    
-    const hasTakeDeliver = props.takeDelivers.some(td => {
-        return td.uidBillingAddress === billingAddress.uid;
+    // Если конкретная улица не найдена, проверяем наличие записи для всего города
+    const cityWideAddress = props.billingAddresses.find(addr => {
+        const addrCity = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+        const addrStreet = addr.street || '';
+        return addrCity === cityName && (!addrStreet || addrStreet.trim() === '');
     });
     
-    if (!hasTakeDeliver) {
-        return { valid: false, billingAddress };
+    if (cityWideAddress) {
+        // Проверяем наличие записи в takeDelivers для адреса всего города
+        if (!props.takeDelivers || props.takeDelivers.length === 0) {
+            return { valid: false, billingAddress: null, isCityWide: false };
+        }
+        
+        const hasTakeDeliver = props.takeDelivers.some(td => {
+            return String(td.uidBillingAddress) === String(cityWideAddress.uid);
+        });
+        
+        if (hasTakeDeliver) {
+            // Есть запись для всего города - можно использовать её коэффициенты
+            return { valid: true, billingAddress: cityWideAddress, isCityWide: true };
+        }
     }
     
-    return { valid: true, billingAddress };
+    return { valid: false, billingAddress: null, isCityWide: false };
 }
 
 // Обработчики выбора улицы
@@ -788,16 +853,22 @@ function onStreetSelected(item) {
         const validation = validateAddress(cityName, streetName);
         
         if (!validation.valid) {
-            // Адрес не найден - эмитим событие
-            const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
-            emit('addressNotFound', {
-                type: props.namePrefix, // 'departure' or 'destination'
-                city: cityName,
-                street: streetName,
-                locality: localityObj,
-                region: localityObj?.region || ''
-            });
-            return; // Не продолжаем обработку
+            // Адрес не найден - проверяем, есть ли запись для всего города
+            if (validation.isCityWide || hasCityWideCoverage.value) {
+                // Есть запись для всего города - используем её коэффициенты, не показываем форму запроса
+                emit('addressFound', { type: props.namePrefix });
+            } else {
+                // Нет записи для всего города - эмитим событие для показа формы запроса
+                const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
+                emit('addressNotFound', {
+                    type: props.namePrefix, // 'departure' or 'destination'
+                    city: cityName,
+                    street: streetName,
+                    locality: localityObj,
+                    region: localityObj?.region || ''
+                });
+                return; // Не продолжаем обработку
+            }
         } else {
             // Адрес найден - эмитим событие для очистки invalid состояния
             emit('addressFound', { type: props.namePrefix });
@@ -847,16 +918,23 @@ function onStreetInputChange(value) {
             const validation = validateAddress(cityName, value.trim());
             
             if (!validation.valid) {
-                // Адрес не найден - устанавливаем флаг и эмитим событие
-                streetNotFound.value = true;
-                const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
-                emit('addressNotFound', {
-                    type: props.namePrefix,
-                    city: cityName,
-                    street: value.trim(),
-                    locality: localityObj,
-                    region: localityObj?.region || ''
-                });
+                // Адрес не найден - проверяем, есть ли запись для всего города
+                if (validation.isCityWide || hasCityWideCoverage.value) {
+                    // Есть запись для всего города - используем её коэффициенты, не показываем форму запроса
+                    streetNotFound.value = false;
+                    emit('addressFound', { type: props.namePrefix });
+                } else {
+                    // Нет записи для всего города - устанавливаем флаг и эмитим событие для показа формы запроса
+                    streetNotFound.value = true;
+                    const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
+                    emit('addressNotFound', {
+                        type: props.namePrefix,
+                        city: cityName,
+                        street: value.trim(),
+                        locality: localityObj,
+                        region: localityObj?.region || ''
+                    });
+                }
             } else {
                 // Адрес найден - сбрасываем флаг и эмитим событие для очистки invalid состояния
                 streetNotFound.value = false;

@@ -1,8 +1,8 @@
 import { r as ref, p as computed, c as createElementBlock, o as openBlock, d as createCommentVNode, a as createBaseVNode, t as toDisplayString, A as mergeProps, n as nextTick, W as renderSlot, b as createTextVNode, F as Fragment, C as renderList, q as watch, K as createVNode, I as normalizeClass, G as createBlock, w as withModifiers, D as onMounted, z as unref, f as reactive, J as createApp } from "./chunks/runtime-dom.esm-bundler-BeftXQEh.js";
-import { C as CheckboxInput, _ as _sfc_main$c } from "./chunks/CheckboxInput-Bz9Rm5jM.js";
+import { C as CheckboxInput, _ as _sfc_main$c } from "./chunks/CheckboxInput-3ItHIB6A.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
 import { T as TextInput, F as Form, b as Field, E as ErrorMessage } from "./chunks/TextInput-BUdG7Qkf.js";
-import { A as AutocompleteInput, f as formatSelectedLocalityName } from "./chunks/AutocompleteInput-tc4AwILM.js";
+import { A as AutocompleteInput, f as formatSelectedLocalityName } from "./chunks/AutocompleteInput-r3_ME10q.js";
 import { l as lang, i as index } from "./chunks/ru.es-DrgQ5Xct.js";
 import { S as SelectInput } from "./chunks/SelectInput-C2Yd_hDG.js";
 import { T as TextareaInput } from "./chunks/TextareaInput-VS3H1kvm.js";
@@ -226,10 +226,10 @@ const _hoisted_7$6 = {
   class: "flex items-center gap-2"
 };
 const _hoisted_8$5 = { class: "text-sm text-gray-500" };
-const _hoisted_9$4 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
-const _hoisted_10$3 = ["disabled", "onClick"];
-const _hoisted_11$3 = { class: "px-3 py-1 bg-white text-center min-w-[40px] text-sm" };
-const _hoisted_12$3 = ["onClick"];
+const _hoisted_9$5 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
+const _hoisted_10$4 = ["disabled", "onClick"];
+const _hoisted_11$4 = { class: "px-3 py-1 bg-white text-center min-w-[40px] text-sm" };
+const _hoisted_12$4 = ["onClick"];
 const _sfc_main$9 = {
   __name: "PackagingSelector",
   props: {
@@ -342,19 +342,19 @@ const _sfc_main$9 = {
               ]),
               isSelected(option.value) ? (openBlock(), createElementBlock("div", _hoisted_7$6, [
                 createBaseVNode("span", _hoisted_8$5, toDisplayString(getUnitLabel(option.value)), 1),
-                createBaseVNode("div", _hoisted_9$4, [
+                createBaseVNode("div", _hoisted_9$5, [
                   createBaseVNode("button", {
                     type: "button",
                     class: "px-3 py-1 text-gray-700 hover:bg-brand-blue hover:text-white disabled:bg-gray-100 disabled:text-gray-300",
                     disabled: getQuantity(option.value) <= 1,
                     onClick: ($event) => decrementQuantity(option.value)
-                  }, " − ", 8, _hoisted_10$3),
-                  createBaseVNode("span", _hoisted_11$3, toDisplayString(getQuantity(option.value)), 1),
+                  }, " − ", 8, _hoisted_10$4),
+                  createBaseVNode("span", _hoisted_11$4, toDisplayString(getQuantity(option.value)), 1),
                   createBaseVNode("button", {
                     type: "button",
                     class: "px-3 py-1 text-gray-700 hover:bg-brand-blue hover:text-white",
                     onClick: ($event) => incrementQuantity(option.value)
-                  }, " + ", 8, _hoisted_12$3)
+                  }, " + ", 8, _hoisted_12$4)
                 ])
               ])) : createCommentVNode("", true)
             ]);
@@ -367,20 +367,29 @@ const _sfc_main$9 = {
 const PackagingSelector = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-6f38001a"]]);
 const _hoisted_1$8 = { class: "flex flex-col gap-4" };
 const _hoisted_2$7 = { class: "grid grid-cols-1 md:grid-cols-3 gap-4 [&_.text-input-vue>input]:text-center" };
-const _hoisted_3$6 = { class: "bg-gray-200 rounded-lg p-4 text-gray-500 text-lg" };
-const _hoisted_4$6 = { class: "flex items-center gap-4" };
-const _hoisted_5$5 = {
+const _hoisted_3$6 = { class: "flex flex-col gap-2" };
+const _hoisted_4$6 = {
+  key: 0,
+  class: "flex items-center gap-2"
+};
+const _hoisted_5$5 = { class: "bg-gray-200 rounded-lg p-4 text-gray-500 text-lg" };
+const _hoisted_6$5 = {
+  key: 1,
+  class: "text-sm text-gray-500 italic"
+};
+const _hoisted_7$5 = { class: "flex items-center gap-4" };
+const _hoisted_8$4 = {
   key: 0,
   class: "flex items-center gap-2 flex-shrink-0"
 };
-const _hoisted_6$5 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
-const _hoisted_7$5 = ["disabled"];
-const _hoisted_8$4 = { class: "px-4 py-2 bg-white text-center min-w-[60px]" };
-const _hoisted_9$3 = { class: "border-t border-gray-200 pt-4 flex flex-col gap-4" };
-const _hoisted_10$2 = { class: "flex flex-col gap-3" };
-const _hoisted_11$2 = { class: "flex items-start gap-2" };
-const _hoisted_12$2 = { class: "flex items-start gap-2" };
-const _hoisted_13$2 = { class: "flex items-start gap-2" };
+const _hoisted_9$4 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
+const _hoisted_10$3 = ["disabled"];
+const _hoisted_11$3 = { class: "px-4 py-2 bg-white text-center min-w-[60px]" };
+const _hoisted_12$3 = { class: "border-t border-gray-200 pt-4 flex flex-col gap-4" };
+const _hoisted_13$2 = { class: "flex flex-col gap-3" };
+const _hoisted_14$2 = { class: "flex items-start gap-2" };
+const _hoisted_15$2 = { class: "flex items-start gap-2" };
+const _hoisted_16$2 = { class: "flex items-start gap-2" };
 const _sfc_main$8 = {
   __name: "CargoPlaceForm",
   props: {
@@ -396,6 +405,7 @@ const _sfc_main$8 = {
     const length = ref(props.modelValue.length || "");
     const width = ref(props.modelValue.width || "");
     const height = ref(props.modelValue.height || "");
+    const volume = ref(props.modelValue.volume || "");
     const weight = ref(props.modelValue.weight || "");
     const description = ref(props.modelValue.description || "");
     const declaredValue = ref(props.modelValue.declaredValue !== void 0 ? props.modelValue.declaredValue : "");
@@ -426,6 +436,8 @@ const _sfc_main$8 = {
       if (length.value !== newValue.length) length.value = newValue.length || "";
       if (width.value !== newValue.width) width.value = newValue.width || "";
       if (height.value !== newValue.height) height.value = newValue.height || "";
+      const newVolume = newValue.volume !== void 0 ? newValue.volume : "";
+      if (volume.value !== newVolume) volume.value = newVolume;
       if (weight.value !== newValue.weight) weight.value = newValue.weight || "";
       if (description.value !== newValue.description) description.value = newValue.description || "";
       const newDeclaredValue = newValue.declaredValue !== void 0 ? newValue.declaredValue : "";
@@ -440,12 +452,13 @@ const _sfc_main$8 = {
       const newQuantity = newValue.quantity || 1;
       if (quantity.value !== newQuantity) quantity.value = newQuantity;
     }, { immediate: true, deep: true });
-    watch([length, width, height, weight, description, declaredValue, packagingItems, selfMarking, dangerousGoods, tempControl, quantity], () => {
+    watch([length, width, height, volume, weight, description, declaredValue, packagingItems, selfMarking, dangerousGoods, tempControl, quantity], () => {
       emit("update:modelValue", {
         id: id.value,
         length: length.value,
         width: width.value,
         height: height.value,
+        volume: volume.value,
         weight: weight.value,
         description: description.value,
         declaredValue: declaredValue.value,
@@ -457,8 +470,20 @@ const _sfc_main$8 = {
       });
     });
     const calculatedVolume = computed(() => {
+      const volumeStr = volume.value !== null && volume.value !== void 0 && volume.value !== "" ? String(volume.value).trim() : "";
+      if (volumeStr && quantity.value === 1) {
+        const vol = parseFloat(volumeStr);
+        if (!isNaN(vol) && vol >= 0) {
+          return vol.toFixed(3);
+        }
+      }
       if (length.value && width.value && height.value) {
-        return (length.value * width.value * height.value / 1e6).toFixed(3);
+        const l = parseFloat(length.value) || 0;
+        const w = parseFloat(width.value) || 0;
+        const h = parseFloat(height.value) || 0;
+        if (l > 0 && w > 0 && h > 0) {
+          return (l * w * h / 1e6).toFixed(3);
+        }
       }
       return "0.000";
     });
@@ -496,29 +521,46 @@ const _sfc_main$8 = {
             "show-formatted-when-blurred": true
           }, null, 8, ["name", "modelValue"])
         ]),
-        createBaseVNode("div", _hoisted_3$6, "Объём, куб.м: " + toDisplayString(calculatedVolume.value), 1),
-        createBaseVNode("div", _hoisted_4$6, [
+        createBaseVNode("div", _hoisted_3$6, [
+          quantity.value === 1 ? (openBlock(), createElementBlock("div", _hoisted_4$6, [
+            createVNode(CalculatorTextInput, {
+              name: `pkg_${id.value}_volume`,
+              placeholder: "Объём, куб.м",
+              modelValue: volume.value,
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => volume.value = $event),
+              type: "number",
+              class: "flex-1",
+              "display-prefix": "Объём",
+              "display-suffix": "куб.м",
+              "show-formatted-when-blurred": true
+            }, null, 8, ["name", "modelValue"]),
+            _cache[11] || (_cache[11] = createBaseVNode("span", { class: "text-sm text-gray-500 whitespace-nowrap" }, "или укажите габариты выше", -1))
+          ])) : createCommentVNode("", true),
+          createBaseVNode("div", _hoisted_5$5, " Объём, куб.м: " + toDisplayString(calculatedVolume.value), 1),
+          quantity.value > 1 ? (openBlock(), createElementBlock("div", _hoisted_6$5, " Для одинаковых мест объем рассчитывается только из габаритов ")) : createCommentVNode("", true)
+        ]),
+        createBaseVNode("div", _hoisted_7$5, [
           createVNode(CalculatorTextInput, {
             name: `pkg_${id.value}_weight`,
             placeholder: "Вес, кг",
             modelValue: weight.value,
-            "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => weight.value = $event),
+            "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => weight.value = $event),
             type: "number",
             class: "flex-1",
             "display-prefix": "Вес",
             "display-suffix": "кг",
             "show-formatted-when-blurred": true
           }, null, 8, ["name", "modelValue"]),
-          __props.showDuplicateButton ? (openBlock(), createElementBlock("div", _hoisted_5$5, [
-            _cache[10] || (_cache[10] = createBaseVNode("span", { class: "text-sm text-gray-600" }, "Одинаковые места", -1)),
-            createBaseVNode("div", _hoisted_6$5, [
+          __props.showDuplicateButton ? (openBlock(), createElementBlock("div", _hoisted_8$4, [
+            _cache[12] || (_cache[12] = createBaseVNode("span", { class: "text-sm text-gray-600" }, "Одинаковые места", -1)),
+            createBaseVNode("div", _hoisted_9$4, [
               createBaseVNode("button", {
                 type: "button",
                 class: normalizeClass(["px-3 py-2", quantity.value <= 1 ? "bg-gray-100 text-gray-300" : "text-gray-700 hover:bg-brand-blue hover:text-white"]),
                 onClick: decrementQuantity,
                 disabled: quantity.value <= 1
-              }, "−", 10, _hoisted_7$5),
-              createBaseVNode("span", _hoisted_8$4, toDisplayString(quantity.value), 1),
+              }, "−", 10, _hoisted_10$3),
+              createBaseVNode("span", _hoisted_11$3, toDisplayString(quantity.value), 1),
               createBaseVNode("button", {
                 type: "button",
                 class: "px-3 py-2 bg-gray-100 hover:bg-brand-blue text-gray-700 hover:text-white",
@@ -527,9 +569,9 @@ const _sfc_main$8 = {
             ])
           ])) : createCommentVNode("", true)
         ]),
-        createBaseVNode("div", _hoisted_9$3, [
+        createBaseVNode("div", _hoisted_12$3, [
           createBaseVNode("div", null, [
-            _cache[11] || (_cache[11] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
+            _cache[13] || (_cache[13] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
               createBaseVNode("label", { class: "text-sm font-medium text-gray-700" }, "Описание содержимого"),
               createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
@@ -542,11 +584,11 @@ const _sfc_main$8 = {
               name: `pkg_${id.value}_desc`,
               placeholder: "Описание содержимого",
               modelValue: description.value,
-              "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => description.value = $event)
+              "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => description.value = $event)
             }, null, 8, ["name", "modelValue"])
           ]),
           createBaseVNode("div", null, [
-            _cache[12] || (_cache[12] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
+            _cache[14] || (_cache[14] = createBaseVNode("div", { class: "flex items-center gap-2 mb-2" }, [
               createBaseVNode("label", { class: "text-sm font-medium text-gray-700" }, "Оценочная стоимость грузоместа, ₽"),
               createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
@@ -559,7 +601,7 @@ const _sfc_main$8 = {
               name: `pkg_${id.value}_value`,
               placeholder: "Оценочная стоимость грузоместа, ₽",
               modelValue: declaredValue.value,
-              "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => declaredValue.value = $event),
+              "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => declaredValue.value = $event),
               type: "number",
               "display-suffix": "₽",
               "show-formatted-when-blurred": true
@@ -569,45 +611,45 @@ const _sfc_main$8 = {
             name: `pkg_${id.value}_packaging`,
             options: packagingOptions.value,
             modelValue: packagingItems.value,
-            "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => packagingItems.value = $event)
+            "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => packagingItems.value = $event)
           }, null, 8, ["name", "options", "modelValue"]),
-          createBaseVNode("div", _hoisted_10$2, [
-            createBaseVNode("div", _hoisted_11$2, [
+          createBaseVNode("div", _hoisted_13$2, [
+            createBaseVNode("div", _hoisted_14$2, [
               createVNode(CalculatorCheckboxInput, {
                 name: `pkg_${id.value}_self_marking`,
                 label: "Самостоятельная маркировка груза",
                 modelValue: selfMarking.value,
-                "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => selfMarking.value = $event)
+                "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => selfMarking.value = $event)
               }, null, 8, ["name", "modelValue"]),
-              _cache[13] || (_cache[13] = createBaseVNode("span", {
+              _cache[15] || (_cache[15] = createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
                 "data-tip": "Если вы самостоятельно промаркировали груз штрихкодом или QR-кодом согласно нашим требованиям."
               }, [
                 createBaseVNode("span", { class: "inline-flex items-center justify-center w-5 h-5 text-sm border border-gray-400 rounded-full text-gray-600 hover:bg-gray-100" }, "?")
               ], -1))
             ]),
-            createBaseVNode("div", _hoisted_12$2, [
+            createBaseVNode("div", _hoisted_15$2, [
               createVNode(CalculatorCheckboxInput, {
                 name: `pkg_${id.value}_dangerous`,
                 label: "Есть опасный груз",
                 modelValue: dangerousGoods.value,
-                "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => dangerousGoods.value = $event)
+                "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => dangerousGoods.value = $event)
               }, null, 8, ["name", "modelValue"]),
-              _cache[14] || (_cache[14] = createBaseVNode("span", {
+              _cache[16] || (_cache[16] = createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
                 "data-tip": "Отметьте, если груз содержит опасные вещества (легковоспламеняющиеся, токсичные, коррозионные материалы). Требуется специальная документация."
               }, [
                 createBaseVNode("span", { class: "inline-flex items-center justify-center w-5 h-5 text-sm border border-gray-400 rounded-full text-gray-600 hover:bg-gray-100" }, "?")
               ], -1))
             ]),
-            createBaseVNode("div", _hoisted_13$2, [
+            createBaseVNode("div", _hoisted_16$2, [
               createVNode(CalculatorCheckboxInput, {
                 name: `pkg_${id.value}_temp`,
                 label: "Требуется температурный режим",
                 modelValue: tempControl.value,
-                "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => tempControl.value = $event)
+                "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => tempControl.value = $event)
               }, null, 8, ["name", "modelValue"]),
-              _cache[15] || (_cache[15] = createBaseVNode("span", {
+              _cache[17] || (_cache[17] = createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
                 "data-tip": "Для грузов, требующих поддержания определенной температуры при транспортировке (продукты питания, медикаменты)."
               }, [
@@ -620,7 +662,7 @@ const _sfc_main$8 = {
     };
   }
 };
-const CargoPlaceForm = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-d3da6083"]]);
+const CargoPlaceForm = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-c967a349"]]);
 const _hoisted_1$7 = { class: "w-full" };
 const _hoisted_2$6 = { class: "flex gap-2 mb-4 justify-between items-start" };
 const _hoisted_3$5 = { class: "overflow-x-auto flex gap-2 flex-1 min-w-0 rounded-lg" };
@@ -651,6 +693,7 @@ const _sfc_main$7 = {
         length: "",
         width: "",
         height: "",
+        volume: "",
         weight: "",
         description: "",
         declaredValue: 1e3,
@@ -668,6 +711,7 @@ const _sfc_main$7 = {
           length: pkg.length || "",
           width: pkg.width || "",
           height: pkg.height || "",
+          volume: pkg.volume !== void 0 ? pkg.volume : "",
           weight: pkg.weight || "",
           description: pkg.description || "",
           declaredValue: pkg.declaredValue !== void 0 ? pkg.declaredValue : 1e3,
@@ -693,6 +737,7 @@ const _sfc_main$7 = {
           length: pkg.length || "",
           width: pkg.width || "",
           height: pkg.height || "",
+          volume: pkg.volume !== void 0 ? pkg.volume : "",
           weight: pkg.weight || "",
           description: pkg.description || "",
           declaredValue: pkg.declaredValue !== void 0 ? pkg.declaredValue : 1e3,
@@ -798,6 +843,7 @@ const _sfc_main$6 = {
         length: "",
         width: "",
         height: "",
+        volume: "",
         weight: "",
         description: "",
         declaredValue: "",
@@ -1025,7 +1071,7 @@ const _hoisted_6$3 = {
 };
 const _hoisted_7$3 = { key: 4 };
 const _hoisted_8$3 = { class: "flex gap-4 pt-4" };
-const _hoisted_9$2 = ["disabled"];
+const _hoisted_9$3 = ["disabled"];
 const _sfc_main$4 = {
   __name: "ManagerRequestForm",
   props: {
@@ -1280,7 +1326,7 @@ const _sfc_main$4 = {
               type: "submit",
               class: "bg-brand-blue text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors",
               disabled: isSubmitting.value || !isFormValid.value
-            }, toDisplayString(isSubmitting.value ? "Отправка..." : "Отправить запрос"), 9, _hoisted_9$2),
+            }, toDisplayString(isSubmitting.value ? "Отправка..." : "Отправить запрос"), 9, _hoisted_9$3),
             !__props.compact ? (openBlock(), createElementBlock("button", {
               key: 0,
               type: "button",
@@ -1318,16 +1364,16 @@ const _hoisted_8$2 = {
   key: 0,
   class: "md:col-span-2 mb-4"
 };
-const _hoisted_9$1 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
-const _hoisted_10$1 = {
+const _hoisted_9$2 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
+const _hoisted_10$2 = {
   key: 1,
   class: "md:col-span-2"
 };
-const _hoisted_11$1 = {
-  key: 0,
+const _hoisted_11$2 = {
+  key: 2,
   class: "mt-4"
 };
-const _hoisted_12$1 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
+const _hoisted_12$2 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
 const _hoisted_13$1 = { class: "md:col-span-2 grid grid-cols-3 gap-4" };
 const _hoisted_14$1 = { class: "md:col-span-2" };
 const _hoisted_15$1 = { class: "md:col-span-2" };
@@ -1629,6 +1675,29 @@ const _sfc_main$3 = {
         return addrCity === cityName && addr.street && addr.street.trim() !== "";
       });
     });
+    const hasCityWideCoverage = computed(() => {
+      var _a;
+      if (!props.city || !props.billingAddresses || props.billingAddresses.length === 0) {
+        return false;
+      }
+      const cityName = ((_a = props.locality) == null ? void 0 : _a.name) || extractCityNameFromFormattedString(props.city);
+      if (!cityName) return false;
+      const cityWideAddress = props.billingAddresses.find((addr) => {
+        var _a2;
+        const addrCity = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+        const addrStreet = addr.street || "";
+        return addrCity === cityName && (!addrStreet || addrStreet.trim() === "");
+      });
+      if (!cityWideAddress) {
+        return false;
+      }
+      if (!props.takeDelivers || props.takeDelivers.length === 0) {
+        return false;
+      }
+      return props.takeDelivers.some((td) => {
+        return String(td.uidBillingAddress) === String(cityWideAddress.uid);
+      });
+    });
     const availableCities = computed(() => {
       const citiesMap = /* @__PURE__ */ new Map();
       props.billingAddresses.forEach((addr) => {
@@ -1763,7 +1832,7 @@ const _sfc_main$3 = {
     });
     function validateAddress(cityName, streetName) {
       if (!cityName || !streetName || !props.billingAddresses || props.billingAddresses.length === 0) {
-        return { valid: false, billingAddress: null };
+        return { valid: false, billingAddress: null, isCityWide: false };
       }
       const normalizedStreetName = streetName.toLowerCase().trim();
       const billingAddress = props.billingAddresses.find((addr) => {
@@ -1772,19 +1841,36 @@ const _sfc_main$3 = {
         const addrStreet = (addr.street || "").toLowerCase().trim();
         return addrCity === cityName && addrStreet === normalizedStreetName;
       });
-      if (!billingAddress) {
-        return { valid: false, billingAddress: null };
+      if (billingAddress) {
+        if (!props.takeDelivers || props.takeDelivers.length === 0) {
+          return { valid: false, billingAddress, isCityWide: false };
+        }
+        const hasTakeDeliver = props.takeDelivers.some((td) => {
+          return String(td.uidBillingAddress) === String(billingAddress.uid);
+        });
+        if (!hasTakeDeliver) {
+          return { valid: false, billingAddress, isCityWide: false };
+        }
+        return { valid: true, billingAddress, isCityWide: false };
       }
-      if (!props.takeDelivers || props.takeDelivers.length === 0) {
-        return { valid: false, billingAddress };
-      }
-      const hasTakeDeliver = props.takeDelivers.some((td) => {
-        return td.uidBillingAddress === billingAddress.uid;
+      const cityWideAddress = props.billingAddresses.find((addr) => {
+        var _a;
+        const addrCity = typeof addr.locality === "string" ? addr.locality : ((_a = addr.locality) == null ? void 0 : _a.name) || "";
+        const addrStreet = addr.street || "";
+        return addrCity === cityName && (!addrStreet || addrStreet.trim() === "");
       });
-      if (!hasTakeDeliver) {
-        return { valid: false, billingAddress };
+      if (cityWideAddress) {
+        if (!props.takeDelivers || props.takeDelivers.length === 0) {
+          return { valid: false, billingAddress: null, isCityWide: false };
+        }
+        const hasTakeDeliver = props.takeDelivers.some((td) => {
+          return String(td.uidBillingAddress) === String(cityWideAddress.uid);
+        });
+        if (hasTakeDeliver) {
+          return { valid: true, billingAddress: cityWideAddress, isCityWide: true };
+        }
       }
-      return { valid: true, billingAddress };
+      return { valid: false, billingAddress: null, isCityWide: false };
     }
     function onStreetSelected(item) {
       var _a;
@@ -1802,16 +1888,20 @@ const _sfc_main$3 = {
         const cityName = ((_a = props.locality) == null ? void 0 : _a.name) || extractCityNameFromFormattedString(props.city);
         const validation = validateAddress(cityName, streetName);
         if (!validation.valid) {
-          const localityObj = props.locality || props.localities.find((loc) => loc.name === cityName);
-          emit("addressNotFound", {
-            type: props.namePrefix,
-            // 'departure' or 'destination'
-            city: cityName,
-            street: streetName,
-            locality: localityObj,
-            region: (localityObj == null ? void 0 : localityObj.region) || ""
-          });
-          return;
+          if (validation.isCityWide || hasCityWideCoverage.value) {
+            emit("addressFound", { type: props.namePrefix });
+          } else {
+            const localityObj = props.locality || props.localities.find((loc) => loc.name === cityName);
+            emit("addressNotFound", {
+              type: props.namePrefix,
+              // 'departure' or 'destination'
+              city: cityName,
+              street: streetName,
+              locality: localityObj,
+              region: (localityObj == null ? void 0 : localityObj.region) || ""
+            });
+            return;
+          }
         } else {
           emit("addressFound", { type: props.namePrefix });
         }
@@ -1846,15 +1936,20 @@ const _sfc_main$3 = {
           const cityName = ((_a = props.locality) == null ? void 0 : _a.name) || extractCityNameFromFormattedString(props.city);
           const validation = validateAddress(cityName, value.trim());
           if (!validation.valid) {
-            streetNotFound.value = true;
-            const localityObj = props.locality || props.localities.find((loc) => loc.name === cityName);
-            emit("addressNotFound", {
-              type: props.namePrefix,
-              city: cityName,
-              street: value.trim(),
-              locality: localityObj,
-              region: (localityObj == null ? void 0 : localityObj.region) || ""
-            });
+            if (validation.isCityWide || hasCityWideCoverage.value) {
+              streetNotFound.value = false;
+              emit("addressFound", { type: props.namePrefix });
+            } else {
+              streetNotFound.value = true;
+              const localityObj = props.locality || props.localities.find((loc) => loc.name === cityName);
+              emit("addressNotFound", {
+                type: props.namePrefix,
+                city: cityName,
+                street: value.trim(),
+                locality: localityObj,
+                region: (localityObj == null ? void 0 : localityObj.region) || ""
+              });
+            }
           } else {
             streetNotFound.value = false;
             emit("addressFound", { type: props.namePrefix });
@@ -2203,7 +2298,7 @@ const _sfc_main$3 = {
               }, null, 8, ["name", "items", "disabled", "placeholder", "modelValue", "itemFormatter", "selectedValueFormatter"])
             ]),
             __props.namePrefix === "departure" ? (openBlock(), createElementBlock("div", _hoisted_7$2, [
-              _cache[16] || (_cache[16] = createBaseVNode("label", { class: "block text-brand-gray font-medium mb-2" }, " Дата сдачи груза ", -1)),
+              _cache[17] || (_cache[17] = createBaseVNode("label", { class: "block text-brand-gray font-medium mb-2" }, " Дата сдачи груза ", -1)),
               createVNode(DatePickerVue, {
                 name: `${__props.namePrefix}_date`,
                 "initial-date": date.value,
@@ -2214,9 +2309,9 @@ const _sfc_main$3 = {
             ])) : createCommentVNode("", true)
           ], 64)) : createCommentVNode("", true),
           deliveryMode.value === "address" ? (openBlock(), createElementBlock(Fragment, { key: 1 }, [
-            !hasAvailableStreets.value ? (openBlock(), createElementBlock("div", _hoisted_8$2, [
-              createBaseVNode("div", _hoisted_9$1, [
-                _cache[17] || (_cache[17] = createBaseVNode("p", { class: "text-sm text-yellow-800 mb-4" }, " Для выбранного города нет доступных улиц в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей. ", -1)),
+            !hasAvailableStreets.value && !hasCityWideCoverage.value ? (openBlock(), createElementBlock("div", _hoisted_8$2, [
+              createBaseVNode("div", _hoisted_9$2, [
+                _cache[18] || (_cache[18] = createBaseVNode("p", { class: "text-sm text-yellow-800 mb-4" }, " Для выбранного города нет доступных улиц в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей. ", -1)),
                 createVNode(ManagerRequestForm, {
                   compact: true,
                   "show-street-field": true,
@@ -2229,8 +2324,9 @@ const _sfc_main$3 = {
                 }, null, 8, ["prefill-region", "prefill-locality", "prefill-street", "regions", "localities"])
               ])
             ])) : createCommentVNode("", true),
-            hasAvailableStreets.value ? (openBlock(), createElementBlock("div", _hoisted_10$1, [
-              createVNode(AutocompleteInput, {
+            hasAvailableStreets.value || hasCityWideCoverage.value ? (openBlock(), createElementBlock("div", _hoisted_10$2, [
+              hasAvailableStreets.value ? (openBlock(), createBlock(AutocompleteInput, {
+                key: 0,
                 ref_key: "streetInputRef",
                 ref: streetInputRef,
                 name: `${__props.namePrefix}_street`,
@@ -2251,10 +2347,21 @@ const _sfc_main$3 = {
                 onItemSelected: onStreetSelected,
                 showResetButton: true,
                 onReset: onStreetReset
-              }, null, 8, ["name", "disabled", "modelValue", "items", "apiSearchFunction"]),
-              streetNotFound.value && state.value.address.street && state.value.address.street.trim() ? (openBlock(), createElementBlock("div", _hoisted_11$1, [
-                createBaseVNode("div", _hoisted_12$1, [
-                  _cache[18] || (_cache[18] = createBaseVNode("p", { class: "text-sm text-yellow-800 mb-4" }, " Введенная улица не найдена в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей. ", -1)),
+              }, null, 8, ["name", "disabled", "modelValue", "items", "apiSearchFunction"])) : hasCityWideCoverage.value ? (openBlock(), createBlock(TextInput, {
+                key: 1,
+                name: `${__props.namePrefix}_street`,
+                label: "Улица",
+                placeholder: "Укажите улицу",
+                disabled: !__props.city,
+                modelValue: state.value.address.street,
+                "onUpdate:modelValue": [
+                  _cache[4] || (_cache[4] = ($event) => state.value.address.street = $event),
+                  onStreetInputChange
+                ]
+              }, null, 8, ["name", "disabled", "modelValue"])) : createCommentVNode("", true),
+              streetNotFound.value && state.value.address.street && state.value.address.street.trim() && !hasCityWideCoverage.value ? (openBlock(), createElementBlock("div", _hoisted_11$2, [
+                createBaseVNode("div", _hoisted_12$2, [
+                  _cache[19] || (_cache[19] = createBaseVNode("p", { class: "text-sm text-yellow-800 mb-4" }, " Введенная улица не найдена в системе. Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей. ", -1)),
                   createVNode(ManagerRequestForm, {
                     compact: true,
                     "show-street-field": true,
@@ -2279,7 +2386,7 @@ const _sfc_main$3 = {
                   disabled: !__props.city || !state.value.address.street,
                   modelValue: state.value.address.house,
                   "onUpdate:modelValue": [
-                    _cache[4] || (_cache[4] = ($event) => state.value.address.house = $event),
+                    _cache[5] || (_cache[5] = ($event) => state.value.address.house = $event),
                     onHouseInputChange
                   ],
                   items: houseOptions.value,
@@ -2301,7 +2408,7 @@ const _sfc_main$3 = {
                   disabled: !__props.city || !state.value.address.house,
                   modelValue: state.value.address.building,
                   "onUpdate:modelValue": [
-                    _cache[5] || (_cache[5] = ($event) => state.value.address.building = $event),
+                    _cache[6] || (_cache[6] = ($event) => state.value.address.building = $event),
                     onAddressFieldChange
                   ]
                 }, null, 8, ["name", "disabled", "modelValue"])
@@ -2314,7 +2421,7 @@ const _sfc_main$3 = {
                   disabled: !__props.city || !state.value.address.house,
                   modelValue: state.value.address.office,
                   "onUpdate:modelValue": [
-                    _cache[6] || (_cache[6] = ($event) => state.value.address.office = $event),
+                    _cache[7] || (_cache[7] = ($event) => state.value.address.office = $event),
                     onAddressFieldChange
                   ]
                 }, null, 8, ["name", "disabled", "modelValue"])
@@ -2328,13 +2435,13 @@ const _sfc_main$3 = {
                 disabled: !__props.city,
                 modelValue: state.value.address.notes,
                 "onUpdate:modelValue": [
-                  _cache[7] || (_cache[7] = ($event) => state.value.address.notes = $event),
+                  _cache[8] || (_cache[8] = ($event) => state.value.address.notes = $event),
                   onAddressFieldChange
                 ]
               }, null, 8, ["name", "disabled", "modelValue"])
             ]),
             createBaseVNode("div", _hoisted_15$1, [
-              _cache[19] || (_cache[19] = createBaseVNode("label", { class: "block text-brand-gray font-medium mb-2" }, " Дата сдачи груза ", -1)),
+              _cache[20] || (_cache[20] = createBaseVNode("label", { class: "block text-brand-gray font-medium mb-2" }, " Дата сдачи груза ", -1)),
               createVNode(DatePickerVue, {
                 name: `${__props.namePrefix}_date`,
                 "initial-date": date.value,
@@ -2351,7 +2458,7 @@ const _sfc_main$3 = {
                 disabled: !__props.city,
                 modelValue: state.value.address.interval,
                 "onUpdate:modelValue": [
-                  _cache[8] || (_cache[8] = ($event) => state.value.address.interval = $event),
+                  _cache[9] || (_cache[9] = ($event) => state.value.address.interval = $event),
                   onAddressFieldChange
                 ]
               }, null, 8, ["name", "disabled", "modelValue"])
@@ -2362,11 +2469,11 @@ const _sfc_main$3 = {
                 label: "Фиксированная дата и время",
                 modelValue: state.value.address.fixedDateTime,
                 "onUpdate:modelValue": [
-                  _cache[9] || (_cache[9] = ($event) => state.value.address.fixedDateTime = $event),
+                  _cache[10] || (_cache[10] = ($event) => state.value.address.fixedDateTime = $event),
                   onAddressFieldChange
                 ]
               }, null, 8, ["name", "modelValue"]),
-              _cache[20] || (_cache[20] = createBaseVNode("span", {
+              _cache[21] || (_cache[21] = createBaseVNode("span", {
                 class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
                 "data-tip": "При выборе этой опции доставка будет выполнена строго в указанную дату и время. Дополнительная плата может быть применена за фиксированное время доставки."
               }, [
@@ -2381,7 +2488,7 @@ const _sfc_main$3 = {
                 disabled: !__props.city,
                 modelValue: state.value.address.fixedTime,
                 "onUpdate:modelValue": [
-                  _cache[10] || (_cache[10] = ($event) => state.value.address.fixedTime = $event),
+                  _cache[11] || (_cache[11] = ($event) => state.value.address.fixedTime = $event),
                   onAddressFieldChange
                 ]
               }, null, 8, ["name", "label", "disabled", "modelValue"])
@@ -2392,7 +2499,7 @@ const _sfc_main$3 = {
                 label: "Доставка в торговые сети",
                 modelValue: state.value.address.retailChains,
                 "onUpdate:modelValue": [
-                  _cache[11] || (_cache[11] = ($event) => state.value.address.retailChains = $event),
+                  _cache[12] || (_cache[12] = ($event) => state.value.address.retailChains = $event),
                   onAddressFieldChange
                 ]
               }, null, 8, ["name", "modelValue"])
@@ -2403,7 +2510,7 @@ const _sfc_main$3 = {
                 label: "Погрузо-разгрузочные работы",
                 modelValue: state.value.address.loadingUnloading,
                 "onUpdate:modelValue": [
-                  _cache[12] || (_cache[12] = ($event) => state.value.address.loadingUnloading = $event),
+                  _cache[13] || (_cache[13] = ($event) => state.value.address.loadingUnloading = $event),
                   onAddressFieldChange
                 ]
               }, null, 8, ["name", "modelValue"]),
@@ -2415,7 +2522,7 @@ const _sfc_main$3 = {
                   disabled: !__props.city,
                   modelValue: state.value.address.floor,
                   "onUpdate:modelValue": [
-                    _cache[13] || (_cache[13] = ($event) => state.value.address.floor = $event),
+                    _cache[14] || (_cache[14] = ($event) => state.value.address.floor = $event),
                     onAddressFieldChange
                   ]
                 }, null, 8, ["name", "disabled", "modelValue"]),
@@ -2424,7 +2531,7 @@ const _sfc_main$3 = {
                   label: "Нет лифта",
                   modelValue: state.value.address.noElevator,
                   "onUpdate:modelValue": [
-                    _cache[14] || (_cache[14] = ($event) => state.value.address.noElevator = $event),
+                    _cache[15] || (_cache[15] = ($event) => state.value.address.noElevator = $event),
                     onAddressFieldChange
                   ]
                 }, null, 8, ["name", "modelValue"]),
@@ -2434,7 +2541,7 @@ const _sfc_main$3 = {
                   label: "Разбор упаковки",
                   modelValue: state.value.address.unpacking,
                   "onUpdate:modelValue": [
-                    _cache[15] || (_cache[15] = ($event) => state.value.address.unpacking = $event),
+                    _cache[16] || (_cache[16] = ($event) => state.value.address.unpacking = $event),
                     onAddressFieldChange
                   ]
                 }, null, 8, ["name", "modelValue"])) : createCommentVNode("", true)
@@ -2514,10 +2621,10 @@ const _hoisted_5$1 = {
 const _hoisted_6$1 = { key: 1 };
 const _hoisted_7$1 = { class: "border-b pb-4 mb-4" };
 const _hoisted_8$1 = { class: "flex items-center justify-between mb-4" };
-const _hoisted_9 = { class: "text-left" };
-const _hoisted_10 = { class: "font-semibold text-base" };
-const _hoisted_11 = { class: "text-sm text-gray-500" };
-const _hoisted_12 = { class: "text-right" };
+const _hoisted_9$1 = { class: "text-left" };
+const _hoisted_10$1 = { class: "font-semibold text-base" };
+const _hoisted_11$1 = { class: "text-sm text-gray-500" };
+const _hoisted_12$1 = { class: "text-right" };
 const _hoisted_13 = { class: "font-semibold text-base" };
 const _hoisted_14 = { class: "text-sm text-gray-500" };
 const _hoisted_15 = { class: "grid grid-cols-3 gap-4 text-center" };
@@ -2811,9 +2918,9 @@ const _sfc_main$1 = {
           createBaseVNode("div", _hoisted_7$1, [
             _cache[6] || (_cache[6] = createBaseVNode("h3", { class: "text-lg font-semibold mb-3 text-gray-700" }, "Параметры расчёта", -1)),
             createBaseVNode("div", _hoisted_8$1, [
-              createBaseVNode("div", _hoisted_9, [
-                createBaseVNode("div", _hoisted_10, toDisplayString(routeInfo.value.from), 1),
-                createBaseVNode("div", _hoisted_11, toDisplayString(routeInfo.value.fromDetails), 1)
+              createBaseVNode("div", _hoisted_9$1, [
+                createBaseVNode("div", _hoisted_10$1, toDisplayString(routeInfo.value.from), 1),
+                createBaseVNode("div", _hoisted_11$1, toDisplayString(routeInfo.value.fromDetails), 1)
               ]),
               _cache[2] || (_cache[2] = createBaseVNode("div", { class: "mx-4 flex-1 flex items-center justify-center" }, [
                 createBaseVNode("svg", {
@@ -2830,7 +2937,7 @@ const _sfc_main$1 = {
                   })
                 ])
               ], -1)),
-              createBaseVNode("div", _hoisted_12, [
+              createBaseVNode("div", _hoisted_12$1, [
                 createBaseVNode("div", _hoisted_13, toDisplayString(routeInfo.value.to), 1),
                 createBaseVNode("div", _hoisted_14, toDisplayString(routeInfo.value.toDetails), 1)
               ])
@@ -3010,11 +3117,15 @@ const _hoisted_3 = { class: "flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:f
 const _hoisted_4 = { class: "bg-brand-light p-5 rounded-lg" };
 const _hoisted_5 = { class: "flex flex-col gap-6" };
 const _hoisted_6 = { class: "bg-brand-light p-5 rounded-lg" };
-const _hoisted_7 = { class: "h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none" };
+const _hoisted_7 = { class: "h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none lg:sticky lg:top-4" };
 const _hoisted_8 = {
   key: 1,
-  class: "bg-brand-light p-5 rounded-lg"
+  class: "bg-brand-light p-5 rounded-lg mt-6"
 };
+const _hoisted_9 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
+const _hoisted_10 = { class: "text-sm text-yellow-800 mb-4" };
+const _hoisted_11 = { key: 0 };
+const _hoisted_12 = { key: 1 };
 const _sfc_main = {
   __name: "CalculatorPage",
   setup(__props) {
@@ -3100,6 +3211,9 @@ const _sfc_main = {
       return Array.from(regionsSet).sort();
     });
     const showCalculator = computed(() => {
+      if (invalidFromCity.value || invalidToCity.value) {
+        return false;
+      }
       const fromCityName = formData.direction.fromAddress ? typeof formData.direction.fromAddress === "string" ? formData.direction.fromAddress : formData.direction.fromAddress.name || "" : formData.direction.from;
       const toCityName = formData.direction.toAddress ? typeof formData.direction.toAddress === "string" ? formData.direction.toAddress : formData.direction.toAddress.name || "" : formData.direction.to;
       if (!fromCityName || !toCityName) {
@@ -3275,8 +3389,20 @@ const _sfc_main = {
       const constraints = tariffConfig.availability;
       const totalWeight = cargoData.packages.reduce((sum, pkg) => sum + pkg.weight * pkg.quantity, 0);
       const totalVolume = cargoData.packages.reduce((sum, pkg) => {
-        const volume = pkg.length * pkg.width * pkg.height / 1e6;
-        return sum + volume * pkg.quantity;
+        const quantity = parseInt(pkg.quantity) || 1;
+        let volume = 0;
+        const volumeStr = pkg.volume !== null && pkg.volume !== void 0 && pkg.volume !== "" ? String(pkg.volume).trim() : "";
+        if (volumeStr && quantity === 1) {
+          const vol = parseFloat(volumeStr);
+          if (!isNaN(vol) && vol >= 0) {
+            volume = vol;
+          } else {
+            volume = pkg.length * pkg.width * pkg.height / 1e6;
+          }
+        } else {
+          volume = pkg.length * pkg.width * pkg.height / 1e6;
+        }
+        return sum + volume * quantity;
       }, 0);
       if (constraints.minWeight && totalWeight < constraints.minWeight) {
         return { isAvailable: false, reason: `Минимальный вес для данного тарифа: ${constraints.minWeight} кг` };
@@ -3398,35 +3524,50 @@ const _sfc_main = {
       } else {
         if (direction.fromAddress) {
           const fromCityName = typeof direction.fromAddress === "string" ? direction.fromAddress : direction.fromAddress.name || "";
+          const streetFromLocation = departure.location && typeof departure.location === "object" ? departure.location.street || "" : "";
           console.log("Поиск fromAddress для адреса:", {
             fromCityName,
+            streetFromLocation,
             directionFromAddress: direction.fromAddress,
             billingAddressesCount: billingAddresses.value.length
           });
-          const terminalsInCity = terminals.value.filter((t) => {
-            var _a2;
-            const termCityName = typeof t.locality === "string" ? t.locality : ((_a2 = t.locality) == null ? void 0 : _a2.name) || "";
-            return termCityName === fromCityName;
-          });
-          if (terminalsInCity.length > 0 && terminalsInCity[0].uidBillingAddress) {
-            fromAddress = billingAddresses.value.find(
-              (addr) => String(addr.uid) === String(terminalsInCity[0].uidBillingAddress)
-            );
-            console.log("fromAddress найден через терминал:", fromAddress ? {
-              uid: fromAddress.uid,
-              locality: fromAddress.locality,
-              terminalUidBillingAddress: terminalsInCity[0].uidBillingAddress
-            } : "не найден");
-          }
-          if (!fromAddress) {
+          const hasSpecificStreet = streetFromLocation && streetFromLocation.trim();
+          if (hasSpecificStreet) {
             fromAddress = billingAddresses.value.find((addr) => {
               var _a2;
               const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
-              return addrLocalityName === fromCityName;
+              const addrStreet = addr.street || "";
+              return addrLocalityName === fromCityName && addrStreet === streetFromLocation.trim();
             });
-            console.log("fromAddress найден по названию города:", fromAddress ? {
+            console.log("fromAddress найден с конкретной улицей:", fromAddress ? {
               uid: fromAddress.uid,
-              locality: fromAddress.locality
+              locality: fromAddress.locality,
+              street: fromAddress.street
+            } : "не найден");
+            if (!fromAddress) {
+              fromAddress = billingAddresses.value.find((addr) => {
+                var _a2;
+                const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+                const addrStreet = addr.street || "";
+                return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === "");
+              });
+              console.log("fromAddress найден без улицы (fallback после поиска конкретной улицы):", fromAddress ? {
+                uid: fromAddress.uid,
+                locality: fromAddress.locality,
+                street: fromAddress.street
+              } : "не найден");
+            }
+          } else {
+            fromAddress = billingAddresses.value.find((addr) => {
+              var _a2;
+              const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+              const addrStreet = addr.street || "";
+              return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === "");
+            });
+            console.log("fromAddress найден без улицы (для всего города):", fromAddress ? {
+              uid: fromAddress.uid,
+              locality: fromAddress.locality,
+              street: fromAddress.street
             } : "не найден");
           }
           if (fromAddress) {
@@ -3502,35 +3643,50 @@ const _sfc_main = {
       } else {
         if (direction.toAddress) {
           const toCityName = typeof direction.toAddress === "string" ? direction.toAddress : direction.toAddress.name || "";
+          const streetFromLocation = destination.location && typeof destination.location === "object" ? destination.location.street || "" : "";
           console.log("Поиск toAddress для адреса:", {
             toCityName,
+            streetFromLocation,
             directionToAddress: direction.toAddress,
             billingAddressesCount: billingAddresses.value.length
           });
-          const terminalsInCity = terminals.value.filter((t) => {
-            var _a2;
-            const termCityName = typeof t.locality === "string" ? t.locality : ((_a2 = t.locality) == null ? void 0 : _a2.name) || "";
-            return termCityName === toCityName;
-          });
-          if (terminalsInCity.length > 0 && terminalsInCity[0].uidBillingAddress) {
-            toAddress = billingAddresses.value.find(
-              (addr) => String(addr.uid) === String(terminalsInCity[0].uidBillingAddress)
-            );
-            console.log("toAddress найден через терминал:", toAddress ? {
-              uid: toAddress.uid,
-              locality: toAddress.locality,
-              terminalUidBillingAddress: terminalsInCity[0].uidBillingAddress
-            } : "не найден");
-          }
-          if (!toAddress) {
+          const hasSpecificStreet = streetFromLocation && streetFromLocation.trim();
+          if (hasSpecificStreet) {
             toAddress = billingAddresses.value.find((addr) => {
               var _a2;
               const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
-              return addrLocalityName === toCityName;
+              const addrStreet = addr.street || "";
+              return addrLocalityName === toCityName && addrStreet === streetFromLocation.trim();
             });
-            console.log("toAddress найден по названию города:", toAddress ? {
+            console.log("toAddress найден с конкретной улицей:", toAddress ? {
               uid: toAddress.uid,
-              locality: toAddress.locality
+              locality: toAddress.locality,
+              street: toAddress.street
+            } : "не найден");
+            if (!toAddress) {
+              toAddress = billingAddresses.value.find((addr) => {
+                var _a2;
+                const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+                const addrStreet = addr.street || "";
+                return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === "");
+              });
+              console.log("toAddress найден без улицы (fallback после поиска конкретной улицы):", toAddress ? {
+                uid: toAddress.uid,
+                locality: toAddress.locality,
+                street: toAddress.street
+              } : "не найден");
+            }
+          } else {
+            toAddress = billingAddresses.value.find((addr) => {
+              var _a2;
+              const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+              const addrStreet = addr.street || "";
+              return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === "");
+            });
+            console.log("toAddress найден без улицы (для всего города):", toAddress ? {
+              uid: toAddress.uid,
+              locality: toAddress.locality,
+              street: toAddress.street
             } : "не найден");
           }
           if (toAddress) {
@@ -3715,8 +3871,22 @@ const _sfc_main = {
         const weight = parseFloat(pkg.weight) || 0;
         const quantity = parseInt(pkg.quantity) || 1;
         const declaredValue = parseFloat(pkg.declaredValue) || 0;
-        const volumeCm3 = length * width * height;
-        const volume = volumeCm3 / 1e6;
+        let volume = 0;
+        let volumeCm3 = 0;
+        const volumeStr = pkg.volume !== null && pkg.volume !== void 0 && pkg.volume !== "" ? String(pkg.volume).trim() : "";
+        if (volumeStr && quantity === 1) {
+          const vol = parseFloat(volumeStr);
+          if (!isNaN(vol) && vol >= 0) {
+            volume = vol;
+            volumeCm3 = volume * 1e6;
+          } else {
+            volumeCm3 = length * width * height;
+            volume = volumeCm3 / 1e6;
+          }
+        } else {
+          volumeCm3 = length * width * height;
+          volume = volumeCm3 / 1e6;
+        }
         const volumetricWeightPerPlace = volumeCm3 / typeTransportation.transportationCoefficient;
         const volumetricWeightTotal = volumetricWeightPerPlace * quantity;
         const actualWeightTotal = weight * quantity;
@@ -4255,7 +4425,18 @@ const _sfc_main = {
         const height = parseFloat(pkg.height) || 0;
         const weight = parseFloat(pkg.weight) || 0;
         const quantity = parseInt(pkg.quantity) || 1;
-        const volumeCm3 = length * width * height;
+        let volumeCm3 = 0;
+        const volumeStr = pkg.volume !== null && pkg.volume !== void 0 && pkg.volume !== "" ? String(pkg.volume).trim() : "";
+        if (volumeStr && quantity === 1) {
+          const volume = parseFloat(volumeStr);
+          if (!isNaN(volume) && volume >= 0) {
+            volumeCm3 = volume * 1e6;
+          } else {
+            volumeCm3 = length * width * height;
+          }
+        } else {
+          volumeCm3 = length * width * height;
+        }
         const volumetricWeightPerPlace = volumeCm3 / typeTransportation.transportationCoefficient;
         const volumetricWeightTotal = volumetricWeightPerPlace * quantity;
         const actualWeightTotal = weight * quantity;
@@ -4265,11 +4446,29 @@ const _sfc_main = {
           cost: 0,
           isSubHeader: true
         });
-        details.push({
-          name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
-          cost: 0,
-          isDetail: true
-        });
+        const volumeStrForFormula = pkg.volume !== null && pkg.volume !== void 0 && pkg.volume !== "" ? String(pkg.volume).trim() : "";
+        if (volumeStrForFormula && quantity === 1) {
+          const volume = parseFloat(volumeStrForFormula);
+          if (!isNaN(volume) && volume >= 0) {
+            details.push({
+              name: `V = ${volume.toFixed(3)} (объем, м³ из формы) × 1000000 = ${volumeCm3.toFixed(2)} см³`,
+              cost: 0,
+              isDetail: true
+            });
+          } else {
+            details.push({
+              name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
+              cost: 0,
+              isDetail: true
+            });
+          }
+        } else {
+          details.push({
+            name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
+            cost: 0,
+            isDetail: true
+          });
+        }
         details.push({
           name: `Объемный вес 1 места = ${volumeCm3.toFixed(2)} (объем, см³) / ${typeTransportation.transportationCoefficient} (коэффициент перевозки из тарифа "${typeTransportation.name}") = ${volumetricWeightPerPlace.toFixed(2)} кг`,
           cost: 0,
@@ -5104,7 +5303,6 @@ const _sfc_main = {
           locality: data.locality,
           region: data.region
         };
-        formData.direction.from = "";
         formData.direction.fromAddress = null;
         formData.direction.fromLocalityId = null;
       } else if (data.type === "to") {
@@ -5113,7 +5311,6 @@ const _sfc_main = {
           locality: data.locality,
           region: data.region
         };
-        formData.direction.to = "";
         formData.direction.toAddress = null;
         formData.direction.toLocalityId = null;
       }
@@ -5191,8 +5388,9 @@ const _sfc_main = {
       }, 100);
     });
     return (_ctx, _cache) => {
+      var _a, _b;
       return openBlock(), createElementBlock(Fragment, null, [
-        _cache[10] || (_cache[10] = createBaseVNode("div", { class: "title-wrapper mb-6" }, [
+        _cache[9] || (_cache[9] = createBaseVNode("div", { class: "title-wrapper mb-6" }, [
           createBaseVNode("h1", { class: "text-h3 mb-2 px-3 xl:px-0" }, "Калькулятор стоимости перевозки")
         ], -1)),
         createBaseVNode("div", _hoisted_1, [
@@ -5204,7 +5402,7 @@ const _sfc_main = {
             onCityFound: handleCityFound
           }, null, 8, ["billingAddresses", "modelValue"])
         ]),
-        showCalculator.value ? (openBlock(), createElementBlock("div", _hoisted_2, [
+        !invalidFromCity.value && !invalidToCity.value ? (openBlock(), createElementBlock("div", _hoisted_2, [
           createBaseVNode("div", _hoisted_3, [
             createBaseVNode("div", _hoisted_4, [
               _cache[7] || (_cache[7] = createBaseVNode("h2", { class: "text-h4 font-bold mb-4" }, "Пункты доставки", -1)),
@@ -5280,19 +5478,25 @@ const _sfc_main = {
               onSelectTariff: selectTariff
             }, null, 8, ["result", "form-data", "calculator-config"])
           ])
-        ])) : (openBlock(), createElementBlock("div", _hoisted_8, [
-          _cache[8] || (_cache[8] = createBaseVNode("p", { class: "text-gray-600 mb-4" }, "Выберите направление выше.", -1)),
-          _cache[9] || (_cache[9] = createBaseVNode("p", { class: "text-gray-600 mb-6" }, "Если вашего направления нет в списке, заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.", -1)),
-          createVNode(ManagerRequestForm, {
-            "prefill-region": managerRequestData.value.region,
-            "prefill-locality": managerRequestData.value.locality,
-            "prefill-street": managerRequestData.value.street,
-            regions: availableRegions.value,
-            localities: availableCities.value,
-            onCancel: handleManagerRequestCancel,
-            onSubmit: handleManagerRequestSubmit
-          }, null, 8, ["prefill-region", "prefill-locality", "prefill-street", "regions", "localities"])
-        ]))
+        ])) : createCommentVNode("", true),
+        (invalidFromCity.value || invalidToCity.value) && (((_a = formData.direction.from) == null ? void 0 : _a.trim()) || ((_b = formData.direction.to) == null ? void 0 : _b.trim())) ? (openBlock(), createElementBlock("div", _hoisted_8, [
+          createBaseVNode("div", _hoisted_9, [
+            createBaseVNode("p", _hoisted_10, [
+              invalidFromCity.value ? (openBlock(), createElementBlock("span", _hoisted_11, "Выбранный город отправки не найден в системе.")) : createCommentVNode("", true),
+              invalidToCity.value ? (openBlock(), createElementBlock("span", _hoisted_12, "Выбранный город назначения не найден в системе.")) : createCommentVNode("", true),
+              _cache[8] || (_cache[8] = createTextVNode(" Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей. "))
+            ]),
+            createVNode(ManagerRequestForm, {
+              "prefill-region": managerRequestData.value.region,
+              "prefill-locality": managerRequestData.value.locality,
+              "prefill-street": managerRequestData.value.street,
+              regions: availableRegions.value,
+              localities: availableCities.value,
+              onCancel: handleManagerRequestCancel,
+              onSubmit: handleManagerRequestSubmit
+            }, null, 8, ["prefill-region", "prefill-locality", "prefill-street", "regions", "localities"])
+          ])
+        ])) : createCommentVNode("", true)
       ], 64);
     };
   }

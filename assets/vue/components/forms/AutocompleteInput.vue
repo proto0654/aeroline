@@ -32,10 +32,17 @@
                 class="absolute w-full bg-white border border-gray-200 rounded-md shadow-md mt-1 max-h-60 overflow-y-auto z-20"
                 :class="{ 'hidden': !isDropdownVisible }"
                 style="max-height: 200px; overflow-y: auto; overscroll-behavior: contain;">
-                <li v-for="(item, index) in filteredItems" :key="getItemKey(item, index)"
-                    class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                    :class="{ 'bg-blue-100': currentIndex === index }" :data-office-id="item.id"
-                    @click="selectItem(item)" v-html="formatItemHTML(item)"></li>
+                <!-- Skeleton loader при загрузке API -->
+                <li v-if="isApiSearching && useApiSearch" class="px-4 py-2">
+                    <div class="skeleton-loader"></div>
+                </li>
+                <!-- Обычные элементы списка -->
+                <template v-else>
+                    <li v-for="(item, index) in filteredItems" :key="getItemKey(item, index)"
+                        class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                        :class="{ 'bg-blue-100': currentIndex === index }" :data-office-id="item.id"
+                        @click="selectItem(item)" v-html="formatItemHTML(item)"></li>
+                </template>
             </ul>
 
             <span v-if="required"
@@ -637,5 +644,33 @@ onUnmounted(() => {
     /* text-sm */
     margin-top: 0.25rem;
     /* mt-1 */
+}
+
+/* Skeleton loader с переливающимся голубым градиентом */
+.skeleton-loader {
+    height: 20px;
+    width: 100%;
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        #e0f2fe 0%,
+        #bae6fd 20%,
+        #7dd3fc 40%,
+        #38bdf8 50%,
+        #7dd3fc 60%,
+        #bae6fd 80%,
+        #e0f2fe 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
 }
 </style>

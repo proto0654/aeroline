@@ -1,4 +1,4 @@
-import { A as AutocompleteInput } from "./AutocompleteInput-tc4AwILM.js";
+import { A as AutocompleteInput } from "./AutocompleteInput-r3_ME10q.js";
 import { r as ref, p as computed, q as watch, D as onMounted, c as createElementBlock, o as openBlock, d as createCommentVNode, a as createBaseVNode, K as createVNode, F as Fragment, C as renderList, n as nextTick, t as toDisplayString, v as toRef, x as withDirectives, V as vModelCheckbox, z as unref, A as mergeProps, i as isRef, W as renderSlot, b as createTextVNode } from "./runtime-dom.esm-bundler-BeftXQEh.js";
 import { u as useField } from "./TextInput-BUdG7Qkf.js";
 import { _ as _export_sfc } from "./_plugin-vue_export-helper-1tPrXgE0.js";
@@ -45,6 +45,8 @@ const _sfc_main$1 = {
     const toOffice = ref(null);
     const fromAutocompleteRef = ref(null);
     const toAutocompleteRef = ref(null);
+    let fromValidationTimer = null;
+    let toValidationTimer = null;
     const availableCities = computed(() => {
       if (!props.billingAddresses || !Array.isArray(props.billingAddresses)) {
         return [];
@@ -163,6 +165,25 @@ const _sfc_main$1 = {
         return [];
       }
     };
+    function checkCityInBillingAddresses(cityName) {
+      if (!cityName || !props.billingAddresses || props.billingAddresses.length === 0) {
+        return false;
+      }
+      const normalizedCityName = extractCityNameFromString(cityName);
+      return props.billingAddresses.some((addr) => {
+        var _a;
+        const addrCity = typeof addr.locality === "string" ? addr.locality : ((_a = addr.locality) == null ? void 0 : _a.name) || "";
+        return addrCity.toLowerCase().trim() === normalizedCityName.toLowerCase().trim() || addrCity === normalizedCityName;
+      });
+    }
+    function extractCityNameFromString(formattedCity) {
+      if (!formattedCity) return "";
+      let cityName = formattedCity.trim();
+      if (cityName.includes(",")) {
+        cityName = cityName.split(",")[0].trim();
+      }
+      return cityName;
+    }
     const onFromItemSelected = (item) => {
       from.value = formatCityName(item);
       fromOffice.value = item;
@@ -189,9 +210,101 @@ const _sfc_main$1 = {
       });
       emit("cityFound", { type: "to" });
     };
+    let isUserTypingFrom = false;
+    let isUserTypingTo = false;
+    const onFromInputChange = (value) => {
+      isUserTypingFrom = true;
+      from.value = value || "";
+      if (!value || !value.trim()) {
+        fromOffice.value = null;
+        if (fromValidationTimer) {
+          clearTimeout(fromValidationTimer);
+          fromValidationTimer = null;
+        }
+        emit("cityFound", { type: "from" });
+        isUserTypingFrom = false;
+        return;
+      }
+      if (fromOffice.value) {
+        const formattedName = formatCityName(fromOffice.value);
+        if (formattedName === value) {
+          isUserTypingFrom = false;
+          return;
+        }
+      }
+      if (fromValidationTimer) {
+        clearTimeout(fromValidationTimer);
+      }
+      fromValidationTimer = setTimeout(() => {
+        const cityName = extractCityNameFromString(value);
+        const isValid = checkCityInBillingAddresses(cityName);
+        if (!isValid && cityName.trim()) {
+          const cityObj = availableCities.value.find(
+            (c) => c.name.toLowerCase() === cityName.toLowerCase()
+          );
+          emit("cityNotFound", {
+            type: "from",
+            city: cityName,
+            locality: cityObj || null,
+            region: (cityObj == null ? void 0 : cityObj.region) || ""
+          });
+        } else if (isValid) {
+          emit("cityFound", { type: "from" });
+        }
+        fromValidationTimer = null;
+        isUserTypingFrom = false;
+      }, 1e3);
+    };
+    const onToInputChange = (value) => {
+      isUserTypingTo = true;
+      to.value = value || "";
+      if (!value || !value.trim()) {
+        toOffice.value = null;
+        if (toValidationTimer) {
+          clearTimeout(toValidationTimer);
+          toValidationTimer = null;
+        }
+        emit("cityFound", { type: "to" });
+        isUserTypingTo = false;
+        return;
+      }
+      if (toOffice.value) {
+        const formattedName = formatCityName(toOffice.value);
+        if (formattedName === value) {
+          isUserTypingTo = false;
+          return;
+        }
+      }
+      if (toValidationTimer) {
+        clearTimeout(toValidationTimer);
+      }
+      toValidationTimer = setTimeout(() => {
+        const cityName = extractCityNameFromString(value);
+        const isValid = checkCityInBillingAddresses(cityName);
+        if (!isValid && cityName.trim()) {
+          const cityObj = availableCities.value.find(
+            (c) => c.name.toLowerCase() === cityName.toLowerCase()
+          );
+          emit("cityNotFound", {
+            type: "to",
+            city: cityName,
+            locality: cityObj || null,
+            region: (cityObj == null ? void 0 : cityObj.region) || ""
+          });
+        } else if (isValid) {
+          emit("cityFound", { type: "to" });
+        }
+        toValidationTimer = null;
+        isUserTypingTo = false;
+      }, 1e3);
+    };
     const onFromReset = () => {
       from.value = "";
       fromOffice.value = null;
+      if (fromValidationTimer) {
+        clearTimeout(fromValidationTimer);
+        fromValidationTimer = null;
+      }
       emit("update:modelValue", {
         from: "",
         to: to.value,
@@ -205,6 +318,10 @@ const _sfc_main$1 = {
     const onToReset = () => {
       to.value = "";
       toOffice.value = null;
+      if (toValidationTimer) {
+        clearTimeout(toValidationTimer);
+        toValidationTimer = null;
+      }
       emit("update:modelValue", {
         from: from.value,
         to: "",
@@ -283,13 +400,24 @@ const _sfc_main$1 = {
       });
     });
     watch(() => props.modelValue, (newValue) => {
+      if (isUserTypingFrom || isUserTypingTo) {
+        return;
+      }
       const fromChanged = newValue.from !== from.value;
       const toChanged = newValue.to !== to.value;
       if (!fromChanged && !toChanged) {
         return;
       }
-      from.value = newValue.from || "";
-      to.value = newValue.to || "";
+      if (fromChanged) {
+        from.value = newValue.from || "";
+        nextTick(() => {
+        });
+      }
+      if (toChanged) {
+        to.value = newValue.to || "";
+        nextTick(() => {
+        });
+      }
       fromOffice.value = newValue.fromAddress || findCityByValue(newValue.from);
       toOffice.value = newValue.toAddress || findCityByValue(newValue.to);
     }, { deep: true });
@@ -311,7 +439,10 @@ const _sfc_main$1 = {
               placeholder: "Откуда",
               items: availableCitiesForSelect.value,
               modelValue: from.value,
-              "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => from.value = $event),
+              "onUpdate:modelValue": [
+                _cache[0] || (_cache[0] = ($event) => from.value = $event),
+                onFromInputChange
+              ],
               onItemSelected: onFromItemSelected,
               onReset: onFromReset,
               emitFullItem: true,
@@ -351,7 +482,10 @@ const _sfc_main$1 = {
               placeholder: "Куда",
               items: availableCitiesForSelect.value,
               modelValue: to.value,
-              "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => to.value = $event),
+              "onUpdate:modelValue": [
+                _cache[1] || (_cache[1] = ($event) => to.value = $event),
+                onToInputChange
+              ],
               onItemSelected: onToItemSelected,
               onReset: onToReset,
               emitFullItem: true,

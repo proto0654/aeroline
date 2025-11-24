@@ -50,6 +50,7 @@ function createDefaultPlace() {
         length: '',
         width: '',
         height: '',
+        volume: '',
         weight: '',
         description: '',
         declaredValue: '',
