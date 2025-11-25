@@ -1,5 +1,5 @@
 import "./chunks/global-modal-JqaLCeH7.js";
-import "./mainJs-D0-2qTTl.js";
+import "./mainJs-CjKlFZUB.js";
 import { c as create$3, a as create$6, b as create$9 } from "./globalUiJs-D9SlClYo.js";
 import { i as initProfilePage } from "./profilePageJs-B65luuBh.js";
 import { c as createElementBlock, o as openBlock, a as createBaseVNode, K as createVNode, w as withModifiers, z as unref } from "./chunks/runtime-dom.esm-bundler-BeftXQEh.js";

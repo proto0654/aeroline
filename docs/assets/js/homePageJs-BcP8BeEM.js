@@ -4,9 +4,9 @@ import { c as createElementBlock, o as openBlock, F as Fragment, C as renderList
 import { u as useGlobalModalStore } from "./chunks/globalModal-CXKQxX77.js";
 import { _ as _sfc_main$1 } from "./chunks/NewsDetailModal-DclWHtQB.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
-const __vite_glob_0_0 = "" + new URL("../CURRENT_STATUS-oYHk4f0L.md", import.meta.url).href;
-const __vite_glob_0_1 = "" + new URL("../PROJECT_CONTEXT-DAiRzwb9.md", import.meta.url).href;
-const __vite_glob_0_2 = "" + new URL("../README-3R_3Qmbx.md", import.meta.url).href;
+const __vite_glob_0_0 = "" + new URL("../CURRENT_STATUS-C80f812W.md", import.meta.url).href;
+const __vite_glob_0_1 = "" + new URL("../PROJECT_CONTEXT-TNDt_Zfh.md", import.meta.url).href;
+const __vite_glob_0_2 = "" + new URL("../README-DwfoUFME.md", import.meta.url).href;
 const __vite_glob_0_3 = "" + new URL("../TEST_CASES-C9Qskk_i.md", import.meta.url).href;
 const __vite_glob_0_4 = "" + new URL("../../bulk-order..html", import.meta.url).href;
 const __vite_glob_0_5 = "" + new URL("../../calculator..html", import.meta.url).href;

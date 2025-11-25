@@ -13,7 +13,8 @@
     </div>
 
     <!-- Калькулятор (скрывается только если введенный город не найден в базе) -->
-    <div v-if="!invalidFromCity && !invalidToCity" class="flex flex-col flex-1 lg:flex-row lg:items-stretch gap-8 min-w-0 h-full">
+    <div v-if="!invalidFromCity && !invalidToCity" class="w-full">
+        <div class="flex flex-col lg:flex-row lg:items-stretch gap-8 min-w-0">
         <!-- Левая колонка: Формы ввода -->
         <div
             class="flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0">
@@ -50,10 +51,11 @@
         </div>
 
         <!-- Правая колонка: Результаты расчета -->
-        <div class="bg-brand-light p-5 rounded-lg w-full lg:w-80 relative">
+        <div class="bg-brand-light p-5 rounded-lg w-full lg:w-80">
             <CalculationResult :result="calculationResult" :form-data="formData" :calculator-config="calculatorConfig"
                 @print="printResult" @selectTariff="selectTariff" />
             <!-- Кнопка "Рассчитать" удалена - расчет происходит автоматически -->
+        </div>
         </div>
     </div>
 
@@ -652,6 +654,12 @@ function calculateTariffCost(typeTransportation) {
     let takeDeliverTo = null;
     let fromAddress = null;
     let toAddress = null;
+    let isCityWidePickup = false; // Флаг: используется покрытие города для забора
+    let isCityWideDelivery = false; // Флаг: используется покрытие города для доставки
+    let originalTakeDeliverFrom = null; // Сохраняем оригинальный takeDeliverFrom для конкретного адреса
+    let originalTakeDeliverTo = null; // Сохраняем оригинальный takeDeliverTo для конкретного адреса
+    let hasSpecificStreetFrom = false; // Флаг: был выбран конкретный адрес для забора
+    let hasSpecificStreetTo = false; // Флаг: был выбран конкретный адрес для доставки
     
     // Для забора
     if (isPickupAtTerminal) {
@@ -794,15 +802,71 @@ function calculateTariffCost(typeTransportation) {
             
             if (fromAddress) {
                 const fromAddressUid = fromAddress.uid;
+                const fromAddressStreet = fromAddress.street || '';
+                const hasSpecificStreetInAddress = fromAddressStreet && fromAddressStreet.trim() !== '';
+                hasSpecificStreetFrom = hasSpecificStreetInAddress; // Сохраняем информацию о конкретном адресе
+                
                 takeDeliverFrom = takeDelivers.value.find(td => 
                     String(td.uidBillingAddress) === String(fromAddressUid) && 
                     String(td.uidTypeTransportation) === String(transportTypeUid)
                 );
+                
+                // Сохраняем оригинальный takeDeliverFrom для конкретного адреса
+                if (takeDeliverFrom && hasSpecificStreetInAddress) {
+                    originalTakeDeliverFrom = takeDeliverFrom;
+                }
+                
                 console.log('takeDeliverFrom найден:', takeDeliverFrom ? {
                     uid: takeDeliverFrom.uid,
                     uidBillingAddress: takeDeliverFrom.uidBillingAddress,
-                    tariffZone: takeDeliverFrom.tariffZone
+                    tariffZone: takeDeliverFrom.tariffZone,
+                    isSpecificAddress: hasSpecificStreetInAddress
                 } : 'не найден');
+                
+                // Fallback: если takeDeliver не найден для конкретного адреса, ищем для города
+                if (!takeDeliverFrom && hasSpecificStreetInAddress) {
+                    console.log('takeDeliverFrom не найден для конкретного адреса, ищем для города:', {
+                        fromCityName,
+                        fromAddressStreet,
+                        fromAddressUid
+                    });
+                    
+                    // Ищем billingAddress для города (без улицы)
+                    const cityWideFromAddress = billingAddresses.value.find(addr => {
+                        const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                        const addrStreet = addr.street || '';
+                        return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === '');
+                    });
+                    
+                    if (cityWideFromAddress) {
+                        const cityWideFromAddressUid = cityWideFromAddress.uid;
+                        takeDeliverFrom = takeDelivers.value.find(td => 
+                            String(td.uidBillingAddress) === String(cityWideFromAddressUid) && 
+                            String(td.uidTypeTransportation) === String(transportTypeUid)
+                        );
+                        
+                        if (takeDeliverFrom) {
+                            console.log('takeDeliverFrom найден для города (fallback):', {
+                                uid: takeDeliverFrom.uid,
+                                uidBillingAddress: takeDeliverFrom.uidBillingAddress,
+                                tariffZone: takeDeliverFrom.tariffZone,
+                                cityWideAddressUid: cityWideFromAddressUid
+                            });
+                            // Сохраняем информацию о том, что используется покрытие города
+                            fromAddress = cityWideFromAddress;
+                            isCityWidePickup = true;
+                        } else {
+                            console.warn('takeDeliverFrom не найден даже для города:', {
+                                cityWideFromAddressUid,
+                                transportTypeUid
+                            });
+                        }
+                    } else {
+                        console.warn('billingAddress для города не найден:', {
+                            fromCityName
+                        });
+                    }
+                }
             }
         } else {
             console.warn('direction.fromAddress отсутствует');
@@ -950,15 +1014,71 @@ function calculateTariffCost(typeTransportation) {
             
             if (toAddress) {
                 const toAddressUid = toAddress.uid;
+                const toAddressStreet = toAddress.street || '';
+                const hasSpecificStreetInAddress = toAddressStreet && toAddressStreet.trim() !== '';
+                hasSpecificStreetTo = hasSpecificStreetInAddress; // Сохраняем информацию о конкретном адресе
+                
                 takeDeliverTo = takeDelivers.value.find(td => 
                     String(td.uidBillingAddress) === String(toAddressUid) && 
                     String(td.uidTypeTransportation) === String(transportTypeUid)
                 );
+                
+                // Сохраняем оригинальный takeDeliverTo для конкретного адреса
+                if (takeDeliverTo && hasSpecificStreetInAddress) {
+                    originalTakeDeliverTo = takeDeliverTo;
+                }
+                
                 console.log('takeDeliverTo найден:', takeDeliverTo ? {
                     uid: takeDeliverTo.uid,
                     uidBillingAddress: takeDeliverTo.uidBillingAddress,
-                    tariffZone: takeDeliverTo.tariffZone
+                    tariffZone: takeDeliverTo.tariffZone,
+                    isSpecificAddress: hasSpecificStreetInAddress
                 } : 'не найден');
+                
+                // Fallback: если takeDeliver не найден для конкретного адреса, ищем для города
+                if (!takeDeliverTo && hasSpecificStreetInAddress) {
+                    console.log('takeDeliverTo не найден для конкретного адреса, ищем для города:', {
+                        toCityName,
+                        toAddressStreet,
+                        toAddressUid
+                    });
+                    
+                    // Ищем billingAddress для города (без улицы)
+                    const cityWideToAddress = billingAddresses.value.find(addr => {
+                        const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                        const addrStreet = addr.street || '';
+                        return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === '');
+                    });
+                    
+                    if (cityWideToAddress) {
+                        const cityWideToAddressUid = cityWideToAddress.uid;
+                        takeDeliverTo = takeDelivers.value.find(td => 
+                            String(td.uidBillingAddress) === String(cityWideToAddressUid) && 
+                            String(td.uidTypeTransportation) === String(transportTypeUid)
+                        );
+                        
+                        if (takeDeliverTo) {
+                            console.log('takeDeliverTo найден для города (fallback):', {
+                                uid: takeDeliverTo.uid,
+                                uidBillingAddress: takeDeliverTo.uidBillingAddress,
+                                tariffZone: takeDeliverTo.tariffZone,
+                                cityWideAddressUid: cityWideToAddressUid
+                            });
+                            // Сохраняем информацию о том, что используется покрытие города
+                            toAddress = cityWideToAddress;
+                            isCityWideDelivery = true;
+                        } else {
+                            console.warn('takeDeliverTo не найден даже для города:', {
+                                cityWideToAddressUid,
+                                transportTypeUid
+                            });
+                        }
+                    } else {
+                        console.warn('billingAddress для города не найден:', {
+                            toCityName
+                        });
+                    }
+                }
             }
         } else {
             console.warn('direction.toAddress отсутствует');
@@ -1013,6 +1133,109 @@ function calculateTariffCost(typeTransportation) {
         String(tz.uidTypeTransportation) === String(transportTypeUid)
     );
 
+    // Fallback: если тарифная зона не найдена для конкретного адреса, пробуем найти для города
+    if (!tariffZone && (hasSpecificStreetFrom || hasSpecificStreetTo)) {
+        console.log('Тарифная зона не найдена для конкретного адреса, пробуем найти для города:', {
+            hasSpecificStreetFrom,
+            hasSpecificStreetTo,
+            takeDeliverFromUid,
+            takeDeliverToUid,
+            originalTakeDeliverFromUid: originalTakeDeliverFrom?.uid,
+            originalTakeDeliverToUid: originalTakeDeliverTo?.uid
+        });
+        
+        // Пробуем найти тарифную зону для города (используя городские takeDeliver)
+        let cityWideTakeDeliverFromUid = takeDeliverFromUid;
+        let cityWideTakeDeliverToUid = takeDeliverToUid;
+        let cityWideTakeDeliverFrom = null; // Сохраняем объект для использования в расчетах
+        let cityWideTakeDeliverTo = null; // Сохраняем объект для использования в расчетах
+        let cityWideFromAddress = null;
+        let cityWideToAddress = null;
+        
+        // Если был выбран конкретный адрес для забора, пробуем найти takeDeliver для города
+        if (hasSpecificStreetFrom && originalTakeDeliverFrom && fromAddress) {
+            const fromCityName = typeof fromAddress.locality === 'string' ? fromAddress.locality : (fromAddress.locality?.name || '');
+            cityWideFromAddress = billingAddresses.value.find(addr => {
+                const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                const addrStreet = addr.street || '';
+                return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === '');
+            });
+            
+            if (cityWideFromAddress) {
+                cityWideTakeDeliverFrom = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(cityWideFromAddress.uid) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                
+                if (cityWideTakeDeliverFrom) {
+                    cityWideTakeDeliverFromUid = cityWideTakeDeliverFrom.uid;
+                    console.log('Найден cityWideTakeDeliverFrom для fallback тарифной зоны:', {
+                        uid: cityWideTakeDeliverFrom.uid,
+                        uidBillingAddress: cityWideTakeDeliverFrom.uidBillingAddress
+                    });
+                }
+            }
+        }
+        
+        // Если был выбран конкретный адрес для доставки, пробуем найти takeDeliver для города
+        if (hasSpecificStreetTo && originalTakeDeliverTo && toAddress) {
+            const toCityName = typeof toAddress.locality === 'string' ? toAddress.locality : (toAddress.locality?.name || '');
+            cityWideToAddress = billingAddresses.value.find(addr => {
+                const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+                const addrStreet = addr.street || '';
+                return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === '');
+            });
+            
+            if (cityWideToAddress) {
+                cityWideTakeDeliverTo = takeDelivers.value.find(td => 
+                    String(td.uidBillingAddress) === String(cityWideToAddress.uid) && 
+                    String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                
+                if (cityWideTakeDeliverTo) {
+                    cityWideTakeDeliverToUid = cityWideTakeDeliverTo.uid;
+                    console.log('Найден cityWideTakeDeliverTo для fallback тарифной зоны:', {
+                        uid: cityWideTakeDeliverTo.uid,
+                        uidBillingAddress: cityWideTakeDeliverTo.uidBillingAddress
+                    });
+                }
+            }
+        }
+        
+        // Пробуем найти тарифную зону с городскими takeDeliver
+        if (cityWideTakeDeliverFromUid !== takeDeliverFromUid || cityWideTakeDeliverToUid !== takeDeliverToUid) {
+            tariffZone = tariffZones.value.find(tz => 
+                String(tz.uidTakeLocality) === String(cityWideTakeDeliverFromUid) && 
+                String(tz.uidDeliverLocality) === String(cityWideTakeDeliverToUid) &&
+                String(tz.uidTypeTransportation) === String(transportTypeUid)
+            );
+            
+            if (tariffZone) {
+                console.log('Тарифная зона найдена для города (fallback):', {
+                    uid: tariffZone.uid,
+                    tariffZone: tariffZone.tariffZone,
+                    uidTakeLocality: tariffZone.uidTakeLocality,
+                    uidDeliverLocality: tariffZone.uidDeliverLocality,
+                    usedCityWidePickup: cityWideTakeDeliverFromUid !== takeDeliverFromUid,
+                    usedCityWideDelivery: cityWideTakeDeliverToUid !== takeDeliverToUid
+                });
+                
+                // Обновляем takeDeliver и флаги, если используется покрытие города
+                // Это важно для правильного расчета стоимости забора и доставки
+                if (cityWideTakeDeliverFromUid !== takeDeliverFromUid && cityWideTakeDeliverFrom && cityWideFromAddress) {
+                    takeDeliverFrom = cityWideTakeDeliverFrom;
+                    fromAddress = cityWideFromAddress;
+                    isCityWidePickup = true;
+                }
+                if (cityWideTakeDeliverToUid !== takeDeliverToUid && cityWideTakeDeliverTo && cityWideToAddress) {
+                    takeDeliverTo = cityWideTakeDeliverTo;
+                    toAddress = cityWideToAddress;
+                    isCityWideDelivery = true;
+                }
+            }
+        }
+    }
+
     if (!tariffZone) {
         const allZonesForTransportType = tariffZones.value.filter(tz => String(tz.uidTypeTransportation) === String(transportTypeUid));
         console.warn('Тарифная зона не найдена:', {
@@ -1021,6 +1244,8 @@ function calculateTariffCost(typeTransportation) {
             transportTypeUid: transportTypeUid,
             takeDeliverFromUid: takeDeliverFromUid,
             takeDeliverToUid: takeDeliverToUid,
+            hasSpecificStreetFrom,
+            hasSpecificStreetTo,
             totalTariffZones: tariffZones.value.length,
             zonesForTransportType: allZonesForTransportType.length,
             availableZones: allZonesForTransportType.map(tz => ({
@@ -1898,7 +2123,6 @@ function calculateTariffCost(typeTransportation) {
     });
 
     // 10. Формирование детализации согласно ТЗ
-    details.push({ name: 'РАСЧЕТ ПО ТЗ', cost: 0, isHeader: true });
     
     // Добавляем предупреждения о зонах в детализацию (если есть)
     if (zoneWarnings && zoneWarnings.length > 0) {
@@ -2198,6 +2422,15 @@ function calculateTariffCost(typeTransportation) {
                 isSubHeader: true
             });
             
+            // Добавляем информацию о покрытии города, если используется fallback
+            if (isCityWidePickup) {
+                details.push({
+                    name: '⚠️ Используется покрытие города (конкретный адрес не найден в системе)',
+                    cost: 0,
+                    isDetail: true
+                });
+            }
+            
             if (step > 0 && totalPayableWeight > unitFrom) {
                 // Показываем расчет шагов только если ПВ > unitFrom и step > 0
                 const pickupStepsCalculation = (totalPayableWeight - unitFrom) / step;
@@ -2362,6 +2595,15 @@ function calculateTariffCost(typeTransportation) {
                 cost: 0,
                 isSubHeader: true
             });
+            
+            // Добавляем информацию о покрытии города, если используется fallback
+            if (isCityWideDelivery) {
+                details.push({
+                    name: '⚠️ Используется покрытие города (конкретный адрес не найден в системе)',
+                    cost: 0,
+                    isDetail: true
+                });
+            }
             
             if (step > 0 && totalPayableWeight > unitFrom) {
                 // Показываем расчет шагов только если ПВ > unitFrom и step > 0

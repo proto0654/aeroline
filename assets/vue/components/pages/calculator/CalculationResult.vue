@@ -1,6 +1,6 @@
 <template>
-    <aside class="h-fit card lg:sticky lg:top-4 lg:self-start">
-        <h2 class="text-h4 font-bold mb-4">Стоимость перевозки</h2>
+    <aside ref="stickyRef" :style="stickyStyle" class="card">
+        <h2 class="text-h4 font-bold mb-4 ">Стоимость перевозки</h2>
 
         <div v-if="!result || !result.isValid" class="text-gray-500">
             <p v-if="result && result.message" class="font-medium text-gray-700 mb-2">{{ result.message }}</p>
@@ -18,14 +18,12 @@
 
         <div v-else>
             <!-- Параметры расчёта -->
-            <div class="border-b pb-4 mb-4">
-                <h3 class="text-lg font-semibold mb-3 text-gray-700">Параметры расчёта</h3>
-
+            <div class="mb-4">
                 <!-- Маршрут -->
                 <div class="flex items-center justify-between mb-4">
                     <div class="text-left">
-                        <div class="font-semibold text-base">{{ routeInfo.from }}</div>
-                        <div class="text-sm text-gray-500">{{ routeInfo.fromDetails }}</div>
+                        <div class="font-semibold text-base leading-1 mb-2">{{ routeInfo.from }}</div>
+                        <div class="text-xs text-gray-500 leading-1">{{ routeInfo.fromDetails }}</div>
                     </div>
                     <div class="mx-4 flex-1 flex items-center justify-center">
                         <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,24 +32,24 @@
                         </svg>
                     </div>
                     <div class="text-right">
-                        <div class="font-semibold text-base">{{ routeInfo.to }}</div>
-                        <div class="text-sm text-gray-500">{{ routeInfo.toDetails }}</div>
+                        <div class="font-semibold text-base leading-1 mb-2">{{ routeInfo.to }}</div>
+                        <div class="text-xs text-gray-500 leading-1">{{ routeInfo.toDetails }}</div>
                     </div>
                 </div>
 
                 <!-- Характеристики груза -->
                 <div class="grid grid-cols-3 gap-4 text-center">
                     <div>
-                        <div class="text-2xl font-bold text-gray-800">{{ cargoInfo.count }}</div>
-                        <div class="text-sm text-gray-600">{{ cargoInfo.countLabel }}</div>
+                        <div class="text-2xl font-bold text-gray-800 leading-1 mb-2">{{ cargoInfo.count }}</div>
+                        <div class="text-xs text-gray-600 leading-1">{{ cargoInfo.countLabel }}</div>
                     </div>
                     <div>
-                        <div class="text-2xl font-bold text-gray-800">{{ cargoInfo.weight }}</div>
-                        <div class="text-sm text-gray-600">кг</div>
+                        <div class="text-2xl font-bold text-gray-800 leading-1 mb-2">{{ cargoInfo.weight }}</div>
+                        <div class="text-xs text-gray-600 leading-1">кг (объемный вес)</div>
                     </div>
                     <div>
-                        <div class="text-2xl font-bold text-gray-800">{{ cargoInfo.volume }}</div>
-                        <div class="text-sm text-gray-600">куб.м</div>
+                        <div class="text-2xl font-bold text-gray-800 leading-1 mb-2">{{ cargoInfo.volume }}</div>
+                        <div class="text-xs text-gray-600 leading-1">куб.м</div>
                     </div>
                 </div>
                 <!-- Километраж -->
@@ -61,31 +59,8 @@
                 </div>
             </div>
 
-
-            <!-- Основной тариф -->
-            <div v-if="result.selectedTariff" class="border-b pb-4 mb-4">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="font-bold text-lg">{{ result.selectedTariff.name }}</span>
-                    <span class="font-bold text-lg">{{ formatCurrency(result.selectedTariff.cost) }}</span>
-                </div>
-                <div class="text-sm text-gray-500 mb-3">{{ result.selectedTariff.description }}</div>
-
-                <!-- Время доставки -->
-                <div v-if="result.selectedTariff.deliveryInfo" class="text-sm text-blue-600 mb-2">
-                    <span class="font-medium">Время доставки:</span> {{ result.selectedTariff.deliveryInfo.description
-                    }}
-                    <span v-if="result.selectedTariff.deliveryInfo.days"> ({{ result.selectedTariff.deliveryInfo.days }}
-                        дн.)</span>
-                </div>
-                <div v-if="result.selectedTariff.minDeliveryDate" class="text-sm text-green-600 mb-3">
-                    <span class="font-medium">Минимальная дата доставки:</span>
-                    {{ formatDate(result.selectedTariff.minDeliveryDate.date) }}
-                </div>
-            </div>
-
             <!-- Список всех тарифов -->
             <div v-if="result.allTariffs && result.allTariffs.length > 0" class="space-y-4 mb-6">
-                <h3 class="text-lg font-semibold text-gray-800">Все тарифы:</h3>
                 <div v-for="tariff in result.allTariffs" :key="tariff.id" :class="[
                     'border rounded-lg p-4 transition-all duration-200',
                     tariff.isAvailable ? 'cursor-pointer hover:border-blue-300' : 'opacity-60 cursor-not-allowed bg-gray-100',
@@ -113,12 +88,6 @@
                             <div v-if="!tariff.isAvailable" class="text-xs text-red-500 mb-1 font-medium">
                                 Недоступно: {{ tariff.reason }}
                             </div>
-
-                            <!-- Время доставки -->
-                            <div v-if="tariff.deliveryInfo" class="mt-1 text-sm text-blue-600">
-                                <span class="font-medium">Время доставки:</span> {{ tariff.deliveryInfo.description }}
-                                <span v-if="tariff.deliveryInfo.days"> ({{ tariff.deliveryInfo.days }} дн.)</span>
-                            </div>
                         </div>
                         <div class="text-right">
                             <div v-if="tariff.isAvailable" class="text-xl font-bold text-gray-800">{{
@@ -143,7 +112,7 @@
                         <div v-if="expandedTariffs.includes(tariff.id) && tariff.details"
                             class="mt-3 space-y-1 text-sm animate-fade-in">
                             <h5 class="font-medium text-gray-700 mb-2">Детализация расчета:</h5>
-                            <div v-for="detail in tariff.details" :key="detail.name" :class="['flex justify-between',
+                            <div v-for="(detail, index) in tariff.details" :key="`${tariff.id}-detail-${index}-${detail.name}`" :class="['flex justify-between',
                                 detail.isHeader ? 'font-semibold text-gray-800 mt-3 mb-1' : '',
                                 detail.isSubHeader ? 'font-medium text-gray-700 mt-2' : '',
                                 detail.isDetail ? 'text-gray-500 text-xs pl-4' : '',
@@ -209,13 +178,17 @@
                 </div>
             </div>
 
-            <button @click="$emit('print')" class="btn btn-secondary w-full mt-4">Распечатать</button>
+            <button @click="$emit('print')" class="btn btn-secondary w-full mt-4 border-none py-3 rounded-xs">Распечатать</button>
         </div>
     </aside>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
+import { useSticky } from '../../../composables/useSticky.js';
+
+// Используем композабл для sticky позиционирования aside
+const { elementRef: stickyRef, isSticky, stickyStyle } = useSticky({ top: 16 });
 
 const props = defineProps({
     result: {

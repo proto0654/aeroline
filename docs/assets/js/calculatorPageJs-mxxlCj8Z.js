@@ -1,4 +1,4 @@
-import { r as ref, p as computed, c as createElementBlock, o as openBlock, d as createCommentVNode, a as createBaseVNode, t as toDisplayString, A as mergeProps, n as nextTick, W as renderSlot, b as createTextVNode, F as Fragment, C as renderList, q as watch, K as createVNode, I as normalizeClass, G as createBlock, w as withModifiers, D as onMounted, z as unref, f as reactive, J as createApp } from "./chunks/runtime-dom.esm-bundler-BeftXQEh.js";
+import { r as ref, p as computed, c as createElementBlock, o as openBlock, d as createCommentVNode, a as createBaseVNode, t as toDisplayString, A as mergeProps, n as nextTick, W as renderSlot, b as createTextVNode, F as Fragment, C as renderList, q as watch, K as createVNode, I as normalizeClass, G as createBlock, w as withModifiers, D as onMounted, z as unref, Q as getCurrentInstance, j as getCurrentScope, k as onScopeDispose, u as hasInjectionContext, s as inject, i as isRef, L as toValue, O as shallowRef, f as reactive, N as watchEffect, E as onUnmounted, Z as normalizeStyle, J as createApp } from "./chunks/runtime-dom.esm-bundler-BeftXQEh.js";
 import { C as CheckboxInput, _ as _sfc_main$c } from "./chunks/CheckboxInput-3ItHIB6A.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
 import { T as TextInput, F as Form, b as Field, E as ErrorMessage } from "./chunks/TextInput-BUdG7Qkf.js";
@@ -386,7 +386,7 @@ const _hoisted_9$4 = { class: "flex items-center border border-gray-300 rounded-
 const _hoisted_10$3 = ["disabled"];
 const _hoisted_11$3 = { class: "px-4 py-2 bg-white text-center min-w-[60px]" };
 const _hoisted_12$3 = { class: "border-t border-gray-200 pt-4 flex flex-col gap-4" };
-const _hoisted_13$2 = { class: "flex flex-col gap-3" };
+const _hoisted_13$3 = { class: "flex flex-col gap-3" };
 const _hoisted_14$2 = { class: "flex items-start gap-2" };
 const _hoisted_15$2 = { class: "flex items-start gap-2" };
 const _hoisted_16$2 = { class: "flex items-start gap-2" };
@@ -613,7 +613,7 @@ const _sfc_main$8 = {
             modelValue: packagingItems.value,
             "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => packagingItems.value = $event)
           }, null, 8, ["name", "options", "modelValue"]),
-          createBaseVNode("div", _hoisted_13$2, [
+          createBaseVNode("div", _hoisted_13$3, [
             createBaseVNode("div", _hoisted_14$2, [
               createVNode(CalculatorCheckboxInput, {
                 name: `pkg_${id.value}_self_marking`,
@@ -1374,7 +1374,7 @@ const _hoisted_11$2 = {
   class: "mt-4"
 };
 const _hoisted_12$2 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
-const _hoisted_13$1 = { class: "md:col-span-2 grid grid-cols-3 gap-4" };
+const _hoisted_13$2 = { class: "md:col-span-2 grid grid-cols-3 gap-4" };
 const _hoisted_14$1 = { class: "md:col-span-2" };
 const _hoisted_15$1 = { class: "md:col-span-2" };
 const _hoisted_16$1 = {
@@ -2375,7 +2375,7 @@ const _sfc_main$3 = {
                 ])
               ])) : createCommentVNode("", true)
             ])) : createCommentVNode("", true),
-            createBaseVNode("div", _hoisted_13$1, [
+            createBaseVNode("div", _hoisted_13$2, [
               createBaseVNode("div", null, [
                 createVNode(AutocompleteInput, {
                   ref_key: "houseInputRef",
@@ -2604,145 +2604,678 @@ const _sfc_main$2 = {
     };
   }
 };
-const _hoisted_1$1 = { class: "h-fit card lg:sticky lg:top-4 lg:self-start" };
-const _hoisted_2$1 = {
+function tryOnScopeDispose(fn, failSilently) {
+  if (getCurrentScope()) {
+    onScopeDispose(fn, failSilently);
+    return true;
+  }
+  return false;
+}
+const localProvidedStateMap = /* @__PURE__ */ new WeakMap();
+const injectLocal = /* @__NO_SIDE_EFFECTS__ */ (...args) => {
+  var _getCurrentInstance;
+  const key = args[0];
+  const instance = (_getCurrentInstance = getCurrentInstance()) === null || _getCurrentInstance === void 0 ? void 0 : _getCurrentInstance.proxy;
+  const owner = instance !== null && instance !== void 0 ? instance : getCurrentScope();
+  if (owner == null && !hasInjectionContext()) throw new Error("injectLocal must be called in setup");
+  if (owner && localProvidedStateMap.has(owner) && key in localProvidedStateMap.get(owner)) return localProvidedStateMap.get(owner)[key];
+  return inject(...args);
+};
+const isClient = typeof window !== "undefined" && typeof document !== "undefined";
+typeof WorkerGlobalScope !== "undefined" && globalThis instanceof WorkerGlobalScope;
+const notNullish = (val) => val != null;
+const toString = Object.prototype.toString;
+const isObject = (val) => toString.call(val) === "[object Object]";
+const noop = () => {
+};
+function createFilterWrapper(filter, fn) {
+  function wrapper(...args) {
+    return new Promise((resolve, reject) => {
+      Promise.resolve(filter(() => fn.apply(this, args), {
+        fn,
+        thisArg: this,
+        args
+      })).then(resolve).catch(reject);
+    });
+  }
+  return wrapper;
+}
+function debounceFilter(ms, options = {}) {
+  let timer;
+  let maxTimer;
+  let lastRejector = noop;
+  const _clearTimeout = (timer$1) => {
+    clearTimeout(timer$1);
+    lastRejector();
+    lastRejector = noop;
+  };
+  let lastInvoker;
+  const filter = (invoke$1) => {
+    const duration = toValue(ms);
+    const maxDuration = toValue(options.maxWait);
+    if (timer) _clearTimeout(timer);
+    if (duration <= 0 || maxDuration !== void 0 && maxDuration <= 0) {
+      if (maxTimer) {
+        _clearTimeout(maxTimer);
+        maxTimer = void 0;
+      }
+      return Promise.resolve(invoke$1());
+    }
+    return new Promise((resolve, reject) => {
+      lastRejector = options.rejectOnCancel ? reject : resolve;
+      lastInvoker = invoke$1;
+      if (maxDuration && !maxTimer) maxTimer = setTimeout(() => {
+        if (timer) _clearTimeout(timer);
+        maxTimer = void 0;
+        resolve(lastInvoker());
+      }, maxDuration);
+      timer = setTimeout(() => {
+        if (maxTimer) _clearTimeout(maxTimer);
+        maxTimer = void 0;
+        resolve(invoke$1());
+      }, duration);
+    });
+  };
+  return filter;
+}
+function throttleFilter(...args) {
+  let lastExec = 0;
+  let timer;
+  let isLeading = true;
+  let lastRejector = noop;
+  let lastValue;
+  let ms;
+  let trailing;
+  let leading;
+  let rejectOnCancel;
+  if (!isRef(args[0]) && typeof args[0] === "object") ({ delay: ms, trailing = true, leading = true, rejectOnCancel = false } = args[0]);
+  else [ms, trailing = true, leading = true, rejectOnCancel = false] = args;
+  const clear = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = void 0;
+      lastRejector();
+      lastRejector = noop;
+    }
+  };
+  const filter = (_invoke) => {
+    const duration = toValue(ms);
+    const elapsed = Date.now() - lastExec;
+    const invoke$1 = () => {
+      return lastValue = _invoke();
+    };
+    clear();
+    if (duration <= 0) {
+      lastExec = Date.now();
+      return invoke$1();
+    }
+    if (elapsed > duration) {
+      lastExec = Date.now();
+      if (leading || !isLeading) invoke$1();
+    } else if (trailing) lastValue = new Promise((resolve, reject) => {
+      lastRejector = rejectOnCancel ? reject : resolve;
+      timer = setTimeout(() => {
+        lastExec = Date.now();
+        isLeading = true;
+        resolve(invoke$1());
+        clear();
+      }, Math.max(0, duration - elapsed));
+    });
+    if (!leading && !timer) timer = setTimeout(() => isLeading = true, duration);
+    isLeading = false;
+    return lastValue;
+  };
+  return filter;
+}
+function pxValue(px) {
+  return px.endsWith("rem") ? Number.parseFloat(px) * 16 : Number.parseFloat(px);
+}
+function toArray(value) {
+  return Array.isArray(value) ? value : [value];
+}
+function getLifeCycleTarget(target) {
+  return getCurrentInstance();
+}
+// @__NO_SIDE_EFFECTS__
+function useDebounceFn(fn, ms = 200, options = {}) {
+  return createFilterWrapper(debounceFilter(ms, options), fn);
+}
+// @__NO_SIDE_EFFECTS__
+function useThrottleFn(fn, ms = 200, trailing = false, leading = true, rejectOnCancel = false) {
+  return createFilterWrapper(throttleFilter(ms, trailing, leading, rejectOnCancel), fn);
+}
+function tryOnMounted(fn, sync = true, target) {
+  if (getLifeCycleTarget()) onMounted(fn, target);
+  else if (sync) fn();
+  else nextTick(fn);
+}
+function watchImmediate(source, cb, options) {
+  return watch(source, cb, {
+    ...options,
+    immediate: true
+  });
+}
+const defaultWindow = isClient ? window : void 0;
+function unrefElement(elRef) {
+  var _$el;
+  const plain = toValue(elRef);
+  return (_$el = plain === null || plain === void 0 ? void 0 : plain.$el) !== null && _$el !== void 0 ? _$el : plain;
+}
+function useEventListener(...args) {
+  const cleanups = [];
+  const cleanup = () => {
+    cleanups.forEach((fn) => fn());
+    cleanups.length = 0;
+  };
+  const register = (el, event, listener, options) => {
+    el.addEventListener(event, listener, options);
+    return () => el.removeEventListener(event, listener, options);
+  };
+  const firstParamTargets = computed(() => {
+    const test = toArray(toValue(args[0])).filter((e) => e != null);
+    return test.every((e) => typeof e !== "string") ? test : void 0;
+  });
+  const stopWatch = watchImmediate(() => {
+    var _firstParamTargets$va, _firstParamTargets$va2;
+    return [
+      (_firstParamTargets$va = (_firstParamTargets$va2 = firstParamTargets.value) === null || _firstParamTargets$va2 === void 0 ? void 0 : _firstParamTargets$va2.map((e) => unrefElement(e))) !== null && _firstParamTargets$va !== void 0 ? _firstParamTargets$va : [defaultWindow].filter((e) => e != null),
+      toArray(toValue(firstParamTargets.value ? args[1] : args[0])),
+      toArray(unref(firstParamTargets.value ? args[2] : args[1])),
+      toValue(firstParamTargets.value ? args[3] : args[2])
+    ];
+  }, ([raw_targets, raw_events, raw_listeners, raw_options]) => {
+    cleanup();
+    if (!(raw_targets === null || raw_targets === void 0 ? void 0 : raw_targets.length) || !(raw_events === null || raw_events === void 0 ? void 0 : raw_events.length) || !(raw_listeners === null || raw_listeners === void 0 ? void 0 : raw_listeners.length)) return;
+    const optionsClone = isObject(raw_options) ? { ...raw_options } : raw_options;
+    cleanups.push(...raw_targets.flatMap((el) => raw_events.flatMap((event) => raw_listeners.map((listener) => register(el, event, listener, optionsClone)))));
+  }, { flush: "post" });
+  const stop = () => {
+    stopWatch();
+    cleanup();
+  };
+  tryOnScopeDispose(cleanup);
+  return stop;
+}
+// @__NO_SIDE_EFFECTS__
+function useMounted() {
+  const isMounted = shallowRef(false);
+  const instance = getCurrentInstance();
+  if (instance) onMounted(() => {
+    isMounted.value = true;
+  }, instance);
+  return isMounted;
+}
+// @__NO_SIDE_EFFECTS__
+function useSupported(callback) {
+  const isMounted = /* @__PURE__ */ useMounted();
+  return computed(() => {
+    isMounted.value;
+    return Boolean(callback());
+  });
+}
+function useMutationObserver(target, callback, options = {}) {
+  const { window: window$1 = defaultWindow, ...mutationOptions } = options;
+  let observer;
+  const isSupported = /* @__PURE__ */ useSupported(() => window$1 && "MutationObserver" in window$1);
+  const cleanup = () => {
+    if (observer) {
+      observer.disconnect();
+      observer = void 0;
+    }
+  };
+  const stopWatch = watch(computed(() => {
+    const items = toArray(toValue(target)).map(unrefElement).filter(notNullish);
+    return new Set(items);
+  }), (newTargets) => {
+    cleanup();
+    if (isSupported.value && newTargets.size) {
+      observer = new MutationObserver(callback);
+      newTargets.forEach((el) => observer.observe(el, mutationOptions));
+    }
+  }, {
+    immediate: true,
+    flush: "post"
+  });
+  const takeRecords = () => {
+    return observer === null || observer === void 0 ? void 0 : observer.takeRecords();
+  };
+  const stop = () => {
+    stopWatch();
+    cleanup();
+  };
+  tryOnScopeDispose(stop);
+  return {
+    isSupported,
+    stop,
+    takeRecords
+  };
+}
+const ssrWidthSymbol = Symbol("vueuse-ssr-width");
+// @__NO_SIDE_EFFECTS__
+function useSSRWidth() {
+  const ssrWidth = hasInjectionContext() ? /* @__PURE__ */ injectLocal(ssrWidthSymbol, null) : null;
+  return typeof ssrWidth === "number" ? ssrWidth : void 0;
+}
+function useMediaQuery(query, options = {}) {
+  const { window: window$1 = defaultWindow, ssrWidth = /* @__PURE__ */ useSSRWidth() } = options;
+  const isSupported = /* @__PURE__ */ useSupported(() => window$1 && "matchMedia" in window$1 && typeof window$1.matchMedia === "function");
+  const ssrSupport = shallowRef(typeof ssrWidth === "number");
+  const mediaQuery = shallowRef();
+  const matches = shallowRef(false);
+  const handler = (event) => {
+    matches.value = event.matches;
+  };
+  watchEffect(() => {
+    if (ssrSupport.value) {
+      ssrSupport.value = !isSupported.value;
+      matches.value = toValue(query).split(",").some((queryString) => {
+        const not = queryString.includes("not all");
+        const minWidth = queryString.match(/\(\s*min-width:\s*(-?\d+(?:\.\d*)?[a-z]+\s*)\)/);
+        const maxWidth = queryString.match(/\(\s*max-width:\s*(-?\d+(?:\.\d*)?[a-z]+\s*)\)/);
+        let res = Boolean(minWidth || maxWidth);
+        if (minWidth && res) res = ssrWidth >= pxValue(minWidth[1]);
+        if (maxWidth && res) res = ssrWidth <= pxValue(maxWidth[1]);
+        return not ? !res : res;
+      });
+      return;
+    }
+    if (!isSupported.value) return;
+    mediaQuery.value = window$1.matchMedia(toValue(query));
+    matches.value = mediaQuery.value.matches;
+  });
+  useEventListener(mediaQuery, "change", handler, { passive: true });
+  return computed(() => matches.value);
+}
+const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
+function useScroll(element, options = {}) {
+  const { throttle = 0, idle = 200, onStop = noop, onScroll = noop, offset = {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+  }, observe: _observe = { mutation: false }, eventListenerOptions = {
+    capture: false,
+    passive: true
+  }, behavior = "auto", window: window$1 = defaultWindow, onError = (e) => {
+    console.error(e);
+  } } = options;
+  const observe = typeof _observe === "boolean" ? { mutation: _observe } : _observe;
+  const internalX = shallowRef(0);
+  const internalY = shallowRef(0);
+  const x = computed({
+    get() {
+      return internalX.value;
+    },
+    set(x$1) {
+      scrollTo(x$1, void 0);
+    }
+  });
+  const y = computed({
+    get() {
+      return internalY.value;
+    },
+    set(y$1) {
+      scrollTo(void 0, y$1);
+    }
+  });
+  function scrollTo(_x, _y) {
+    var _ref, _toValue, _toValue2, _document;
+    if (!window$1) return;
+    const _element = toValue(element);
+    if (!_element) return;
+    (_ref = _element instanceof Document ? window$1.document.body : _element) === null || _ref === void 0 || _ref.scrollTo({
+      top: (_toValue = toValue(_y)) !== null && _toValue !== void 0 ? _toValue : y.value,
+      left: (_toValue2 = toValue(_x)) !== null && _toValue2 !== void 0 ? _toValue2 : x.value,
+      behavior: toValue(behavior)
+    });
+    const scrollContainer = (_element === null || _element === void 0 || (_document = _element.document) === null || _document === void 0 ? void 0 : _document.documentElement) || (_element === null || _element === void 0 ? void 0 : _element.documentElement) || _element;
+    if (x != null) internalX.value = scrollContainer.scrollLeft;
+    if (y != null) internalY.value = scrollContainer.scrollTop;
+  }
+  const isScrolling = shallowRef(false);
+  const arrivedState = reactive({
+    left: true,
+    right: false,
+    top: true,
+    bottom: false
+  });
+  const directions = reactive({
+    left: false,
+    right: false,
+    top: false,
+    bottom: false
+  });
+  const onScrollEnd = (e) => {
+    if (!isScrolling.value) return;
+    isScrolling.value = false;
+    directions.left = false;
+    directions.right = false;
+    directions.top = false;
+    directions.bottom = false;
+    onStop(e);
+  };
+  const onScrollEndDebounced = /* @__PURE__ */ useDebounceFn(onScrollEnd, throttle + idle);
+  const setArrivedState = (target) => {
+    var _document2;
+    if (!window$1) return;
+    const el = (target === null || target === void 0 || (_document2 = target.document) === null || _document2 === void 0 ? void 0 : _document2.documentElement) || (target === null || target === void 0 ? void 0 : target.documentElement) || unrefElement(target);
+    const { display, flexDirection, direction } = getComputedStyle(el);
+    const directionMultipler = direction === "rtl" ? -1 : 1;
+    const scrollLeft = el.scrollLeft;
+    directions.left = scrollLeft < internalX.value;
+    directions.right = scrollLeft > internalX.value;
+    const left = Math.abs(scrollLeft * directionMultipler) <= (offset.left || 0);
+    const right = Math.abs(scrollLeft * directionMultipler) + el.clientWidth >= el.scrollWidth - (offset.right || 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
+    if (display === "flex" && flexDirection === "row-reverse") {
+      arrivedState.left = right;
+      arrivedState.right = left;
+    } else {
+      arrivedState.left = left;
+      arrivedState.right = right;
+    }
+    internalX.value = scrollLeft;
+    let scrollTop = el.scrollTop;
+    if (target === window$1.document && !scrollTop) scrollTop = window$1.document.body.scrollTop;
+    directions.top = scrollTop < internalY.value;
+    directions.bottom = scrollTop > internalY.value;
+    const top = Math.abs(scrollTop) <= (offset.top || 0);
+    const bottom = Math.abs(scrollTop) + el.clientHeight >= el.scrollHeight - (offset.bottom || 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
+    if (display === "flex" && flexDirection === "column-reverse") {
+      arrivedState.top = bottom;
+      arrivedState.bottom = top;
+    } else {
+      arrivedState.top = top;
+      arrivedState.bottom = bottom;
+    }
+    internalY.value = scrollTop;
+  };
+  const onScrollHandler = (e) => {
+    var _documentElement;
+    if (!window$1) return;
+    setArrivedState((_documentElement = e.target.documentElement) !== null && _documentElement !== void 0 ? _documentElement : e.target);
+    isScrolling.value = true;
+    onScrollEndDebounced(e);
+    onScroll(e);
+  };
+  useEventListener(element, "scroll", throttle ? /* @__PURE__ */ useThrottleFn(onScrollHandler, throttle, true, false) : onScrollHandler, eventListenerOptions);
+  tryOnMounted(() => {
+    try {
+      const _element = toValue(element);
+      if (!_element) return;
+      setArrivedState(_element);
+    } catch (e) {
+      onError(e);
+    }
+  });
+  if ((observe === null || observe === void 0 ? void 0 : observe.mutation) && element != null && element !== window$1 && element !== document) useMutationObserver(element, () => {
+    const _element = toValue(element);
+    if (!_element) return;
+    setArrivedState(_element);
+  }, {
+    attributes: true,
+    childList: true,
+    subtree: true
+  });
+  useEventListener(element, "scrollend", onScrollEnd, eventListenerOptions);
+  return {
+    x,
+    y,
+    isScrolling,
+    arrivedState,
+    directions,
+    measure() {
+      const _element = toValue(element);
+      if (window$1 && _element) setArrivedState(_element);
+    }
+  };
+}
+function useWindowScroll(options = {}) {
+  const { window: window$1 = defaultWindow, ...rest } = options;
+  return useScroll(window$1, rest);
+}
+// @__NO_SIDE_EFFECTS__
+function useWindowSize(options = {}) {
+  const { window: window$1 = defaultWindow, initialWidth = Number.POSITIVE_INFINITY, initialHeight = Number.POSITIVE_INFINITY, listenOrientation = true, includeScrollbar = true, type = "inner" } = options;
+  const width = shallowRef(initialWidth);
+  const height = shallowRef(initialHeight);
+  const update = () => {
+    if (window$1) if (type === "outer") {
+      width.value = window$1.outerWidth;
+      height.value = window$1.outerHeight;
+    } else if (type === "visual" && window$1.visualViewport) {
+      const { width: visualViewportWidth, height: visualViewportHeight, scale } = window$1.visualViewport;
+      width.value = Math.round(visualViewportWidth * scale);
+      height.value = Math.round(visualViewportHeight * scale);
+    } else if (includeScrollbar) {
+      width.value = window$1.innerWidth;
+      height.value = window$1.innerHeight;
+    } else {
+      width.value = window$1.document.documentElement.clientWidth;
+      height.value = window$1.document.documentElement.clientHeight;
+    }
+  };
+  update();
+  tryOnMounted(update);
+  const listenerOptions = { passive: true };
+  useEventListener("resize", update, listenerOptions);
+  if (window$1 && type === "visual" && window$1.visualViewport) useEventListener(window$1.visualViewport, "resize", update, listenerOptions);
+  if (listenOrientation) watch(useMediaQuery("(orientation: portrait)"), () => update());
+  return {
+    width,
+    height
+  };
+}
+function useSticky(options = {}) {
+  const { top = 16, minWidth = 1024 } = options;
+  const elementRef = ref(null);
+  const isSticky = ref(false);
+  const { y: scrollY } = useWindowScroll();
+  const { width: windowWidth } = /* @__PURE__ */ useWindowSize();
+  const isLargeScreen = computed(() => windowWidth.value >= minWidth);
+  const stickyStyle = computed(() => {
+    if (!isSticky.value || !elementRef.value) return {};
+    const rect = elementRef.value.getBoundingClientRect();
+    return {
+      position: "fixed",
+      top: `${top}px`,
+      width: `${rect.width}px`,
+      zIndex: 10
+    };
+  });
+  let initialTop = null;
+  let parentElement = null;
+  function updateSticky() {
+    if (!elementRef.value || !isLargeScreen.value) {
+      isSticky.value = false;
+      return;
+    }
+    const rect = elementRef.value.getBoundingClientRect();
+    const scrollTop = scrollY.value;
+    if (!parentElement) {
+      parentElement = elementRef.value.parentElement;
+      while (parentElement && parentElement !== document.body) {
+        if (parentElement.classList.contains("bg-brand-light")) {
+          break;
+        }
+        const parentStyle = getComputedStyle(parentElement);
+        if (parentStyle.overflow !== "visible" && parentStyle.overflow !== "") {
+          break;
+        }
+        parentElement = parentElement.parentElement;
+      }
+      if (!parentElement || parentElement === document.body) {
+        parentElement = elementRef.value.parentElement;
+      }
+    }
+    const parentRect = parentElement.getBoundingClientRect();
+    const elementHeight = rect.height;
+    if (initialTop === null && !isSticky.value) {
+      initialTop = rect.top + scrollTop;
+      parentRect.top + scrollTop;
+    }
+    const elementTopRelativeToViewport = rect.top;
+    const parentTopRelativeToViewport = parentRect.top;
+    const parentBottomRelativeToViewport = parentRect.bottom;
+    const stickyStart = initialTop - top;
+    const shouldStartSticky = scrollTop >= stickyStart && elementTopRelativeToViewport <= top;
+    const elementBottomInStickyMode = top + elementHeight;
+    const shouldStopAtBottom = elementBottomInStickyMode >= parentBottomRelativeToViewport;
+    const shouldStopAtTop = parentTopRelativeToViewport > top;
+    const finalSticky = shouldStartSticky && !shouldStopAtBottom && !shouldStopAtTop;
+    if (finalSticky !== isSticky.value) {
+      isSticky.value = finalSticky;
+      if (!finalSticky) {
+        initialTop = null;
+      }
+    }
+  }
+  let rafId = null;
+  function handleScroll() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      updateSticky();
+      rafId = null;
+    });
+  }
+  onMounted(() => {
+    if (elementRef.value) {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      window.addEventListener("resize", updateSticky, { passive: true });
+      setTimeout(updateSticky, 100);
+    }
+  });
+  onUnmounted(() => {
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", updateSticky);
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+    }
+  });
+  watch(scrollY, () => {
+    handleScroll();
+  });
+  return {
+    elementRef,
+    isSticky,
+    stickyStyle
+  };
+}
+const _hoisted_1$1 = {
   key: 0,
   class: "text-gray-500"
 };
-const _hoisted_3$1 = {
+const _hoisted_2$1 = {
   key: 0,
   class: "font-medium text-gray-700 mb-2"
 };
-const _hoisted_4$1 = { key: 1 };
-const _hoisted_5$1 = {
+const _hoisted_3$1 = { key: 1 };
+const _hoisted_4$1 = {
   key: 2,
   class: "mt-3 text-sm text-gray-400"
 };
-const _hoisted_6$1 = { key: 1 };
-const _hoisted_7$1 = { class: "border-b pb-4 mb-4" };
-const _hoisted_8$1 = { class: "flex items-center justify-between mb-4" };
-const _hoisted_9$1 = { class: "text-left" };
-const _hoisted_10$1 = { class: "font-semibold text-base" };
-const _hoisted_11$1 = { class: "text-sm text-gray-500" };
-const _hoisted_12$1 = { class: "text-right" };
-const _hoisted_13 = { class: "font-semibold text-base" };
-const _hoisted_14 = { class: "text-sm text-gray-500" };
-const _hoisted_15 = { class: "grid grid-cols-3 gap-4 text-center" };
-const _hoisted_16 = { class: "text-2xl font-bold text-gray-800" };
-const _hoisted_17 = { class: "text-sm text-gray-600" };
-const _hoisted_18 = { class: "text-2xl font-bold text-gray-800" };
-const _hoisted_19 = { class: "text-2xl font-bold text-gray-800" };
-const _hoisted_20 = {
+const _hoisted_5$1 = { key: 1 };
+const _hoisted_6$1 = { class: "mb-4" };
+const _hoisted_7$1 = { class: "flex items-center justify-between mb-4" };
+const _hoisted_8$1 = { class: "text-left" };
+const _hoisted_9$1 = { class: "font-semibold text-base leading-1 mb-2" };
+const _hoisted_10$1 = { class: "text-xs text-gray-500 leading-1" };
+const _hoisted_11$1 = { class: "text-right" };
+const _hoisted_12$1 = { class: "font-semibold text-base leading-1 mb-2" };
+const _hoisted_13$1 = { class: "text-xs text-gray-500 leading-1" };
+const _hoisted_14 = { class: "grid grid-cols-3 gap-4 text-center" };
+const _hoisted_15 = { class: "text-2xl font-bold text-gray-800 leading-1 mb-2" };
+const _hoisted_16 = { class: "text-xs text-gray-600 leading-1" };
+const _hoisted_17 = { class: "text-2xl font-bold text-gray-800 leading-1 mb-2" };
+const _hoisted_18 = { class: "text-2xl font-bold text-gray-800 leading-1 mb-2" };
+const _hoisted_19 = {
   key: 0,
   class: "mt-2 text-center"
 };
-const _hoisted_21 = { class: "text-lg font-bold text-gray-900" };
-const _hoisted_22 = {
+const _hoisted_20 = { class: "text-lg font-bold text-gray-900" };
+const _hoisted_21 = {
   key: 0,
-  class: "border-b pb-4 mb-4"
-};
-const _hoisted_23 = { class: "flex justify-between items-center mb-2" };
-const _hoisted_24 = { class: "font-bold text-lg" };
-const _hoisted_25 = { class: "font-bold text-lg" };
-const _hoisted_26 = { class: "text-sm text-gray-500 mb-3" };
-const _hoisted_27 = {
-  key: 0,
-  class: "text-sm text-blue-600 mb-2"
-};
-const _hoisted_28 = { key: 0 };
-const _hoisted_29 = {
-  key: 1,
-  class: "text-sm text-green-600 mb-3"
-};
-const _hoisted_30 = {
-  key: 1,
   class: "space-y-4 mb-6"
 };
-const _hoisted_31 = ["onClick"];
-const _hoisted_32 = { class: "flex justify-between items-start mb-2 relative" };
-const _hoisted_33 = { class: "flex-1" };
-const _hoisted_34 = { class: "font-semibold text-gray-800 flex items-center gap-2" };
-const _hoisted_35 = {
+const _hoisted_22 = ["onClick"];
+const _hoisted_23 = { class: "flex justify-between items-start mb-2 relative" };
+const _hoisted_24 = { class: "flex-1" };
+const _hoisted_25 = { class: "font-semibold text-gray-800 flex items-center gap-2" };
+const _hoisted_26 = {
   key: 0,
   class: "absolute top-0 right-0 left-auto -translate-y-7 translate-x-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
 };
-const _hoisted_36 = { class: "text-sm text-gray-600 mb-1" };
-const _hoisted_37 = { class: "text-xs text-gray-500 mb-1" };
-const _hoisted_38 = { key: 0 };
-const _hoisted_39 = { key: 1 };
-const _hoisted_40 = {
+const _hoisted_27 = { class: "text-sm text-gray-600 mb-1" };
+const _hoisted_28 = { class: "text-xs text-gray-500 mb-1" };
+const _hoisted_29 = { key: 0 };
+const _hoisted_30 = { key: 1 };
+const _hoisted_31 = {
   key: 0,
   class: "text-xs text-red-500 mb-1 font-medium"
 };
-const _hoisted_41 = {
-  key: 1,
-  class: "mt-1 text-sm text-blue-600"
-};
-const _hoisted_42 = { key: 0 };
-const _hoisted_43 = { class: "text-right" };
-const _hoisted_44 = {
+const _hoisted_32 = { class: "text-right" };
+const _hoisted_33 = {
   key: 0,
   class: "text-xl font-bold text-gray-800"
 };
-const _hoisted_45 = {
+const _hoisted_34 = {
   key: 1,
   class: "text-xl font-bold text-gray-400"
 };
-const _hoisted_46 = {
+const _hoisted_35 = {
   key: 0,
   class: "mt-3 pt-3 border-t border-gray-200"
 };
-const _hoisted_47 = ["onClick"];
-const _hoisted_48 = {
+const _hoisted_36 = ["onClick"];
+const _hoisted_37 = {
   key: 0,
   class: "mt-3 space-y-1 text-sm animate-fade-in"
 };
-const _hoisted_49 = { key: 0 };
-const _hoisted_50 = {
+const _hoisted_38 = { key: 0 };
+const _hoisted_39 = {
   key: 0,
   class: "border-t pt-2 mt-2"
 };
-const _hoisted_51 = { class: "flex justify-between" };
-const _hoisted_52 = { class: "font-medium" };
-const _hoisted_53 = {
+const _hoisted_40 = { class: "flex justify-between" };
+const _hoisted_41 = { class: "font-medium" };
+const _hoisted_42 = {
   key: 0,
   class: "flex justify-between"
 };
-const _hoisted_54 = { class: "font-medium" };
-const _hoisted_55 = {
-  key: 2,
+const _hoisted_43 = { class: "font-medium" };
+const _hoisted_44 = {
+  key: 1,
   class: "border-t pt-4"
 };
-const _hoisted_56 = {
+const _hoisted_45 = {
   key: 0,
   class: "text-sm space-y-1 mb-3"
 };
-const _hoisted_57 = {
+const _hoisted_46 = {
   key: 0,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_58 = {
+const _hoisted_47 = {
   key: 1,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_59 = {
+const _hoisted_48 = {
   key: 2,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_60 = {
+const _hoisted_49 = {
   key: 3,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_61 = {
+const _hoisted_50 = {
   key: 4,
   class: "flex justify-between text-gray-600 border-t pt-1"
 };
-const _hoisted_62 = {
+const _hoisted_51 = {
   key: 5,
   class: "flex justify-between text-gray-600"
 };
-const _hoisted_63 = { class: "flex justify-between items-center font-bold text-lg border-t pt-3" };
-const _hoisted_64 = { class: "text-xl" };
+const _hoisted_52 = { class: "flex justify-between items-center font-bold text-lg border-t pt-3" };
+const _hoisted_53 = { class: "text-xl" };
 const _sfc_main$1 = {
   __name: "CalculationResult",
   props: {
@@ -2761,6 +3294,7 @@ const _sfc_main$1 = {
   },
   emits: ["print", "selectTariff"],
   setup(__props) {
+    const { elementRef: stickyRef, stickyStyle } = useSticky({ top: 16 });
     const props = __props;
     const expandedTariffs = ref([]);
     function toggleTariffDetails(tariffUid) {
@@ -2892,20 +3426,17 @@ const _sfc_main$1 = {
       });
       return Object.values(categories).filter((cat) => cat.items.length > 0);
     });
-    function formatDate(date) {
-      if (!date) return "";
-      const d = new Date(date);
-      const day = String(d.getDate()).padStart(2, "0");
-      const month = String(d.getMonth() + 1).padStart(2, "0");
-      const year = d.getFullYear();
-      return `${day}.${month}.${year}`;
-    }
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("aside", _hoisted_1$1, [
-        _cache[23] || (_cache[23] = createBaseVNode("h2", { class: "text-h4 font-bold mb-4" }, "Стоимость перевозки", -1)),
-        !__props.result || !__props.result.isValid ? (openBlock(), createElementBlock("div", _hoisted_2$1, [
-          __props.result && __props.result.message ? (openBlock(), createElementBlock("p", _hoisted_3$1, toDisplayString(__props.result.message), 1)) : (openBlock(), createElementBlock("p", _hoisted_4$1, "Заполните все обязательные поля, чтобы увидеть стоимость перевозки.")),
-          !__props.result || !__props.result.message ? (openBlock(), createElementBlock("div", _hoisted_5$1, _cache[1] || (_cache[1] = [
+      return openBlock(), createElementBlock("aside", {
+        ref_key: "stickyRef",
+        ref: stickyRef,
+        style: normalizeStyle(unref(stickyStyle)),
+        class: "card"
+      }, [
+        _cache[18] || (_cache[18] = createBaseVNode("h2", { class: "text-h4 font-bold mb-4" }, "Стоимость перевозки", -1)),
+        !__props.result || !__props.result.isValid ? (openBlock(), createElementBlock("div", _hoisted_1$1, [
+          __props.result && __props.result.message ? (openBlock(), createElementBlock("p", _hoisted_2$1, toDisplayString(__props.result.message), 1)) : (openBlock(), createElementBlock("p", _hoisted_3$1, "Заполните все обязательные поля, чтобы увидеть стоимость перевозки.")),
+          !__props.result || !__props.result.message ? (openBlock(), createElementBlock("div", _hoisted_4$1, _cache[1] || (_cache[1] = [
             createBaseVNode("p", null, "Необходимо указать:", -1),
             createBaseVNode("ul", { class: "list-disc list-inside mt-1 space-y-1" }, [
               createBaseVNode("li", null, "Города отправления и назначения"),
@@ -2914,13 +3445,12 @@ const _sfc_main$1 = {
               createBaseVNode("li", null, "Дату отправки")
             ], -1)
           ]))) : createCommentVNode("", true)
-        ])) : (openBlock(), createElementBlock("div", _hoisted_6$1, [
-          createBaseVNode("div", _hoisted_7$1, [
-            _cache[6] || (_cache[6] = createBaseVNode("h3", { class: "text-lg font-semibold mb-3 text-gray-700" }, "Параметры расчёта", -1)),
-            createBaseVNode("div", _hoisted_8$1, [
-              createBaseVNode("div", _hoisted_9$1, [
-                createBaseVNode("div", _hoisted_10$1, toDisplayString(routeInfo.value.from), 1),
-                createBaseVNode("div", _hoisted_11$1, toDisplayString(routeInfo.value.fromDetails), 1)
+        ])) : (openBlock(), createElementBlock("div", _hoisted_5$1, [
+          createBaseVNode("div", _hoisted_6$1, [
+            createBaseVNode("div", _hoisted_7$1, [
+              createBaseVNode("div", _hoisted_8$1, [
+                createBaseVNode("div", _hoisted_9$1, toDisplayString(routeInfo.value.from), 1),
+                createBaseVNode("div", _hoisted_10$1, toDisplayString(routeInfo.value.fromDetails), 1)
               ]),
               _cache[2] || (_cache[2] = createBaseVNode("div", { class: "mx-4 flex-1 flex items-center justify-center" }, [
                 createBaseVNode("svg", {
@@ -2937,48 +3467,31 @@ const _sfc_main$1 = {
                   })
                 ])
               ], -1)),
-              createBaseVNode("div", _hoisted_12$1, [
-                createBaseVNode("div", _hoisted_13, toDisplayString(routeInfo.value.to), 1),
-                createBaseVNode("div", _hoisted_14, toDisplayString(routeInfo.value.toDetails), 1)
+              createBaseVNode("div", _hoisted_11$1, [
+                createBaseVNode("div", _hoisted_12$1, toDisplayString(routeInfo.value.to), 1),
+                createBaseVNode("div", _hoisted_13$1, toDisplayString(routeInfo.value.toDetails), 1)
               ])
             ]),
-            createBaseVNode("div", _hoisted_15, [
+            createBaseVNode("div", _hoisted_14, [
               createBaseVNode("div", null, [
-                createBaseVNode("div", _hoisted_16, toDisplayString(cargoInfo.value.count), 1),
-                createBaseVNode("div", _hoisted_17, toDisplayString(cargoInfo.value.countLabel), 1)
+                createBaseVNode("div", _hoisted_15, toDisplayString(cargoInfo.value.count), 1),
+                createBaseVNode("div", _hoisted_16, toDisplayString(cargoInfo.value.countLabel), 1)
               ]),
               createBaseVNode("div", null, [
-                createBaseVNode("div", _hoisted_18, toDisplayString(cargoInfo.value.weight), 1),
-                _cache[3] || (_cache[3] = createBaseVNode("div", { class: "text-sm text-gray-600" }, "кг", -1))
+                createBaseVNode("div", _hoisted_17, toDisplayString(cargoInfo.value.weight), 1),
+                _cache[3] || (_cache[3] = createBaseVNode("div", { class: "text-xs text-gray-600 leading-1" }, "кг (объемный вес)", -1))
               ]),
               createBaseVNode("div", null, [
-                createBaseVNode("div", _hoisted_19, toDisplayString(cargoInfo.value.volume), 1),
-                _cache[4] || (_cache[4] = createBaseVNode("div", { class: "text-sm text-gray-600" }, "куб.м", -1))
+                createBaseVNode("div", _hoisted_18, toDisplayString(cargoInfo.value.volume), 1),
+                _cache[4] || (_cache[4] = createBaseVNode("div", { class: "text-xs text-gray-600 leading-1" }, "куб.м", -1))
               ])
             ]),
-            __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_20, [
+            __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_19, [
               _cache[5] || (_cache[5] = createBaseVNode("span", { class: "text-base text-gray-700 font-medium" }, "Расстояние: ", -1)),
-              createBaseVNode("span", _hoisted_21, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
+              createBaseVNode("span", _hoisted_20, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
             ])) : createCommentVNode("", true)
           ]),
-          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_22, [
-            createBaseVNode("div", _hoisted_23, [
-              createBaseVNode("span", _hoisted_24, toDisplayString(__props.result.selectedTariff.name), 1),
-              createBaseVNode("span", _hoisted_25, toDisplayString(formatCurrency(__props.result.selectedTariff.cost)), 1)
-            ]),
-            createBaseVNode("div", _hoisted_26, toDisplayString(__props.result.selectedTariff.description), 1),
-            __props.result.selectedTariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_27, [
-              _cache[7] || (_cache[7] = createBaseVNode("span", { class: "font-medium" }, "Время доставки:", -1)),
-              createTextVNode(" " + toDisplayString(__props.result.selectedTariff.deliveryInfo.description) + " ", 1),
-              __props.result.selectedTariff.deliveryInfo.days ? (openBlock(), createElementBlock("span", _hoisted_28, " (" + toDisplayString(__props.result.selectedTariff.deliveryInfo.days) + " дн.)", 1)) : createCommentVNode("", true)
-            ])) : createCommentVNode("", true),
-            __props.result.selectedTariff.minDeliveryDate ? (openBlock(), createElementBlock("div", _hoisted_29, [
-              _cache[8] || (_cache[8] = createBaseVNode("span", { class: "font-medium" }, "Минимальная дата доставки:", -1)),
-              createTextVNode(" " + toDisplayString(formatDate(__props.result.selectedTariff.minDeliveryDate.date)), 1)
-            ])) : createCommentVNode("", true)
-          ])) : createCommentVNode("", true),
-          __props.result.allTariffs && __props.result.allTariffs.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_30, [
-            _cache[14] || (_cache[14] = createBaseVNode("h3", { class: "text-lg font-semibold text-gray-800" }, "Все тарифы:", -1)),
+          __props.result.allTariffs && __props.result.allTariffs.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_21, [
             (openBlock(true), createElementBlock(Fragment, null, renderList(__props.result.allTariffs, (tariff) => {
               var _a;
               return openBlock(), createElementBlock("div", {
@@ -2990,29 +3503,24 @@ const _sfc_main$1 = {
                 ]),
                 onClick: ($event) => tariff.isAvailable && _ctx.$emit("selectTariff", tariff.id)
               }, [
-                createBaseVNode("div", _hoisted_32, [
-                  createBaseVNode("div", _hoisted_33, [
-                    createBaseVNode("h4", _hoisted_34, [
+                createBaseVNode("div", _hoisted_23, [
+                  createBaseVNode("div", _hoisted_24, [
+                    createBaseVNode("h4", _hoisted_25, [
                       createTextVNode(toDisplayString(tariff.fullName) + " ", 1),
-                      tariff.isAvailable && tariff.isRecommended ? (openBlock(), createElementBlock("span", _hoisted_35, " Экономия " + toDisplayString(Math.round(tariff.savings)) + " ₽. Рекомендуем! ", 1)) : createCommentVNode("", true)
+                      tariff.isAvailable && tariff.isRecommended ? (openBlock(), createElementBlock("span", _hoisted_26, " Экономия " + toDisplayString(Math.round(tariff.savings)) + " ₽. Рекомендуем! ", 1)) : createCommentVNode("", true)
                     ]),
-                    createBaseVNode("p", _hoisted_36, toDisplayString(tariff.description || tariff.name || "Доставка груза"), 1),
-                    createBaseVNode("ul", _hoisted_37, [
-                      tariff.transportationCoefficient ? (openBlock(), createElementBlock("li", _hoisted_38, "Коэффициент перевозки: " + toDisplayString(tariff.transportationCoefficient), 1)) : createCommentVNode("", true),
-                      tariff.deliveryInfo ? (openBlock(), createElementBlock("li", _hoisted_39, "Время доставки: " + toDisplayString(tariff.deliveryInfo.description), 1)) : createCommentVNode("", true)
+                    createBaseVNode("p", _hoisted_27, toDisplayString(tariff.description || tariff.name || "Доставка груза"), 1),
+                    createBaseVNode("ul", _hoisted_28, [
+                      tariff.transportationCoefficient ? (openBlock(), createElementBlock("li", _hoisted_29, "Коэффициент перевозки: " + toDisplayString(tariff.transportationCoefficient), 1)) : createCommentVNode("", true),
+                      tariff.deliveryInfo ? (openBlock(), createElementBlock("li", _hoisted_30, "Время доставки: " + toDisplayString(tariff.deliveryInfo.description), 1)) : createCommentVNode("", true)
                     ]),
-                    !tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_40, " Недоступно: " + toDisplayString(tariff.reason), 1)) : createCommentVNode("", true),
-                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_41, [
-                      _cache[9] || (_cache[9] = createBaseVNode("span", { class: "font-medium" }, "Время доставки:", -1)),
-                      createTextVNode(" " + toDisplayString(tariff.deliveryInfo.description) + " ", 1),
-                      tariff.deliveryInfo.days ? (openBlock(), createElementBlock("span", _hoisted_42, " (" + toDisplayString(tariff.deliveryInfo.days) + " дн.)", 1)) : createCommentVNode("", true)
-                    ])) : createCommentVNode("", true)
+                    !tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_31, " Недоступно: " + toDisplayString(tariff.reason), 1)) : createCommentVNode("", true)
                   ]),
-                  createBaseVNode("div", _hoisted_43, [
-                    tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_44, toDisplayString(tariff.cost ? Math.round(tariff.cost).toLocaleString() : "0") + " ₽", 1)) : (openBlock(), createElementBlock("div", _hoisted_45, "—"))
+                  createBaseVNode("div", _hoisted_32, [
+                    tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_33, toDisplayString(tariff.cost ? Math.round(tariff.cost).toLocaleString() : "0") + " ₽", 1)) : (openBlock(), createElementBlock("div", _hoisted_34, "—"))
                   ])
                 ]),
-                tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_46, [
+                tariff.isAvailable ? (openBlock(), createElementBlock("div", _hoisted_35, [
                   createBaseVNode("button", {
                     onClick: withModifiers(($event) => toggleTariffDetails(tariff.id), ["stop"]),
                     class: "text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
@@ -3023,7 +3531,7 @@ const _sfc_main$1 = {
                       fill: "none",
                       stroke: "currentColor",
                       viewBox: "0 0 24 24"
-                    }, _cache[10] || (_cache[10] = [
+                    }, _cache[6] || (_cache[6] = [
                       createBaseVNode("path", {
                         "stroke-linecap": "round",
                         "stroke-linejoin": "round",
@@ -3031,12 +3539,12 @@ const _sfc_main$1 = {
                         d: "M19 9l-7 7-7-7"
                       }, null, -1)
                     ]), 2))
-                  ], 8, _hoisted_47),
-                  expandedTariffs.value.includes(tariff.id) && tariff.details ? (openBlock(), createElementBlock("div", _hoisted_48, [
-                    _cache[13] || (_cache[13] = createBaseVNode("h5", { class: "font-medium text-gray-700 mb-2" }, "Детализация расчета:", -1)),
-                    (openBlock(true), createElementBlock(Fragment, null, renderList(tariff.details, (detail) => {
+                  ], 8, _hoisted_36),
+                  expandedTariffs.value.includes(tariff.id) && tariff.details ? (openBlock(), createElementBlock("div", _hoisted_37, [
+                    _cache[9] || (_cache[9] = createBaseVNode("h5", { class: "font-medium text-gray-700 mb-2" }, "Детализация расчета:", -1)),
+                    (openBlock(true), createElementBlock(Fragment, null, renderList(tariff.details, (detail, index2) => {
                       return openBlock(), createElementBlock("div", {
-                        key: detail.name,
+                        key: `${tariff.id}-detail-${index2}-${detail.name}`,
                         class: normalizeClass([
                           "flex justify-between",
                           detail.isHeader ? "font-semibold text-gray-800 mt-3 mb-1" : "",
@@ -3047,85 +3555,86 @@ const _sfc_main$1 = {
                         ])
                       }, [
                         createBaseVNode("span", null, toDisplayString(detail.name), 1),
-                        !detail.isHeader && !detail.isSubHeader && !detail.isDetail && detail.cost !== 0 ? (openBlock(), createElementBlock("span", _hoisted_49, toDisplayString(detail.cost < 0 ? "" : "+") + toDisplayString(formatCurrency(detail.cost)), 1)) : createCommentVNode("", true)
+                        !detail.isHeader && !detail.isSubHeader && !detail.isDetail && detail.cost !== 0 ? (openBlock(), createElementBlock("span", _hoisted_38, toDisplayString(detail.cost < 0 ? "" : "+") + toDisplayString(formatCurrency(detail.cost)), 1)) : createCommentVNode("", true)
                       ], 2);
                     }), 128)),
-                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_50, [
-                      createBaseVNode("div", _hoisted_51, [
-                        _cache[11] || (_cache[11] = createBaseVNode("span", { class: "text-gray-600" }, "Время доставки:", -1)),
-                        createBaseVNode("span", _hoisted_52, toDisplayString(tariff.deliveryInfo.days) + " дн.", 1)
+                    tariff.deliveryInfo ? (openBlock(), createElementBlock("div", _hoisted_39, [
+                      createBaseVNode("div", _hoisted_40, [
+                        _cache[7] || (_cache[7] = createBaseVNode("span", { class: "text-gray-600" }, "Время доставки:", -1)),
+                        createBaseVNode("span", _hoisted_41, toDisplayString(tariff.deliveryInfo.days) + " дн.", 1)
                       ]),
-                      __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_53, [
-                        _cache[12] || (_cache[12] = createBaseVNode("span", { class: "text-gray-600" }, "Расстояние:", -1)),
-                        createBaseVNode("span", _hoisted_54, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
+                      __props.result.distanceKm ? (openBlock(), createElementBlock("div", _hoisted_42, [
+                        _cache[8] || (_cache[8] = createBaseVNode("span", { class: "text-gray-600" }, "Расстояние:", -1)),
+                        createBaseVNode("span", _hoisted_43, toDisplayString(Math.round(__props.result.distanceKm)) + " км", 1)
                       ])) : createCommentVNode("", true)
                     ])) : createCommentVNode("", true)
                   ])) : createCommentVNode("", true)
                 ])) : createCommentVNode("", true)
-              ], 10, _hoisted_31);
+              ], 10, _hoisted_22);
             }), 128))
           ])) : createCommentVNode("", true),
-          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_55, [
-            __props.result.selectedTariff.summary ? (openBlock(), createElementBlock("div", _hoisted_56, [
-              __props.result.selectedTariff.summary.transportationCost ? (openBlock(), createElementBlock("div", _hoisted_57, [
-                _cache[15] || (_cache[15] = createBaseVNode("span", null, "Стоимость перевозки:", -1)),
+          __props.result.selectedTariff ? (openBlock(), createElementBlock("div", _hoisted_44, [
+            __props.result.selectedTariff.summary ? (openBlock(), createElementBlock("div", _hoisted_45, [
+              __props.result.selectedTariff.summary.transportationCost ? (openBlock(), createElementBlock("div", _hoisted_46, [
+                _cache[10] || (_cache[10] = createBaseVNode("span", null, "Стоимость перевозки:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.transportationCost)), 1)
               ])) : createCommentVNode("", true),
-              __props.result.selectedTariff.summary.pickupCost > 0 ? (openBlock(), createElementBlock("div", _hoisted_58, [
-                _cache[16] || (_cache[16] = createBaseVNode("span", null, "Стоимость забора:", -1)),
+              __props.result.selectedTariff.summary.pickupCost > 0 ? (openBlock(), createElementBlock("div", _hoisted_47, [
+                _cache[11] || (_cache[11] = createBaseVNode("span", null, "Стоимость забора:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.pickupCost)), 1)
               ])) : createCommentVNode("", true),
-              __props.result.selectedTariff.summary.deliveryCost > 0 ? (openBlock(), createElementBlock("div", _hoisted_59, [
-                _cache[17] || (_cache[17] = createBaseVNode("span", null, "Стоимость доставки:", -1)),
+              __props.result.selectedTariff.summary.deliveryCost > 0 ? (openBlock(), createElementBlock("div", _hoisted_48, [
+                _cache[12] || (_cache[12] = createBaseVNode("span", null, "Стоимость доставки:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.deliveryCost)), 1)
               ])) : createCommentVNode("", true),
-              __props.result.selectedTariff.summary.additionalServices > 0 ? (openBlock(), createElementBlock("div", _hoisted_60, [
-                _cache[18] || (_cache[18] = createBaseVNode("span", null, "Дополнительные услуги:", -1)),
+              __props.result.selectedTariff.summary.additionalServices > 0 ? (openBlock(), createElementBlock("div", _hoisted_49, [
+                _cache[13] || (_cache[13] = createBaseVNode("span", null, "Дополнительные услуги:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.additionalServices)), 1)
               ])) : createCommentVNode("", true),
-              __props.result.selectedTariff.summary.totalWithoutVAT ? (openBlock(), createElementBlock("div", _hoisted_61, [
-                _cache[19] || (_cache[19] = createBaseVNode("span", null, "Стоимость без НДС:", -1)),
+              __props.result.selectedTariff.summary.totalWithoutVAT ? (openBlock(), createElementBlock("div", _hoisted_50, [
+                _cache[14] || (_cache[14] = createBaseVNode("span", null, "Стоимость без НДС:", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.totalWithoutVAT)), 1)
               ])) : createCommentVNode("", true),
-              __props.result.selectedTariff.summary.vatAmount ? (openBlock(), createElementBlock("div", _hoisted_62, [
-                _cache[20] || (_cache[20] = createBaseVNode("span", null, "НДС (5%):", -1)),
+              __props.result.selectedTariff.summary.vatAmount ? (openBlock(), createElementBlock("div", _hoisted_51, [
+                _cache[15] || (_cache[15] = createBaseVNode("span", null, "НДС (5%):", -1)),
                 createBaseVNode("span", null, toDisplayString(formatCurrency(__props.result.selectedTariff.summary.vatAmount)), 1)
               ])) : createCommentVNode("", true)
             ])) : createCommentVNode("", true),
-            createBaseVNode("div", _hoisted_63, [
-              _cache[21] || (_cache[21] = createBaseVNode("span", null, "Общая стоимость", -1)),
-              createBaseVNode("span", _hoisted_64, toDisplayString(formatCurrency(__props.result.selectedTariff.cost)), 1)
+            createBaseVNode("div", _hoisted_52, [
+              _cache[16] || (_cache[16] = createBaseVNode("span", null, "Общая стоимость", -1)),
+              createBaseVNode("span", _hoisted_53, toDisplayString(formatCurrency(__props.result.selectedTariff.cost)), 1)
             ]),
-            _cache[22] || (_cache[22] = createBaseVNode("div", { class: "text-xs text-gray-400 mt-1" }, " С учетом НДС ", -1))
+            _cache[17] || (_cache[17] = createBaseVNode("div", { class: "text-xs text-gray-400 mt-1" }, " С учетом НДС ", -1))
           ])) : createCommentVNode("", true),
           createBaseVNode("button", {
             onClick: _cache[0] || (_cache[0] = ($event) => _ctx.$emit("print")),
-            class: "btn btn-secondary w-full mt-4"
+            class: "btn btn-secondary w-full mt-4 border-none py-3 rounded-xs"
           }, "Распечатать")
         ]))
-      ]);
+      ], 4);
     };
   }
 };
-const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-ab51c995"]]);
+const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-ba68cd3a"]]);
 const _hoisted_1 = { class: "bg-brand-light p-5 rounded-lg mb-6" };
 const _hoisted_2 = {
   key: 0,
-  class: "flex flex-col flex-1 lg:flex-row lg:items-stretch gap-8 min-w-0 h-full"
+  class: "w-full"
 };
-const _hoisted_3 = { class: "flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0" };
-const _hoisted_4 = { class: "bg-brand-light p-5 rounded-lg" };
-const _hoisted_5 = { class: "flex flex-col gap-6" };
-const _hoisted_6 = { class: "bg-brand-light p-5 rounded-lg" };
-const _hoisted_7 = { class: "bg-brand-light p-5 rounded-lg w-full lg:w-80 relative" };
-const _hoisted_8 = {
+const _hoisted_3 = { class: "flex flex-col lg:flex-row lg:items-stretch gap-8 min-w-0" };
+const _hoisted_4 = { class: "flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0" };
+const _hoisted_5 = { class: "bg-brand-light p-5 rounded-lg" };
+const _hoisted_6 = { class: "flex flex-col gap-6" };
+const _hoisted_7 = { class: "bg-brand-light p-5 rounded-lg" };
+const _hoisted_8 = { class: "bg-brand-light p-5 rounded-lg w-full lg:w-80" };
+const _hoisted_9 = {
   key: 1,
   class: "bg-brand-light p-5 rounded-lg mt-6"
 };
-const _hoisted_9 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
-const _hoisted_10 = { class: "text-sm text-yellow-800 mb-4" };
-const _hoisted_11 = { key: 0 };
-const _hoisted_12 = { key: 1 };
+const _hoisted_10 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" };
+const _hoisted_11 = { class: "text-sm text-yellow-800 mb-4" };
+const _hoisted_12 = { key: 0 };
+const _hoisted_13 = { key: 1 };
 const _sfc_main = {
   __name: "CalculatorPage",
   setup(__props) {
@@ -3438,7 +3947,7 @@ const _sfc_main = {
       return { isAvailable: true, reason: null };
     }
     function calculateTariffCost(typeTransportation) {
-      var _a, _b;
+      var _a, _b, _c, _d;
       const { cargo, departure, destination, extraOptions, direction } = formData;
       const isPickupAtTerminal = departure.deliveryMode === "terminal";
       const isDeliveryAtTerminal = destination.deliveryMode === "terminal";
@@ -3466,6 +3975,12 @@ const _sfc_main = {
       let takeDeliverTo = null;
       let fromAddress = null;
       let toAddress = null;
+      let isCityWidePickup = false;
+      let isCityWideDelivery = false;
+      let originalTakeDeliverFrom = null;
+      let originalTakeDeliverTo = null;
+      let hasSpecificStreetFrom = false;
+      let hasSpecificStreetTo = false;
       if (isPickupAtTerminal) {
         const terminalFrom = departure.location && typeof departure.location === "object" ? departure.location : null;
         console.log("Поиск takeDeliverFrom для терминала:", {
@@ -3572,14 +4087,59 @@ const _sfc_main = {
           }
           if (fromAddress) {
             const fromAddressUid = fromAddress.uid;
+            const fromAddressStreet = fromAddress.street || "";
+            const hasSpecificStreetInAddress = fromAddressStreet && fromAddressStreet.trim() !== "";
+            hasSpecificStreetFrom = hasSpecificStreetInAddress;
             takeDeliverFrom = takeDelivers.value.find(
               (td) => String(td.uidBillingAddress) === String(fromAddressUid) && String(td.uidTypeTransportation) === String(transportTypeUid)
             );
+            if (takeDeliverFrom && hasSpecificStreetInAddress) {
+              originalTakeDeliverFrom = takeDeliverFrom;
+            }
             console.log("takeDeliverFrom найден:", takeDeliverFrom ? {
               uid: takeDeliverFrom.uid,
               uidBillingAddress: takeDeliverFrom.uidBillingAddress,
-              tariffZone: takeDeliverFrom.tariffZone
+              tariffZone: takeDeliverFrom.tariffZone,
+              isSpecificAddress: hasSpecificStreetInAddress
             } : "не найден");
+            if (!takeDeliverFrom && hasSpecificStreetInAddress) {
+              console.log("takeDeliverFrom не найден для конкретного адреса, ищем для города:", {
+                fromCityName,
+                fromAddressStreet,
+                fromAddressUid
+              });
+              const cityWideFromAddress = billingAddresses.value.find((addr) => {
+                var _a2;
+                const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+                const addrStreet = addr.street || "";
+                return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === "");
+              });
+              if (cityWideFromAddress) {
+                const cityWideFromAddressUid = cityWideFromAddress.uid;
+                takeDeliverFrom = takeDelivers.value.find(
+                  (td) => String(td.uidBillingAddress) === String(cityWideFromAddressUid) && String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                if (takeDeliverFrom) {
+                  console.log("takeDeliverFrom найден для города (fallback):", {
+                    uid: takeDeliverFrom.uid,
+                    uidBillingAddress: takeDeliverFrom.uidBillingAddress,
+                    tariffZone: takeDeliverFrom.tariffZone,
+                    cityWideAddressUid: cityWideFromAddressUid
+                  });
+                  fromAddress = cityWideFromAddress;
+                  isCityWidePickup = true;
+                } else {
+                  console.warn("takeDeliverFrom не найден даже для города:", {
+                    cityWideFromAddressUid,
+                    transportTypeUid
+                  });
+                }
+              } else {
+                console.warn("billingAddress для города не найден:", {
+                  fromCityName
+                });
+              }
+            }
           }
         } else {
           console.warn("direction.fromAddress отсутствует");
@@ -3691,14 +4251,59 @@ const _sfc_main = {
           }
           if (toAddress) {
             const toAddressUid = toAddress.uid;
+            const toAddressStreet = toAddress.street || "";
+            const hasSpecificStreetInAddress = toAddressStreet && toAddressStreet.trim() !== "";
+            hasSpecificStreetTo = hasSpecificStreetInAddress;
             takeDeliverTo = takeDelivers.value.find(
               (td) => String(td.uidBillingAddress) === String(toAddressUid) && String(td.uidTypeTransportation) === String(transportTypeUid)
             );
+            if (takeDeliverTo && hasSpecificStreetInAddress) {
+              originalTakeDeliverTo = takeDeliverTo;
+            }
             console.log("takeDeliverTo найден:", takeDeliverTo ? {
               uid: takeDeliverTo.uid,
               uidBillingAddress: takeDeliverTo.uidBillingAddress,
-              tariffZone: takeDeliverTo.tariffZone
+              tariffZone: takeDeliverTo.tariffZone,
+              isSpecificAddress: hasSpecificStreetInAddress
             } : "не найден");
+            if (!takeDeliverTo && hasSpecificStreetInAddress) {
+              console.log("takeDeliverTo не найден для конкретного адреса, ищем для города:", {
+                toCityName,
+                toAddressStreet,
+                toAddressUid
+              });
+              const cityWideToAddress = billingAddresses.value.find((addr) => {
+                var _a2;
+                const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+                const addrStreet = addr.street || "";
+                return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === "");
+              });
+              if (cityWideToAddress) {
+                const cityWideToAddressUid = cityWideToAddress.uid;
+                takeDeliverTo = takeDelivers.value.find(
+                  (td) => String(td.uidBillingAddress) === String(cityWideToAddressUid) && String(td.uidTypeTransportation) === String(transportTypeUid)
+                );
+                if (takeDeliverTo) {
+                  console.log("takeDeliverTo найден для города (fallback):", {
+                    uid: takeDeliverTo.uid,
+                    uidBillingAddress: takeDeliverTo.uidBillingAddress,
+                    tariffZone: takeDeliverTo.tariffZone,
+                    cityWideAddressUid: cityWideToAddressUid
+                  });
+                  toAddress = cityWideToAddress;
+                  isCityWideDelivery = true;
+                } else {
+                  console.warn("takeDeliverTo не найден даже для города:", {
+                    cityWideToAddressUid,
+                    transportTypeUid
+                  });
+                }
+              } else {
+                console.warn("billingAddress для города не найден:", {
+                  toCityName
+                });
+              }
+            }
           }
         } else {
           console.warn("direction.toAddress отсутствует");
@@ -3742,6 +4347,89 @@ const _sfc_main = {
       let tariffZone = tariffZones.value.find(
         (tz) => String(tz.uidTakeLocality) === String(takeDeliverFromUid) && String(tz.uidDeliverLocality) === String(takeDeliverToUid) && String(tz.uidTypeTransportation) === String(transportTypeUid)
       );
+      if (!tariffZone && (hasSpecificStreetFrom || hasSpecificStreetTo)) {
+        console.log("Тарифная зона не найдена для конкретного адреса, пробуем найти для города:", {
+          hasSpecificStreetFrom,
+          hasSpecificStreetTo,
+          takeDeliverFromUid,
+          takeDeliverToUid,
+          originalTakeDeliverFromUid: originalTakeDeliverFrom == null ? void 0 : originalTakeDeliverFrom.uid,
+          originalTakeDeliverToUid: originalTakeDeliverTo == null ? void 0 : originalTakeDeliverTo.uid
+        });
+        let cityWideTakeDeliverFromUid = takeDeliverFromUid;
+        let cityWideTakeDeliverToUid = takeDeliverToUid;
+        let cityWideTakeDeliverFrom = null;
+        let cityWideTakeDeliverTo = null;
+        let cityWideFromAddress = null;
+        let cityWideToAddress = null;
+        if (hasSpecificStreetFrom && originalTakeDeliverFrom && fromAddress) {
+          const fromCityName = typeof fromAddress.locality === "string" ? fromAddress.locality : ((_c = fromAddress.locality) == null ? void 0 : _c.name) || "";
+          cityWideFromAddress = billingAddresses.value.find((addr) => {
+            var _a2;
+            const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+            const addrStreet = addr.street || "";
+            return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === "");
+          });
+          if (cityWideFromAddress) {
+            cityWideTakeDeliverFrom = takeDelivers.value.find(
+              (td) => String(td.uidBillingAddress) === String(cityWideFromAddress.uid) && String(td.uidTypeTransportation) === String(transportTypeUid)
+            );
+            if (cityWideTakeDeliverFrom) {
+              cityWideTakeDeliverFromUid = cityWideTakeDeliverFrom.uid;
+              console.log("Найден cityWideTakeDeliverFrom для fallback тарифной зоны:", {
+                uid: cityWideTakeDeliverFrom.uid,
+                uidBillingAddress: cityWideTakeDeliverFrom.uidBillingAddress
+              });
+            }
+          }
+        }
+        if (hasSpecificStreetTo && originalTakeDeliverTo && toAddress) {
+          const toCityName = typeof toAddress.locality === "string" ? toAddress.locality : ((_d = toAddress.locality) == null ? void 0 : _d.name) || "";
+          cityWideToAddress = billingAddresses.value.find((addr) => {
+            var _a2;
+            const addrLocalityName = typeof addr.locality === "string" ? addr.locality : ((_a2 = addr.locality) == null ? void 0 : _a2.name) || "";
+            const addrStreet = addr.street || "";
+            return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === "");
+          });
+          if (cityWideToAddress) {
+            cityWideTakeDeliverTo = takeDelivers.value.find(
+              (td) => String(td.uidBillingAddress) === String(cityWideToAddress.uid) && String(td.uidTypeTransportation) === String(transportTypeUid)
+            );
+            if (cityWideTakeDeliverTo) {
+              cityWideTakeDeliverToUid = cityWideTakeDeliverTo.uid;
+              console.log("Найден cityWideTakeDeliverTo для fallback тарифной зоны:", {
+                uid: cityWideTakeDeliverTo.uid,
+                uidBillingAddress: cityWideTakeDeliverTo.uidBillingAddress
+              });
+            }
+          }
+        }
+        if (cityWideTakeDeliverFromUid !== takeDeliverFromUid || cityWideTakeDeliverToUid !== takeDeliverToUid) {
+          tariffZone = tariffZones.value.find(
+            (tz) => String(tz.uidTakeLocality) === String(cityWideTakeDeliverFromUid) && String(tz.uidDeliverLocality) === String(cityWideTakeDeliverToUid) && String(tz.uidTypeTransportation) === String(transportTypeUid)
+          );
+          if (tariffZone) {
+            console.log("Тарифная зона найдена для города (fallback):", {
+              uid: tariffZone.uid,
+              tariffZone: tariffZone.tariffZone,
+              uidTakeLocality: tariffZone.uidTakeLocality,
+              uidDeliverLocality: tariffZone.uidDeliverLocality,
+              usedCityWidePickup: cityWideTakeDeliverFromUid !== takeDeliverFromUid,
+              usedCityWideDelivery: cityWideTakeDeliverToUid !== takeDeliverToUid
+            });
+            if (cityWideTakeDeliverFromUid !== takeDeliverFromUid && cityWideTakeDeliverFrom && cityWideFromAddress) {
+              takeDeliverFrom = cityWideTakeDeliverFrom;
+              fromAddress = cityWideFromAddress;
+              isCityWidePickup = true;
+            }
+            if (cityWideTakeDeliverToUid !== takeDeliverToUid && cityWideTakeDeliverTo && cityWideToAddress) {
+              takeDeliverTo = cityWideTakeDeliverTo;
+              toAddress = cityWideToAddress;
+              isCityWideDelivery = true;
+            }
+          }
+        }
+      }
       if (!tariffZone) {
         const allZonesForTransportType = tariffZones.value.filter((tz) => String(tz.uidTypeTransportation) === String(transportTypeUid));
         console.warn("Тарифная зона не найдена:", {
@@ -3750,6 +4438,8 @@ const _sfc_main = {
           transportTypeUid,
           takeDeliverFromUid,
           takeDeliverToUid,
+          hasSpecificStreetFrom,
+          hasSpecificStreetTo,
           totalTariffZones: tariffZones.value.length,
           zonesForTransportType: allZonesForTransportType.length,
           availableZones: allZonesForTransportType.map((tz) => ({
@@ -4395,7 +5085,6 @@ const _sfc_main = {
         vatAmount,
         finalCost
       });
-      details.push({ name: "РАСЧЕТ ПО ТЗ", cost: 0, isHeader: true });
       if (zoneWarnings && zoneWarnings.length > 0) {
         details.push({ name: "⚠️ ПРЕДУПРЕЖДЕНИЯ О ЗОНАХ", cost: 0, isSubHeader: true });
         zoneWarnings.forEach((warning) => {
@@ -4622,6 +5311,13 @@ const _sfc_main = {
             cost: 0,
             isSubHeader: true
           });
+          if (isCityWidePickup) {
+            details.push({
+              name: "⚠️ Используется покрытие города (конкретный адрес не найден в системе)",
+              cost: 0,
+              isDetail: true
+            });
+          }
           if (step > 0 && totalPayableWeight > unitFrom) {
             const pickupStepsCalculation = (totalPayableWeight - unitFrom) / step;
             details.push({
@@ -4751,6 +5447,13 @@ const _sfc_main = {
             cost: 0,
             isSubHeader: true
           });
+          if (isCityWideDelivery) {
+            details.push({
+              name: "⚠️ Используется покрытие города (конкретный адрес не найден в системе)",
+              cost: 0,
+              isDetail: true
+            });
+          }
           if (step > 0 && totalPayableWeight > unitFrom) {
             const deliveryStepsCalculation = (totalPayableWeight - unitFrom) / step;
             details.push({
@@ -5412,85 +6115,87 @@ const _sfc_main = {
         !invalidFromCity.value && !invalidToCity.value ? (openBlock(), createElementBlock("div", _hoisted_2, [
           createBaseVNode("div", _hoisted_3, [
             createBaseVNode("div", _hoisted_4, [
-              _cache[7] || (_cache[7] = createBaseVNode("h2", { class: "text-h4 font-bold mb-4" }, "Пункты доставки", -1)),
               createBaseVNode("div", _hoisted_5, [
-                formData.direction.from ? (openBlock(), createBlock(_sfc_main$3, {
-                  key: 0,
-                  title: "Пункт отправки",
-                  "terminal-label": "Сдать на терминале",
-                  "address-label": "Забрать по адресу",
-                  "name-prefix": "departure",
-                  city: formData.direction.from,
-                  locality: formData.direction.fromAddress,
-                  localities: [],
-                  billingAddresses: billingAddresses.value,
-                  terminals: terminals.value,
-                  takeDelivers: takeDelivers.value,
-                  transportTypes: transportTypes.value,
-                  modelValue: formData.departure,
-                  "onUpdate:modelValue": [
-                    _cache[1] || (_cache[1] = ($event) => formData.departure = $event),
-                    _cache[2] || (_cache[2] = (value) => {
-                      console.log("CalculatorPage: Обновление departure", value);
-                      formData.departure = value;
-                    })
-                  ],
-                  onAddressNotFound: handleAddressNotFound,
-                  onAddressFound: handleAddressFound
-                }, null, 8, ["city", "locality", "billingAddresses", "terminals", "takeDelivers", "transportTypes", "modelValue"])) : createCommentVNode("", true),
-                formData.direction.to ? (openBlock(), createBlock(_sfc_main$3, {
-                  key: 1,
-                  title: "Пункт назначения",
-                  "terminal-label": "Получить на терминале",
-                  "address-label": "Доставить по адресу",
-                  "name-prefix": "destination",
-                  city: formData.direction.to,
-                  locality: formData.direction.toAddress,
-                  localities: [],
-                  billingAddresses: billingAddresses.value,
-                  terminals: terminals.value,
-                  takeDelivers: takeDelivers.value,
-                  transportTypes: transportTypes.value,
-                  modelValue: formData.destination,
-                  "onUpdate:modelValue": [
-                    _cache[3] || (_cache[3] = ($event) => formData.destination = $event),
-                    _cache[4] || (_cache[4] = (value) => {
-                      console.log("CalculatorPage: Обновление destination", value);
-                      formData.destination = value;
-                    })
-                  ],
-                  onAddressNotFound: handleAddressNotFound,
-                  onAddressFound: handleAddressFound
-                }, null, 8, ["city", "locality", "billingAddresses", "terminals", "takeDelivers", "transportTypes", "modelValue"])) : createCommentVNode("", true),
-                createVNode(_sfc_main$2, {
-                  modelValue: formData.extraOptions,
-                  "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => formData.extraOptions = $event)
-                }, null, 8, ["modelValue"])
+                _cache[7] || (_cache[7] = createBaseVNode("h2", { class: "text-h4 font-bold mb-4" }, "Пункты доставки", -1)),
+                createBaseVNode("div", _hoisted_6, [
+                  formData.direction.from ? (openBlock(), createBlock(_sfc_main$3, {
+                    key: 0,
+                    title: "Пункт отправки",
+                    "terminal-label": "Сдать на терминале",
+                    "address-label": "Забрать по адресу",
+                    "name-prefix": "departure",
+                    city: formData.direction.from,
+                    locality: formData.direction.fromAddress,
+                    localities: [],
+                    billingAddresses: billingAddresses.value,
+                    terminals: terminals.value,
+                    takeDelivers: takeDelivers.value,
+                    transportTypes: transportTypes.value,
+                    modelValue: formData.departure,
+                    "onUpdate:modelValue": [
+                      _cache[1] || (_cache[1] = ($event) => formData.departure = $event),
+                      _cache[2] || (_cache[2] = (value) => {
+                        console.log("CalculatorPage: Обновление departure", value);
+                        formData.departure = value;
+                      })
+                    ],
+                    onAddressNotFound: handleAddressNotFound,
+                    onAddressFound: handleAddressFound
+                  }, null, 8, ["city", "locality", "billingAddresses", "terminals", "takeDelivers", "transportTypes", "modelValue"])) : createCommentVNode("", true),
+                  formData.direction.to ? (openBlock(), createBlock(_sfc_main$3, {
+                    key: 1,
+                    title: "Пункт назначения",
+                    "terminal-label": "Получить на терминале",
+                    "address-label": "Доставить по адресу",
+                    "name-prefix": "destination",
+                    city: formData.direction.to,
+                    locality: formData.direction.toAddress,
+                    localities: [],
+                    billingAddresses: billingAddresses.value,
+                    terminals: terminals.value,
+                    takeDelivers: takeDelivers.value,
+                    transportTypes: transportTypes.value,
+                    modelValue: formData.destination,
+                    "onUpdate:modelValue": [
+                      _cache[3] || (_cache[3] = ($event) => formData.destination = $event),
+                      _cache[4] || (_cache[4] = (value) => {
+                        console.log("CalculatorPage: Обновление destination", value);
+                        formData.destination = value;
+                      })
+                    ],
+                    onAddressNotFound: handleAddressNotFound,
+                    onAddressFound: handleAddressFound
+                  }, null, 8, ["city", "locality", "billingAddresses", "terminals", "takeDelivers", "transportTypes", "modelValue"])) : createCommentVNode("", true),
+                  createVNode(_sfc_main$2, {
+                    modelValue: formData.extraOptions,
+                    "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => formData.extraOptions = $event)
+                  }, null, 8, ["modelValue"])
+                ])
+              ]),
+              createBaseVNode("div", _hoisted_7, [
+                createVNode(_sfc_main$6, {
+                  "calculator-config": calculatorConfig.value,
+                  modelValue: formData.cargo,
+                  "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => formData.cargo = $event)
+                }, null, 8, ["calculator-config", "modelValue"])
               ])
             ]),
-            createBaseVNode("div", _hoisted_6, [
-              createVNode(_sfc_main$6, {
+            createBaseVNode("div", _hoisted_8, [
+              createVNode(CalculationResult, {
+                result: calculationResult.value,
+                "form-data": formData,
                 "calculator-config": calculatorConfig.value,
-                modelValue: formData.cargo,
-                "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => formData.cargo = $event)
-              }, null, 8, ["calculator-config", "modelValue"])
+                onPrint: printResult,
+                onSelectTariff: selectTariff
+              }, null, 8, ["result", "form-data", "calculator-config"])
             ])
-          ]),
-          createBaseVNode("div", _hoisted_7, [
-            createVNode(CalculationResult, {
-              result: calculationResult.value,
-              "form-data": formData,
-              "calculator-config": calculatorConfig.value,
-              onPrint: printResult,
-              onSelectTariff: selectTariff
-            }, null, 8, ["result", "form-data", "calculator-config"])
           ])
         ])) : createCommentVNode("", true),
-        (invalidFromCity.value || invalidToCity.value) && (((_a = formData.direction.from) == null ? void 0 : _a.trim()) || ((_b = formData.direction.to) == null ? void 0 : _b.trim())) ? (openBlock(), createElementBlock("div", _hoisted_8, [
-          createBaseVNode("div", _hoisted_9, [
-            createBaseVNode("p", _hoisted_10, [
-              invalidFromCity.value ? (openBlock(), createElementBlock("span", _hoisted_11, "Выбранный город отправки не найден в системе.")) : createCommentVNode("", true),
-              invalidToCity.value ? (openBlock(), createElementBlock("span", _hoisted_12, "Выбранный город назначения не найден в системе.")) : createCommentVNode("", true),
+        (invalidFromCity.value || invalidToCity.value) && (((_a = formData.direction.from) == null ? void 0 : _a.trim()) || ((_b = formData.direction.to) == null ? void 0 : _b.trim())) ? (openBlock(), createElementBlock("div", _hoisted_9, [
+          createBaseVNode("div", _hoisted_10, [
+            createBaseVNode("p", _hoisted_11, [
+              invalidFromCity.value ? (openBlock(), createElementBlock("span", _hoisted_12, "Выбранный город отправки не найден в системе.")) : createCommentVNode("", true),
+              invalidToCity.value ? (openBlock(), createElementBlock("span", _hoisted_13, "Выбранный город назначения не найден в системе.")) : createCommentVNode("", true),
               _cache[8] || (_cache[8] = createTextVNode(" Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей. "))
             ]),
             createVNode(ManagerRequestForm, {
