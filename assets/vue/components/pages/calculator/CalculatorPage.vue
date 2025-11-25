@@ -50,7 +50,9 @@
         </div>
 
         <!-- Правая колонка: Результаты расчета -->
-        <div class="h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none lg:sticky lg:top-4">
+        <div 
+            v-sticky="{ top: 16, zIndex: 1000, breakpoint: 1024, disabled: false }"
+            class="h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none">
             <CalculationResult :result="calculationResult" :form-data="formData" :calculator-config="calculatorConfig"
                 @print="printResult" @selectTariff="selectTariff" />
             <!-- Кнопка "Рассчитать" удалена - расчет происходит автоматически -->
@@ -87,6 +89,14 @@ import CalculationResult from './CalculationResult.vue';
 import ManagerRequestForm from './ManagerRequestForm.vue';
 import apiService from '../../../services/apiService.js';
 import { formatSelectedLocalityName } from '../../../utils/localityFormatter.js';
+import { vSticky } from '../../../utils/sticky.js';
+
+// Регистрируем директиву локально
+defineOptions({
+    directives: {
+        sticky: vSticky
+    }
+});
 
 // Новые данные из API
 const billingAddresses = ref([]);
@@ -2870,9 +2880,21 @@ function isFormDataValid() {
         const quantity = parseInt(pkg.quantity);
         
         // Проверяем обязательные поля согласно ТЗ
-        if (!length || length <= 0) return false;
-        if (!width || width <= 0) return false;
-        if (!height || height <= 0) return false;
+        // Если quantity === 1 и есть прямой ввод объема, то Д×Ш×В не обязательны
+        const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
+            ? String(pkg.volume).trim() 
+            : '';
+        const hasDirectVolume = volumeStr && quantity === 1;
+        const directVolumeValid = hasDirectVolume && !isNaN(parseFloat(volumeStr)) && parseFloat(volumeStr) >= 0;
+        
+        // Длина, ширина, высота обязательны только если нет прямого ввода объема
+        if (!directVolumeValid) {
+            if (!length || length <= 0) return false;
+            if (!width || width <= 0) return false;
+            if (!height || height <= 0) return false;
+        }
+        
+        // Вес и количество всегда обязательны
         if (!weight || weight <= 0) return false;
         if (!quantity || quantity <= 0) return false;
     }
@@ -2988,19 +3010,33 @@ const calculationResult = computed(() => {
         } else {
             cargo.packages.forEach((pkg, index) => {
                 const placeNum = index + 1;
-                if (!parseFloat(pkg.length) || parseFloat(pkg.length) <= 0) {
-                    missingFields.push(`длина места ${placeNum}`);
+                const quantity = parseInt(pkg.quantity);
+                
+                // Проверяем, есть ли прямой ввод объема для отдельных мест
+                const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
+                    ? String(pkg.volume).trim() 
+                    : '';
+                const hasDirectVolume = volumeStr && quantity === 1;
+                const directVolumeValid = hasDirectVolume && !isNaN(parseFloat(volumeStr)) && parseFloat(volumeStr) >= 0;
+                
+                // Длина, ширина, высота обязательны только если нет прямого ввода объема
+                if (!directVolumeValid) {
+                    if (!parseFloat(pkg.length) || parseFloat(pkg.length) <= 0) {
+                        missingFields.push(`длина места ${placeNum}`);
+                    }
+                    if (!parseFloat(pkg.width) || parseFloat(pkg.width) <= 0) {
+                        missingFields.push(`ширина места ${placeNum}`);
+                    }
+                    if (!parseFloat(pkg.height) || parseFloat(pkg.height) <= 0) {
+                        missingFields.push(`высота места ${placeNum}`);
+                    }
                 }
-                if (!parseFloat(pkg.width) || parseFloat(pkg.width) <= 0) {
-                    missingFields.push(`ширина места ${placeNum}`);
-                }
-                if (!parseFloat(pkg.height) || parseFloat(pkg.height) <= 0) {
-                    missingFields.push(`высота места ${placeNum}`);
-                }
+                
+                // Вес и количество всегда обязательны
                 if (!parseFloat(pkg.weight) || parseFloat(pkg.weight) <= 0) {
                     missingFields.push(`вес места ${placeNum}`);
                 }
-                if (!parseInt(pkg.quantity) || parseInt(pkg.quantity) <= 0) {
+                if (!quantity || quantity <= 0) {
                     missingFields.push(`количество места ${placeNum}`);
                 }
             });

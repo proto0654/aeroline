@@ -1,5 +1,5 @@
 import "./chunks/global-modal-JqaLCeH7.js";
-import { i as initFaqAccordion, a as initPaymentTabs } from "./mainJs-DYbGONFy.js";
+import { i as initFaqAccordion, a as initPaymentTabs } from "./mainJs-ssDcHgVf.js";
 import "./globalUiJs-D9SlClYo.js";
 import "./chunks/runtime-dom.esm-bundler-BeftXQEh.js";
 import "./chunks/globalModal-CXKQxX77.js";
