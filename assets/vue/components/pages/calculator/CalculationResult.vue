@@ -178,7 +178,7 @@
                 </div>
             </div>
 
-            <button @click="$emit('print')" class="btn btn-secondary w-full mt-4 border-none py-3 rounded-xs">Распечатать</button>
+            <button @click="$emit('print')" class="btn btn-secondary w-full mt-4 border-none py-3 rounded-xs mb-4">Распечатать</button>
         </div>
     </aside>
 </template>

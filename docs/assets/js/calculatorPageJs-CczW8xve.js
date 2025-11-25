@@ -3069,28 +3069,43 @@ function useSticky(options = {}) {
   const { top = 16, minWidth = 1024 } = options;
   const elementRef = ref(null);
   const isSticky = ref(false);
+  const isStickyToBottom = ref(false);
+  const bottomOffset = ref(0);
   const { y: scrollY } = useWindowScroll();
   const { width: windowWidth } = /* @__PURE__ */ useWindowSize();
   const isLargeScreen = computed(() => windowWidth.value >= minWidth);
   const stickyStyle = computed(() => {
     if (!isSticky.value || !elementRef.value) return {};
     const rect = elementRef.value.getBoundingClientRect();
-    return {
+    const style = {
       position: "fixed",
-      top: `${top}px`,
       width: `${rect.width}px`,
       zIndex: 10
     };
+    if (isStickyToBottom.value) {
+      style.bottom = `${bottomOffset.value}px`;
+    } else {
+      style.top = `${top}px`;
+    }
+    return style;
   });
   let initialTop = null;
   let parentElement = null;
+  let lastScrollDirection = null;
   function updateSticky() {
     if (!elementRef.value || !isLargeScreen.value) {
       isSticky.value = false;
+      isStickyToBottom.value = false;
       return;
     }
     const rect = elementRef.value.getBoundingClientRect();
     const scrollTop = scrollY.value;
+    const currentScrollDirection = scrollTop > ((lastScrollDirection == null ? void 0 : lastScrollDirection.scrollTop) || 0) ? "down" : "up";
+    if (lastScrollDirection === null || currentScrollDirection !== lastScrollDirection.direction) {
+      lastScrollDirection = { direction: currentScrollDirection, scrollTop };
+    } else {
+      lastScrollDirection.scrollTop = scrollTop;
+    }
     if (!parentElement) {
       parentElement = elementRef.value.parentElement;
       while (parentElement && parentElement !== document.body) {
@@ -3119,14 +3134,22 @@ function useSticky(options = {}) {
     const stickyStart = initialTop - top;
     const shouldStartSticky = scrollTop >= stickyStart && elementTopRelativeToViewport <= top;
     const elementBottomInStickyMode = top + elementHeight;
-    const shouldStopAtBottom = elementBottomInStickyMode >= parentBottomRelativeToViewport;
+    const reachedBottom = elementBottomInStickyMode >= parentBottomRelativeToViewport;
     const shouldStopAtTop = parentTopRelativeToViewport > top;
-    const finalSticky = shouldStartSticky && !shouldStopAtBottom && !shouldStopAtTop;
-    if (finalSticky !== isSticky.value) {
-      isSticky.value = finalSticky;
-      if (!finalSticky) {
-        initialTop = null;
+    const shouldBeSticky = shouldStartSticky && !shouldStopAtTop;
+    if (shouldBeSticky) {
+      isSticky.value = true;
+      if (reachedBottom) {
+        isStickyToBottom.value = true;
+        const windowHeight = window.innerHeight;
+        bottomOffset.value = windowHeight - parentBottomRelativeToViewport;
+      } else {
+        isStickyToBottom.value = false;
       }
+    } else {
+      isSticky.value = false;
+      isStickyToBottom.value = false;
+      initialTop = null;
     }
   }
   let rafId = null;
@@ -3608,14 +3631,14 @@ const _sfc_main$1 = {
           ])) : createCommentVNode("", true),
           createBaseVNode("button", {
             onClick: _cache[0] || (_cache[0] = ($event) => _ctx.$emit("print")),
-            class: "btn btn-secondary w-full mt-4 border-none py-3 rounded-xs"
+            class: "btn btn-secondary w-full mt-4 border-none py-3 rounded-xs mb-4"
           }, "Распечатать")
         ]))
       ], 4);
     };
   }
 };
-const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-ba68cd3a"]]);
+const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-9ad0d58c"]]);
 const _hoisted_1 = { class: "bg-brand-light p-5 rounded-lg mb-6" };
 const _hoisted_2 = {
   key: 0,

@@ -12,6 +12,8 @@ export function useSticky(options = {}) {
     const { top = 16, minWidth = 1024 } = options;
     const elementRef = ref(null);
     const isSticky = ref(false);
+    const isStickyToBottom = ref(false); // Новое состояние: прилипание к низу
+    const bottomOffset = ref(0); // Отступ снизу для прилипания к низу
     
     const { y: scrollY } = useWindowScroll();
     const { width: windowWidth } = useWindowSize();
@@ -22,26 +24,44 @@ export function useSticky(options = {}) {
         if (!isSticky.value || !elementRef.value) return {};
         
         const rect = elementRef.value.getBoundingClientRect();
-        return {
+        const style = {
             position: 'fixed',
-            top: `${top}px`,
             width: `${rect.width}px`,
             zIndex: 10
         };
+        
+        // Если прилипаем к низу, используем bottom вместо top
+        if (isStickyToBottom.value) {
+            style.bottom = `${bottomOffset.value}px`;
+        } else {
+            style.top = `${top}px`;
+        }
+        
+        return style;
     });
 
     let initialTop = null;
     let initialParentTop = null;
     let parentElement = null;
+    let lastScrollDirection = null; // 'up' или 'down'
 
     function updateSticky() {
         if (!elementRef.value || !isLargeScreen.value) {
             isSticky.value = false;
+            isStickyToBottom.value = false;
             return;
         }
 
         const rect = elementRef.value.getBoundingClientRect();
         const scrollTop = scrollY.value;
+        
+        // Определяем направление прокрутки
+        const currentScrollDirection = scrollTop > (lastScrollDirection?.scrollTop || 0) ? 'down' : 'up';
+        if (lastScrollDirection === null || currentScrollDirection !== lastScrollDirection.direction) {
+            lastScrollDirection = { direction: currentScrollDirection, scrollTop };
+        } else {
+            lastScrollDirection.scrollTop = scrollTop;
+        }
         
         // Находим родительский контейнер (колонку с bg-brand-light)
         if (!parentElement) {
@@ -83,25 +103,38 @@ export function useSticky(options = {}) {
         const stickyStart = initialTop - top;
         const shouldStartSticky = scrollTop >= stickyStart && elementTopRelativeToViewport <= top;
         
-        // Элемент перестает быть sticky когда:
-        // 1. Его нижняя граница (в sticky режиме) достигает нижней границы родителя
-        // 2. Или верхняя граница родителя выше top отступа (родитель еще не достиг своей начальной позиции)
+        // Проверяем, достиг ли элемент низа родителя
+        // Когда элемент sticky сверху, его нижняя граница находится на top + elementHeight
         const elementBottomInStickyMode = top + elementHeight;
-        const shouldStopAtBottom = elementBottomInStickyMode >= parentBottomRelativeToViewport;
+        const reachedBottom = elementBottomInStickyMode >= parentBottomRelativeToViewport;
         
         // Если верхняя граница родителя выше top, значит родитель еще не достиг своей начальной позиции
         // и элемент не должен быть sticky
         const shouldStopAtTop = parentTopRelativeToViewport > top;
         
-        const finalSticky = shouldStartSticky && !shouldStopAtBottom && !shouldStopAtTop;
+        // Элемент должен быть sticky, если:
+        // 1. Должен начать быть sticky И не должен остановиться сверху
+        const shouldBeSticky = shouldStartSticky && !shouldStopAtTop;
         
-        if (finalSticky !== isSticky.value) {
-            isSticky.value = finalSticky;
-            // Сбрасываем initialTop если элемент перестал быть sticky, чтобы пересчитать при следующем включении
-            if (!finalSticky) {
-                initialTop = null;
-                initialParentTop = null;
+        if (shouldBeSticky) {
+            isSticky.value = true;
+            
+            // Если достигли низа родителя, прилипаем к низу
+            if (reachedBottom) {
+                isStickyToBottom.value = true;
+                // Вычисляем отступ снизу (обновляем при каждой прокрутке)
+                const windowHeight = window.innerHeight;
+                bottomOffset.value = windowHeight - parentBottomRelativeToViewport;
+            } else {
+                // Иначе обычное sticky сверху
+                isStickyToBottom.value = false;
             }
+        } else {
+            isSticky.value = false;
+            isStickyToBottom.value = false;
+            // Сбрасываем initialTop если элемент перестал быть sticky, чтобы пересчитать при следующем включении
+            initialTop = null;
+            initialParentTop = null;
         }
     }
 
