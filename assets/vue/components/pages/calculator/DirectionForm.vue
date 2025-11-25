@@ -583,7 +583,7 @@ watch(() => props.modelValue, (newValue) => {
     // Устанавливаем флаги, чтобы предотвратить циклические обновления
     if (fromChanged) {
         isUpdatingFromInput = true;
-        from.value = newValue.from || '';
+    from.value = newValue.from || '';
         nextTick(() => {
             isUpdatingFromInput = false;
         });
@@ -591,7 +591,7 @@ watch(() => props.modelValue, (newValue) => {
     
     if (toChanged) {
         isUpdatingToInput = true;
-        to.value = newValue.to || '';
+    to.value = newValue.to || '';
         nextTick(() => {
             isUpdatingToInput = false;
         });

@@ -131,10 +131,10 @@
 
 /* Стили уже применены через классы Tailwind */
 
-.animate-fade-in[data-v-8694341d] {
-    animation: fadeIn-8694341d 0.2s ease-in-out;
+.animate-fade-in[data-v-ab51c995] {
+    animation: fadeIn-ab51c995 0.2s ease-in-out;
 }
-@keyframes fadeIn-8694341d {
+@keyframes fadeIn-ab51c995 {
 from {
         opacity: 0;
         transform: translateY(-5px);

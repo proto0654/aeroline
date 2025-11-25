@@ -33,8 +33,8 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@vitejs/plugin-vue": "^5.2.4",
-    "@vue/test-utils": "^2.4.6",
     "@vitest/ui": "^2.1.8",
+    "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.14",
     "cpx": "^1.5.0",
     "cssnano": "^7.0.7",
@@ -63,6 +63,7 @@
   ],
   "dependencies": {
     "@vee-validate/rules": "^4.15.0",
+    "@vueuse/core": "^14.0.0",
     "axios": "^1.9.0",
     "daisyui": "^5.0.37",
     "list.js": "^2.3.1",

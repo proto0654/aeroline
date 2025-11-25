@@ -465,7 +465,7 @@
     "src": "assets/img/slider/snow-flake.svg"
   },
   "assets/js/main.js": {
-    "file": "assets/js/mainJs-ssDcHgVf.js",
+    "file": "assets/js/mainJs-D0-2qTTl.js",
     "name": "mainJs",
     "src": "assets/js/main.js",
     "isEntry": true,
@@ -474,7 +474,7 @@
       "_modal-manager-BXwv0V3q.js"
     ],
     "css": [
-      "assets/css/mainJs-DsxWI9ZO.css"
+      "assets/css/mainJs-C4Vf10U4.css"
     ]
   },
   "assets/js/modules/global-ui.js": {
@@ -492,7 +492,7 @@
     ]
   },
   "assets/js/modules/home-page.js": {
-    "file": "assets/js/homePageJs-s3SBPSVt.js",
+    "file": "assets/js/homePageJs-cbHtQJrx.js",
     "name": "homePageJs",
     "src": "assets/js/modules/home-page.js",
     "isEntry": true,
@@ -525,8 +525,8 @@
       "order-list..html",
       "order-new..html",
       "order-tracking..html",
-      "assets/data/package-lock-BkC8jPWj.json",
-      "assets/data/package-BbcHHUzt.json",
+      "assets/data/package-lock-Cbu0gIvc.json",
+      "assets/data/package-BonSYK-a.json",
       "payments..html",
       "assets/postcss.config-By4aJUYq.js",
       "profile..html",
@@ -570,7 +570,7 @@
     ]
   },
   "assets/vue/entrypoints/calculator-page.js": {
-    "file": "assets/js/calculatorPageJs-C95lUj0w.js",
+    "file": "assets/js/calculatorPageJs-CzSl_Fid.js",
     "name": "calculatorPageJs",
     "src": "assets/vue/entrypoints/calculator-page.js",
     "isEntry": true,
@@ -587,7 +587,7 @@
       "_select-arrow-He2ejS2L.js"
     ],
     "css": [
-      "assets/css/calculatorPageJs-DaKOADlV.css"
+      "assets/css/calculatorPageJs-DPp3bV34.css"
     ]
   },
   "assets/vue/entrypoints/lk-datepicker.js": {
@@ -633,7 +633,7 @@
     "src": "calculator.html"
   },
   "contacts.html": {
-    "file": "assets/js/contacts-BXlIndqz.js",
+    "file": "assets/js/contacts-Bqdgucz6.js",
     "name": "contacts",
     "src": "contacts.html",
     "isEntry": true,
@@ -682,7 +682,7 @@
     "src": "helper.html"
   },
   "index.html": {
-    "file": "assets/js/main-53oulNF_.js",
+    "file": "assets/js/main-CFZ6JbBn.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -747,7 +747,7 @@
     "src": "notifications.html"
   },
   "order-list.html": {
-    "file": "assets/js/orderList-BX6xMaRL.js",
+    "file": "assets/js/orderList-Co2bKImk.js",
     "name": "orderList",
     "src": "order-list.html",
     "isEntry": true,
@@ -787,7 +787,7 @@
     "src": "order-new.html"
   },
   "order-tracking.html": {
-    "file": "assets/js/orderTracking-CXSY48us.js",
+    "file": "assets/js/orderTracking-CzKqNkrZ.js",
     "name": "orderTracking",
     "src": "order-tracking.html",
     "isEntry": true,
@@ -826,15 +826,15 @@
     ]
   },
   "package-lock.json": {
-    "file": "assets/data/package-lock-BkC8jPWj.json",
+    "file": "assets/data/package-lock-Cbu0gIvc.json",
     "src": "package-lock.json"
   },
   "package.json": {
-    "file": "assets/data/package-BbcHHUzt.json",
+    "file": "assets/data/package-BonSYK-a.json",
     "src": "package.json"
   },
   "payments.html": {
-    "file": "assets/js/payments-4GL84iCE.js",
+    "file": "assets/js/payments-zKkbt0ti.js",
     "name": "payments",
     "src": "payments.html",
     "isEntry": true,
@@ -886,7 +886,7 @@
     "src": "postcss.config.js"
   },
   "profile.html": {
-    "file": "assets/js/profile-DZxMXTFv.js",
+    "file": "assets/js/profile-81bMB93h.js",
     "name": "profile",
     "src": "profile.html",
     "isEntry": true,
@@ -926,7 +926,7 @@
     "src": "reports.html"
   },
   "senders-receivers.html": {
-    "file": "assets/js/sendersReceivers-Bm3IOzaJ.js",
+    "file": "assets/js/sendersReceivers-DJPYc14g.js",
     "name": "sendersReceivers",
     "src": "senders-receivers.html",
     "isEntry": true,
@@ -963,7 +963,7 @@
     ]
   },
   "service-acts.html": {
-    "file": "assets/js/serviceActs-C1q1lgSQ.js",
+    "file": "assets/js/serviceActs-yroUSEF3.js",
     "name": "serviceActs",
     "src": "service-acts.html",
     "isEntry": true,
@@ -1001,7 +1001,7 @@
     ]
   },
   "services.html": {
-    "file": "assets/js/services-B5i-_C2b.js",
+    "file": "assets/js/services-rCcL4Q94.js",
     "name": "services",
     "src": "services.html",
     "isEntry": true,
@@ -1052,7 +1052,7 @@
     "src": "user-create.html"
   },
   "vacancies.html": {
-    "file": "assets/js/vacancies-Bij__qFu.js",
+    "file": "assets/js/vacancies-eunKO4wo.js",
     "name": "vacancies",
     "src": "vacancies.html",
     "isEntry": true,

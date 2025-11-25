@@ -783,19 +783,19 @@ function validateAddress(cityName, streetName) {
     
     // Если конкретная улица найдена, проверяем наличие takeDeliver
     if (billingAddress) {
-        // Проверяем наличие записи в takeDelivers для найденного billingAddress
-        if (!props.takeDelivers || props.takeDelivers.length === 0) {
+    // Проверяем наличие записи в takeDelivers для найденного billingAddress
+    if (!props.takeDelivers || props.takeDelivers.length === 0) {
             return { valid: false, billingAddress, isCityWide: false };
-        }
-        
-        const hasTakeDeliver = props.takeDelivers.some(td => {
+    }
+    
+    const hasTakeDeliver = props.takeDelivers.some(td => {
             return String(td.uidBillingAddress) === String(billingAddress.uid);
-        });
-        
-        if (!hasTakeDeliver) {
+    });
+    
+    if (!hasTakeDeliver) {
             return { valid: false, billingAddress, isCityWide: false };
-        }
-        
+    }
+    
         return { valid: true, billingAddress, isCityWide: false };
     }
     
@@ -859,15 +859,15 @@ function onStreetSelected(item) {
                 emit('addressFound', { type: props.namePrefix });
             } else {
                 // Нет записи для всего города - эмитим событие для показа формы запроса
-                const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
-                emit('addressNotFound', {
-                    type: props.namePrefix, // 'departure' or 'destination'
-                    city: cityName,
-                    street: streetName,
-                    locality: localityObj,
-                    region: localityObj?.region || ''
-                });
-                return; // Не продолжаем обработку
+            const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
+            emit('addressNotFound', {
+                type: props.namePrefix, // 'departure' or 'destination'
+                city: cityName,
+                street: streetName,
+                locality: localityObj,
+                region: localityObj?.region || ''
+            });
+            return; // Не продолжаем обработку
             }
         } else {
             // Адрес найден - эмитим событие для очистки invalid состояния
@@ -925,15 +925,15 @@ function onStreetInputChange(value) {
                     emit('addressFound', { type: props.namePrefix });
                 } else {
                     // Нет записи для всего города - устанавливаем флаг и эмитим событие для показа формы запроса
-                    streetNotFound.value = true;
-                    const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
-                    emit('addressNotFound', {
-                        type: props.namePrefix,
-                        city: cityName,
-                        street: value.trim(),
-                        locality: localityObj,
-                        region: localityObj?.region || ''
-                    });
+                streetNotFound.value = true;
+                const localityObj = props.locality || props.localities.find(loc => loc.name === cityName);
+                emit('addressNotFound', {
+                    type: props.namePrefix,
+                    city: cityName,
+                    street: value.trim(),
+                    locality: localityObj,
+                    region: localityObj?.region || ''
+                });
                 }
             } else {
                 // Адрес найден - сбрасываем флаг и эмитим событие для очистки invalid состояния

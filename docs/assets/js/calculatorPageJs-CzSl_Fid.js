@@ -1,4 +1,4 @@
-import { r as ref, p as computed, c as createElementBlock, o as openBlock, d as createCommentVNode, a as createBaseVNode, t as toDisplayString, A as mergeProps, n as nextTick, W as renderSlot, b as createTextVNode, F as Fragment, C as renderList, q as watch, K as createVNode, I as normalizeClass, G as createBlock, w as withModifiers, D as onMounted, z as unref, f as reactive, x as withDirectives, J as createApp } from "./chunks/runtime-dom.esm-bundler-BeftXQEh.js";
+import { r as ref, p as computed, c as createElementBlock, o as openBlock, d as createCommentVNode, a as createBaseVNode, t as toDisplayString, A as mergeProps, n as nextTick, W as renderSlot, b as createTextVNode, F as Fragment, C as renderList, q as watch, K as createVNode, I as normalizeClass, G as createBlock, w as withModifiers, D as onMounted, z as unref, f as reactive, J as createApp } from "./chunks/runtime-dom.esm-bundler-BeftXQEh.js";
 import { C as CheckboxInput, _ as _sfc_main$c } from "./chunks/CheckboxInput-3ItHIB6A.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
 import { T as TextInput, F as Form, b as Field, E as ErrorMessage } from "./chunks/TextInput-BUdG7Qkf.js";
@@ -2604,7 +2604,7 @@ const _sfc_main$2 = {
     };
   }
 };
-const _hoisted_1$1 = { class: "h-fit card" };
+const _hoisted_1$1 = { class: "h-fit card lg:sticky lg:top-4 lg:self-start" };
 const _hoisted_2$1 = {
   key: 0,
   class: "text-gray-500"
@@ -3107,83 +3107,17 @@ const _sfc_main$1 = {
     };
   }
 };
-const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-8694341d"]]);
-const vSticky = {
-  mounted(el, binding) {
-    const options = binding.value || {};
-    const topOffset = options.top || 16;
-    const zIndex = options.zIndex || 1e3;
-    const enabled = options.disabled !== true;
-    const breakpoint = options.breakpoint || 1024;
-    if (!enabled) {
-      return;
-    }
-    const originalPosition = window.getComputedStyle(el).position;
-    const originalTop = window.getComputedStyle(el).top;
-    const originalZIndex = window.getComputedStyle(el).zIndex;
-    const applySticky = () => {
-      if (window.innerWidth >= breakpoint) {
-        el.style.position = "sticky";
-        el.style.top = `${topOffset}px`;
-        el.style.zIndex = zIndex;
-      } else {
-        el.style.position = originalPosition;
-        el.style.top = originalTop;
-        el.style.zIndex = originalZIndex;
-      }
-    };
-    applySticky();
-    const handleResize = () => {
-      applySticky();
-    };
-    window.addEventListener("resize", handleResize);
-    el._stickyData = {
-      originalPosition,
-      originalTop,
-      originalZIndex,
-      handleResize
-    };
-  },
-  updated(el, binding) {
-    const options = binding.value || {};
-    const enabled = options.disabled !== true;
-    const breakpoint = options.breakpoint || 1024;
-    if (enabled && window.innerWidth >= breakpoint) {
-      const topOffset = options.top || 16;
-      const zIndex = options.zIndex || 1e3;
-      el.style.position = "sticky";
-      el.style.top = `${topOffset}px`;
-      el.style.zIndex = zIndex;
-    } else {
-      if (el._stickyData) {
-        el.style.position = el._stickyData.originalPosition;
-        el.style.top = el._stickyData.originalTop;
-        el.style.zIndex = el._stickyData.originalZIndex;
-      }
-    }
-  },
-  unmounted(el) {
-    if (el._stickyData && el._stickyData.handleResize) {
-      window.removeEventListener("resize", el._stickyData.handleResize);
-    }
-    if (el._stickyData) {
-      el.style.position = el._stickyData.originalPosition;
-      el.style.top = el._stickyData.originalTop;
-      el.style.zIndex = el._stickyData.originalZIndex;
-      delete el._stickyData;
-    }
-  }
-};
+const CalculationResult = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-ab51c995"]]);
 const _hoisted_1 = { class: "bg-brand-light p-5 rounded-lg mb-6" };
 const _hoisted_2 = {
   key: 0,
-  class: "flex flex-col flex-1 lg:flex-row gap-8 min-w-0"
+  class: "flex flex-col flex-1 lg:flex-row lg:items-stretch gap-8 min-w-0 h-full"
 };
 const _hoisted_3 = { class: "flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0" };
 const _hoisted_4 = { class: "bg-brand-light p-5 rounded-lg" };
 const _hoisted_5 = { class: "flex flex-col gap-6" };
 const _hoisted_6 = { class: "bg-brand-light p-5 rounded-lg" };
-const _hoisted_7 = { class: "h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none" };
+const _hoisted_7 = { class: "bg-brand-light p-5 rounded-lg w-full lg:w-80 relative" };
 const _hoisted_8 = {
   key: 1,
   class: "bg-brand-light p-5 rounded-lg mt-6"
@@ -3192,11 +3126,7 @@ const _hoisted_9 = { class: "bg-yellow-50 border border-yellow-200 rounded-lg p-
 const _hoisted_10 = { class: "text-sm text-yellow-800 mb-4" };
 const _hoisted_11 = { key: 0 };
 const _hoisted_12 = { key: 1 };
-const _sfc_main = /* @__PURE__ */ Object.assign({
-  directives: {
-    sticky: vSticky
-  }
-}, {
+const _sfc_main = {
   __name: "CalculatorPage",
   setup(__props) {
     const billingAddresses = ref([]);
@@ -5265,20 +5195,16 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
         } else {
           cargo.packages.forEach((pkg, index2) => {
             const placeNum = index2 + 1;
-            const quantity = parseInt(pkg.quantity);
+            const quantity = parseInt(pkg.quantity) || 0;
             const volumeStr = pkg.volume !== null && pkg.volume !== void 0 && pkg.volume !== "" ? String(pkg.volume).trim() : "";
             const hasDirectVolume = volumeStr && quantity === 1;
             const directVolumeValid = hasDirectVolume && !isNaN(parseFloat(volumeStr)) && parseFloat(volumeStr) >= 0;
-            if (!directVolumeValid) {
-              if (!parseFloat(pkg.length) || parseFloat(pkg.length) <= 0) {
-                missingFields.push(`длина места ${placeNum}`);
-              }
-              if (!parseFloat(pkg.width) || parseFloat(pkg.width) <= 0) {
-                missingFields.push(`ширина места ${placeNum}`);
-              }
-              if (!parseFloat(pkg.height) || parseFloat(pkg.height) <= 0) {
-                missingFields.push(`высота места ${placeNum}`);
-              }
+            const hasLength = parseFloat(pkg.length) && parseFloat(pkg.length) > 0;
+            const hasWidth = parseFloat(pkg.width) && parseFloat(pkg.width) > 0;
+            const hasHeight = parseFloat(pkg.height) && parseFloat(pkg.height) > 0;
+            const hasDimensions = hasLength && hasWidth && hasHeight;
+            if (!directVolumeValid && !hasDimensions) {
+              missingFields.push(`габариты или объем места ${placeNum}`);
             }
             if (!parseFloat(pkg.weight) || parseFloat(pkg.weight) <= 0) {
               missingFields.push(`вес места ${placeNum}`);
@@ -5550,7 +5476,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
               }, null, 8, ["calculator-config", "modelValue"])
             ])
           ]),
-          withDirectives((openBlock(), createElementBlock("div", _hoisted_7, [
+          createBaseVNode("div", _hoisted_7, [
             createVNode(CalculationResult, {
               result: calculationResult.value,
               "form-data": formData,
@@ -5558,8 +5484,6 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
               onPrint: printResult,
               onSelectTariff: selectTariff
             }, null, 8, ["result", "form-data", "calculator-config"])
-          ])), [
-            [unref(vSticky), { top: 16, zIndex: 1e3, breakpoint: 1024, disabled: false }]
           ])
         ])) : createCommentVNode("", true),
         (invalidFromCity.value || invalidToCity.value) && (((_a = formData.direction.from) == null ? void 0 : _a.trim()) || ((_b = formData.direction.to) == null ? void 0 : _b.trim())) ? (openBlock(), createElementBlock("div", _hoisted_8, [
@@ -5583,7 +5507,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       ], 64);
     };
   }
-});
+};
 const app = createApp(_sfc_main);
 app.component("Form", Form);
 app.component("Field", Field);

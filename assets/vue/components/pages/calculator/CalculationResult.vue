@@ -1,5 +1,5 @@
 <template>
-    <aside class="h-fit card">
+    <aside class="h-fit card lg:sticky lg:top-4 lg:self-start">
         <h2 class="text-h4 font-bold mb-4">Стоимость перевозки</h2>
 
         <div v-if="!result || !result.isValid" class="text-gray-500">

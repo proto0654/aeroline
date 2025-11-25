@@ -15,9 +15,11 @@ export const vSticky = {
         }
 
         // Сохраняем исходные стили
-        const originalPosition = window.getComputedStyle(el).position;
-        const originalTop = window.getComputedStyle(el).top;
-        const originalZIndex = window.getComputedStyle(el).zIndex;
+        const computedStyle = window.getComputedStyle(el);
+        const originalPosition = computedStyle.position;
+        const originalTop = computedStyle.top;
+        const originalZIndex = computedStyle.zIndex;
+        const originalAlignSelf = computedStyle.alignSelf;
         
         // Функция для применения sticky стилей
         const applySticky = () => {
@@ -25,10 +27,12 @@ export const vSticky = {
                 el.style.position = 'sticky';
                 el.style.top = `${topOffset}px`;
                 el.style.zIndex = zIndex;
+                el.style.alignSelf = 'flex-start'; // Важно для flex-контейнеров
             } else {
-                el.style.position = originalPosition;
-                el.style.top = originalTop;
-                el.style.zIndex = originalZIndex;
+                el.style.position = originalPosition || 'static';
+                el.style.top = originalTop || 'auto';
+                el.style.zIndex = originalZIndex || 'auto';
+                el.style.alignSelf = originalAlignSelf || 'auto';
             }
         };
         
@@ -47,6 +51,7 @@ export const vSticky = {
             originalPosition,
             originalTop,
             originalZIndex,
+            originalAlignSelf,
             handleResize
         };
     },
@@ -62,12 +67,14 @@ export const vSticky = {
             el.style.position = 'sticky';
             el.style.top = `${topOffset}px`;
             el.style.zIndex = zIndex;
+            el.style.alignSelf = 'flex-start';
         } else {
             // Восстанавливаем исходные стили
             if (el._stickyData) {
-                el.style.position = el._stickyData.originalPosition;
-                el.style.top = el._stickyData.originalTop;
-                el.style.zIndex = el._stickyData.originalZIndex;
+                el.style.position = el._stickyData.originalPosition || 'static';
+                el.style.top = el._stickyData.originalTop || 'auto';
+                el.style.zIndex = el._stickyData.originalZIndex || 'auto';
+                el.style.alignSelf = el._stickyData.originalAlignSelf || 'auto';
             }
         }
     },
@@ -80,9 +87,10 @@ export const vSticky = {
         
         // Восстанавливаем исходные стили при размонтировании
         if (el._stickyData) {
-            el.style.position = el._stickyData.originalPosition;
-            el.style.top = el._stickyData.originalTop;
-            el.style.zIndex = el._stickyData.originalZIndex;
+            el.style.position = el._stickyData.originalPosition || 'static';
+            el.style.top = el._stickyData.originalTop || 'auto';
+            el.style.zIndex = el._stickyData.originalZIndex || 'auto';
+            el.style.alignSelf = el._stickyData.originalAlignSelf || 'auto';
             delete el._stickyData;
         }
     }

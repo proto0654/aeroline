@@ -13,7 +13,7 @@
     </div>
 
     <!-- Калькулятор (скрывается только если введенный город не найден в базе) -->
-    <div v-if="!invalidFromCity && !invalidToCity" class="flex flex-col flex-1 lg:flex-row gap-8 min-w-0">
+    <div v-if="!invalidFromCity && !invalidToCity" class="flex flex-col flex-1 lg:flex-row lg:items-stretch gap-8 min-w-0 h-full">
         <!-- Левая колонка: Формы ввода -->
         <div
             class="flex flex-col gap-6 lg:flex-1 [&_.text-input-vue]:focus-visible:outline-blue-400 [&_.text-input-vue>input]:p-4 [&_.text-input-vue>input::placeholder]:text-gray-600 min-w-0">
@@ -50,9 +50,7 @@
         </div>
 
         <!-- Правая колонка: Результаты расчета -->
-        <div 
-            v-sticky="{ top: 16, zIndex: 1000, breakpoint: 1024, disabled: false }"
-            class="h-fit bg-brand-light p-5 rounded-lg w-full lg:w-80 flex-none">
+        <div class="bg-brand-light p-5 rounded-lg w-full lg:w-80 relative">
             <CalculationResult :result="calculationResult" :form-data="formData" :calculator-config="calculatorConfig"
                 @print="printResult" @selectTariff="selectTariff" />
             <!-- Кнопка "Рассчитать" удалена - расчет происходит автоматически -->
@@ -67,14 +65,14 @@
                 <span v-if="invalidToCity">Выбранный город назначения не найден в системе.</span>
                 Заполните форму ниже, и наш менеджер свяжется с вами для уточнения деталей.
             </p>
-            <ManagerRequestForm
-                :prefill-region="managerRequestData.region"
-                :prefill-locality="managerRequestData.locality"
-                :prefill-street="managerRequestData.street"
-                :regions="availableRegions"
-                :localities="availableCities"
-                @cancel="handleManagerRequestCancel"
-                @submit="handleManagerRequestSubmit" />
+        <ManagerRequestForm
+            :prefill-region="managerRequestData.region"
+            :prefill-locality="managerRequestData.locality"
+            :prefill-street="managerRequestData.street"
+            :regions="availableRegions"
+            :localities="availableCities"
+            @cancel="handleManagerRequestCancel"
+            @submit="handleManagerRequestSubmit" />
         </div>
     </div>
 </template>
@@ -89,14 +87,6 @@ import CalculationResult from './CalculationResult.vue';
 import ManagerRequestForm from './ManagerRequestForm.vue';
 import apiService from '../../../services/apiService.js';
 import { formatSelectedLocalityName } from '../../../utils/localityFormatter.js';
-import { vSticky } from '../../../utils/sticky.js';
-
-// Регистрируем директиву локально
-defineOptions({
-    directives: {
-        sticky: vSticky
-    }
-});
 
 // Новые данные из API
 const billingAddresses = ref([]);
@@ -770,18 +760,18 @@ function calculateTariffCost(typeTransportation) {
                     locality: fromAddress.locality,
                     street: fromAddress.street
                 } : 'не найден');
-                
+            
                 // Если не нашли адрес с конкретной улицей, ищем адрес без улицы (для всего города) как fallback
-                if (!fromAddress) {
-                    fromAddress = billingAddresses.value.find(addr => {
-                        const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+            if (!fromAddress) {
+                fromAddress = billingAddresses.value.find(addr => {
+                    const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
                         const addrStreet = addr.street || '';
                         // Ищем адрес без улицы (street пустой или null) для того же города
                         return addrLocalityName === fromCityName && (!addrStreet || addrStreet.trim() === '');
-                    });
-                    
+                });
+                
                     console.log('fromAddress найден без улицы (fallback после поиска конкретной улицы):', fromAddress ? {
-                        uid: fromAddress.uid,
+                    uid: fromAddress.uid,
                         locality: fromAddress.locality,
                         street: fromAddress.street
                     } : 'не найден');
@@ -926,18 +916,18 @@ function calculateTariffCost(typeTransportation) {
                     locality: toAddress.locality,
                     street: toAddress.street
                 } : 'не найден');
-                
+            
                 // Если не нашли адрес с конкретной улицей, ищем адрес без улицы (для всего города) как fallback
-                if (!toAddress) {
-                    toAddress = billingAddresses.value.find(addr => {
-                        const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
+            if (!toAddress) {
+                toAddress = billingAddresses.value.find(addr => {
+                    const addrLocalityName = typeof addr.locality === 'string' ? addr.locality : (addr.locality?.name || '');
                         const addrStreet = addr.street || '';
                         // Ищем адрес без улицы (street пустой или null) для того же города
                         return addrLocalityName === toCityName && (!addrStreet || addrStreet.trim() === '');
-                    });
-                    
+                });
+                
                     console.log('toAddress найден без улицы (fallback после поиска конкретной улицы):', toAddress ? {
-                        uid: toAddress.uid,
+                    uid: toAddress.uid,
                         locality: toAddress.locality,
                         street: toAddress.street
                     } : 'не найден');
@@ -1214,8 +1204,8 @@ function calculateTariffCost(typeTransportation) {
             }
         } else {
             // Вычисляем из габаритов
-            // Формулы из ТЗ:
-            // V = L * W * H (в см³)
+        // Формулы из ТЗ:
+        // V = L * W * H (в см³)
             volumeCm3 = length * width * height;
             volume = volumeCm3 / 1000000; // переводим в м³
         }
@@ -1991,11 +1981,11 @@ function calculateTariffCost(typeTransportation) {
                 });
             } else {
                 // Вычисление из габаритов (если объем невалидный)
-                details.push({
-                    name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
-                    cost: 0,
-                    isDetail: true
-                });
+        details.push({
+            name: `V = ${length.toFixed(2)} (длина, см) × ${width.toFixed(2)} (ширина, см) × ${height.toFixed(2)} (высота, см) = ${volumeCm3.toFixed(2)} см³`,
+            cost: 0,
+            isDetail: true
+        });
             }
         } else {
             // Вычисление из габаритов
@@ -2879,8 +2869,7 @@ function isFormDataValid() {
         const weight = parseFloat(pkg.weight);
         const quantity = parseInt(pkg.quantity);
         
-        // Проверяем обязательные поля согласно ТЗ
-        // Если quantity === 1 и есть прямой ввод объема, то Д×Ш×В не обязательны
+        // Проверяем прямой ввод объема для отдельных мест (quantity === 1)
         const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
             ? String(pkg.volume).trim() 
             : '';
@@ -3010,26 +2999,24 @@ const calculationResult = computed(() => {
         } else {
             cargo.packages.forEach((pkg, index) => {
                 const placeNum = index + 1;
-                const quantity = parseInt(pkg.quantity);
+                const quantity = parseInt(pkg.quantity) || 0;
                 
-                // Проверяем, есть ли прямой ввод объема для отдельных мест
+                // Проверяем прямой ввод объема для отдельных мест (quantity === 1)
                 const volumeStr = pkg.volume !== null && pkg.volume !== undefined && pkg.volume !== '' 
                     ? String(pkg.volume).trim() 
                     : '';
                 const hasDirectVolume = volumeStr && quantity === 1;
                 const directVolumeValid = hasDirectVolume && !isNaN(parseFloat(volumeStr)) && parseFloat(volumeStr) >= 0;
                 
-                // Длина, ширина, высота обязательны только если нет прямого ввода объема
-                if (!directVolumeValid) {
-                    if (!parseFloat(pkg.length) || parseFloat(pkg.length) <= 0) {
-                        missingFields.push(`длина места ${placeNum}`);
-                    }
-                    if (!parseFloat(pkg.width) || parseFloat(pkg.width) <= 0) {
-                        missingFields.push(`ширина места ${placeNum}`);
-                    }
-                    if (!parseFloat(pkg.height) || parseFloat(pkg.height) <= 0) {
-                        missingFields.push(`высота места ${placeNum}`);
-                    }
+                // Проверяем наличие габаритов
+                const hasLength = parseFloat(pkg.length) && parseFloat(pkg.length) > 0;
+                const hasWidth = parseFloat(pkg.width) && parseFloat(pkg.width) > 0;
+                const hasHeight = parseFloat(pkg.height) && parseFloat(pkg.height) > 0;
+                const hasDimensions = hasLength && hasWidth && hasHeight;
+                
+                // Если нет ни габаритов, ни объема - показываем общее сообщение
+                if (!directVolumeValid && !hasDimensions) {
+                    missingFields.push(`габариты или объем места ${placeNum}`);
                 }
                 
                 // Вес и количество всегда обязательны
