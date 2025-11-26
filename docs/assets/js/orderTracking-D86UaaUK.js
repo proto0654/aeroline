@@ -279,21 +279,21 @@ const _hoisted_8$1 = {
   class: "flex flex-col gap-1 relative z-10 mt-10"
 };
 const _hoisted_9$1 = { class: "flex items-center gap-3" };
-const _hoisted_10 = { class: "w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow" };
-const _hoisted_11 = { class: "font-bold text-gray-800 uppercase" };
-const _hoisted_12 = { class: "text-xs text-gray-600" };
-const _hoisted_13 = ["onClick"];
-const _hoisted_14 = { key: 0 };
-const _hoisted_15 = { class: "font-bold text-brand-blue mb-1 ml-6 mt-2 pl-9 relative" };
-const _hoisted_16 = { class: "border-l-2 border-dashed border-gray-300 ml-6 flex flex-col gap-3" };
-const _hoisted_17 = { class: "pl-9 relative flex items-center gap-3" };
-const _hoisted_18 = { class: "font-medium text-gray-900" };
-const _hoisted_19 = { class: "text-xs text-gray-500" };
-const _hoisted_20 = {
+const _hoisted_10$1 = { class: "w-12 h-12 flex items-center justify-center bg-white rounded-[10px] shadow" };
+const _hoisted_11$1 = { class: "font-bold text-gray-800 uppercase" };
+const _hoisted_12$1 = { class: "text-xs text-gray-600" };
+const _hoisted_13$1 = ["onClick"];
+const _hoisted_14$1 = { key: 0 };
+const _hoisted_15$1 = { class: "font-bold text-brand-blue mb-1 ml-6 mt-2 pl-9 relative" };
+const _hoisted_16$1 = { class: "border-l-2 border-dashed border-gray-300 ml-6 flex flex-col gap-3" };
+const _hoisted_17$1 = { class: "pl-9 relative flex items-center gap-3" };
+const _hoisted_18$1 = { class: "font-medium text-gray-900" };
+const _hoisted_19$1 = { class: "text-xs text-gray-500" };
+const _hoisted_20$1 = {
   key: 0,
   class: "text-xs text-gray-500"
 };
-const _hoisted_21 = {
+const _hoisted_21$1 = {
   key: 2,
   class: "flex flex-col gap-1 relative z-10 mt-10"
 };
@@ -337,14 +337,14 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
             ])
           ], 2)) : item.type === "group-single" ? (openBlock(), createElementBlock("div", _hoisted_8$1, [
             createBaseVNode("div", _hoisted_9$1, [
-              createBaseVNode("div", _hoisted_10, [
+              createBaseVNode("div", _hoisted_10$1, [
                 createVNode(_component_status_icon, {
                   status: item.event.stateCurrent
                 }, null, 8, ["status"])
               ]),
               createBaseVNode("div", null, [
-                createBaseVNode("div", _hoisted_11, toDisplayString($options.getStatusText(item.event.stateCurrent)), 1),
-                createBaseVNode("div", _hoisted_12, toDisplayString(item.event.date), 1),
+                createBaseVNode("div", _hoisted_11$1, toDisplayString($options.getStatusText(item.event.stateCurrent)), 1),
+                createBaseVNode("div", _hoisted_12$1, toDisplayString(item.event.date), 1),
                 createBaseVNode("button", {
                   class: "flex items-center gap-1 text-brand-blue underline text-xs font-medium mt-1 ml-0 focus:outline-none",
                   onClick: withModifiers(($event) => $options.toggleGroup(index), ["stop"])
@@ -363,25 +363,25 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
                       d: "M19 9l-7 7-7-7"
                     }, null, -1)
                   ]), 2))
-                ], 8, _hoisted_13)
+                ], 8, _hoisted_13$1)
               ])
             ]),
-            $data.openGroups[index] ? (openBlock(), createElementBlock("div", _hoisted_14, [
-              createBaseVNode("div", _hoisted_15, [
+            $data.openGroups[index] ? (openBlock(), createElementBlock("div", _hoisted_14$1, [
+              createBaseVNode("div", _hoisted_15$1, [
                 createTextVNode(toDisplayString(item.city) + " ", 1),
                 _cache[1] || (_cache[1] = createBaseVNode("span", { class: "dot-timeline absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-blue z-10" }, null, -1))
               ]),
-              createBaseVNode("div", _hoisted_16, [
-                createBaseVNode("div", _hoisted_17, [
+              createBaseVNode("div", _hoisted_16$1, [
+                createBaseVNode("div", _hoisted_17$1, [
                   createBaseVNode("div", null, [
-                    createBaseVNode("div", _hoisted_18, toDisplayString($options.getStatusText(item.event.stateCurrent)), 1),
-                    createBaseVNode("div", _hoisted_19, toDisplayString(item.event.date), 1),
-                    item.event.additionalInfo ? (openBlock(), createElementBlock("div", _hoisted_20, toDisplayString($options.formatAdditionalInfo(item.event.stateCurrent, item.event.additionalInfo)), 1)) : createCommentVNode("", true)
+                    createBaseVNode("div", _hoisted_18$1, toDisplayString($options.getStatusText(item.event.stateCurrent)), 1),
+                    createBaseVNode("div", _hoisted_19$1, toDisplayString(item.event.date), 1),
+                    item.event.additionalInfo ? (openBlock(), createElementBlock("div", _hoisted_20$1, toDisplayString($options.formatAdditionalInfo(item.event.stateCurrent, item.event.additionalInfo)), 1)) : createCommentVNode("", true)
                   ])
                 ])
               ])
             ])) : createCommentVNode("", true)
-          ])) : item.type === "in-transit" ? (openBlock(), createElementBlock("div", _hoisted_21, [
+          ])) : item.type === "in-transit" ? (openBlock(), createElementBlock("div", _hoisted_21$1, [
             createBaseVNode("div", _hoisted_22, [
               createBaseVNode("div", _hoisted_23, [
                 createVNode(_component_StatusIcon, { status: "ПП" })
@@ -447,6 +447,14 @@ const _sfc_main$1 = {
       type: Object,
       required: true
     }
+  },
+  computed: {
+    customerOrderNumberDisplay() {
+      if (!this.order.customerOrderNumber || this.order.customerOrderNumber.trim() === "") {
+        return "customerOrderNumber - не указан";
+      }
+      return this.order.customerOrderNumber;
+    }
   }
 };
 const _hoisted_1$1 = { class: "md:basis-3/5 w-full p-2 md:p-6 flex flex-col gap-6" };
@@ -458,6 +466,18 @@ const _hoisted_6$1 = { class: "flex-1" };
 const _hoisted_7$1 = { class: "font-semibold text-brand-gray text-body-secondary leading-1.2" };
 const _hoisted_8 = { class: "overflow-x-auto" };
 const _hoisted_9 = { class: "table w-full table-zebra" };
+const _hoisted_10 = { class: "flex flex-col" };
+const _hoisted_11 = { class: "text-base font-medium text-gray-600" };
+const _hoisted_12 = { class: "flex flex-col" };
+const _hoisted_13 = { class: "text-base font-medium text-gray-600" };
+const _hoisted_14 = { class: "flex flex-col" };
+const _hoisted_15 = { class: "text-base font-medium text-gray-600" };
+const _hoisted_16 = { class: "flex flex-col" };
+const _hoisted_17 = { class: "text-base font-medium text-gray-600" };
+const _hoisted_18 = { class: "flex flex-col" };
+const _hoisted_19 = { class: "text-base font-medium text-gray-600" };
+const _hoisted_20 = { class: "flex flex-col" };
+const _hoisted_21 = { class: "text-base font-medium text-gray-600" };
 function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", _hoisted_1$1, [
     createBaseVNode("div", _hoisted_2$1, [
@@ -475,22 +495,44 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
         createBaseVNode("table", _hoisted_9, [
           createBaseVNode("tbody", null, [
             createBaseVNode("tr", null, [
-              _cache[2] || (_cache[2] = createBaseVNode("td", { class: "font-medium text-brand-gray" }, "Номер заказа", -1)),
-              createBaseVNode("td", null, toDisplayString($props.order.orderNumber), 1),
-              _cache[3] || (_cache[3] = createBaseVNode("td", { class: "font-medium text-brand-gray" }, "Номер ТН", -1)),
-              createBaseVNode("td", null, toDisplayString($props.order.invoiceNumber), 1)
+              createBaseVNode("td", null, [
+                createBaseVNode("div", _hoisted_10, [
+                  _cache[2] || (_cache[2] = createBaseVNode("div", { class: "text-xs text-gray-500 mb-1" }, "Номер заказа", -1)),
+                  createBaseVNode("div", _hoisted_11, toDisplayString($props.order.orderNumber), 1)
+                ])
+              ]),
+              createBaseVNode("td", null, [
+                createBaseVNode("div", _hoisted_12, [
+                  _cache[3] || (_cache[3] = createBaseVNode("div", { class: "text-xs text-gray-500 mb-1" }, "Номер ТН", -1)),
+                  createBaseVNode("div", _hoisted_13, toDisplayString($props.order.invoiceNumber), 1)
+                ])
+              ]),
+              createBaseVNode("td", null, [
+                createBaseVNode("div", _hoisted_14, [
+                  _cache[4] || (_cache[4] = createBaseVNode("div", { class: "text-xs text-gray-500 mb-1" }, "Номер заказа клиента", -1)),
+                  createBaseVNode("div", _hoisted_15, toDisplayString($options.customerOrderNumberDisplay), 1)
+                ])
+              ])
             ]),
             createBaseVNode("tr", null, [
-              _cache[4] || (_cache[4] = createBaseVNode("td", { class: "font-medium text-brand-gray" }, "Номер заказа клиента", -1)),
-              createBaseVNode("td", null, toDisplayString($props.order.additionalCheck), 1),
-              _cache[5] || (_cache[5] = createBaseVNode("td", { class: "font-medium text-brand-gray" }, "Количество мест", -1)),
-              createBaseVNode("td", null, toDisplayString($props.order.numberSeats), 1)
-            ]),
-            createBaseVNode("tr", null, [
-              _cache[6] || (_cache[6] = createBaseVNode("td", { class: "font-medium text-brand-gray" }, "Вес, кг", -1)),
-              createBaseVNode("td", null, toDisplayString($props.order.weight), 1),
-              _cache[7] || (_cache[7] = createBaseVNode("td", { class: "font-medium text-brand-gray" }, "Объем, куб.м.", -1)),
-              createBaseVNode("td", null, toDisplayString($props.order.volume), 1)
+              createBaseVNode("td", null, [
+                createBaseVNode("div", _hoisted_16, [
+                  _cache[5] || (_cache[5] = createBaseVNode("div", { class: "text-xs text-gray-500 mb-1" }, "Количество мест", -1)),
+                  createBaseVNode("div", _hoisted_17, toDisplayString($props.order.numberSeats), 1)
+                ])
+              ]),
+              createBaseVNode("td", null, [
+                createBaseVNode("div", _hoisted_18, [
+                  _cache[6] || (_cache[6] = createBaseVNode("div", { class: "text-xs text-gray-500 mb-1" }, "Вес, кг", -1)),
+                  createBaseVNode("div", _hoisted_19, toDisplayString($props.order.weight), 1)
+                ])
+              ]),
+              createBaseVNode("td", null, [
+                createBaseVNode("div", _hoisted_20, [
+                  _cache[7] || (_cache[7] = createBaseVNode("div", { class: "text-xs text-gray-500 mb-1" }, "Объем, куб.м.", -1)),
+                  createBaseVNode("div", _hoisted_21, toDisplayString($props.order.volume), 1)
+                ])
+              ])
             ])
           ])
         ])

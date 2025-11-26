@@ -15,22 +15,44 @@
                 <table class="table w-full table-zebra">
                     <tbody>
                         <tr>
-                            <td class="font-medium text-brand-gray">Номер заказа</td>
-                            <td>{{ order.orderNumber }}</td>
-                            <td class="font-medium text-brand-gray">Номер ТН</td>
-                            <td>{{ order.invoiceNumber }}</td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <div class="text-xs text-gray-500 mb-1">Номер заказа</div>
+                                    <div class="text-base font-medium text-gray-600">{{ order.orderNumber }}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <div class="text-xs text-gray-500 mb-1">Номер ТН</div>
+                                    <div class="text-base font-medium text-gray-600">{{ order.invoiceNumber }}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <div class="text-xs text-gray-500 mb-1">Номер заказа клиента</div>
+                                    <div class="text-base font-medium text-gray-600">{{ customerOrderNumberDisplay }}</div>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
-                            <td class="font-medium text-brand-gray">Номер заказа клиента</td>
-                            <td>{{ order.additionalCheck }}</td>
-                            <td class="font-medium text-brand-gray">Количество мест</td>
-                            <td>{{ order.numberSeats }}</td>
-                        </tr>
-                        <tr>
-                            <td class="font-medium text-brand-gray">Вес, кг</td>
-                            <td>{{ order.weight }}</td>
-                            <td class="font-medium text-brand-gray">Объем, куб.м.</td>
-                            <td>{{ order.volume }}</td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <div class="text-xs text-gray-500 mb-1">Количество мест</div>
+                                    <div class="text-base font-medium text-gray-600">{{ order.numberSeats }}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <div class="text-xs text-gray-500 mb-1">Вес, кг</div>
+                                    <div class="text-base font-medium text-gray-600">{{ order.weight }}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <div class="text-xs text-gray-500 mb-1">Объем, куб.м.</div>
+                                    <div class="text-base font-medium text-gray-600">{{ order.volume }}</div>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -45,6 +67,14 @@ export default {
         order: {
             type: Object,
             required: true,
+        },
+    },
+    computed: {
+        customerOrderNumberDisplay() {
+            if (!this.order.customerOrderNumber || this.order.customerOrderNumber.trim() === '') {
+                return 'customerOrderNumber - не указан';
+            }
+            return this.order.customerOrderNumber;
         },
     },
 };
