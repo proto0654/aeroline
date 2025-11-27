@@ -215,21 +215,22 @@ const _sfc_main$a = {
   }
 };
 const CalculatorCheckboxInput = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-bcdd8af1"]]);
-const _hoisted_1$9 = { class: "flex items-center gap-2 mb-4" };
-const _hoisted_2$8 = { class: "text-sm font-medium text-gray-700" };
-const _hoisted_3$7 = { class: "space-y-3" };
-const _hoisted_4$7 = { class: "flex items-center gap-3" };
-const _hoisted_5$6 = ["id", "checked", "onChange"];
-const _hoisted_6$6 = ["for"];
-const _hoisted_7$6 = {
+const _hoisted_1$9 = { class: "hidden" };
+const _hoisted_2$8 = { class: "flex items-center gap-2 mb-4" };
+const _hoisted_3$7 = { class: "text-sm font-medium text-gray-700" };
+const _hoisted_4$7 = { class: "space-y-3" };
+const _hoisted_5$6 = { class: "flex items-center gap-3" };
+const _hoisted_6$6 = ["id", "checked", "onChange"];
+const _hoisted_7$6 = ["for"];
+const _hoisted_8$5 = {
   key: 0,
   class: "flex items-center gap-2"
 };
-const _hoisted_8$5 = { class: "text-sm text-gray-500" };
-const _hoisted_9$5 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
-const _hoisted_10$4 = ["disabled", "onClick"];
-const _hoisted_11$4 = { class: "px-3 py-1 bg-white text-center min-w-[40px] text-sm" };
-const _hoisted_12$4 = ["onClick"];
+const _hoisted_9$5 = { class: "text-sm text-gray-500" };
+const _hoisted_10$4 = { class: "flex items-center border border-gray-300 rounded-lg overflow-hidden" };
+const _hoisted_11$4 = ["disabled", "onClick"];
+const _hoisted_12$4 = { class: "px-3 py-1 bg-white text-center min-w-[40px] text-sm" };
+const _hoisted_13$4 = ["onClick"];
 const _sfc_main$9 = {
   __name: "PackagingSelector",
   props: {
@@ -311,9 +312,9 @@ const _sfc_main$9 = {
       }
     }
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", null, [
-        createBaseVNode("div", _hoisted_1$9, [
-          createBaseVNode("label", _hoisted_2$8, toDisplayString(__props.label), 1),
+      return openBlock(), createElementBlock("div", _hoisted_1$9, [
+        createBaseVNode("div", _hoisted_2$8, [
+          createBaseVNode("label", _hoisted_3$7, toDisplayString(__props.label), 1),
           _cache[0] || (_cache[0] = createBaseVNode("span", {
             class: "tooltip tooltip-bottom md:tooltip-right cursor-help mobile-tooltip-center",
             "data-tip": "Выберите необходимые типы упаковки. Вы можете заказать несколько типов одновременно. Стоимость упаковки будет добавлена к общей стоимости доставки."
@@ -321,40 +322,40 @@ const _sfc_main$9 = {
             createBaseVNode("span", { class: "inline-flex items-center justify-center w-5 h-5 text-sm border border-gray-400 rounded-full text-gray-600 hover:bg-gray-100" }, "?")
           ], -1))
         ]),
-        createBaseVNode("div", _hoisted_3$7, [
+        createBaseVNode("div", _hoisted_4$7, [
           (openBlock(true), createElementBlock(Fragment, null, renderList(__props.options, (option) => {
             return openBlock(), createElementBlock("div", {
               key: option.value,
               class: "flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
             }, [
-              createBaseVNode("div", _hoisted_4$7, [
+              createBaseVNode("div", _hoisted_5$6, [
                 createBaseVNode("input", {
                   id: `${__props.name}_${option.value}`,
                   type: "checkbox",
                   checked: isSelected(option.value),
                   onChange: ($event) => toggleSelection(option.value),
                   class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                }, null, 40, _hoisted_5$6),
+                }, null, 40, _hoisted_6$6),
                 createBaseVNode("label", {
                   for: `${__props.name}_${option.value}`,
                   class: "text-sm font-medium text-gray-700 cursor-pointer"
-                }, toDisplayString(option.label), 9, _hoisted_6$6)
+                }, toDisplayString(option.label), 9, _hoisted_7$6)
               ]),
-              isSelected(option.value) ? (openBlock(), createElementBlock("div", _hoisted_7$6, [
-                createBaseVNode("span", _hoisted_8$5, toDisplayString(getUnitLabel(option.value)), 1),
-                createBaseVNode("div", _hoisted_9$5, [
+              isSelected(option.value) ? (openBlock(), createElementBlock("div", _hoisted_8$5, [
+                createBaseVNode("span", _hoisted_9$5, toDisplayString(getUnitLabel(option.value)), 1),
+                createBaseVNode("div", _hoisted_10$4, [
                   createBaseVNode("button", {
                     type: "button",
                     class: "px-3 py-1 text-gray-700 hover:bg-brand-blue hover:text-white disabled:bg-gray-100 disabled:text-gray-300",
                     disabled: getQuantity(option.value) <= 1,
                     onClick: ($event) => decrementQuantity(option.value)
-                  }, " − ", 8, _hoisted_10$4),
-                  createBaseVNode("span", _hoisted_11$4, toDisplayString(getQuantity(option.value)), 1),
+                  }, " − ", 8, _hoisted_11$4),
+                  createBaseVNode("span", _hoisted_12$4, toDisplayString(getQuantity(option.value)), 1),
                   createBaseVNode("button", {
                     type: "button",
                     class: "px-3 py-1 text-gray-700 hover:bg-brand-blue hover:text-white",
                     onClick: ($event) => incrementQuantity(option.value)
-                  }, " + ", 8, _hoisted_12$4)
+                  }, " + ", 8, _hoisted_13$4)
                 ])
               ])) : createCommentVNode("", true)
             ]);
@@ -364,7 +365,7 @@ const _sfc_main$9 = {
     };
   }
 };
-const PackagingSelector = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-6f38001a"]]);
+const PackagingSelector = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-6f1a47f2"]]);
 const _hoisted_1$8 = { class: "flex flex-col gap-4" };
 const _hoisted_2$7 = { class: "grid grid-cols-1 md:grid-cols-3 gap-4 [&_.text-input-vue>input]:text-center" };
 const _hoisted_3$6 = { class: "flex flex-col gap-2" };

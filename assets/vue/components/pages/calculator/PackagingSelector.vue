@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="hidden">
         <!-- Заголовок с tooltip -->
         <div class="flex items-center gap-2 mb-4">
             <label class="text-sm font-medium text-gray-700">{{ label }}</label>
