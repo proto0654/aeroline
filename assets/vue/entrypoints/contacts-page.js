@@ -17,15 +17,55 @@ const loadContactsData = async () => {
   error.value = null;
   
   try {
-    // Загружаем офисы и населенные пункты из API
-    const officesData = await apiService.getBillingAddressesWithRelations();
-    const localitiesData = await apiService.getLocalitiesWithRelations();
+    // Загружаем терминалы и населенные пункты из API
+    const [terminalsData, localitiesData] = await Promise.all([
+      apiService.getTerminals(),
+      apiService.getLocalitiesWithRelations()
+    ]);
     
-    offices.value = officesData;
+    console.log("Терминалы загружены:", terminalsData.length);
+    
+    // Используем данные терминалов напрямую (терминалы уже содержат все необходимые данные)
+    const mergedOffices = terminalsData
+      .map(terminal => {
+        // Преобразуем координаты из строки "lat, lng" в массив [lat, lng]
+        let coordinates = [];
+        if (terminal.coordinates) {
+          const coords = terminal.coordinates.split(',').map(c => parseFloat(c.trim()));
+          if (coords.length === 2 && !isNaN(coords[0]) && !isNaN(coords[1])) {
+            coordinates = coords;
+          }
+        }
+        
+        // Если координат нет, пропускаем терминал
+        if (coordinates.length !== 2) {
+          console.warn(`Координаты не найдены или некорректны для терминала ${terminal.uid}: ${terminal.coordinates}`);
+          return null;
+        }
+        
+        // Используем fullName из терминала как адрес (уже содержит полный адрес)
+        // Если fullName нет, используем representation как fallback
+        const address = terminal.fullName || terminal.representation || '';
+        
+        return {
+          id: terminal.uid,
+          city: terminal.locality || '',
+          address: address,
+          type: terminal.type || '',
+          phone: terminal.phone || '',
+          email: terminal.email || '',
+          coordinates: coordinates
+        };
+      })
+      .filter(office => office !== null && office.coordinates && office.coordinates.length === 2);
+    
+    offices.value = mergedOffices;
     localities.value = localitiesData;
     
-    // Используем localities для городов вместо извлечения из офисов
+    // Используем localities для городов
     cities.value = localitiesData.map(locality => locality.name);
+    
+    console.log("Данные офисов (терминалов) загружены и объединены:", offices.value.length);
     
   } catch (err) {
     console.error('Ошибка загрузки контактов:', err);

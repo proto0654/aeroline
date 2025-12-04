@@ -48,8 +48,9 @@ export function initVacanciesPage() {
 
 /**
  * Инициализация пагинации для вакансий
+ * Экспортируем для использования в Vue entrypoint
  */
-function initVacanciesPagination() {
+export function initVacanciesPagination() {
   console.log('VacanciesPage: Проверка контейнеров для пагинации...');
   
   // Проверяем наличие необходимых контейнеров
@@ -70,12 +71,13 @@ function initVacanciesPagination() {
     }
     
     // Создаем экземпляр пагинации с настройками для вакансий
+    // Фильтрация по городу теперь происходит в Vue компоненте до создания элементов
     vacanciesPagination = new Pagination({
       containerSelector: '.vacancies-container',
       itemSelector: '.vacancy-item',
       paginationSelector: '.pagination-container',
       itemsPerPage: 5, // Количество вакансий на странице
-      filterSelector: '#cityFilter',
+      // filterSelector больше не используется, фильтрация в Vue
       filterAttribute: 'data-location',
       useDisplayNone: true // Используем display: none вместо класса hidden для вакансий
     });

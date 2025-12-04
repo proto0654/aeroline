@@ -27,83 +27,13 @@
 
 
   <!-- Фильтр по городу -->
-  <div class="flex justify-center mb-6 md:mb-10 px-4">
-    <div class="relative w-full md:max-w-xs">
-      <select id="cityFilter" class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 w-full focus:outline-none text-body-secondary">
-        <option value="all">Все города</option>
-        {{#each cities}}
-        <option value="{{this}}">{{this}}</option>
-        {{/each}}
-      </select>
-      <img src="{{basePath}}assets/img/select-arrow.svg" alt="" class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-    </div>
+  <div class="flex justify-center my-6 md:my-10 px-4">
+    <div id="city-filter-app"></div>
   </div>
 
   <!-- Список вакансий -->
   <section class="space-y-4 md:space-y-6 mb-10 w-full vacancies-container px-4 max-w-[1200px] mx-auto">
-    {{#each vacancies}}
-    <div class="vacancy-item bg-brand-light rounded-xl overflow-hidden p-2" data-location="{{location}}">
-      <button type="button" class="w-full flex justify-between items-center p-1 md:px-3 md:py-3 focus:outline-none vacancy-toggle">
-        <div>
-          <div class="font-bold text-h6 md:text-h5 text-brand-gray mb-1 text-left px-2 leading-1.2">{{title}}</div>
-          <div class="text-brand-blue font-bold text-base md:text-lg text-left px-2">{{salary}} <span class="text-brand-gray font-normal">{{location}}</span></div>
-        </div>
-        <div class="bg-white p-3 rounded-full ml-5 md:ml-0">
-          <svg class="w-5 h-5 text-brand-gray transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-        </div>
-      </button>
-      <div class="vacancy-content hidden px-4 pb-4 md:px-5 md:pb-6">
-        {{#if description}}
-        <div class="text-base">
-          <hr class="border-t border-t-2 border-white mb-4">
-          {{description}}
-        </div>
-        {{else}}
-        <hr class="border-t border-t-2 border-white mb-4">
-        <div class="grid md:grid-cols-3 gap-6 items-start">
-          <div class="md:col-span-2">
-            {{#if duties}}
-            <div class="mb-2 font-semibold">Обязанности</div>
-            <ul class="list-disc list-inside text-base mb-4">
-              {{#each duties}}
-              <li>{{this}}</li>
-              {{/each}}
-            </ul>
-            {{/if}}
-            
-            {{#if requirements}}
-            <div class="mb-2 font-semibold">Требования</div>
-            <ul class="list-disc list-inside text-base mb-4">
-              {{#each requirements}}
-              <li>{{this}}</li>
-              {{/each}}
-            </ul>
-            {{/if}}
-            
-            {{#if conditions}}
-            <div class="mb-2 font-semibold">Условия</div>
-            <ul class="list-disc list-inside text-sm md:text-base">
-              {{#each conditions}}
-              <li>{{this}}</li>
-              {{/each}}
-            </ul>
-            {{/if}}
-          </div>
-          <div class="bg-brand-white rounded-lg p-8 rounded-xl flex flex-col justify-between gap-4">
-            <div>
-              <div class="font-semibold mb-2 text-h5">Обращаться по телефону</div>
-              {{#if contact}}
-              <div class="mb-2">{{contact.phone}}</div>
-              <div class="mb-2">Контактное лицо: {{contact.person}}</div>
-              <div class="mb-2">Email: {{contact.email}}</div>
-              {{/if}}
-            </div>
-          </div>
-        </div>
-        {{/if}}
-      </div>
-    </div>
-    {{/each}}
+    <!-- Вакансии будут загружены через Vue -->
   </section>
   
   <!-- Пагинация -->
@@ -112,6 +42,7 @@
   </div>
 </main>
 
+<script type="module" src="{{basePath}}assets/vue/entrypoints/vacancies-page.js"></script>
 <script type="module" src="{{basePath}}assets/js/page-entrypoints/vacancies.js"></script>
 
 {{> footer menuType="main"}}

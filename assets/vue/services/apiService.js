@@ -962,6 +962,36 @@ class ApiService {
         
         return cityName;
     }
+
+    // ========== МЕТОДЫ ДЛЯ РАБОТЫ С ВАКАНСИЯМИ ==========
+
+    // Получение всех вакансий
+    async getVacancies() {
+        try {
+            const response = await fetch(`${this.baseUrl}/vacancies`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении вакансий:', error);
+            throw error;
+        }
+    }
+
+    // Получение вакансий по городу
+    async getVacanciesByCity(city) {
+        try {
+            const response = await fetch(`${this.baseUrl}/vacancies?city=${encodeURIComponent(city)}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка при получении вакансий по городу:', error);
+            throw error;
+        }
+    }
 }
 
 // Создаем экземпляр сервиса

@@ -341,24 +341,53 @@ export async function initMap(basePath) {
 
       let offices = [];
 
-      // Загружаем данные из API
-      const response = await fetch('https://08615a563fb9b4f8.mokky.dev/billingAddresses');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      // Загружаем терминалы из API
+      const baseUrl = 'https://08615a563fb9b4f8.mokky.dev';
+      
+      const terminalsResponse = await fetch(`${baseUrl}/terminals`);
+      
+      if (!terminalsResponse.ok) {
+        throw new Error(`HTTP error! status: ${terminalsResponse.status}`);
       }
       
-      const apiData = await response.json();
-      // Конвертируем данные API в формат, ожидаемый картой
-      // В новой структуре billingAddresses содержит поле locality как строку
-      offices = apiData.map(addr => ({
-        city: addr.locality || addr.city || '',
-        address: addr.street ? `${addr.street} ${addr.houseNumber || ''}`.trim() : (addr.address || ''),
-        type: addr.type || '',
-        phone: addr.phone || '',
-        email: addr.email || '',
-        coordinates: addr.coordinates || []
-      }));
-      console.log("Данные офисов загружены из API:", offices.length);
+      const terminalsData = await terminalsResponse.json();
+      
+      console.log("Терминалы загружены из API:", terminalsData.length);
+      
+      // Используем данные терминалов напрямую (терминалы уже содержат все необходимые данные)
+      offices = terminalsData
+        .map(terminal => {
+          // Преобразуем координаты из строки "lat, lng" в массив [lat, lng]
+          let coordinates = [];
+          if (terminal.coordinates) {
+            const coords = terminal.coordinates.split(',').map(c => parseFloat(c.trim()));
+            if (coords.length === 2 && !isNaN(coords[0]) && !isNaN(coords[1])) {
+              coordinates = coords;
+            }
+          }
+          
+          // Если координат нет, пропускаем терминал
+          if (coordinates.length !== 2) {
+            console.warn(`Координаты не найдены или некорректны для терминала ${terminal.uid}: ${terminal.coordinates}`);
+            return null;
+          }
+          
+          // Используем fullName из терминала как адрес (уже содержит полный адрес)
+          // Если fullName нет, используем representation как fallback
+          const address = terminal.fullName || terminal.representation || '';
+          
+          return {
+            city: terminal.locality || '',
+            address: address,
+            type: terminal.type || '',
+            phone: terminal.phone || '',
+            email: terminal.email || '',
+            coordinates: coordinates
+          };
+        })
+        .filter(office => office !== null && office.coordinates && office.coordinates.length === 2);
+      
+      console.log("Данные офисов (терминалов) загружены:", offices.length);
 
 
       // Центрируем карту с учетом типа устройства
