@@ -48,7 +48,6 @@
 import { ref, computed, onMounted } from 'vue';
 import { useGlobalModalStore } from '../stores/globalModal';
 import NewsDetailModal from './modals/NewsDetailModal.vue';
-import newsData from '../../data/news.json'; // Using mock data for now
 
 // Функция для корректного формирования пути к картинке
 const getImageUrl = (imgPath) => {
@@ -61,17 +60,37 @@ export default {
   name: 'HomePageNews',
   setup() {
     const modalStore = useGlobalModalStore();
+    const news = ref([]);
+    const loading = ref(true);
 
-    // Assuming newsData is an array of news objects
-    // Sort by date and take the latest 3
-    const latestNews = computed(() => {
-      // Simple date parsing, adjust if format is different
-      // Correcting to access the news array from the imported object
-      if (!newsData || !Array.isArray(newsData.news)) {
-        console.error('Expected newsData.news to be an array, but got:', newsData);
-        return []; // Return empty array to prevent errors
+    // Загрузка данных из API
+    onMounted(async () => {
+      try {
+        const apiUrl = 'https://08615a563fb9b4f8.mokky.dev/news';
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        // API возвращает массив напрямую
+        const newsArray = Array.isArray(data) ? data : (data.news || []);
+        news.value = newsArray;
+        loading.value = false;
+      } catch (error) {
+        console.error('Error loading news:', error);
+        news.value = [];
+        loading.value = false;
       }
-      const sortedNews = [...newsData.news].sort((a, b) => new Date(b.date) - new Date(a.date));
+    });
+
+    // Sort by timestamp and take the latest 3
+    const latestNews = computed(() => {
+      if (!news.value || !Array.isArray(news.value)) {
+        return [];
+      }
+      // Сортируем по timestamp (убывание) и берем первые 3
+      const sortedNews = [...news.value].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
       return sortedNews.slice(0, 3);
     });
 
@@ -88,6 +107,7 @@ export default {
       latestNews,
       openNewsModal,
       getImageUrl,
+      loading,
     };
   },
 };

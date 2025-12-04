@@ -50,20 +50,40 @@ watch(() => props.initialRange, (newRange) => {
 // Отслеживание изменений dateRange и эмитирование события
 watch(dateRange, (newRange) => {
   console.log('DateRangePickerVue: dateRange changed, emitting update:range', newRange);
-  // Emit null if range is cleared, otherwise emit the range array
-  if (!newRange || newRange.length !== 2 || !newRange[0] || !newRange[1]) {
+  // Обрабатываем разные случаи выбора дат
+  if (!newRange || !Array.isArray(newRange) || newRange.length === 0) {
     emit('update:range', { start: null, end: null });
+  } else if (newRange.length === 1 && newRange[0]) {
+    // Если выбрана только одна дата, используем её как start и end
+    emit('update:range', { start: newRange[0], end: newRange[0] });
+  } else if (newRange.length === 2) {
+    // Если выбраны две даты
+    if (newRange[0] && newRange[1]) {
+      emit('update:range', { start: newRange[0], end: newRange[1] });
+    } else if (newRange[0] && !newRange[1]) {
+      // Если выбрана только первая дата
+      emit('update:range', { start: newRange[0], end: newRange[0] });
+    } else if (!newRange[0] && newRange[1]) {
+      // Если выбрана только вторая дата
+      emit('update:range', { start: newRange[1], end: newRange[1] });
+    } else {
+      emit('update:range', { start: null, end: null });
+    }
   } else {
-    emit('update:range', { start: newRange[0], end: newRange[1] });
+    emit('update:range', { start: null, end: null });
   }
 });
 
 // Обработчик изменения диапазона дат
 const handleChange = (newRange) => {
   dateRange.value = newRange;
-  // Если выбран полный диапазон (2 даты) и опция включена — закрываем попап
-  if (props.closeOnSelect && Array.isArray(newRange) && newRange.length === 2 && newRange[0] && newRange[1]) {
-    isOpen.value = false;
+  // Если выбрана одна дата или полный диапазон (2 даты) и опция включена — закрываем попап
+  if (props.closeOnSelect && Array.isArray(newRange)) {
+    // Закрываем попап если выбрана одна дата или обе даты
+    if ((newRange.length === 1 && newRange[0]) || 
+        (newRange.length === 2 && newRange[0] && newRange[1])) {
+      isOpen.value = false;
+    }
   }
 };
 

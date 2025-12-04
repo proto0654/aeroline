@@ -96,7 +96,19 @@ function getContactsData() {
 // Загрузка данных о новостях из JSON
 function getNewsData() {
   try {
-    const newsData = fs.readFileSync("./assets/data/news.json", "utf-8");
+    // Пробуем сначала news.json, потом news1.json
+    let newsData;
+    try {
+      newsData = fs.readFileSync("./assets/data/news.json", "utf-8");
+    } catch (e) {
+      // Если news.json не найден, пробуем news1.json
+      try {
+        newsData = fs.readFileSync("./assets/data/news1.json", "utf-8");
+      } catch (e2) {
+        throw new Error("Neither news.json nor news1.json found");
+      }
+    }
+    
     const data = JSON.parse(newsData);
 
     // Vue компонент теперь управляет пагинацией и отображением новостей,

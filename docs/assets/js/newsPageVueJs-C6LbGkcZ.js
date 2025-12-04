@@ -2,7 +2,7 @@ import { c as computed, a as createElementBlock, o as openBlock, b as createBase
 import { _ as _sfc_main$4, a as __vite_glob_0_6, b as __vite_glob_0_5, c as __vite_glob_0_4, d as __vite_glob_0_3, e as __vite_glob_0_2, f as __vite_glob_0_1, g as __vite_glob_0_0 } from "./chunks/NewsDetailModal-Dr9kf68J.js";
 import { u as useGlobalModalStore } from "./chunks/globalModal-DF8292GH.js";
 import { _ as _export_sfc } from "./chunks/_plugin-vue_export-helper-1tPrXgE0.js";
-import { D as DateRangeFilter } from "./chunks/DateRangeFilter-_XW56hCZ.js";
+import { D as DateRangeFilter } from "./chunks/DateRangeFilter-_0qYugai.js";
 import "./chunks/ru.es-EKHWBIgh.js";
 import "./lkDatepickerJs-DWvQwp-x.js";
 const _hoisted_1$3 = {
@@ -264,17 +264,67 @@ const _sfc_main = {
     const defaultEndDate = ref(null);
     onMounted(async () => {
       try {
-        const jsonUrl = `${"./"}assets/data/news.json`;
-        const response = await fetch(jsonUrl);
+        const apiUrl = "https://08615a563fb9b4f8.mokky.dev/news";
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        news.value = data.news.map((item) => ({
-          ...item,
-          // Преобразуем timestamp в объект Date для удобства фильтрации
-          dateObject: new Date(item.timestamp * 1e3)
-        })).sort((a, b) => b.timestamp - a.timestamp);
+        const newsArray = Array.isArray(data) ? data : data.news || [];
+        const parseDateString = (dateStr) => {
+          if (!dateStr) return null;
+          const months = {
+            "январь": 0,
+            "февраль": 1,
+            "март": 2,
+            "апрель": 3,
+            "май": 4,
+            "июнь": 5,
+            "июль": 6,
+            "август": 7,
+            "сентябрь": 8,
+            "октябрь": 9,
+            "ноябрь": 10,
+            "декабрь": 11
+          };
+          const parts = dateStr.toLowerCase().split(" ");
+          if (parts.length >= 3) {
+            const day = parseInt(parts[0]);
+            const monthName = parts[1];
+            const year = parseInt(parts[2]);
+            if (months.hasOwnProperty(monthName)) {
+              return new Date(year, months[monthName], day);
+            }
+          }
+          return null;
+        };
+        news.value = newsArray.map((item) => {
+          let dateObj = null;
+          if (item.date) {
+            const parsedDate = parseDateString(item.date);
+            if (parsedDate) {
+              dateObj = parsedDate;
+            }
+          }
+          if (!dateObj && item.timestamp) {
+            dateObj = new Date(item.timestamp * 1e3);
+            const localDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+            dateObj = localDate;
+          }
+          if (item.id === "15" || item.id === 15 || item.date && item.date.includes("5 май")) {
+            console.log(`[DEBUG LOAD] Item ID: ${item.id}, timestamp: ${item.timestamp}, date: ${item.date}, dateObject: ${dateObj}, dateString: ${dateObj ? dateObj.toISOString().split("T")[0] : "null"}`);
+          }
+          return {
+            ...item,
+            // Преобразуем timestamp в объект Date для удобства фильтрации
+            dateObject: dateObj || /* @__PURE__ */ new Date()
+          };
+        }).sort((a, b) => {
+          if (a.dateObject && b.dateObject) {
+            return b.dateObject.getTime() - a.dateObject.getTime();
+          }
+          return (b.timestamp || 0) - (a.timestamp || 0);
+        });
         if (data.itemsPerPage) {
           itemsPerPage.value = data.itemsPerPage;
         }
@@ -307,11 +357,26 @@ const _sfc_main = {
         const itemDate = new Date(item.dateObject.getFullYear(), item.dateObject.getMonth(), item.dateObject.getDate());
         const startFilterDate = startDateFilter.value ? new Date(startDateFilter.value.getFullYear(), startDateFilter.value.getMonth(), startDateFilter.value.getDate()) : null;
         const endFilterDate = endDateFilter.value ? new Date(endDateFilter.value.getFullYear(), endDateFilter.value.getMonth(), endDateFilter.value.getDate()) : null;
-        if (endFilterDate) {
-          endFilterDate.setDate(endFilterDate.getDate() + 1);
+        const isSingleDate = startFilterDate && endFilterDate && startFilterDate.getTime() === endFilterDate.getTime();
+        if (isSingleDate) {
+          const itemDateStr = `${itemDate.getFullYear()}-${String(itemDate.getMonth() + 1).padStart(2, "0")}-${String(itemDate.getDate()).padStart(2, "0")}`;
+          const filterDateStr = `${startFilterDate.getFullYear()}-${String(startFilterDate.getMonth() + 1).padStart(2, "0")}-${String(startFilterDate.getDate()).padStart(2, "0")}`;
+          const match = itemDateStr === filterDateStr;
+          if (item.id === "15" || item.id === 15) {
+            console.log(`[DEBUG] Item ID: ${item.id}, timestamp: ${item.timestamp}, dateObject: ${item.dateObject}, itemDate: ${itemDateStr}, filterDate: ${filterDateStr}, match: ${match}`);
+          }
+          return match;
         }
-        const startMatch = startFilterDate ? itemDate >= startFilterDate : true;
-        const endMatch = endFilterDate ? itemDate < endFilterDate : true;
+        let startMatch = true;
+        let endMatch = true;
+        if (startFilterDate) {
+          startMatch = itemDate >= startFilterDate;
+        }
+        if (endFilterDate) {
+          const endFilterDatePlusOne = new Date(endFilterDate);
+          endFilterDatePlusOne.setDate(endFilterDatePlusOne.getDate() + 1);
+          endMatch = itemDate < endFilterDatePlusOne;
+        }
         return startMatch && endMatch;
       });
     });
@@ -332,8 +397,16 @@ const _sfc_main = {
     };
     const handleDateRangeChanged = (payload) => {
       console.log("NewsPageContainer: handleDateRangeChanged вызван с payload:", payload);
-      startDateFilter.value = payload.start || null;
-      endDateFilter.value = payload.end || null;
+      if (payload.start && !payload.end) {
+        startDateFilter.value = payload.start;
+        endDateFilter.value = payload.start;
+      } else if (!payload.start && payload.end) {
+        startDateFilter.value = payload.end;
+        endDateFilter.value = payload.end;
+      } else {
+        startDateFilter.value = payload.start || null;
+        endDateFilter.value = payload.end || null;
+      }
       currentPage.value = 1;
       console.log("NewsPageContainer: Фильтры дат установлены: startDateFilter=", startDateFilter.value, "endDateFilter=", endDateFilter.value);
     };
@@ -357,7 +430,7 @@ const _sfc_main = {
     };
   }
 };
-const NewsPageContainer = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-54bf766e"]]);
+const NewsPageContainer = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-cbbdc146"]]);
 const newsPageApp = createApp(NewsPageContainer);
 const newsPageElement = document.getElementById("news-page-app");
 if (newsPageElement) {

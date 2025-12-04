@@ -37,21 +37,73 @@ const defaultEndDate = ref(null);
 // Загрузка данных
 onMounted(async () => {
   try {
-    // Формируем универсальный путь к JSON с учётом base
-    const jsonUrl = `${import.meta.env.BASE_URL}assets/data/news.json`;
-    const response = await fetch(jsonUrl);
+    // Загружаем данные из API
+    const apiUrl = 'https://08615a563fb9b4f8.mokky.dev/news';
+    const response = await fetch(apiUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
 
-    news.value = data.news.map(item => ({
-      ...item,
-      // Преобразуем timestamp в объект Date для удобства фильтрации
-      dateObject: new Date(item.timestamp * 1000)
-    })).sort((a, b) => b.timestamp - a.timestamp); // Сортируем по убыванию даты
+    // API возвращает массив напрямую, а не объект с полем news
+    const newsArray = Array.isArray(data) ? data : (data.news || []);
+    
+    // Функция для парсинга даты из строки формата "5 май 2025"
+    const parseDateString = (dateStr) => {
+      if (!dateStr) return null;
+      const months = {
+        'январь': 0, 'февраль': 1, 'март': 2, 'апрель': 3, 'май': 4, 'июнь': 5,
+        'июль': 6, 'август': 7, 'сентябрь': 8, 'октябрь': 9, 'ноябрь': 10, 'декабрь': 11
+      };
+      const parts = dateStr.toLowerCase().split(' ');
+      if (parts.length >= 3) {
+        const day = parseInt(parts[0]);
+        const monthName = parts[1];
+        const year = parseInt(parts[2]);
+        if (months.hasOwnProperty(monthName)) {
+          return new Date(year, months[monthName], day);
+        }
+      }
+      return null;
+    };
 
-    // Если в news.json есть itemsPerPage, используем его
+    news.value = newsArray.map(item => {
+      // Пробуем использовать поле date для точной даты, если оно есть
+      let dateObj = null;
+      if (item.date) {
+        const parsedDate = parseDateString(item.date);
+        if (parsedDate) {
+          dateObj = parsedDate;
+        }
+      }
+      
+      // Если не удалось распарсить date, используем timestamp
+      if (!dateObj && item.timestamp) {
+        dateObj = new Date(item.timestamp * 1000);
+        // Корректируем на локальное время: берем только дату без времени
+        const localDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+        dateObj = localDate;
+      }
+      
+      // Логирование для отладки новостей за май 2025
+      if (item.id === '15' || item.id === 15 || (item.date && item.date.includes('5 май'))) {
+        console.log(`[DEBUG LOAD] Item ID: ${item.id}, timestamp: ${item.timestamp}, date: ${item.date}, dateObject: ${dateObj}, dateString: ${dateObj ? dateObj.toISOString().split('T')[0] : 'null'}`);
+      }
+      
+      return {
+        ...item,
+        // Преобразуем timestamp в объект Date для удобства фильтрации
+        dateObject: dateObj || new Date()
+      };
+    }).sort((a, b) => {
+      // Сортируем по dateObject, если есть, иначе по timestamp
+      if (a.dateObject && b.dateObject) {
+        return b.dateObject.getTime() - a.dateObject.getTime();
+      }
+      return (b.timestamp || 0) - (a.timestamp || 0);
+    });
+
+    // Если в данных есть itemsPerPage, используем его
     if (data.itemsPerPage) {
       itemsPerPage.value = data.itemsPerPage;
     }
@@ -90,20 +142,50 @@ const filteredNews = computed(() => {
   }
 
   return news.value.filter(item => {
+    // Нормализуем дату новости: создаем новую дату только с годом, месяцем и днем (без времени)
     const itemDate = new Date(item.dateObject.getFullYear(), item.dateObject.getMonth(), item.dateObject.getDate());
 
+    // Нормализуем даты фильтра (убираем время, оставляем только дату)
     const startFilterDate = startDateFilter.value ? new Date(startDateFilter.value.getFullYear(), startDateFilter.value.getMonth(), startDateFilter.value.getDate()) : null;
     const endFilterDate = endDateFilter.value ? new Date(endDateFilter.value.getFullYear(), endDateFilter.value.getMonth(), endDateFilter.value.getDate()) : null;
 
-    // Добавим +1 день к endFilterDate, чтобы включить весь последний день диапазона
-    if (endFilterDate) {
-      endFilterDate.setDate(endFilterDate.getDate() + 1);
+    // Проверяем, выбрана ли только одна дата (точная дата)
+    const isSingleDate = startFilterDate && endFilterDate && 
+      startFilterDate.getTime() === endFilterDate.getTime();
+    
+    // Если выбрана только одна дата, фильтруем по точной дате
+    if (isSingleDate) {
+      // Сравниваем даты по строковому представлению YYYY-MM-DD для надежности
+      const itemDateStr = `${itemDate.getFullYear()}-${String(itemDate.getMonth() + 1).padStart(2, '0')}-${String(itemDate.getDate()).padStart(2, '0')}`;
+      const filterDateStr = `${startFilterDate.getFullYear()}-${String(startFilterDate.getMonth() + 1).padStart(2, '0')}-${String(startFilterDate.getDate()).padStart(2, '0')}`;
+      const match = itemDateStr === filterDateStr;
+      
+      // Логирование для отладки (временно включено)
+      if (item.id === '15' || item.id === 15) {
+        console.log(`[DEBUG] Item ID: ${item.id}, timestamp: ${item.timestamp}, dateObject: ${item.dateObject}, itemDate: ${itemDateStr}, filterDate: ${filterDateStr}, match: ${match}`);
+      }
+      
+      return match;
     }
 
-    const startMatch = startFilterDate ? itemDate >= startFilterDate : true;
-    const endMatch = endFilterDate ? itemDate < endFilterDate : true; // Используем < для исключения следующего дня
+    // Если выбран диапазон дат
+    // Если есть только startDate, фильтруем от этой даты и дальше
+    // Если есть только endDate, фильтруем до этой даты включительно
+    let startMatch = true;
+    let endMatch = true;
 
-    // Логирование для отладки каждой новости
+    if (startFilterDate) {
+      startMatch = itemDate >= startFilterDate;
+    }
+
+    if (endFilterDate) {
+      // Добавим +1 день к endFilterDate, чтобы включить весь последний день диапазона
+      const endFilterDatePlusOne = new Date(endFilterDate);
+      endFilterDatePlusOne.setDate(endFilterDatePlusOne.getDate() + 1);
+      endMatch = itemDate < endFilterDatePlusOne;
+    }
+
+    // Логирование для отладки
     // console.log(`Item ID: ${item.id}, ItemDate: ${itemDate.toISOString().split('T')[0]}`);
     // console.log(`  Filter: Start: ${startFilterDate ? startFilterDate.toISOString().split('T')[0] : 'N/A'}, End: ${endFilterDate ? endFilterDate.toISOString().split('T')[0] : 'N/A'}`);
     // console.log(`  Match: Start: ${startMatch}, End: ${endMatch}, Overall: ${startMatch && endMatch}`);
@@ -134,8 +216,20 @@ const updateCurrentPage = (page) => {
 const handleDateRangeChanged = (payload) => {
   console.log('NewsPageContainer: handleDateRangeChanged вызван с payload:', payload);
   // payload.start и payload.end уже являются объектами Date
-  startDateFilter.value = payload.start || null;
-  endDateFilter.value = payload.end || null;
+  // Если выбрана только одна дата, устанавливаем её как startDate и endDate
+  if (payload.start && !payload.end) {
+    // Если есть только start, используем его как единственную дату
+    startDateFilter.value = payload.start;
+    endDateFilter.value = payload.start;
+  } else if (!payload.start && payload.end) {
+    // Если есть только end, используем его как единственную дату
+    startDateFilter.value = payload.end;
+    endDateFilter.value = payload.end;
+  } else {
+    // Если есть обе даты или обе null
+    startDateFilter.value = payload.start || null;
+    endDateFilter.value = payload.end || null;
+  }
   currentPage.value = 1; // Сброс страницы при изменении фильтра
   console.log('NewsPageContainer: Фильтры дат установлены: startDateFilter=', startDateFilter.value, 'endDateFilter=', endDateFilter.value);
 };

@@ -37,16 +37,30 @@ const _sfc_main$1 = {
     }, { immediate: true });
     watch(dateRange, (newRange) => {
       console.log("DateRangePickerVue: dateRange changed, emitting update:range", newRange);
-      if (!newRange || newRange.length !== 2 || !newRange[0] || !newRange[1]) {
+      if (!newRange || !Array.isArray(newRange) || newRange.length === 0) {
         emit("update:range", { start: null, end: null });
+      } else if (newRange.length === 1 && newRange[0]) {
+        emit("update:range", { start: newRange[0], end: newRange[0] });
+      } else if (newRange.length === 2) {
+        if (newRange[0] && newRange[1]) {
+          emit("update:range", { start: newRange[0], end: newRange[1] });
+        } else if (newRange[0] && !newRange[1]) {
+          emit("update:range", { start: newRange[0], end: newRange[0] });
+        } else if (!newRange[0] && newRange[1]) {
+          emit("update:range", { start: newRange[1], end: newRange[1] });
+        } else {
+          emit("update:range", { start: null, end: null });
+        }
       } else {
-        emit("update:range", { start: newRange[0], end: newRange[1] });
+        emit("update:range", { start: null, end: null });
       }
     });
     const handleChange = (newRange) => {
       dateRange.value = newRange;
-      if (props.closeOnSelect && Array.isArray(newRange) && newRange.length === 2 && newRange[0] && newRange[1]) {
-        isOpen.value = false;
+      if (props.closeOnSelect && Array.isArray(newRange)) {
+        if (newRange.length === 1 && newRange[0] || newRange.length === 2 && newRange[0] && newRange[1]) {
+          isOpen.value = false;
+        }
       }
     };
     const handleClose = () => {
@@ -78,7 +92,7 @@ const _sfc_main$1 = {
     };
   }
 };
-const DateRangePickerVue = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-200713a2"]]);
+const DateRangePickerVue = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-f4d8fb39"]]);
 const _hoisted_1 = { class: "date-range-filter mb-6" };
 const _sfc_main = {
   __name: "DateRangeFilter",
