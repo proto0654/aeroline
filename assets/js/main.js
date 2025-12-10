@@ -121,7 +121,9 @@ function initializePage() {
 
   // Определяем текущую страницу и инициализируем соответствующий функционал
   const pathname = window.location.pathname;
-  const currentPage = pathname.split('/').pop();
+  // Убираем начальный и конечный слеши, разбиваем и берем последний непустой элемент
+  const pathParts = pathname.replace(/^\/|\/$/g, '').split('/').filter(Boolean);
+  const currentPage = pathParts.length > 0 ? pathParts[pathParts.length - 1] : 'index';
   
   console.log(`Текущий путь: ${pathname}, определена страница: ${currentPage || 'главная (индекс)'}`);
 

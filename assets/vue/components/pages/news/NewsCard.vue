@@ -40,8 +40,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue';
-import { useGlobalModalStore } from '../../../stores/globalModal';
+import { defineProps, computed, onMounted, ref } from 'vue';
 import NewsDetailModal from '../../modals/NewsDetailModal.vue';
 
 // Импортируем все картинки из папки news (Vite подставит правильные пути с хешем)
@@ -54,7 +53,33 @@ const props = defineProps({
   },
 });
 
-const globalModalStore = useGlobalModalStore();
+// Используем глобальный store из window.globalModalStore (создается в global-modal.js)
+// Это обеспечивает использование единого глобального состояния на всех страницах
+// Получаем store в onMounted, так как глобальная модалка инициализируется в DOMContentLoaded
+const globalModalStore = ref(null);
+
+onMounted(() => {
+  // Ждем инициализации глобальной модалки
+  if (window.globalModalStore) {
+    globalModalStore.value = window.globalModalStore;
+  } else {
+    // Если store еще не готов, ждем его появления (глобальная модалка загружается в DOMContentLoaded)
+    const checkInterval = setInterval(() => {
+      if (window.globalModalStore) {
+        globalModalStore.value = window.globalModalStore;
+        clearInterval(checkInterval);
+      }
+    }, 50);
+    
+    // Таймаут на случай, если что-то пошло не так
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      if (!globalModalStore.value) {
+        console.error('globalModalStore не инициализирован. Убедитесь, что assets/vue/entrypoints/global-modal.js загружен.');
+      }
+    }, 5000);
+  }
+});
 
 const truncatedContent = computed(() => {
   const maxLength = 120; // Примерная длина для краткого описания
@@ -65,7 +90,11 @@ const truncatedContent = computed(() => {
 });
 
 const openNewsDetail = (newsItem) => {
-  globalModalStore.openModal(NewsDetailModal, { news: newsItem }, 'large');
+  if (!globalModalStore.value) {
+    console.error('Не удалось открыть модальное окно: globalModalStore не доступен');
+    return;
+  }
+  globalModalStore.value.openModal(NewsDetailModal, { news: newsItem }, 'large');
 };
 
 // Функция для поиска картинки по имени файла

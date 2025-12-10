@@ -1,22 +1,38 @@
 import { createApp } from "vue";
 import { initHomePage } from "../modules/home-page.js";
-import {
-  useGlobalModalStore /*, ModalCancelledError*/,
-} from "../../vue/stores/globalModal.js"; // ModalCancelledError больше не нужен
+// Импортируем global-pinia.js для гарантии его загрузки перед использованием stores
+import "../../vue/entrypoints/global-pinia.js";
 import LoginForm from "../../vue/components/forms/LoginForm.vue";
 import ContactForm from "../../vue/components/forms/ContactForm.vue"; // Импорт нового компонента контактной формы
 import { initDirectionForm } from "../../vue/entrypoints/home-direction-form.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // Ждем инициализации глобальной Pinia и stores
+  let attempts = 0;
+  while ((!window.pinia || !window.globalModalStore) && attempts < 100) {
+    await new Promise(resolve => setTimeout(resolve, 50));
+    attempts++;
+  }
+  
+  if (!window.globalModalStore) {
+    console.error('globalModalStore не доступен. Убедитесь, что global-pinia.js загружен.');
+    return;
+  }
+  
   // Инициализируем главную страницу
   initHomePage();
 
-  const globalModal = useGlobalModalStore();
+  const globalModal = window.globalModalStore;
 
   // Монтируем компонент контактной формы
   const contactFormElement = document.getElementById("contact-form-app");
   if (contactFormElement) {
-    createApp(ContactForm).mount(contactFormElement);
+    const contactApp = createApp(ContactForm);
+    // Используем глобальную Pinia, если она доступна
+    if (window.pinia) {
+      contactApp.use(window.pinia);
+    }
+    contactApp.mount(contactFormElement);
   }
 
   // Инициализируем форму направления доставки

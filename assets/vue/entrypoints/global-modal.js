@@ -1,20 +1,42 @@
 import { createApp } from 'vue';
-import { createPinia } from 'pinia';
 import GlobalModalHost from '../components/GlobalModalHost.vue';
-import { useGlobalModalStore } from '../stores/globalModal.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * Инициализация глобальной модалки
+ * Требует, чтобы global-pinia.js был загружен первым
+ */
+async function initGlobalModal() {
   const globalModalContainer = document.querySelector('.vue-app-mount-point');
 
   if (globalModalContainer) {
-    const app = createApp(GlobalModalHost);
-    const pinia = createPinia();
+    // Ждем инициализации Pinia (до 5 секунд)
+    let attempts = 0;
+    while (!window.pinia && attempts < 100) {
+      await new Promise(resolve => setTimeout(resolve, 50));
+      attempts++;
+    }
+    
+    // Проверяем, что Pinia инициализирована
+    if (!window.pinia) {
+      console.error('Pinia не инициализирована. Убедитесь, что global-pinia.js загружен перед global-modal.js');
+      return;
+    }
 
-    app.use(pinia);
+    const app = createApp(GlobalModalHost);
+    app.use(window.pinia);
     app.mount(globalModalContainer);
 
-    window.globalModalStore = useGlobalModalStore();
+    console.log('Global modal host инициализирован');
   } else {
-    console.warn('Global modal host container #global-modal-host not found.');
+    console.warn('Global modal host container .vue-app-mount-point not found.');
   }
-}); 
+}
+
+// Проверяем состояние документа и инициализируем соответственно
+if (document.readyState === 'loading') {
+  // Документ еще загружается, ждем DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', initGlobalModal);
+} else {
+  // Документ уже загружен, инициализируем сразу
+  initGlobalModal();
+} 

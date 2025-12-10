@@ -1,10 +1,20 @@
 <script setup>
+import { ref } from 'vue';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 import TextInput from './TextInput.vue';
 import BaseForm from './BaseForm.vue';
+import { useAuthStore } from '../../stores/auth.js';
 
 const emit = defineEmits(['close', 'success']);
+
+// Получаем auth store (используем глобальную Pinia через window.pinia)
+let authStore;
+if (window.pinia) {
+  authStore = useAuthStore();
+} else {
+  console.warn('Pinia не инициализирована. Auth store недоступен.');
+}
 
 // Схема валидации
 const schema = yup.object({
@@ -17,12 +27,29 @@ const { handleSubmit, resetForm } = useForm({
   validationSchema: schema,
 });
 
+const errorMessage = ref('');
+
 // Обработчик отправки формы
-const onSubmit = handleSubmit(values => {
-  console.log('Форма логина отправлена:', values);
-  emit('success', { success: true, message: 'Вход выполнен успешно!' });
-  emit('close');
-  resetForm();
+const onSubmit = handleSubmit(async (values) => {
+  if (!authStore) {
+    errorMessage.value = 'Ошибка инициализации. Перезагрузите страницу.';
+    return;
+  }
+
+  errorMessage.value = '';
+  
+  try {
+    await authStore.login(values.email, values.password);
+    emit('success', { 
+      success: true, 
+      message: 'Вход выполнен успешно!',
+      user: authStore.user
+    });
+    emit('close');
+    resetForm();
+  } catch (error) {
+    errorMessage.value = error.message || 'Ошибка при входе в систему';
+  }
 });
 
 const onCancel = () => {
@@ -33,6 +60,9 @@ const onCancel = () => {
 <template>
   <div class="modal-content p-6">
     <h3 class="text-h4 font-bold text-brand-gray mb-4">Вход в систему</h3>
+    <div v-if="errorMessage" class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+      {{ errorMessage }}
+    </div>
     <BaseForm
       :validation-schema="schema"
       :on-submit="onSubmit"

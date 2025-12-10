@@ -40,6 +40,10 @@ async function initDirectionForm() {
       },
     });
 
+    // Используем глобальную Pinia, если она доступна
+    if (window.pinia) {
+      directionApp.use(window.pinia);
+    }
     directionApp.mount(directionFormElement);
   } catch (error) {
     console.error("Ошибка при загрузке данных адресов:", error);
@@ -62,6 +66,10 @@ async function initDirectionForm() {
         });
       },
     });
+    // Используем глобальную Pinia, если она доступна
+    if (window.pinia) {
+      directionApp.use(window.pinia);
+    }
     directionApp.mount(directionFormElement);
   }
 }

@@ -15,6 +15,8 @@
 </head>
 <body class="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
 <div class="vue-app-mount-point"></div>
+<!-- Глобальная Pinia должна загружаться первой для всех страниц -->
+<script type="module" src="{{basePath}}assets/vue/entrypoints/global-pinia.js"></script>
 <script type="module" src="{{basePath}}assets/vue/entrypoints/global-modal.js"></script>
 <script type="module" src="{{basePath}}assets/js/modules/global-ui.js"></script>
 <script type="module" src="{{basePath}}assets/js/main.js"></script>

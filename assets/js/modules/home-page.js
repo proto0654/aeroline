@@ -228,18 +228,28 @@ export function initHomePage() {
   const homePageNewsAppElement = document.getElementById("home-page-news-app");
   if (homePageNewsAppElement) {
     console.log("Found #home-page-news-app, mounting Vue component");
-    const app = createApp(HomePageNews);
-
-    // Use the existing Pinia store instance if available, otherwise create a new one
-    // This assumes createPinia() and app.use(pinia) are called elsewhere globally, e.g., in main.js
-    // const pinia = createPinia(); // Удаляем локальную инициализацию Pinia
-    // app.use(pinia); // Удаляем локальное использование Pinia
-
-    // Provide access to the global modal store if needed within the component setup
-    // app.provide('globalModalStore', useGlobalModalStore()); // This is one way, but importing directly in component is also fine
-
+    
+    // Ждем инициализации глобальной Pinia
+    async function mountHomePageNews() {
+      // Ждем до 5 секунд инициализации Pinia
+      let attempts = 0;
+      while (!window.pinia && attempts < 100) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+        attempts++;
+      }
+      
+      if (!window.pinia) {
+        console.error('Глобальная Pinia не инициализирована. Убедитесь, что global-pinia.js загружен.');
+        return;
+      }
+      
+      const app = createApp(HomePageNews);
+      app.use(window.pinia);
     app.mount(homePageNewsAppElement);
     console.log("HomePageNews component mounted.");
+    }
+    
+    mountHomePageNews();
   } else {
     console.warn(
       "Could not find #home-page-news-app element to mount Vue component."
